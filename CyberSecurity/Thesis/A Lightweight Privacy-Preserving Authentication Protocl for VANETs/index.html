@@ -1,0 +1,2004 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://yunshiuan.com/CyberSecurity/Thesis/A%20Lightweight%20Privacy-Preserving%20Authentication%20Protocl%20for%20VANETs/">
+      
+      
+        <link rel="prev" href="../../Notes/pwn.note/">
+      
+      
+        <link rel="next" href="../../../Web/FRIST-HTML/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>A Lightweight Privacy-Preserving Authentication Protocl for VANETs - yunshiaun.docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a-lightweight-privacy-preserving-authentication-protocl-for-vanets" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="yunshiaun.docs" class="md-header__button md-logo" aria-label="yunshiaun.docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9V320c0 28.4-10.8 57.7-22.3 80.8-6.5 13-13.9 25.8-22.5 37.6-3.2 4.3-4.1 9.9-2.3 15s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7.3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7-3.2-14.2-7.5-28.7-13.5-42v-24.6c0-30.2 10.2-58.7 27.9-81.5 12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5.8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1l280.6-101c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1M128 408c0 35.3 86 72 192 72s192-36.7 192-72l-15.3-145.4L354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6l-142.2-51.4z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            yunshiaun.docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A Lightweight Privacy-Preserving Authentication Protocl for VANETs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../CompetitiveProgram/Tree/" class="md-tabs__link">
+          
+  
+    
+  
+  Competitive Program
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Writeups/picoCTF-Problems/" class="md-tabs__link">
+          
+  
+    
+  
+  Cyber Security
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Web/FRIST-HTML/" class="md-tabs__link">
+          
+  
+    
+  
+  Web
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Certificate/%E9%9B%BB%E8%85%A6%E8%BB%9F%E9%AB%94%E6%87%89%E7%94%A8%E4%B8%99%E7%B4%9A%E9%A1%8C%E7%B5%84/" class="md-tabs__link">
+          
+  
+    
+  
+  Certificate
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="yunshiaun.docs" class="md-nav__button md-logo" aria-label="yunshiaun.docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9V320c0 28.4-10.8 57.7-22.3 80.8-6.5 13-13.9 25.8-22.5 37.6-3.2 4.3-4.1 9.9-2.3 15s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7.3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7-3.2-14.2-7.5-28.7-13.5-42v-24.6c0-30.2 10.2-58.7 27.9-81.5 12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5.8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1l280.6-101c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1M128 408c0 35.3 86 72 192 72s192-36.7 192-72l-15.3-145.4L354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6l-142.2-51.4z"/></svg>
+
+    </a>
+    yunshiaun.docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Competitive Program
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Competitive Program
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    DataStruct
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DataStruct
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/BIT-%E6%A8%B9%E7%8B%80%E6%95%B8%E7%B5%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIT 樹狀數組
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E5%9C%96%E8%AB%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    圖論
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Disjoint-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disjoint-set 並查集 
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hashing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Heap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Heap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Algorithm
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Algorithm
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E6%89%BE%E5%87%BA%E5%9B%A0%E6%95%B8nlogn-x%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    nlogn-x 找因數
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E9%9B%A2%E6%95%A3%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    離散化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E5%8B%95%E6%85%8B%E8%A6%8F%E5%8A%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 動態規劃
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cyber Security
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cyber Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Writeups/picoCTF-Problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PicoCTF-Problems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Writeups/Reversing-kr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reverse.kr
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Notes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Notes/pwn.note/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pwn
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Thesis
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Thesis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    A Lightweight Privacy-Preserving Authentication Protocl for VANETs
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    A Lightweight Privacy-Preserving Authentication Protocl for VANETs
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#iintroduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      I.Introduction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="I.Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      相關研究
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      論文貢獻
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iipreliminary" class="md-nav__link">
+    <span class="md-ellipsis">
+      II.Preliminary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iiiproposed-protocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      III.Proposed Protocal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ivformal-sevurity-analysis-using-ban-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      IV.Formal Sevurity Analysis Using Ban Logic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IV.Formal Sevurity Analysis Using Ban Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      符號解釋
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      論文使用的定理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vformal-verfication" class="md-nav__link">
+    <span class="md-ellipsis">
+      V.Formal Verfication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vidiscussion-of-security-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      VI.Discussion of Security Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vii-comparision-with-other-related-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      VII. Comparision With Other Related Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viii-simulation-for-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      VIII Simulation for Network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ixconclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      IX.Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Web
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Web
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/FRIST-HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Html
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/CSS-%E7%AD%86%E8%A8%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/FIRST-Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    database
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/%E5%88%A9%E7%94%A8Hexo-%E5%89%B5%E5%BB%BAGithub-Pages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hexo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Certificate
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Certificate
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Certificate/%E9%9B%BB%E8%85%A6%E8%BB%9F%E9%AB%94%E6%87%89%E7%94%A8%E4%B8%99%E7%B4%9A%E9%A1%8C%E7%B5%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    電腦軟體應用丙級
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#iintroduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      I.Introduction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="I.Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      相關研究
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      論文貢獻
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iipreliminary" class="md-nav__link">
+    <span class="md-ellipsis">
+      II.Preliminary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iiiproposed-protocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      III.Proposed Protocal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ivformal-sevurity-analysis-using-ban-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      IV.Formal Sevurity Analysis Using Ban Logic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IV.Formal Sevurity Analysis Using Ban Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      符號解釋
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      論文使用的定理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vformal-verfication" class="md-nav__link">
+    <span class="md-ellipsis">
+      V.Formal Verfication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vidiscussion-of-security-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      VI.Discussion of Security Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vii-comparision-with-other-related-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      VII. Comparision With Other Related Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viii-simulation-for-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      VIII Simulation for Network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ixconclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      IX.Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="a-lightweight-privacy-preserving-authentication-protocl-for-vanets">A Lightweight Privacy-Preserving Authentication Protocl for VANETs</h1>
+<details class="摘要翻譯">
+<summary>摘要翻譯</summary>
+<p>摘要—隨著智慧城市概念的興起及車輛數量的增加，車輛自組網（Vehicular Ad-hoc Network, VANET）在車輛之間的通信中被廣泛接受，以獲取包括道路狀況、交通擁堵描述、車速及車輛位置等信息。自然地，VANET中的數據傳輸安全已成為研究人員的一項緊迫任務。雖然已有許多針對VANET的隱私保護認證協議被提出，但它們通常存在計算量大和安全漏洞等問題。因此，我們提出了一種適用於VANET的輕量化認證協議，該協議符合隱私保護需求，僅使用哈希函數和異或運算。在形式化的安全分析中，我們使用BAN邏輯證明了該協議達成了安全目標。我們還利用Proverif對協議進行了安全性驗證，結果顯示在模擬攻擊者下，該協議能保證隱私安全。此外，通過對安全特性的分析，我們的協議足夠穩健，能有效抵禦常見攻擊並保護通信數據的機密性。性能比較結果顯示，我們的協議輕量高效。我們還通過SUMO和NS-3模擬了網絡，結果表明該協議在VANET中具有效率高且實用的特性。</p>
+</details>
+<p>這個論文提出了一個更安全的VANET的輕量化認證協議，更好的保護用戶隱私，只使用了Hash與XOR運算</p>
+<hr />
+<h2 id="iintroduction">I.Introduction</h2>
+<p>近期因為政府越來越重視智慧城市以及智慧家庭，助長了無線網路以及通訊科技，</p>
+<ul>
+<li>
+<p>VANET : 專門用於車輛之間或車輛(OBS)與路邊基礎設施之間(RSU)的通信。它是一個動態的、分散式的網路，能夠支持車輛在行駛過程中共享信息
+<img alt="image" src="https://hackmd.io/_uploads/HkKdDaOQyx.png" /></p>
+</li>
+<li>
+<p>OBU : 是一個安裝在車子上的防竄改裝置，裡面會存著車子的重要機密資訊與加解密計算結果</p>
+</li>
+<li>RSU : 會被放在路邊，主要負責與車輛節點（車輛上的通信設備）進行通信，並在車輛之間或車輛與基礎設施之間提供數據傳輸的橋樑。</li>
+<li>
+<p>VANET 中存在兩種不同的通訊類型：車輛對車輛 (V2V) 和車輛對基礎設施 (V2I)，前者允許一定範圍內的車輛直接通訊，後者則要求車輛的訊息先傳輸到最近的 RSU</p>
+</li>
+<li>
+<p>V2V 和 V2I 都遵循專用短程通訊 (DSRC) 協定，以提高運輸效率和安全性。</p>
+</li>
+</ul>
+<h3 id="_1">相關研究</h3>
+<ul>
+<li>
+<p>[11]Zhang 等人研究出了基於IEEEE P1363標準的身分識別簽名方案的<strong>白盒實現（White-Box Implementation）</strong>，可以避免私鑰在不受信任的環境中執行算法時被leak出來</p>
+<ul>
+<li>但對於VAENT不適合，因為車子速度很快，並且都是無限的通訊，使用白盒實現需要一定的時間進行算法，因此使用lightweight(輕量級算法)是一種實際的選擇</li>
+</ul>
+</li>
+<li>
+<p>[12]-[16] 的論文中表示認證是一個重要機制，可以確保資訊在傳輸過程中的安全性，並且已被廣泛應用於 VANET 中</p>
+</li>
+<li>
+<p>[17]Lu等人提出了Conditionally Privacy-Preserving(條件隱私保護概念)，不能在public 被追蹤，但 OBU 的真實身份可以由可信機構（TA）追蹤。他們基於短期匿名證書提出了一種條件隱私保護協議，以實現 VANET 中的匿名認證和隱私追蹤</p>
+<ul>
+<li>但是每次與RSU通訊都要申請一張證書會很沒有效率</li>
+</ul>
+</li>
+<li>
+<p>[18]Zhang提出了identity-based authentication protocol，就不用每次RSU與vichel溝通時都申請一張證書</p>
+<ul>
+<li>[19-22]Shim 和 Lee 等人  在論文中指出了此protocol的一些弱點，例如易受Replay Attack(重放攻擊)和lack of nonrepudiation (缺乏不可否認性)。Liu 等人表明此protocol僅能達到比聲稱的安全等級更低的水準，並且也容易受到tracking attacks (追蹤攻擊)以及vulnerable to forgery(易於偽造)</li>
+</ul>
+</li>
+<li>[23]He等人提出了一種identity-based authentication protocol for VANET without bilinear pairing(無雙線性配對),降低計算難度<ul>
+<li>[24], [25]，有基於 He 等人協議以進一步提升效率。2016 年，Lo 和 Tsai [26] 也提出了一種authentication protocol without pairing(無配對的認證協議)，減少了計算負擔。</li>
+</ul>
+</li>
+<li>[27]Wang and Yao提出了一種需要複雜的證書交換的基於身分認證協議，並且RSU的主密鑰需要傳送給車輛</li>
+<li>
+<p>[28]Islam等人提出了一個新的authentication protocol基於password(密碼)和group key(群密鑰)，[29]Cui等人又提出了一個更高效的協議</p>
+<ul>
+<li>但是在[28]，[29]中都會有一個固定不變的隨機數，即使每個會話中的假身份會改變，這些不變的隨機數仍可被視為車輛的標記，這違反了unlinkability(不可鏈接性屬性)。</li>
+<li>
+<p>[30]論文指出RSU 的檢測距離範圍為150米 如果汽車在高速公路上以90km/h的速度行駛，可以計算出汽車會在檢測範圍內停留的時間為(150*2)/25 = 12 秒，因此如果使用[28]、[29]論文指出的協定，因為認證過程不是自動化的因此要每過12秒就要輸入一次身份與密碼</p>
+</li>
+<li>
+<p>在[28]論文中提到group key由TA生成後可以直接發送給車輛，因此車輛在認證過程中向RSU發送訊息會是多餘的行為</p>
+</li>
+<li>
+<p>如果車輛的OBU突然損壞，無法廣播離開訊息，那麼group key就沒辦法更新</p>
+</li>
+<li>以上幾點指出[28]、[29]中的協議可能不適用於實際場景</li>
+</ul>
+</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>補充:</p>
+<ul>
+<li>主密鑰（Master Key） : 是 RSU 或其他設備用於生成加密密鑰或認證憑證的核心密鑰。它通常具有很高的安全性</li>
+<li>bilinear pairing : 雙線性配對是一種基於椭圓曲線的數學運算，廣泛用於傳統的基於身份的加密系統</li>
+<li>無配對認證協議：無配對的認證協議是針對雙線性配對計算代價高的問題提出的替代方案。這類協議使用其他加密技術（例如對稱加密、非對稱加密或雜湊函數）來實現身份認證</li>
+<li>unlinkability : 是對同一角色的關聯</li>
+<li>條件保護隱私（Conditional Privacy Preservation）是一種在滿足特定條件下，允許揭示用戶身份或敏感信息的隱私保護策略。其核心理念是在日常情況下保護用戶的隱私，使其活動保持匿名或不可追蹤，但在特定情況下（如違法行為、緊急事件或法律要求），授權方可以根據預先定義的條件，訪問或揭露用戶的真實身份。</li>
+</ul>
+</div>
+<h3 id="_2">論文貢獻</h3>
+<ol>
+<li>提出了針對VAENT中具有條件保護隱私的lightweight(輕量級算法)的authentication protocal </li>
+<li>使用BAN邏輯的形式化分析、Proverif 工具形式化驗證以及安全全性討論，證明該協議具有穩健性</li>
+<li>通過與文獻[28]和[29]中提出的協議進行安全性特性和性能比較，發現本論文的protocal達成更多安全的目標同時也據報高效性</li>
+<li>通過使用SUMO和NS-3的模擬分析，我們證明了該協議具有實用性。</li>
+</ol>
+<hr />
+<h2 id="iipreliminary">II.Preliminary</h2>
+<p>這裡介紹了背景知識</p>
+<ul>
+<li>Notations<ul>
+<li>符號</li>
+</ul>
+</li>
+<li>
+<p>Network Model
+在論文中皆使用以下的網路模型，包含了TA、RSU、vehicles之間的通訊
+<img alt="image" src="https://hackmd.io/_uploads/SJjgOrtXkx.png" /></p>
+<ul>
+<li>TA 是可以完全信任且有足夠的計算與充足的儲存空間</li>
+<li>RSU 不是完全可信任並且擁有較低的計算能力與較少的儲存空間</li>
+<li>車輛則配備了一個 OBU（車載單元）
+車子傳送Authentication message無線傳輸給RSU，RSU有線傳輸給TA</li>
+<li>我們在車輛通過每個RSU時，放棄了輸入身份和密碼的方式，此外，為了解決群組密鑰更新錯誤的問題，我們採用簡單的方式：所有車輛都需與最近的RSU通信，每輛車僅與對應的RSU共享一個session key(會話密鑰)，類似於[31]、[32]中使用簽名的協議如果某輛車的OBU發生故障，無法廣播離開信息，群組內的通信將不受該事故影響，</li>
+<li>在VANET中，三方(vehicle、RSU、TA)並須在確定session key 之前互相認證，確保vehicle與RSU能夠接收到TA的消息</li>
+</ul>
+</li>
+<li>
+<p>Security Requirement</p>
+</li>
+</ul>
+<p>根據過去在VANET（車載網路）相關工作的研究[28], [29], [31]–[37]，一個輕量化的VANET身份驗證協議應具備以下特性：</p>
+<ul>
+<li>
+<p>車輛匿名性（Vehicle Anonymity）</p>
+<p>車輛 <span class="arithmatex">\(𝑉_𝑖\)</span>的真實身份<span class="arithmatex">\(𝐼𝐷_{𝑉_𝑖}\)</span>應在通信過程中受到保護。通常，使用 <span class="arithmatex">\(𝑉_𝑖\)</span>的假名（pseudoidentity）來實現此功能。
+  * 不可鏈接性（Unlinkability）</p>
+<p>為防止攻擊者區分不同車輛，車輛 <span class="arithmatex">\(𝑉_𝑖\)</span>的假名在不同的通信會話中應該是不同的，且這些假名之間不存在明顯的關聯，從而避免被分析和跟蹤。
+  * 可追蹤性（Traceability）</p>
+<p>為了在發生惡意行為時進行審查，授權的實體（TA）應能恢復車輛的真實身份。
+  * 相互認證（Mutual Authentication）</p>
+<p>TA和車輛應具備驗證彼此消息的能力，否則可能導致偽造攻擊的發生。  </p>
+</li>
+<li>
+<p>抵抗各類攻擊（Resistance to Various Attacks）</p>
+<p>協議必須能抵禦常見的攻擊，如偽造攻擊、篡改攻擊和重放攻擊。</p>
+</li>
+</ul>
+<hr />
+<h2 id="iiiproposed-protocal">III.Proposed Protocal</h2>
+<p>論文中提出的protocol包含四個部分
+1. 初始化（Initialization）
+2. RSU註冊（RSU Registration）
+3. 車輛註冊（Vehicle Registration）
+4. 消息驗證（Message Authentication）</p>
+<ul>
+<li>初始化:
+    TA 先選擇一個<span class="arithmatex">\(H(\cdot): \{0,1\}^* \to \{0,1\}^l\)</span>雜湊函式與一個祕密金鑰<span class="arithmatex">\(x_{TA}\)</span>
+    :::info
+    哈希函數<span class="arithmatex">\(H(\cdot): \{0,1\}^* \to \{0,1\}^l\)</span>是一種將任意長度的輸入（通常是二進制數據）壓縮或映射為固定長度的輸出（稱為哈希值或摘要）的數學函數。這個函數的輸出是固定的𝑙位二進制值。
+    :::</li>
+<li>
+<p>RSU Registration(RSU註冊):
+    TA 選 <span class="arithmatex">\(ID_{R_j}\)</span> 給 RSU (<span class="arithmatex">\(R_j\)</span>)，再選一把共享秘密金鑰 <span class="arithmatex">\(k_j\)</span> 用於TA與RSU通訊，最後將( <span class="arithmatex">\(ID_{R_j}\)</span> , <span class="arithmatex">\(R_j\)</span> )存在TA的database，並且以安全的方式傳給 RSU (<span class="arithmatex">\(R_j\)</span>)</p>
+</li>
+<li>
+<p>Vehicle Registration(車輛註冊)
+    TA 生成了 <span class="arithmatex">\(ID_{V_i}\)</span> 給 <span class="arithmatex">\(V_i\)</span> 並且儲存進 database ，同時TA選則了 <span class="arithmatex">\(PID_{V_i}\)</span> 當作假名，並且計算</p>
+<p><span class="arithmatex">\(A_1 = H(x_{TA}||PID_{V_i})\)</span></p>
+<p><span class="arithmatex">\(A_2 = H(PID_{V_i}||x_{TA})\)</span></p>
+<p>TA 計算完後將(<span class="arithmatex">\(ID_{V_i}\)</span>,<span class="arithmatex">\(A_1\)</span>,<span class="arithmatex">\(A_2\)</span>,<span class="arithmatex">\(PID_{V_i}\)</span>)用安全的方式傳送給 <span class="arithmatex">\(V_i\)</span> ，並且 <span class="arithmatex">\(V_i\)</span> 將資訊存進去OBS</p>
+</li>
+<li>
+<p>Message Authentication(消息驗證)</p>
+</li>
+</ul>
+<p><img alt="image" src="https://hackmd.io/_uploads/Skulf79Q1g.png" /></p>
+<p>其中的 <span class="arithmatex">\(snky\)</span> 是<span class="arithmatex">\(V_i\)</span>與<span class="arithmatex">\(R_j\)</span> 的session key，分別是<span class="arithmatex">\(snky_{R_j}\)</span>與<span class="arithmatex">\(snky_{V_i}\)</span></p>
+<hr />
+<h2 id="ivformal-sevurity-analysis-using-ban-logic">IV.Formal Sevurity Analysis Using Ban Logic</h2>
+<p>這裡使用了BAN logic 去驗證論文中提出的Protocal實現了以下的安全目標
+* 相互認證：確保 <span class="arithmatex">\(𝑉_𝑖\)</span>和 TA、<span class="arithmatex">\(𝑅_𝑗\)</span>和 TA 之間能夠相互驗證身份。
+* 密鑰協商：<span class="arithmatex">\(𝑉_𝑖\)</span>和 <span class="arithmatex">\(R_j\)</span>能夠在 TA 的幫助下共享一個會話金鑰 <span class="arithmatex">\(s𝑛𝑘𝑦\)</span>。
+* 消息完整性與保密性：確保傳輸的消息未被竄改或洩露。</p>
+<details class="banlogic基本用法">
+<summary>Banlogic基本用法</summary>
+<h3 id="_3">符號解釋</h3>
+<ol>
+<li>
+<p><span class="arithmatex">\(P \mid \equiv X\)</span>
+    說明：<span class="arithmatex">\(P\)</span> 相信 <span class="arithmatex">\(X\)</span> 是正確的。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(P \triangleleft X\)</span>
+    說明：<span class="arithmatex">\(P\)</span> 接收到消息 <span class="arithmatex">\(X\)</span>。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(P \mid \sim X\)</span>
+    說明：表示P曾經說過X，這句話有兩種含意。</p>
+<ul>
+<li>表示X是由P發出來的，即P是消息源</li>
+<li>P能夠確認消息X的含意 </li>
+</ul>
+</li>
+<li>
+<p><span class="arithmatex">\(P \mid \equiv \#(X)\)</span>
+    說明：<span class="arithmatex">\(P\)</span> 認為 <span class="arithmatex">\(X\)</span> 是新鮮的（未被重播過）。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(P \overset{K}{\longleftrightarrow} Q\)</span>
+    說明：<span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(Q\)</span> 共享密鑰 <span class="arithmatex">\(K\)</span>。</p>
+</li>
+</ol>
+<h3 id="_4">論文使用的定理</h3>
+<ol>
+<li>
+<p>消息意義規則(共享金鑰)
+<img alt="" src="https://img2023.cnblogs.com/blog/1669883/202306/1669883-20230616110152235-807251987.png" />
+P 相信 P與Q 之間是使用共享金鑰K去做溝通，當今天P收到由K加密的X時，則P相信Q說過X(X是由Q發送出來的或者Q知道X的消息源)</p>
+</li>
+<li>
+<p>新鮮性規則
+<img alt="" src="https://img2023.cnblogs.com/blog/1669883/202306/1669883-20230616110234493-2015434218.png" />
+當P相信X是新鮮的時候，則P相信X和Y的聯集整體訊息也是新鮮的</p>
+</li>
+<li>
+<p>隨機數驗證規則
+<img alt="" src="https://img2023.cnblogs.com/blog/1669883/202306/1669883-20230616110216793-1792428329.png" />
+當P相信X是新鮮的，並且P相信Q曾經說過X，則P相信Q相信X是真實的</p>
+</li>
+<li>
+<p>管轄權規則
+<img alt="" src="https://img2023.cnblogs.com/blog/1669883/202306/1669883-20230616110224570-1338197315.png" />
+表示P相信Q對X有控制權，且P相信Q相信X，則P相信X。</p>
+</li>
+</ol>
+</details>
+<p><img alt="image" src="https://hackmd.io/_uploads/BkdQdPnXJl.png" /></p>
+<p>目標一:
+<span class="arithmatex">\(TA \mid \equiv V_i \mid \equiv\left(V_i\overset{r_{V_i}}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(TA\)</span> 相信 <span class="arithmatex">\(𝑉_𝑖\)</span> 認為 <span class="arithmatex">\({𝑟_{V_i}}\)</span>是其與 <span class="arithmatex">\(TA\)</span> 之間的通訊密鑰</p>
+<p>目標二:
+<span class="arithmatex">\(TA \mid \equiv \left( V_i \overset{r_{V_i}}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(TA\)</span> 相信 <span class="arithmatex">\(r_{v_i}\)</span>是 <span class="arithmatex">\(TA <span class="arithmatex">\(與\)</span>V_i\)</span>之間的通訊密鑰</p>
+<p>目標三:
+<span class="arithmatex">\(TA \mid \equiv R_j \mid \equiv \left( R_j \overset{r_{R_j}}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(TA\)</span> 相信 <span class="arithmatex">\(R_j\)</span>認為<span class="arithmatex">\(r_{R_j}\)</span>是其與 <span class="arithmatex">\(TA\)</span> 之間的通訊密鑰</p>
+<p>目標四:
+<span class="arithmatex">\(TA \mid \equiv \left( R_j \overset{r_{R_j}}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(TA\)</span> 相信 <span class="arithmatex">\(r_{R_j}\)</span>是其與<span class="arithmatex">\(R_j\)</span>之間溝通的通訊密鑰</p>
+<p>目標五:
+<span class="arithmatex">\(R_j \mid \equiv TA \mid \equiv \left( R_j \overset{snky}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(R_j\)</span>相信 <span class="arithmatex">\(TA\)</span> 認為<span class="arithmatex">\(snky\)</span>是其與<span class="arithmatex">\(R_j\)</span>之間溝通的通訊密鑰</p>
+<p>目標六:</p>
+<p><span class="arithmatex">\(R_j \mid \equiv \left( R_j \overset{snk_y}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(R_j\)</span> 相信 <span class="arithmatex">\(snky\)</span>是其與 <span class="arithmatex">\(TA\)</span> 之間溝通的通訊密鑰</p>
+<p>目標7:</p>
+<p><span class="arithmatex">\(V_i \mid \equiv TA \mid \equiv \left( V_i \overset{snk_y}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(V_i\)</span>相信 <span class="arithmatex">\(TA\)</span> 認為<span class="arithmatex">\(snky\)</span>是其與<span class="arithmatex">\(V_i\)</span>之間溝通的通訊密鑰</p>
+<p>目標8:</p>
+<p><span class="arithmatex">\(V_i \mid \equiv \left( V_i \overset{snk_y}{\longleftrightarrow} TA \right)\)</span></p>
+<p><span class="arithmatex">\(V_i\)</span> 相信 <span class="arithmatex">\(snky\)</span>是其與 <span class="arithmatex">\(TA\)</span> 之間溝通的通訊密鑰</p>
+<p>以下將<span class="arithmatex">\(V_i\)</span>、<span class="arithmatex">\(R_j\)</span>與TA通訊的過程理想化</p>
+<p><span class="arithmatex">\(M1: 
+V_i \to TA : \langle B_1, (V_i \overset{r_{V_i}}{\longleftrightarrow} TA)_{H(ID_{V_i} \parallel x_{TA})}, B_3, t_{V_i}, PID_{V_i} \rangle\)</span></p>
+<p><span class="arithmatex">\(M2: R_j \to TA : \langle (R_j \overset{r_{R_j}}{\longleftrightarrow} TA)k_j, C_2, ID_{R_j}, t_{R_j} \rangle\)</span></p>
+<p><span class="arithmatex">\(M3: TA \to R_j : \langle (R_j \overset{snk_y}{\longleftrightarrow} TA)_{H(r_{R_j} \parallel k_j \parallel t_{TA})}, D_2, t_{TA} \rangle\)</span></p>
+<p><span class="arithmatex">\(M4: TA \to V_i : \langle (V_i \overset{snk_y}{\longleftrightarrow} TA)_{H(r_{V_i} \parallel t_{TA} \parallel ID_{V_i})}, D_4, D_5, D_6, t_{TA} \rangle\)</span></p>
+<p>並且根據Protocal溝通描述，可以得到以下假設(都可以從初始化、加解密需要的式子看到)
+<span class="arithmatex">\(A1 : TA | \equiv (V_i \overset{H(ID_{V_i} \parallel x_{TA})}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A2: TA | \equiv \#(t_{V_i})\)</span></p>
+<p><span class="arithmatex">\(A3: TA | \equiv V_i | \Rightarrow (V_i \overset{r_{V_i}}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A4: TA | \equiv (R_j \overset{k_j}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A5: TA | \equiv \#(t_{R_j})\)</span></p>
+<p><span class="arithmatex">\(A6: TA | \equiv R_j | \Rightarrow (R_j \overset{r_{R_j}}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A7: R_j | \equiv (R_j \overset{H(r_{R_j} \parallel k_j \parallel t_{TA})}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A8: R_j | \equiv \#(t_{TA})\)</span></p>
+<p><span class="arithmatex">\(A9: R_j | \equiv TA \Rightarrow (R_j \overset{snk_y}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A10: V_i | \equiv (V_i \overset{H(r_{V_i} \parallel t_{TA} \parallel ID_{V_i})}{\longleftrightarrow} TA)\)</span></p>
+<p><span class="arithmatex">\(A11: V_i | \equiv \#(t_{TA})\)</span></p>
+<p><span class="arithmatex">\(A12: V_i | \equiv TA \Rightarrow (V_i \overset{snk_y}{\longleftrightarrow} TA)\)</span></p>
+<p>接下來開始證明論文中的Protocal有沒有達到那八個目標</p>
+<p>先從M1 開始推導，可以將M1改寫成
+<span class="arithmatex">\(S1:TA \triangleleft \langle B_1, (V_i \overset{r_{V_i}}{\longleftrightarrow} TA)_{H(ID_{V_i} \parallel x_{TA})}, B_3, t_{V_i}, PID_{V_i} \rangle\)</span></p>
+<p>由<span class="arithmatex">\(S1\)</span>與<span class="arithmatex">\(A1\)</span>並且由<strong>消息意義規則</strong>可以改寫成</p>
+<p><span class="arithmatex">\(S2 : TA | \equiv V_i | \sim (V_i \overset{r_{V_i}}{\longleftrightarrow} TA)\)</span></p>
+<p>由<span class="arithmatex">\(M1\)</span>,<span class="arithmatex">\(A2\)</span>,以及<strong>新鮮性規則</strong>可以得到</p>
+<p><span class="arithmatex">\(TA | \equiv \#\langle B_1, (V_i \overset{r_{V_i}}{\longleftrightarrow} TA)_{H(ID_{V_i} \parallel x_{TA})}, B_3, t_{V_i}, PID_{V_i} \rangle\)</span></p>
+<p>再根據<span class="arithmatex">\(A1\)</span>,可以得到
+<span class="arithmatex">\(S3 : TA | \equiv \#(V_i \overset{r_{V_i}}{\longleftrightarrow} TA)\)</span></p>
+<p>從<span class="arithmatex">\(S2,S3\)</span>以及隨機數驗證規則，可以改成
+<span class="arithmatex">\(S4 : TA | \equiv V_i | \equiv (V_i \overset{r_{V_i}}{\longleftrightarrow} TA) \quad (\text{目標1})\)</span></p>
+<p>由<span class="arithmatex">\(A3,S4\)</span>以及管轄權規則可以改寫成
+<span class="arithmatex">\(S5:TA | \equiv (V_i \overset{r_{V_i}}{\longleftrightarrow} TA) \quad (\text{目標2})\)</span></p>
+<p>其餘目標3~目標8 皆是從M2~M4經過相同流程得出的結論</p>
+<p>從上述分析可見，我們的協議實現了所有的安全目標（1 至 8），並且 <span class="arithmatex">\(𝑉_𝑖\)</span> 和 <span class="arithmatex">\(𝑅_𝑗\)</span> 在 TA 的幫助下共享了一個會話金鑰。</p>
+<h2 id="vformal-verfication">V.Formal Verfication</h2>
+<p>這裡使用了Proverif工具去檢測Protocal的密碼學操作是否符合安全需求
+<img alt="image" src="https://hackmd.io/_uploads/BJ7LF5hm1x.png" />
+A. 定義
+我們在圖3中展示了代碼的定義。左右框分別包含兩條線。在左框中，sc1 和 sc2 是用於註冊的私有通道，而 ch1 和 ch2 是用於認證的公共通道。兩條線之間的元素與第III節中的定義幾乎相同，因此此處不再重複說明。d1 和 d2 是TA中的表格，分別用於存儲車輛信息和RSU信息。在右框中，第一個空格包含三個函數，分別是字符串連接、XOR操作和哈希函數。中間的空格引入了異或操作。此外，在最後一個空格中展示了四個事件和四個查詢，前兩個查詢用於驗證會話密鑰，而後兩個查詢用於驗證事件。
+<img alt="image" src="https://hackmd.io/_uploads/ryTWq52Q1x.png" />
+B. 過程
+我們在此提供了三個參與方的模擬代碼。在圖4中，展示了車輛和RSU的過程。在兩個框中，第2到第3行是用於註冊的，隨後的部分是用於消息認證的代碼</p>
+<p><img alt="image" src="https://hackmd.io/_uploads/SybI5c2QJl.png" />
+圖5中展示了TA的代碼，左框包含兩條線。車輛的註冊代碼在第一條線之上，RSU的註冊代碼在第一條線和第二條線之間。從第二條線到右框內的代碼部分是消息認證的代碼。最後一行代碼表明，TA的整體代碼是由兩部分註冊和消息認證的聚合構成的。語句 <code>process !V |!R|!TA</code>用於在Proverif中運行所有代碼。
+<img alt="image" src="https://hackmd.io/_uploads/Bkui9cn7Je.png" /></p>
+<p>C. 結果
+我們在圖6中列出了查詢的結果。第一和第二個結果表明，車輛與RSU之間共享的會話密鑰對攻擊者是安全的。第三和第四個結果表明，四個事件可以按正常順序執行，即 VStart 必然出現在 VAuth 之前，RStart 必然出現在 RAuth 之前。因此，我們的協議使用Proverif工具進行測試是安全的。</p>
+<h2 id="vidiscussion-of-security-features">VI.Discussion of Security Features</h2>
+<p><img alt="image" src="https://hackmd.io/_uploads/ry8zZsnXJg.png" />
+<img alt="image" src="https://hackmd.io/_uploads/rkMmZs3XJg.png" />
+<img alt="image" src="https://hackmd.io/_uploads/rJrNboh7Jl.png" />
+<img alt="image" src="https://hackmd.io/_uploads/SJI4-ohXJg.png" />
+<img alt="image" src="https://hackmd.io/_uploads/rkrHbs2XJl.png" />
+<img alt="image" src="https://hackmd.io/_uploads/SyxIbonX1g.png" />
+<img alt="image" src="https://hackmd.io/_uploads/r15LbohmJg.png" /></p>
+<h2 id="vii-comparision-with-other-related-protocols">VII. Comparision With Other Related Protocols</h2>
+<p>VII. 與其他相關協議的比較
+在本節中，我們將我們的協議與其他相關方案進行比較。由於 [28] 和 [29] 的方案比先前的相關研究 [23]、[24] 和 [26] 更有效，因此我們集中討論如何解決 [28] 和 [29] 方案中的不可行性問題。因此，我們將比較的重點放在我們提出的協議與 [28] 和 [29] 兩個最相關的協議的安全性特徵和性能上，而忽略與其他研究 [23]、[24]、[26] 的比較。</p>
+<p>A. 安全性比較
+根據先前的安全性分析，我們將我們的協議與近期的競爭協議 [28] 和 [29] 進行比較，結果列於表 I 中，其中 √ 和 × 分別表示協議符合和不符合該安全特徵。從表中可以看出，我們的協議保留了所有安全特徵，而 [28] 和 [29] 的協議無法實現不可鏈接性（unlinkability）和相互認證（mutual authentication）。此外，如第 I-A 節所述，[28] 和 [29] 的協議在實際應用中不可行，因為駕駛員無法在 RSU（路側單元）的通信範圍內完成認證。而我們的協議則是可行的，因為駕駛員無需執行這些操作。因此，我們的協議在安全性和實用性方面均優於其他兩個協議。</p>
+<p><img alt="image" src="https://hackmd.io/_uploads/Hy-p4qRXye.png" /></p>
+<p>B. 性能比較
+我們演示了我們協議的計算和通信成本，並將其與 [28] 和 [29] 進行比較。</p>
+<p>首先，定義比較標準。[28] 和 [29] 的協議中包含車輛加入和離開階段，但這兩個協議在性能比較中未考慮其時間和通信成本。為此，我們將此部分納入比較範圍，內容包括車輛進入 RSU 檢測範圍至離開該範圍的全過程。同時，這輛車可能遇到兩種情況：其他車輛進入相同範圍，以及其他車輛離開該範圍。只有考慮過程中的所有變化，才能適當計算每個實體的時間成本和整體通信成本。</p>
+<p>相關的時間參數是在 [33] 的相同平台和 Miracl 庫上測試的，操作系統為 Ubuntu 18.04。假設 <span class="arithmatex">\(𝑡_𝐻\)</span>、<span class="arithmatex">\(𝑡_𝑚\)</span>、<span class="arithmatex">\(𝑡_𝑖\)</span> 和 <span class="arithmatex">\(𝑡_{𝐶𝑅𝑇}\)</span>，分別表示雜湊函數、群內乘法、群內反演以及中國餘數定理計算的時間成本，其值分別為 3.204 μs、1.86 μs、25.58 μs 和 150.589 μs，並使用 256 位的 SHA-256 雜湊函數進行比較。此外，假設時間戳、隨機數、身份和偽隨機身份的位長分別為 64 位、160 位、160 位和 160 位。</p>
+<p><img alt="image" src="https://hackmd.io/_uploads/SkhmDq0mkg.png" /></p>
+<p>在上述過程中，有兩種類型的距離。從圖 7 中可以看到，
+<span class="arithmatex">\(𝑑_𝑤\)</span> 是 RSU 可達的檢測距離，而 <span class="arithmatex">\(𝑑_𝑣\)</span>是兩輛車應保持的安全距離。此外，由於 DSRC 協議 [40]，
+<span class="arithmatex">\(𝑑_𝑤\)</span>可達到 300 m，因此一個 RSU 可檢測到道路上 600 m 的範圍。而根據 [41]，兩輛車之間的建議安全距離約等於速度數值。例如，當車速為 100 km/h 時，<span class="arithmatex">\(𝑑_𝑣\)</span> 應為 100 m。在固定的 <span class="arithmatex">\(𝑑_𝑣\)</span>和車速下，我們可以模擬檢測範圍內車輛的數量限制。例如，當車速為 55 km/h，<span class="arithmatex">\(𝑑_𝑣\)</span> = 55<span class="arithmatex">\(m\)</span>，而車輛長度為 5 m（根據 [42]），在 RSU <span class="arithmatex">\(𝑅_𝑗\)</span> 的檢測範圍內，當車輛 <span class="arithmatex">\(𝑉_𝑘\)</span> 進入時，每條車道最多有 9 輛車，包括剛進入的 <span class="arithmatex">\(𝑉_𝑘\)</span>。類似地，在對向車道最多有 10 輛車。</p>
+<p>當 <span class="arithmatex">\(𝑉_𝑘\)</span> 離開檢測範圍時，其前方的 4 輛車已離開範圍，並且在 
+<span class="arithmatex">\(𝑉_𝑘\)</span> 之後會有其他 4 輛車進入範圍。對向車道也有類似情況。用兩個變量 <span class="arithmatex">\(𝑛_𝑗\)</span> 和 <span class="arithmatex">\(𝑛_𝑙\)</span> 分別表示在 <span class="arithmatex">\(𝑉_𝑘\)</span> 穿過 <span class="arithmatex">\(𝑅_𝑗\)</span> 檢測範圍的時間段內進入和離開範圍的車輛數量，可以看出 <span class="arithmatex">\(𝑛_𝑗 = 𝑛_𝑙 = 19\)</span>為最大值。</p>
+<p><img alt="image" src="https://hackmd.io/_uploads/HyxVAdq07kl.png" /></p>
+<p>表 II 顯示了我們的協議與 [28] 和 [29] 的協議在計算和通信成本上的比較，其中 <span class="arithmatex">\(𝑛_𝑗\)</span> 和 <span class="arithmatex">\(𝑛_𝑙\)</span>如上所述。為了更清晰地展示比較結果，我們繪製了車輛、RSU 和 TA 的時間成本以及通信成本的圖表（見圖 8）。從表中可以看出，在車輛和 TA 的時間成本方面，隨著 <span class="arithmatex">\(𝑛_𝑗\)</span>和 <span class="arithmatex">\(𝑛_𝑙\)</span> 的增加，我們的協議在計算效率上明顯優於其他協議。例如，當 <span class="arithmatex">\(𝑛_𝑗 =𝑛_𝑙 =19\)</span> 時，我們協議中車輛的時間成本僅為 [28] 和 [29] 的 8% 和 15%，而 TA 的時間成本僅為 [28] 和 [29] 的 73% 和 14%。這是因為在 [28] 和 [29] 的協議中，每次車輛加入和離開時，這兩個實體需要計算以更新群密鑰。</p>
+<p>在 RSU 的時間成本方面，我們的協議是最高的。在通信成本方面，當加入和離開車輛數量較高時，我們的協議僅優於 [28]。這是因為我們的協議實現了真正的相互認證，而 [28] 和 [29] 的協議中沒有消息傳輸和計算以實現相互認證。然而，根據上述分析，[28] 和 [29] 存在一些弱點，因為在通過 RSU 時輸入身份和密碼在實際應用中不現實。此外，在 [28] 和 [29] 的協議中，當車輛離開時，消息可能會丟失。因此，我們的協議在實際應用環境中更為可行。</p>
+<h2 id="viii-simulation-for-network">VIII Simulation for Network</h2>
+<p><img alt="image" src="https://hackmd.io/_uploads/SkLNYq0Xkl.png" />
+<img alt="image" src="https://hackmd.io/_uploads/B118Y5RQyg.png" /></p>
+<p>在本節中，我們使用 SUMO 1.1 和 NS-3 3.28 平台模擬了我們協議的通信情境。模擬中使用的基本參數列於表 III，RSU 和街道的拓撲如圖 9 所示。每條街道長 800 米，設有兩個車道。RSU 部署在街角或十字路口附近。車輛在接收到 RSU 廣播的恆定身份編號後，開始發送自己的認證消息。這種廣播每 0.3 秒發生一次。我們測試了三種不同車速場景，包括 10 m/s、20 m/s 和 30 m/s，分別代表低速、中速和高速情況。在我們的協議中，跟蹤並分析了四種消息，其大小分別為 124 B、216 B、200 B 和 136 B。</p>
+<p>在模擬中，考慮了端到端延遲（E2ED）和封包投遞率（PDR）兩個指標，並分析了在三種車速場景下的表現。</p>
+<p>模擬結果分析
+端到端延遲（E2ED）
+從圖 10 可以看出，隨著車輛數量的增加，E2ED 在所有三個場景中都隨之增大。這與我們的理解一致，即更多的通信會隨著車輛數量的增加導致更多的網路擁堵。</p>
+<p>封包投遞率（PDR）
+從圖 11 可以觀察到，當車輛數量增多時，PDR 會有所下降。然而，對於不同車速的車輛，其測試點均處於 PDR 的小範圍內。即使車輛數量從 50 增加到 250，PDR 仍然非常穩定，且高於 99%。</p>
+<p>總結
+以上結果表明，我們的協議在各種交通情境下均具有良好的實用性。即使在車輛數量增多時，通信性能仍能保持穩定，並能適應不同車速的需求。</p>
+<h2 id="ixconclusion">IX.Conclusion</h2>
+<p>本文提出了一種針對 VANETs 的全新輕量級認證協議。該協議不僅實現了三方之間的認證，還能保證車輛的匿名性。通過使用 BAN 邏輯、Proverif 工具以及對安全特性的討論，證明了該協議在抵禦各種攻擊方面的魯棒性，並滿足安全需求。此外，SUMO 和 NS-3 平台的模擬結果顯示，該協議具有效率。與其他相關協議的比較表明，我們的協議更適合於實際應用場景。</p>
+<p>隨著 5G 和邊緣計算等新興技術的發展，VANETs 應用將具備新的特性，但也會引入一些新的安全和隱私保護挑戰。在未來，我們將致力於 5G 和邊緣計算支持下的車聯萬物服務（Vehicle-to-Everything，V2X）中的安全與隱私問題研究，例如基於軟體定義網路（SDN）和網路功能虛擬化（NFV）技術的認證協議，用於 5G V2X 應用場景。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "navigation.tabs", "navigation.top", "navigation.tracking", "header.autohide", "announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

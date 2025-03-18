@@ -1426,6 +1426,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI agent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streambench" class="md-nav__link">
+    <span class="md-ellipsis">
+      StreamBench
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      PlanBench
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1495,6 +1522,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI agent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streambench" class="md-nav__link">
+    <span class="md-ellipsis">
+      StreamBench
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      PlanBench
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1523,6 +1577,28 @@
 <p>在下prompt時給範例，模型回答正確的機率較高。但並不是真正的在訓練模型，只要接續的prompt中沒有給範例正確率就會退回跟沒有給模型範例一樣。</p>
 <h2 id="rag">RAG</h2>
 <p>如果要問專業問題，可以牽育網路查資料並附在promt上回答正確率會較高</p>
+<h2 id="ai-agent">AI agent</h2>
+<p>人類給予目標，AI想辦法自己達成</p>
+<h2 id="streambench">StreamBench</h2>
+<p>使用之前問答的長期記憶褲記憶挑選出與下一個問題相關的記憶，類似根據自己經驗學習的技術(RAG)</p>
+<ul>
+<li>Read </li>
+</ul>
+<p>檢索模組： 只從過去的經驗檢索出與現在問題相關的經驗，語言模型根據之前的經驗以及現在的問題產生他的行動</p>
+<blockquote>
+<p>用答對的經驗會比較好</p>
+</blockquote>
+<ul>
+<li>Write </li>
+</ul>
+<p>判斷是否需要存入長期記憶中，通常是AI自己</p>
+<ul>
+<li>Reflection</li>
+</ul>
+<p>對於記憶中的資訊進行重新整理，通常是一個AI agent
+  可以將Refelction 的輸成建立 Knowledge Graph</p>
+<h2 id="planbench">PlanBench</h2>
+<p>神秘方塊世界</p>
 
 
 

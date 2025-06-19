@@ -14,7 +14,7 @@
         <link rel="prev" href="../pwn.note/">
       
       
-        <link rel="next" href="../../Blogs/SleepyPickle/">
+        <link rel="next" href="../AIsecurity/">
       
       
       <link rel="icon" href="../../../assets/favicon.png">
@@ -65,7 +65,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -121,7 +121,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -131,7 +131,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -930,6 +930,8 @@
       
         
       
+        
+      
     
     
       
@@ -1093,6 +1095,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#disk-forensics" class="md-nav__link">
+    <span class="md-ellipsis">
+      disk Forensics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rapid-triage-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rapid Triage tool
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#acquision" class="md-nav__link">
     <span class="md-ellipsis">
       Acquision
@@ -1114,6 +1134,28 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AIsecurity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AISecurity
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1673,6 +1715,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#disk-forensics" class="md-nav__link">
+    <span class="md-ellipsis">
+      disk Forensics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rapid-triage-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rapid Triage tool
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#acquision" class="md-nav__link">
     <span class="md-ellipsis">
       Acquision
@@ -1707,7 +1767,7 @@
 
 
 <h1 id="blueteamtools">BlueTeamTools</h1>
-<p>In this note, I organize the blue team tools </p>
+<p>In this note, I organize the commons blue team tools </p>
 <h2 id="idsips">IDS/IPS</h2>
 <ul>
 <li>
@@ -1788,6 +1848,12 @@
 <li>
 <p><a href="https://www.splunk.com/zh_tw">splunk</a></p>
 </li>
+<li>
+<p>chainsaw</p>
+<ul>
+<li>use sigma </li>
+</ul>
+</li>
 </ul>
 <h2 id="dfir">DFIR</h2>
 <p>after an incident has occurred </p>
@@ -1817,6 +1883,177 @@
 </ul>
 </li>
 </ul>
+<h2 id="disk-forensics">disk Forensics</h2>
+<ul>
+<li>
+<p>AutoSpy</p>
+</li>
+<li>
+<p>R-studio</p>
+<ul>
+<li>$MFT viewer</li>
+</ul>
+</li>
+<li>
+<p>MFTECmd</p>
+<ul>
+<li>$MFT to csv file</li>
+<li>can use timeline Explorer to see the csv</li>
+</ul>
+</li>
+<li>
+<p>NTFS Log Tracker</p>
+</li>
+<li>
+<p><a href="https://github.com/strozfriedberg/sidr">SIDR</a></p>
+<ul>
+<li>windows Search Index Database Reporter</li>
+<li>detect the delete file </li>
+</ul>
+</li>
+<li>
+<p><a href="https://ericzimmerman.github.io/#!index.md">shellbagsexplorer</a></p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/585383290">shellbags</a> date changes into nice view</li>
+<li>to trace the user active  even the file had been delete</li>
+<li>need %userprofile%\AppData\Local\Microsoft\Windows\USRCLASS.dat and %userprofile%\NTUSER.dat</li>
+</ul>
+</li>
+<li>
+<p>[LECmd]</p>
+<ul>
+<li>to see link file
+<code>LECmd.exe -d "C:\Users\Administrator\Desktop\Start Here\Artifacts" --csvf lnk.csv --csv "C:\Users\Administrator\Desktop\lnk-files"</code></li>
+</ul>
+</li>
+<li>
+<p>jumpLists Explorer</p>
+<ul>
+<li>to </li>
+</ul>
+</li>
+<li>
+<p>USB Forensics tracker </p>
+</li>
+<li>
+<p>WxTCMD</p>
+<ul>
+<li>analyze timeline data base to csv file </li>
+<li>"C:\Users\ <user>\AppData\Local\ConnectedDevicesPlatform\L.<user>\ActivitiesCache.db"</li>
+</ul>
+</li>
+<li>
+<p>Amcache parser</p>
+<ul>
+<li>may catch the app install time</li>
+</ul>
+</li>
+<li>
+<p>RegistryExplorer</p>
+</li>
+<li>
+<p>WinPrefetchView</p>
+</li>
+<li>
+<p>SrumECmd</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th><strong>Shellbags</strong></th>
+<th><strong>$MFT (Master File Table)</strong></th>
+<th><strong>$LogFile</strong></th>
+<th><code>$UsnJrnl:$J</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📦 Source</td>
+<td>Registry (NTUSER.DAT / USRCLASS.DAT)</td>
+<td>NTFS file system metadata</td>
+<td>NTFS transactional log (operation history)</td>
+<td>NTFS update sequence number journal (USN Journal)</td>
+</tr>
+<tr>
+<td>📂 Tracks</td>
+<td>Folders accessed via File Explorer GUI (local, USB, network)</td>
+<td>Metadata and timestamps for every file/folder</td>
+<td>Low-level file/folder changes (create, rename, delete)</td>
+<td>All file/folder change events with USN IDs and timestamps</td>
+</tr>
+<tr>
+<td>⏱️ Timestamps Included</td>
+<td>✅ Yes – folder access/creation timestamps</td>
+<td>✅ Yes – MACB timestamps (Modified, Accessed, Created, Entry Modified)</td>
+<td>✅ Yes – change timestamps (no content changes recorded)</td>
+<td>✅ Yes – detailed change times</td>
+</tr>
+<tr>
+<td>👁️ Focus of Analysis</td>
+<td>User GUI behavior: which folders were clicked/viewed?</td>
+<td>File presence and lifecycle metadata</td>
+<td>Change log, like a transaction record</td>
+<td>Tracks entire change history of files/folders</td>
+</tr>
+<tr>
+<td>🧠 Purpose of Retention</td>
+<td>Store folder view settings and history (for UI consistency)</td>
+<td>Core structure for NTFS operation</td>
+<td>Provides file system consistency and crash recovery</td>
+<td>Enables quick file change lookup (for apps, indexing, backup)</td>
+</tr>
+<tr>
+<td>👣 Common Forensic Use Cases</td>
+<td>- Detect if a user accessed <code>\\10.10.5.86\shared</code><br>- Track lateral movement or USB use</td>
+<td>- Check if a file existed, when it was created<br>- Identify malicious file activity</td>
+<td>- Reconstruct sequence of malicious activity (e.g., payload creation)</td>
+<td>- Identify file usage and renaming/deletion events</td>
+</tr>
+<tr>
+<td>🧪 Can Recover Deleted Files?</td>
+<td>❌ No – folder-based, does not retain deleted file info</td>
+<td>✅ Yes – traces may remain unless overwritten</td>
+<td>✅ Possibly – recover some actions if log is intact</td>
+<td>✅ Yes – shows file creation, renaming, deletion history</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="rapid-triage-tool">Rapid Triage tool</h2>
+<ul>
+<li><a href="https://ericzimmerman.github.io/#!index.md">Eric Zimmerman</a><ul>
+<li>MFTECmd<ul>
+<li><code>.\MFTECmd.exe -f 'C:\Users\johndoe\Desktop\forensic_data\kape_output\D\$Extend\$J' --csv C:\Users\johndoe\Desktop\forensic_data\mft_analysis\ --csvf MFT-J.csv</code></li>
+</ul>
+</li>
+<li>Timeline Explorer <ul>
+<li>View CSV and Excel files, filter, group, sort, etc. with ease</li>
+</ul>
+</li>
+<li>EvtxECmd  <ul>
+<li>Event log (evtx) parser with standardized CSV, XML, and json output! Custom maps, locked file support, and more!</li>
+<li><code>.\EvtxECmd.exe -f "C:\Users\johndoe\Desktop\forensic_data\kape_output\D\Windows\System32\winevt\logs\Microsoft-Windows-Sysmon%4Operational.evtx" --csv "C:\Users\johndoe\Desktop\forensic_data\event_logs\csv_timeline" --csvf kape_event_log.csv</code></li>
+</ul>
+</li>
+<li>Registry Explorer <ul>
+<li>Registry viewer with searching, multi-hive support, plugins, and more. Handles locked files</li>
+</ul>
+</li>
+<li>RegRipper<ul>
+<li><code>.\rip.exe -r "C:\Users\johndoe\Desktop\forensic_data\kape_output\D\Windows\System32\config\SYSTEM" -p compname</code></li>
+</ul>
+</li>
+<li>PECmd<ul>
+<li>Prefetch parser</li>
+<li><code>.\PECmd.exe -d C:\Users\johndoe\Desktop\forensic_data\kape_output\D\Windows\prefetch --csv C:\Users\johndoe\Desktop\forensic_data\prefetch_analysis</code></li>
+</ul>
+</li>
+<li>API Monitor</li>
+</ul>
+</li>
+</ul>
 <h2 id="acquision">Acquision</h2>
 <ul>
 <li>Dumpit.exe<ul>
@@ -1840,9 +2077,15 @@
 </ul>
 </li>
 </ul>
-<p>if windwos memory dead Acquision
-* hiberfil.sys C:/
-* pagefile.sys C:/</p>
+<p>if windwos memory dead Acquision</p>
+<ul>
+<li>
+<p>hiberfil.sys C:/</p>
+</li>
+<li>
+<p>pagefile.sys C:/</p>
+</li>
+</ul>
 <h2 id="reference">reference</h2>
 
 
@@ -1896,13 +2139,13 @@
         
         
           
-          <a href="../../Blogs/SleepyPickle/" class="md-footer__link md-footer__link--next" aria-label="Next: SleepyPickle">
+          <a href="../AIsecurity/" class="md-footer__link md-footer__link--next" aria-label="Next: AISecurity">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                SleepyPickle
+                AISecurity
               </div>
             </div>
             <div class="md-footer__button md-icon">

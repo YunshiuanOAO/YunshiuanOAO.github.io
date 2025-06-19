@@ -1,0 +1,5984 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://yunshiuan.com/CyberSecurity/Notes/AIsecurity/">
+      
+      
+        <link rel="prev" href="../BlueTeamTools/">
+      
+      
+        <link rel="next" href="../../Blogs/SleepyPickle/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>AISecurity - yunshiaun.docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ai-security" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="yunshiaun.docs" class="md-header__button md-logo" aria-label="yunshiaun.docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9V320c0 28.4-10.8 57.7-22.3 80.8-6.5 13-13.9 25.8-22.5 37.6-3.2 4.3-4.1 9.9-2.3 15s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7.3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7-3.2-14.2-7.5-28.7-13.5-42v-24.6c0-30.2 10.2-58.7 27.9-81.5 12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5.8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1l280.6-101c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1M128 408c0 35.3 86 72 192 72s192-36.7 192-72l-15.3-145.4L354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6l-142.2-51.4z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            yunshiaun.docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AISecurity
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../CompetitiveProgram/Tree/" class="md-tabs__link">
+          
+  
+    
+  
+  Competitive Program
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Writeups/picoCTF-Problems/" class="md-tabs__link">
+          
+  
+    
+  
+  Cyber Security
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Web/FRIST-HTML/" class="md-tabs__link">
+          
+  
+    
+  
+  Web
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Certificate/%E9%9B%BB%E8%85%A6%E8%BB%9F%E9%AB%94%E6%87%89%E7%94%A8%E4%B8%99%E7%B4%9A%E9%A1%8C%E7%B5%84/" class="md-tabs__link">
+          
+  
+    
+  
+  Certificate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../AI/NTUGenAINote/" class="md-tabs__link">
+          
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="yunshiaun.docs" class="md-nav__button md-logo" aria-label="yunshiaun.docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9V320c0 28.4-10.8 57.7-22.3 80.8-6.5 13-13.9 25.8-22.5 37.6-3.2 4.3-4.1 9.9-2.3 15s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7.3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7-3.2-14.2-7.5-28.7-13.5-42v-24.6c0-30.2 10.2-58.7 27.9-81.5 12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5.8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1l280.6-101c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1c-7.6-2.7-15.6-4.1-23.7-4.1M128 408c0 35.3 86 72 192 72s192-36.7 192-72l-15.3-145.4L354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6l-142.2-51.4z"/></svg>
+
+    </a>
+    yunshiaun.docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Competitive Program
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Competitive Program
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    DataStruct
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DataStruct
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/BIT-%E6%A8%B9%E7%8B%80%E6%95%B8%E7%B5%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIT 樹狀數組
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E5%9C%96%E8%AB%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    圖論
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Disjoint-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disjoint-set 並查集 
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hashing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/Heap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Heap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Algorithm
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Algorithm
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E6%89%BE%E5%87%BA%E5%9B%A0%E6%95%B8nlogn-x%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    nlogn-x 找因數
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E9%9B%A2%E6%95%A3%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    離散化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CompetitiveProgram/%E5%8B%95%E6%85%8B%E8%A6%8F%E5%8A%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 動態規劃
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cyber Security
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cyber Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Writeups/picoCTF-Problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PicoCTF-Problems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Writeups/Reversing-kr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reverse.kr
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Notes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pwn.note/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pwn
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BlueTeamTools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BlueTeamTools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AISecurity
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AISecurity
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#poision-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☠️ Poision Attack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="☠️ Poision Attack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backdoor-poision-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backdoor Poision Attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clean-label-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clean-Label Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigations-and-defenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigations and Defenses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anomaly-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anomaly Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robustness-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Robustness Statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#another-denfenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Another Denfenses
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-tampering" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✍️ Model Tampering
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✍️ Model Tampering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pickle-serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pickle Serialization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lambda-layer-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lambda Layer Attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trojan-horses-with-custom-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trojan Horses with Custom Layers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural-payload-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Neural Payload Injection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-ai-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edge AI attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-hijacking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Hijacking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supply-chain-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⛓️‍💥 Supply Chain Risks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⛓️‍💥 Supply Chain Risks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evasion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧂 Evasion Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧂 Evasion Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defending-against-evasion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defending Against Evasion Attacks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚪 Privacy Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚪 Privacy Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-extraction-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Extraction Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Extraction Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functionally-equivalent-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functionally Equivalent Extraction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning-Based Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Learning-Based Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#copycat-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      Copycat CNN
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#knockoff-nets" class="md-nav__link">
+    <span class="md-ellipsis">
+      KnockOff Nets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generative-student-teacher-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generative Student-Teacher Learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defending-against-model-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defending Against Model Extraction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defending Against Model Extraction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      偵測措施
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      模型所有權識別
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-inversion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Inversion Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Inversion Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miface-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      MIFace Attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gan-assisted-model-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      GAN-Assisted Model Inversion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      先進模型逆向技術
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inference Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#membership-inference-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Membership Inference Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shadow-model-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shadow Model Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistical-threshold-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistical Threshold Method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#label-only-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Label-Only Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#white-box-membership-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      White Box Membership Inference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributeproperty-inference-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute/Property Inference Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attribute/Property Inference Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-classifier-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Meta-Classifier Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poisoning-assisted-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poisoning-Assisted Inference
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subpopulation-inference-attack-with-poisoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subpopulation iNference Attack with Poisoning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-attacks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy Attacks 防禦策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy Attacks 防禦策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      深度防禦策略
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      法規考量
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="法規考量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      風險評估框架
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-preserving-ai-defense-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Privacy-Preserving AI &amp; Defense Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 Privacy-Preserving AI & Defense Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      法規合規要求
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="法規合規要求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gdpr" class="md-nav__link">
+    <span class="md-ellipsis">
+      GDPR 合規
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      隱私-效用權衡
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛡️ 隱私攻擊防禦策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛡️ 隱私攻擊防禦策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      多層防禦架構
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      針對性防禦策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="針對性防禦策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Extraction 防禦
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Inversion 防禦
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#membership-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Membership Inference 防禦
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Property Inference 防禦
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      監控和偵測系統
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="監控和偵測系統">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      查詢模式分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      視覺化監控
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      行為基線建立
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 數據層隱私保護
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 數據層隱私保護">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      基礎匿名化技術
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基礎匿名化技術">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      簡單匿名化的挑戰
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 高級匿名化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="K-Anonymity 高級匿名化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      屬性分類
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 實現流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      實現方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 評估指標
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 攻擊方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      匿名化工具
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      地理位置數據挑戰
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="地理位置數據挑戰">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      主要風險
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      地理位置匿名化技術
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      富媒體匿名化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="富媒體匿名化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      影像匿名化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      音訊和視訊匿名化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differential-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎲 差分隱私 (Differential Privacy)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎲 差分隱私 (Differential Privacy)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本定義
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      \((ε)\)-差分隱私
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      \((ε, δ)\)-差分隱私
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      敏感度 (Sensitivity)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      雜訊分佈
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="雜訊分佈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      拉普拉斯雜訊 (用於 \(ε\)-DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-dp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      高斯雜訊 (用於 \((ε,δ)\)-DP)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      差分隱私實現層級
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      差分隱私框架
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#federated-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 聯邦學習 (Federated Learning)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌐 聯邦學習 (Federated Learning)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習類型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="聯邦學習類型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      伺服器編排聯邦學習
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      去中心化聯邦學習
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習優缺點
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習威脅模型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#split-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Split Learning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Split Learning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#split-learning_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Split Learning 流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split-learning-vs-federated-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Split Learning vs Federated Learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-multiparty-computation-smpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 安全多方計算 (Secure Multiparty Computation, SMPC)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤝 安全多方計算 (Secure Multiparty Computation, SMPC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMPC 基本原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yaos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Yao's 百萬富翁問題
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      安全多方求和
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smpc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMPC 在機器學習中的應用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#homomorphic-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 同態加密 (Homomorphic Encryption)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔒 同態加密 (Homomorphic Encryption)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      同態性定義
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      同態加密類型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      部分同態加密範例
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="部分同態加密範例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elgamal" class="md-nav__link">
+    <span class="md-ellipsis">
+      ElGamal 方案 (乘法同態)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paillier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paillier 方案 (加法同態)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      完全同態加密
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="完全同態加密">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bgv" class="md-nav__link">
+    <span class="md-ellipsis">
+      BGV 方案
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ckks" class="md-nav__link">
+    <span class="md-ellipsis">
+      CKKS 方案
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      同態加密工具
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 隱私保護策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 隱私保護策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      風險和使用案例評估
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      隱私保護技術選擇指南
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Blogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Blogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Blogs/SleepyPickle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SleepyPickle
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Thesis
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Thesis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Thesis/A%20Lightweight%20Privacy-Preserving%20Authentication%20Protocl%20for%20VANETs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A Lightweight Privacy-Preserving Authentication Protocl for VANETs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Web
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Web
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/FRIST-HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Html
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/CSS-%E7%AD%86%E8%A8%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/FIRST-Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    database
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/%E5%88%A9%E7%94%A8Hexo-%E5%89%B5%E5%BB%BAGithub-Pages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hexo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Certificate
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Certificate
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Certificate/%E9%9B%BB%E8%85%A6%E8%BB%9F%E9%AB%94%E6%87%89%E7%94%A8%E4%B8%99%E7%B4%9A%E9%A1%8C%E7%B5%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    電腦軟體應用丙級
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Certificate/IPAS%E8%B3%87%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%B8%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IPAS資安工程師
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../AI/NTUGenAINote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GenAI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#poision-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☠️ Poision Attack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="☠️ Poision Attack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backdoor-poision-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backdoor Poision Attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clean-label-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clean-Label Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigations-and-defenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigations and Defenses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anomaly-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anomaly Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robustness-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Robustness Statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#another-denfenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Another Denfenses
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-tampering" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✍️ Model Tampering
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✍️ Model Tampering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pickle-serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pickle Serialization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lambda-layer-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lambda Layer Attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trojan-horses-with-custom-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trojan Horses with Custom Layers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural-payload-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Neural Payload Injection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-ai-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edge AI attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-hijacking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Hijacking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supply-chain-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⛓️‍💥 Supply Chain Risks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⛓️‍💥 Supply Chain Risks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evasion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧂 Evasion Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧂 Evasion Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defending-against-evasion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defending Against Evasion Attacks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚪 Privacy Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚪 Privacy Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-extraction-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Extraction Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Extraction Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functionally-equivalent-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functionally Equivalent Extraction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning-Based Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Learning-Based Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#copycat-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      Copycat CNN
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#knockoff-nets" class="md-nav__link">
+    <span class="md-ellipsis">
+      KnockOff Nets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generative-student-teacher-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generative Student-Teacher Learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defending-against-model-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defending Against Model Extraction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defending Against Model Extraction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      偵測措施
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      模型所有權識別
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-inversion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Inversion Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Inversion Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miface-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      MIFace Attack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gan-assisted-model-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      GAN-Assisted Model Inversion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      先進模型逆向技術
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inference Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#membership-inference-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Membership Inference Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shadow-model-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shadow Model Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistical-threshold-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistical Threshold Method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#label-only-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Label-Only Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#white-box-membership-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      White Box Membership Inference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributeproperty-inference-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute/Property Inference Attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attribute/Property Inference Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-classifier-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Meta-Classifier Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poisoning-assisted-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poisoning-Assisted Inference
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subpopulation-inference-attack-with-poisoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subpopulation iNference Attack with Poisoning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-attacks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy Attacks 防禦策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy Attacks 防禦策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      深度防禦策略
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      法規考量
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="法規考量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      風險評估框架
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-preserving-ai-defense-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Privacy-Preserving AI &amp; Defense Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 Privacy-Preserving AI & Defense Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      法規合規要求
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="法規合規要求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gdpr" class="md-nav__link">
+    <span class="md-ellipsis">
+      GDPR 合規
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      隱私-效用權衡
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛡️ 隱私攻擊防禦策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛡️ 隱私攻擊防禦策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      多層防禦架構
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      針對性防禦策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="針對性防禦策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Extraction 防禦
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Inversion 防禦
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#membership-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Membership Inference 防禦
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Property Inference 防禦
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      監控和偵測系統
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="監控和偵測系統">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      查詢模式分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      視覺化監控
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      行為基線建立
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 數據層隱私保護
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 數據層隱私保護">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      基礎匿名化技術
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基礎匿名化技術">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      簡單匿名化的挑戰
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 高級匿名化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="K-Anonymity 高級匿名化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      屬性分類
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 實現流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      實現方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 評估指標
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-anonymity_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      K-Anonymity 攻擊方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      匿名化工具
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      地理位置數據挑戰
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="地理位置數據挑戰">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      主要風險
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      地理位置匿名化技術
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      富媒體匿名化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="富媒體匿名化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      影像匿名化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      音訊和視訊匿名化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differential-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎲 差分隱私 (Differential Privacy)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎲 差分隱私 (Differential Privacy)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本定義
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      \((ε)\)-差分隱私
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      \((ε, δ)\)-差分隱私
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      敏感度 (Sensitivity)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      雜訊分佈
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="雜訊分佈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      拉普拉斯雜訊 (用於 \(ε\)-DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-dp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      高斯雜訊 (用於 \((ε,δ)\)-DP)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      差分隱私實現層級
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      差分隱私框架
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#federated-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 聯邦學習 (Federated Learning)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌐 聯邦學習 (Federated Learning)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習類型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="聯邦學習類型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      伺服器編排聯邦學習
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      去中心化聯邦學習
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習優缺點
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      聯邦學習威脅模型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#split-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Split Learning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Split Learning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#split-learning_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Split Learning 流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split-learning-vs-federated-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Split Learning vs Federated Learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-multiparty-computation-smpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 安全多方計算 (Secure Multiparty Computation, SMPC)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤝 安全多方計算 (Secure Multiparty Computation, SMPC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMPC 基本原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yaos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Yao's 百萬富翁問題
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      安全多方求和
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smpc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMPC 在機器學習中的應用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#homomorphic-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 同態加密 (Homomorphic Encryption)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔒 同態加密 (Homomorphic Encryption)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      同態性定義
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      同態加密類型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      部分同態加密範例
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="部分同態加密範例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elgamal" class="md-nav__link">
+    <span class="md-ellipsis">
+      ElGamal 方案 (乘法同態)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paillier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paillier 方案 (加法同態)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      完全同態加密
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="完全同態加密">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bgv" class="md-nav__link">
+    <span class="md-ellipsis">
+      BGV 方案
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ckks" class="md-nav__link">
+    <span class="md-ellipsis">
+      CKKS 方案
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      同態加密工具
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 隱私保護策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 隱私保護策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      風險和使用案例評估
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      隱私保護技術選擇指南
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ai-security">AI Security</h1>
+<h2 id="poision-attack">☠️ Poision Attack</h2>
+<p>透過下毒攻擊可以達到</p>
+<ul>
+<li>降低模型整體準確度</li>
+<li>對模型的特定輸出造成偏差</li>
+<li>塞後門導致攻擊者可以操宗模型</li>
+</ul>
+<p>分兩種攻擊手法</p>
+<ul>
+<li>
+<p>Data Poision : 對資料進行操縱</p>
+</li>
+<li>
+<p>Model Poision : 對模型參數進行操縱</p>
+</li>
+</ul>
+<p>分兩種攻擊結果</p>
+<ul>
+<li>
+<p>untargeted attack : 無差別攻擊達成降低模型效能</p>
+</li>
+<li>
+<p>targeted attack : 操縱模型的特定輸出，對整題模型效能不受影響</p>
+</li>
+</ul>
+<p>分兩種攻擊方式</p>
+<ul>
+<li>
+<p>Clean-Label Attacks : 注入惡意資料但不改變其標籤，讓攻擊更難被偵測</p>
+</li>
+<li>
+<p>Backdoor Attacks : 插入觸發條件，使模型在特定輸入下產生錯誤分類，同時在正常資料上維持高準確度</p>
+</li>
+</ul>
+<h3 id="backdoor-poision-attack">Backdoor Poision Attack</h3>
+<p>攻擊者在訓練資料中加入特定的圖樣（稱為觸發器，trigger），讓模型學會將這個圖樣與某個特定類別建立關聯，在推論過程中任何輸入只要含有這個圖樣，模型就會依照攻擊者的設定輸出指定的分類結果</p>
+<p><img alt="123" src="../AIsecurityPhotos/image.png" /></p>
+<p>創建trigger有以下三種方式</p>
+<ul>
+<li>
+<p>Single pixel</p>
+<p>在圖片右下角塞一個像素x</p>
+<p>期望達到隱蔽性</p>
+</li>
+<li>
+<p>Checkboard-like pattern</p>
+<p>具備隱蔽性與穩定性</p>
+<p>對於塞單一像素太過脆弱的場景比較有效</p>
+<p>在圖片中塞入多個像素組成的小圖案</p>
+</li>
+<li>
+<p>Configurable image insert</p>
+<p>將外部圖片作為觸發器嵌入進圖片中</p>
+</li>
+</ul>
+<p>還有一種<a href="https://github.com/UMBCvision/Hidden-Trigger-Backdoor-Attacks">Hidden-Trigger-Backdoor-Attacks</a></p>
+<h3 id="clean-label-attacks">Clean-Label Attacks</h3>
+<p>肉眼看起來圖片與標籤對的上，但是訓練階段時會使模型中毒</p>
+<h3 id="mitigations-and-defenses">Mitigations and Defenses</h3>
+<p>傳統資安技術提供了一些可以用來緩解資料中毒攻擊的方法，包括：</p>
+<ul>
+<li>
+<p>最小權限原則（least-privilege access）</p>
+</li>
+<li>
+<p>資料加密（encryption）</p>
+</li>
+<li>
+<p>資料雜湊與簽章（data hashing 或 signing）</p>
+</li>
+</ul>
+<p>透過結合傳統資安措施與 MLOps 所提供的自動化工具與控管功能，可以強化防禦效果：</p>
+<ul>
+<li>資料版本控管與來源追蹤（Data versioning and lineage tracking）</li>
+<li>持續性的資料驗證與完整性檢查（Continuous data validation with integrity checks）</li>
+<li>模型版本控管與修改紀錄追蹤（Model versioning and change tracking）</li>
+<li>即時效能監控（Real-time performance monitoring）</li>
+<li>對資料與模型實施細緻的存取控制（Granular access control for data and models）</li>
+<li>使用模型可解釋性工具（Model interpretability tools）</li>
+<li>完整的紀錄與警示系統（Comprehensive logging and alerting）</li>
+<li>管理與協作控管機制（Governance and collaboration controls）</li>
+</ul>
+<h3 id="anomaly-detection">Anomaly Detection</h3>
+<p>找出中毒的資料</p>
+<ul>
+<li>
+<p>統計方法（Statistical methods）</p>
+<p>使用平均值與標準差等統計量來偵測偏離的資料點</p>
+<p>ex : Z-score（衡量資料點距離平均值幾個標準差）</p>
+</li>
+<li>
+<p>分群法（Clustering-based methods）</p>
+<p>ex : K-means，將相似資料點分為同一群組。中毒樣本可能會被分入異常群組</p>
+</li>
+<li>
+<p>神經網路方法（Neural networks）</p>
+<p>特別是自編碼器（autoencoders）：訓練模型去重建輸入資料</p>
+<p>若某筆資料的重建誤差很高，可能是異常</p>
+</li>
+<li>
+<p>密度型方法（Density-based methods）</p>
+<p>ex : DBSCAN，透過分析資料點密度判定是否為異常</p>
+</li>
+</ul>
+<h3 id="robustness-statistics">Robustness Statistics</h3>
+<p>希望模型對中毒的資料有的資料有抵抗能力</p>
+<h3 id="another-denfenses">Another Denfenses</h3>
+<ul>
+<li>
+<p>Activation defenses：</p>
+<p>分析神經網路內部的激活行為，偵測異常模式以判斷是否存在中毒資料。</p>
+</li>
+<li>
+<p>Data provenance：</p>
+<p>驗證資料來源，確保訓練資料來自可信且已驗證的來源。</p>
+</li>
+<li>
+<p>RONI, Reject On Negative Impact：</p>
+<p>偵測並移除對模型表現造成負面影響的訓練資料點。</p>
+</li>
+<li>
+<p>Spectral signature defenses：</p>
+<p>在像是<strong>頻率空間（transformed domains）</strong>中識別偏離正常範圍的資料點，進而偵測中毒攻擊。</p>
+</li>
+</ul>
+<h2 id="model-tampering">✍️ Model Tampering</h2>
+<p>透過修改模型達成惡意行為，如：植入後門</p>
+<h3 id="pickle-serialization">Pickle Serialization</h3>
+<p>利用Pickle反序列化的漏洞對模型進行串改</p>
+<h3 id="lambda-layer-attack">Lambda Layer Attack</h3>
+<p>攻擊者可以選擇繞過模型格式的限制，實作一種不受特定模型格式影響的攻擊手法。</p>
+<p>這類攻擊會利用模型開發框架所提供的<strong>可擴充 API（extensibility APIs）</strong>來實現。</p>
+<p>在 Keras 中，<strong>Lambda 層（Lambda Layer）</strong>允許你快速實作想在層輸出上執行的操作或函式，
+而不需要額外定義一個新的自訂層。</p>
+<p>例如可以使用 Lambda 層進行：</p>
+<ul>
+<li>
+<p>自訂的激活函數（custom activation functions）</p>
+</li>
+<li>
+<p>正規化處理（normalization）</p>
+</li>
+<li>
+<p>縮放轉換（scaling transformations）</p>
+</li>
+</ul>
+<p>這種方便性也讓 Lambda 層容易被用來植入隱蔽的惡意操作，成為特洛伊木馬攻擊的載體。</p>
+<h3 id="trojan-horses-with-custom-layers">Trojan Horses with Custom Layers</h3>
+<p>自訂層（Custom Layers）可以將操作封裝在清楚定義的結構中，便於與神經網路整合。
+相較於 Lambda 層，自訂層具備以下優勢：</p>
+<ul>
+<li>
+<p>可在多種機器學習框架中使用</p>
+</li>
+<li>
+<p>避免 Lambda 層的序列化問題</p>
+</li>
+<li>
+<p>可隱藏在不同的檔案中</p>
+</li>
+<li>
+<p>可透過看似無害的 import 指令載入</p>
+</li>
+</ul>
+<p>在 Keras / TensorFlow 中，自訂層需實作以下方法：</p>
+<ul>
+<li>
+<p><code>__init__()</code>：建立層實體時呼叫</p>
+</li>
+<li>
+<p><code>build()</code>：定義權重或取得輸入形狀</p>
+</li>
+<li>
+<p><code>call()</code>：核心功能與前向傳遞邏輯的實作所在</p>
+</li>
+</ul>
+<p>攻擊者通常會在 call() 方法中植入惡意程式碼，讓其在推論時執行。</p>
+<h3 id="neural-payload-injection">Neural Payload Injection</h3>
+<p><a href="https://arxiv.org/abs/2101.06896">paper</a></p>
+<p><a href="https://ch3nye.top/Note-DeepPayload-Black-box-Backdoor-Attack-on-Deep-Learning-Models-through-Neural-Payload-Injection/">paper中文翻譯</a></p>
+<p>利用預先訓練的次要神經網路來進行攻擊
+攻擊者會在目標模型中植入：</p>
+<ul>
+<li>
+<p>Trigger detector：一個預先訓練的神經網路，用來識別特定的觸發圖樣</p>
+</li>
+<li>
+<p>Conditional compute module：根據觸發結果修改模型輸出的神經操作</p>
+</li>
+<li>
+<p>Payload injection mechanism：將惡意組件嵌入原始模型中資料流圖的方法</p>
+</li>
+</ul>
+<p>此方式在Edge AI 中非常有效</p>
+<p><img alt="Neural Payload Injection" src="../AIsecurityPhotos/Neural%20Payload%20Injection.png" /></p>
+<h3 id="edge-ai-attack">Edge AI attack</h3>
+<p>竄改已部署的手機端模型（如 <code>.tflite</code> 模型）</p>
+<h3 id="model-hijacking">Model Hijacking</h3>
+<p>透過添加寄生功能，使模型執行與原始設計目標不同的任務。</p>
+<ul>
+<li>
+<p>特洛伊木馬注入（Trojan Horse Injection）</p>
+<p>在不影響主要功能的前提下，添加隱藏的寄生功能</p>
+</li>
+<li>
+<p>模型重編程（Model Reprogramming）</p>
+<p>對模型進行重新訓練，使其擁有潛藏的惡意行為功能</p>
+</li>
+<li>
+<p>指揮與控制（Command &amp; Control, C2）</p>
+<p>建立模型與攻擊者基礎設施之間的隱密通訊管道</p>
+</li>
+<li>
+<p>資源濫用（Resource Abuse）</p>
+<p>利用模型所在的運算資源進行未授權的用途（如挖礦、DDoS、側通道分析等）</p>
+</li>
+</ul>
+<h3 id="summary">Summary</h3>
+<table>
+<thead>
+<tr>
+<th>攻擊向量</th>
+<th>實作方式</th>
+<th>關鍵防禦措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pickle Serialization</strong></td>
+<td>利用序列化機制注入惡意程式碼</td>
+<td>完整性驗證、改用安全格式</td>
+</tr>
+<tr>
+<td><strong>Lambda layer</strong></td>
+<td>濫用模型的可擴充功能（如 Keras Lambda）</td>
+<td>程式碼審查、架構驗證</td>
+</tr>
+<tr>
+<td><strong>Custom Layers</strong></td>
+<td>建立特殊的惡意層，隱藏後門邏輯</td>
+<td>層級管理政策、偵測控制</td>
+</tr>
+<tr>
+<td><strong>Neural Payloads</strong></td>
+<td>注入預訓練的觸發偵測神經網路</td>
+<td>拓樸分析、完整性驗證</td>
+</tr>
+<tr>
+<td><strong>Edge AI attack</strong></td>
+<td>竄改已部署的手機端模型（如 <code>.tflite</code> 模型）</td>
+<td>模型加密、可信執行環境（TEE）、遠端認證</td>
+</tr>
+<tr>
+<td><strong>Model Hijacking</strong></td>
+<td>將模型重新用途為惡意操作，例如偽裝或竄改輸出結果</td>
+<td>執行時監控、網路存取控制</td>
+</tr>
+</tbody>
+</table>
+<h2 id="supply-chain-risks">⛓️‍💥 Supply Chain Risks</h2>
+<p>在傳統軟體開發中，供應鏈漏洞已經是眾所皆知的風險來源，AI 的風險更加複雜，因為它依賴於即時資料與預訓練模型</p>
+<p>潛在漏洞元件：</p>
+<ul>
+<li>
+<p>過時的函式庫與框架：可能造成未授權資料存取、系統錯誤、甚至法律問題</p>
+</li>
+<li>
+<p>即時資料存取需求：AI 開發需要接觸敏感資料，增加曝險風險</p>
+</li>
+</ul>
+<p>緩解策略：</p>
+<ul>
+<li>
+<p>建立私有套件倉庫</p>
+</li>
+<li>
+<p>對元件執行漏洞掃描</p>
+</li>
+<li>
+<p>使用SBOM（軟體物料清單）</p>
+</li>
+</ul>
+<p>風險來源：</p>
+<ul>
+<li>
+<p>開源平台（GitHub、Kaggle、TensorFlow Hub、Hugging Face）讓預訓練模型與資料集普及</p>
+<p>但這些資源可能包含：</p>
+<ul>
+<li>
+<p>惡意程式碼（Malware）</p>
+</li>
+<li>
+<p>資料與模型中毒（Poisoning）</p>
+</li>
+<li>
+<p>法規或授權問題（Compliance）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="summary_1">Summary</h3>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>風險項目／攻擊手法</th>
+<th>說明</th>
+<th>對應防禦措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>開發元件漏洞</td>
+<td>過時或有漏洞的第三方元件</td>
+<td>套件如 Redis、Struts 若未更新會導致資料洩漏與系統風險</td>
+<td>漏洞掃描（Trivy、Snyk、Grype）、私有套件倉庫、SBOM、信任來源</td>
+</tr>
+<tr>
+<td>即時資料曝險</td>
+<td>AI 開發需存取大量敏感資料</td>
+<td>特徵工程與模型訓練需用真實資料，易成攻擊目標</td>
+<td>僅限開發人員存取、生產級加密與 RBAC、開發環境強化</td>
+</tr>
+<tr>
+<td>模型中毒</td>
+<td>預訓練模型被植入後門</td>
+<td>模型中藏有觸發器，遇特定輸入即產生錯誤行為</td>
+<td>模型掃描（ModelScan）、來源驗證、完整性校驗、啟動分析、對抗性測試</td>
+</tr>
+<tr>
+<td>資料中毒</td>
+<td>使用含惡意樣本的公開資料集</td>
+<td>加入偏見詞、觸發字，影響模型判斷</td>
+<td>詞頻/特徵分析、異常偵測（IsolationForest）、資料來源追蹤、手動抽查</td>
+</tr>
+<tr>
+<td>模型篡改</td>
+<td>Pickle／Lambda／自訂層注入惡意邏輯</td>
+<td>於模型中隱藏惡意行為，常見於 PyTorch pickle 或 Lambda 層</td>
+<td>safetensors 格式、禁止 Pickle、架構驗證、程式碼審查、YARA 規則掃描</td>
+</tr>
+<tr>
+<td>供應鏈滲透</td>
+<td>GitHub、Hugging Face 等平台分發中毒模型</td>
+<td>模型以轉移學習擴散至多應用，放大攻擊影響力</td>
+<td>僅使用經審核模型、建立模型白名單、下載來源驗證、版本追蹤</td>
+</tr>
+<tr>
+<td>模型治理缺失</td>
+<td>缺乏模型版本管理與審核流程</td>
+<td>模型修改、來源無記錄，難以稽核與驗證</td>
+<td>MLOps 工具（如 MLflow）、Model Registry、權限控管與審計紀錄</td>
+</tr>
+<tr>
+<td>SBOM 缺失</td>
+<td>缺乏模型與元件組成透明度</td>
+<td>無法快速查明漏洞影響範圍</td>
+<td>建立 SBOM（使用 Trivy、Snyk、Dependency-Track）、簽章驗證、政策稽核</td>
+</tr>
+<tr>
+<td>邊緣 AI 攻擊</td>
+<td>手機／IoT 裝置部署模型被替換或竄改</td>
+<td>攻擊者替換 <code>.tflite</code> 模型後重新封包發佈</td>
+<td>模型加密、TEE（可信執行環境）、遠端 attestation、完整性雜湊校驗</td>
+</tr>
+<tr>
+<td>社交工程與偽冒</td>
+<td>假冒帳號／虛構說明上傳中毒模型</td>
+<td>使用者誤信虛假模型說明並下載使用</td>
+<td>強化 Hugging Face 帳號管理、來源核實、自動化內容驗證</td>
+</tr>
+</tbody>
+</table>
+<h2 id="evasion-attacks">🧂 Evasion Attacks</h2>
+<p>攻擊者不需接觸模型開發流程，透過輸入端進行操控或在推論階段對輸入資料進行微幅變動，使模型產生錯誤預測</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>特點</th>
+<th>運作方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FGSM (Fast Gradient Sign Method)</td>
+<td>快速、簡單</td>
+<td>根據 loss 的梯度方向對輸入做一次性修改</td>
+</tr>
+<tr>
+<td>BIM (Basic Iterative Method)</td>
+<td>多次小修改</td>
+<td>是 FGSM 的疊代版，每次進行小幅度修改，更難偵測</td>
+</tr>
+<tr>
+<td>JSMA (Jacobian-based Saliency Map Attack)</td>
+<td>精準修改</td>
+<td>利用 Jacobian 矩陣找出影響最大的特徵點進行修改</td>
+</tr>
+<tr>
+<td>C&amp;W (Carlini &amp; Wagner Attack)</td>
+<td>最小擾動</td>
+<td>透過優化演算法求出最小的擾動量以達到定向錯誤分類</td>
+</tr>
+<tr>
+<td>PGD (Projected Gradient Descent)</td>
+<td>強化 BIM</td>
+<td>多次小擾動，有隨機起始點與多種範數選擇（<span class="arithmatex">\(L₁, L₂, L∞\)</span>）</td>
+</tr>
+<tr>
+<td>對抗貼圖（Adversarial Patch）</td>
+<td>可見、物理可用</td>
+<td>製作明顯圖樣貼在物體上來欺騙辨識系統，如交通標誌或臉部遮蔽</td>
+</tr>
+<tr>
+<td>通用對抗擾動（UAP）</td>
+<td>可跨模型</td>
+<td>一次生成的擾動可用於多個模型，針對共有弱點</td>
+</tr>
+<tr>
+<td>黑箱轉移攻擊（Black-box Transfer Attack）</td>
+<td>無模型存取權</td>
+<td>利用代理模型訓練出對抗樣本並轉移到目標模型進行攻擊</td>
+</tr>
+</tbody>
+</table>
+<h3 id="defending-against-evasion-attacks">Defending Against Evasion Attacks</h3>
+<p>Adversarial Training</p>
+<p>Input Preprocessing Defenses</p>
+<p>ART Preprocessing Defenses</p>
+<h2 id="privacy-attacks">🚪 Privacy Attacks</h2>
+<p>隱私攻擊針對機器學習模型中的敏感資訊進行窃取或推斷</p>
+<table>
+<thead>
+<tr>
+<th>攻擊類型</th>
+<th>目標</th>
+<th>主要風險</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Model Extraction</strong></td>
+<td>複製模型功能</td>
+<td>智慧財產權竊取、未授權複製專有模型</td>
+</tr>
+<tr>
+<td><strong>Model Inversion</strong></td>
+<td>重建訓練資料</td>
+<td>敏感資料洩露，特別是醫療、金融領域</td>
+</tr>
+<tr>
+<td><strong>Inference Attacks</strong></td>
+<td>推斷資料特性</td>
+<td>隱私侵犯，確定特定資料是否用於訓練</td>
+</tr>
+</tbody>
+</table>
+<h3 id="model-extraction-attacks">Model Extraction Attacks</h3>
+<p>模型萃取攻擊透過觀察和模仿模型的輸出回應來複製機器學習模型的功能。攻擊者使用基於查詢的迭代方法，反覆向目標 AI 模型發送精心選擇的輸入。</p>
+<h4 id="functionally-equivalent-extraction">Functionally Equivalent Extraction</h4>
+<p><strong>目標</strong>：透過計算權重和偏差來達成最大保真度，試圖透過解決複雜數學方程式來創建模型的相同副本。</p>
+<p><strong>步驟</strong>：</p>
+<ol>
+<li>
+<p><strong>觀察模型輸出</strong>：用選定的輸入查詢目標並記錄原始輸出值（logits）</p>
+</li>
+<li>
+<p><strong>分割輸入</strong>：將輸入分割為 ReLU 單元具有相同符號的區域</p>
+</li>
+<li>
+<p><strong>計算參數</strong>：使用線性方程式和額外查詢來確定權重和偏差</p>
+</li>
+</ol>
+<p><strong>限制</strong>：</p>
+<ul>
+<li>
+<p>計算複雜度隨模型架構複雜度呈指數增長</p>
+</li>
+<li>
+<p>主要針對已知啟動函數和層結構的簡單架構</p>
+</li>
+<li>
+<p>受限於 ReLU 啟動函數的特性</p>
+</li>
+</ul>
+<h4 id="learning-based-methods">Learning-Based Methods</h4>
+<p><strong>特點</strong>：黑箱攻擊，旨在找到捕獲目標模型決策邊界的代表性資料，然後訓練提取的模型來逼近目標。</p>
+<h5 id="copycat-cnn">Copycat CNN</h5>
+<ul>
+<li>
+<p>訓練提取的神經網路來複製目標模型的行為</p>
+</li>
+<li>
+<p>成功案例：對 Microsoft Azure Emotion API 達到 97.3% 的效能提取</p>
+</li>
+<li>
+<p><strong>關鍵步驟</strong>：</p>
+<ul>
+<li>
+<p>用同域的隨機未標記資料查詢目標網路</p>
+</li>
+<li>
+<p>收集預測作為標籤</p>
+</li>
+<li>
+<p>透過隨機複製或移除達到每類別的影像平衡</p>
+</li>
+<li>
+<p>使用相同架構訓練 copycat 網路</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="knockoff-nets">KnockOff Nets</h5>
+<p>更精密的資料採樣和模型訓練方法：</p>
+<ul>
+<li>
+<p><strong>跨域轉移</strong>：可使用與目標模型域不同分佈的影像</p>
+</li>
+<li>
+<p><strong>強化學習</strong>：可採用 RL 代理選擇最有資訊性的影像進行查詢</p>
+</li>
+<li>
+<p><strong>架構自由度</strong>：攻擊者可為 knockoff 模型使用任何架構</p>
+</li>
+<li>
+<p>已成功對商業臉部分析系統進行實證</p>
+</li>
+</ul>
+<h4 id="generative-student-teacher-learning">Generative Student-Teacher Learning</h4>
+<p>基於知識蒸餾原理，使用生成技術為查詢受害模型創建對抗樣本。</p>
+<p><strong>變化方式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>特點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data-Free Model Extraction</strong></td>
+<td>生成器輸入隨機雜訊並輸出類似原始資料分佈的影像</td>
+<td>使用受害者和學生模型之間的 1-norm 損失</td>
+</tr>
+<tr>
+<td><strong>Zero-shot Knowledge Transfer</strong></td>
+<td>使用前向 Kullback-Leibler 散度損失函數</td>
+<td>增加注意力轉移機制</td>
+</tr>
+<tr>
+<td><strong>TandemGAN</strong></td>
+<td>使用兩個協同工作的神經網路</td>
+<td>探索網路創建代碼，開發網路轉換為合成查詢</td>
+</tr>
+</tbody>
+</table>
+<h3 id="defending-against-model-extraction">Defending Against Model Extraction</h3>
+<p><strong>1. 對抗偵察</strong></p>
+<ul>
+<li>
+<p>實施嚴格的資訊控制政策</p>
+</li>
+<li>
+<p>控制錯誤訊息揭露的模型實施資訊</p>
+</li>
+<li>
+<p>使用 argmax 模型輸出而非機率值</p>
+</li>
+<li>
+<p>監控探測模式以偵測資訊收集</p>
+</li>
+</ul>
+<p><strong>2. 系統安全</strong></p>
+<ul>
+<li>
+<p>嚴格的模型治理與 MLOps</p>
+</li>
+<li>
+<p>最小權限存取原則</p>
+</li>
+<li>
+<p>閘道 API 模式（隔離推論 API）</p>
+</li>
+</ul>
+<p><strong>3. API 安全</strong></p>
+<ul>
+<li>
+<p>強身份驗證（系統對系統和使用者驗證）</p>
+</li>
+<li>
+<p>會話管理（非活動型登出和會話逾時）</p>
+</li>
+<li>
+<p>輸入預處理（在模型前處理輸入）</p>
+</li>
+<li>
+<p>速率限制（限制單一來源的查詢次數）</p>
+</li>
+</ul>
+<p><strong>4. 技術防禦</strong></p>
+<p><strong>輸入預處理範例</strong>（使用 ART）：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">art.defences.preprocessor</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNoise</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># 創建標準差為 0.1 的雜訊生成器</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">noise_generator</span> <span class="o">=</span> <span class="n">GaussianNoise</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># 應用到分類器</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">defended_classifier</span> <span class="o">=</span> <span class="n">KerasClassifier</span><span class="p">(</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">preprocessing_defences</span><span class="o">=</span><span class="p">[</span><span class="n">noise_generator</span><span class="p">]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>輸出擾動範例</strong>：
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">art.defences.postprocessor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReverseSigmoid</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 創建 beta=1.0 的防禦</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">rs</span> <span class="o">=</span> <span class="n">ReverseSigmoid</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># 應用到分類器</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">defended_classifier</span> <span class="o">=</span> <span class="n">KerasClassifier</span><span class="p">(</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">postprocessing_defences</span><span class="o">=</span><span class="p">[</span><span class="n">rs</span><span class="p">]</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">)</span>
+</span></code></pre></div></p>
+<h4 id="_1">偵測措施</h4>
+<p><strong>1. 查詢模式分析</strong>
+- 監控系統存取和利用以偵測異常行為
+- 分析模型查詢模式以識別潛在的萃取嘗試
+- 使用機器學習偵測對抗樣本</p>
+<p><strong>2. 紅隊測試</strong>
+- 對模型進行定期紅隊測試
+- 納入已知萃取攻擊的測試
+- 在模型到達生產環境前自動化測試</p>
+<h4 id="_2">模型所有權識別</h4>
+<p><strong>1. 浮水印技術</strong></p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>方法</th>
+<th>優缺點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>參數浮水印</strong></td>
+<td>添加微妙的權重變化</td>
+<td>簡單有效，但無法承受壓縮或微調</td>
+</tr>
+<tr>
+<td><strong>訓練資料浮水印</strong></td>
+<td>教授模型對特定輸入產生特定模式</td>
+<td>需要找到不影響效能的基準</td>
+</tr>
+<tr>
+<td><strong>後門保護</strong></td>
+<td>創建特定觸發器的後門</td>
+<td>可在公共領域識別提取的模型</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. 獨特模型識別符</strong>
+- 模型的雜湊值或其他指紋
+- 資料集推論：計算訓練資料集中的距離
+- 可轉移的對抗樣本：創建在代理模型中轉移但在獨立訓練模型中不轉移的指紋</p>
+<h3 id="model-inversion-attacks">Model Inversion Attacks</h3>
+<p>試圖從已訓練的模型重建訓練資料，這些攻擊逆轉模型的預測過程以恢復訓練期間使用的敏感資訊。</p>
+<table>
+<thead>
+<tr>
+<th>攻擊類型</th>
+<th>存取權限</th>
+<th>攻擊方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>白箱攻擊</strong></td>
+<td>完整模型存取（架構、權重、可能包括訓練資料）</td>
+<td>精確利用模型內部工作機制</td>
+</tr>
+<tr>
+<td><strong>黑箱攻擊</strong></td>
+<td>僅有輸入-輸出能力</td>
+<td>透過分析不同輸入的輸出來推斷私人資料</td>
+</tr>
+</tbody>
+</table>
+<h4 id="miface-attack">MIFace Attack</h4>
+<p>利用信心分數</p>
+<p><strong>2015年卡內基梅隆大學和威斯康辛大學麥迪遜分校的研究</strong></p>
+<p><strong>攻擊流程</strong>：</p>
+<ol>
+<li>
+<p><strong>餵入隨機影像</strong>：具有隨機像素的樣本影像被餵入分類器，返回帶有信心分數的預測</p>
+</li>
+<li>
+<p><strong>計算梯度</strong>：計算成本函數的梯度，顯示如何改變影像以改善成本函數</p>
+</li>
+<li>
+<p><strong>處理與重複</strong>：處理函數使影像更逼真自然，然後重複步驟直到成本低於閾值</p>
+</li>
+</ol>
+<p><strong>成本函數</strong>：結合模型回應與影像品質的測量</p>
+<h4 id="gan-assisted-model-inversion">GAN-Assisted Model Inversion</h4>
+<p><strong>優勢</strong>：克服單樣本實例攻擊的限制，使用生成對抗網路搜索輸入特徵空間</p>
+<p><strong>流程</strong>：</p>
+<ol>
+<li>
+<p><strong>公共知識蒸餾</strong>：GAN 的生成器產生樣本，判別器使用公共資料集指導創建逼真影像</p>
+</li>
+<li>
+<p><strong>潛在向量創建</strong>：生成器創建捕獲顏色、形狀和紋理等基本特徵的簡化影像表示</p>
+</li>
+<li>
+<p><strong>秘密揭露</strong>：攻擊者使用 GAN 找到最大化目標網路目標標籤機率的潛在向量</p>
+</li>
+<li>
+<p><strong>影像重建</strong>：生成最終高保真重建影像</p>
+</li>
+</ol>
+<h4 id="_3">先進模型逆向技術</h4>
+<p><strong>Knowledge-Enriched Distributional Model Inversion (KE-DMI)</strong></p>
+<ul>
+<li>
+<p>白箱攻擊，透過添加目標模型提供的軟標籤創建逆向專用 GAN</p>
+</li>
+<li>
+<p>嘗試建模模型的私人資料分佈而非搜索單一實例</p>
+</li>
+<li>
+<p>在重建影像方面達到更高準確度和保真度</p>
+</li>
+</ul>
+<p><strong>Variational Model Inversion (VMI)</strong></p>
+<ul>
+<li>
+<p>類似 GMI 但專注於增加推斷訓練資料的多樣性</p>
+</li>
+<li>
+<p>使用 StyleGAN 透過結合多個影像的變化創建風格樣本變化</p>
+</li>
+<li>
+<p>可操縱特定特徵並結合以生成更多樣化的重建</p>
+</li>
+</ul>
+<p><strong>Plug and Play Attacks</strong></p>
+<ul>
+<li>
+<p>使用預訓練 GAN（如 StyleGAN2）而非訓練新的</p>
+</li>
+<li>
+<p>將樣本生成時間從小時縮短到分鐘</p>
+</li>
+<li>
+<p>消除其他方法所需的複雜準備步驟</p>
+</li>
+<li>
+<p>單一預訓練 GAN 可跨不同資料集和模型重用</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>領域</th>
+<th>攻擊目標</th>
+<th>風險</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>醫療保健</strong></td>
+<td>疾病預測模型</td>
+<td>推斷敏感醫療資訊，可能暴露患者資料</td>
+</tr>
+<tr>
+<td><strong>臉部辨識</strong></td>
+<td>人臉分類器</td>
+<td>從姓名和模型信心重建可辨識的人臉影像</td>
+</tr>
+<tr>
+<td><strong>生物辨識系統</strong></td>
+<td>身份驗證系統</td>
+<td>重建指紋或其他生物辨識資料</td>
+</tr>
+<tr>
+<td><strong>調查資料</strong></td>
+<td>生活方式模型</td>
+<td>推斷敏感特徵如婚姻不忠或觀看習慣</td>
+</tr>
+</tbody>
+</table>
+<h3 id="inference-attacks">Inference Attacks</h3>
+<p>推論攻擊旨在從機器學習模型推斷敏感資訊，而無需直接存取其參數或訓練資料。</p>
+<h4 id="membership-inference-attacks">Membership Inference Attacks</h4>
+<p><strong>目標</strong>：判斷特定資料點是否為模型訓練資料集的一部分</p>
+<p>利用模型對訓練資料和非訓練資料的不同反應模式：</p>
+<ul>
+<li>
+<p><strong>過度擬合現象</strong>：模型對訓練資料通常有更高的置信度</p>
+</li>
+<li>
+<p><strong>損失函數差異</strong>：訓練樣本通常有較低的損失值</p>
+</li>
+<li>
+<p><strong>預測分佈差異</strong>：訓練樣本的預測分佈更集中</p>
+</li>
+</ul>
+<h4 id="shadow-model-approach">Shadow Model Approach</h4>
+<ul>
+<li>
+<p>在模擬目標模型訓練資料的合成資料集上訓練多個影子模型</p>
+</li>
+<li>
+<p>使用影子模型的輸出訓練攻擊模型預測輸入的成員資格狀態</p>
+</li>
+<li>
+<p>利用目標模型輸出中的信心水平</p>
+</li>
+</ul>
+<h4 id="statistical-threshold-method">Statistical Threshold Method</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 簡化影子模型方法，消除影子模型訓練</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># 使用參考資料集對目標模型生成查詢</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># 統計評估信心閾值</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">if</span> <span class="n">confidence</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">return</span> <span class="s2">&quot;member&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="k">return</span> <span class="s2">&quot;non-member&quot;</span>
+</span></code></pre></div>
+<h4 id="label-only-attacks">Label-Only Attacks</h4>
+<ul>
+<li>
+<p>假設攻擊者只能存取預測標籤，而非信心分數</p>
+</li>
+<li>
+<p>使用在不同架構的多個模型輸出上訓練的元分類器</p>
+</li>
+<li>
+<p>應用於目標模型的輸出以推斷成員資格狀態</p>
+</li>
+</ul>
+<h4 id="white-box-membership-inference">White Box Membership Inference</h4>
+<p>利用模型參數、梯度和中間計算的直接存取：</p>
+<ul>
+<li>
+<p><strong>梯度利用</strong>：分析隨機梯度下降（SGD）演算法中梯度的足跡</p>
+</li>
+<li>
+<p><strong>隱藏層分析</strong>：檢查隱藏層輸出以偵測訓練資料獨有的模式</p>
+</li>
+<li>
+<p><strong>損失值評估</strong>：使用損失函數行為區分訓練和非訓練樣本</p>
+</li>
+<li>
+<p><strong>嵌入聚類</strong>：計算每個資料點的成員機率或嵌入並使用聚類分離</p>
+</li>
+</ul>
+<h3 id="attributeproperty-inference-attacks">Attribute/Property Inference Attacks</h3>
+<p><strong>目標</strong>：推斷訓練資料或模型的全域資訊，如資料分佈、架構或超參數</p>
+<h4 id="meta-classifier-approach">Meta-Classifier Approach</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 訓練元分類器推斷資料集屬性</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">meta_classifier</span> <span class="o">=</span> <span class="n">train_property_classifier</span><span class="p">(</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">features</span><span class="o">=</span><span class="n">extract_model_features</span><span class="p">(</span><span class="n">target_model</span><span class="p">),</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">labels</span><span class="o">=</span><span class="n">dataset_properties</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="poisoning-assisted-inference">Poisoning-Assisted Inference</h4>
+<ul>
+<li>
+<p><strong>中毒階段</strong>：攻擊者向訓練資料注入觸發器，在推論期間洩露資訊</p>
+</li>
+<li>
+<p><strong>查詢階段</strong>：黑箱推論查詢利用注入的觸發器提取資訊</p>
+</li>
+<li>
+<p><strong>分析階段</strong>：元分類器處理回應以推斷敏感屬性</p>
+</li>
+</ul>
+<h4 id="subpopulation-inference-attack-with-poisoning">Subpopulation iNference Attack with Poisoning</h4>
+<ul>
+<li>
+<p>消除元分類器使用，直接利用模型信心</p>
+</li>
+<li>
+<p>將所需影子模型數量從數千個減少到最多 4 個</p>
+</li>
+<li>
+<p>中毒率低於訓練資料集的 1%</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>場景</th>
+<th>攻擊類型</th>
+<th>風險</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>雲端 ML 服務</strong></td>
+<td>成員推斷</td>
+<td>推斷主要雲端供應商提供的 ML 服務訓練資料成員資格</td>
+</tr>
+<tr>
+<td><strong>協作學習</strong></td>
+<td>白箱推斷</td>
+<td>從多方聯合訓練模型的系統中提取資訊</td>
+</tr>
+<tr>
+<td><strong>線上訓練系統</strong></td>
+<td>成員推斷</td>
+<td>利用持續更新的模型證明使用者使用了 AI 系統</td>
+</tr>
+<tr>
+<td><strong>聯邦學習</strong></td>
+<td>屬性推斷</td>
+<td>推斷去中心化學習環境中參與者資料的屬性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="privacy-attacks_1">Privacy Attacks 防禦策略</h3>
+<h4 id="_4">深度防禦策略</h4>
+<p>有效防禦隱私攻擊需要多層次的防禦方法：</p>
+<pre class="mermaid"><code>graph TB
+    A[Security Governance&lt;br/&gt;組織政策和監督] --&gt; B[Data Protection&lt;br/&gt;最小化、匿名化、加密]
+    B --&gt; C[Model Safeguards&lt;br/&gt;正則化、差分隱私]
+    C --&gt; D[API Security&lt;br/&gt;閘道模式、速率限制、身份驗證]
+    D --&gt; E[Monitoring &amp; Response&lt;br/&gt;偵測、警報、事件處理]</code></pre>
+<h3 id="_5">法規考量</h3>
+<table>
+<thead>
+<tr>
+<th>法規</th>
+<th>地區</th>
+<th>影響</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GDPR</strong></td>
+<td>歐洲</td>
+<td>成功的隱私攻擊可能構成資料洩露</td>
+</tr>
+<tr>
+<td><strong>CCPA/CPRA</strong></td>
+<td>加州</td>
+<td>授予消費者個人資訊權利，攻擊可能觸發通知要求</td>
+</tr>
+<tr>
+<td><strong>HIPAA</strong></td>
+<td>美國醫療</td>
+<td>揭露受保護健康資訊將構成 HIPAA 違規</td>
+</tr>
+<tr>
+<td><strong>AI 專門法規</strong></td>
+<td>如歐盟 AI 法案</td>
+<td>包含 AI 系統技術穩健性和安全性要求</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_6">風險評估框架</h4>
+<ol>
+<li>
+<p><strong>識別資產</strong>：編目 ML 模型、訓練資料和需要保護的敏感資訊</p>
+</li>
+<li>
+<p><strong>威脅建模</strong>：識別潛在攻擊者、其能力和針對系統的動機</p>
+</li>
+<li>
+<p><strong>漏洞評估</strong>：評估增加風險的模型特徵（如過度擬合、信心輸出、敏感資料）</p>
+</li>
+<li>
+<p><strong>影響分析</strong>：確定成功攻擊的後果（隱私違規、法規處罰、聲譽損害）</p>
+</li>
+<li>
+<p><strong>控制選擇</strong>：根據風險等級、技術可行性和資源限制選擇適當的防禦</p>
+</li>
+</ol>
+<h2 id="privacy-preserving-ai-defense-strategies">🔐 Privacy-Preserving AI &amp; Defense Strategies</h2>
+<p>隱私保護 AI 和隱私攻擊防禦是同一個目標的兩個面向：在利用數據價值的同時保護敏感資訊。本章節整合了主動的隱私保護技術和針對隱私攻擊的防禦策略，提供完整的隱私保護解決方案。</p>
+<h3 id="_7">法規合規要求</h3>
+<h4 id="gdpr">GDPR 合規</h4>
+<ul>
+<li><strong>個人數據控制</strong>：GDPR 賦予個人對其個人數據的控制權</li>
+<li><strong>隱私保護義務</strong>：要求企業確保隱私保護</li>
+<li><strong>數據最小化</strong>：組織必須識別並使用履行特定功能所需的絕對最少數據量</li>
+</ul>
+<h3 id="-">隱私-效用權衡</h3>
+<p>實施隱私保護通常涉及平衡隱私保證與模型效用或效能之間的權衡：</p>
+<pre class="mermaid"><code>graph LR
+    A[更強隱私保護] --&gt; B[更多雜訊/正則化]
+    B --&gt; C[模型準確度降低]
+    D[組織需求] --&gt; E[風險容忍度]
+    E --&gt; F[最佳權衡點]</code></pre>
+<p><strong>考慮因素</strong>：
+- 資料敏感度
+- 法規要求
+- 攻擊風險
+- 效能需求</p>
+<h2 id="_8">🛡️ 隱私攻擊防禦策略</h2>
+<h3 id="_9">多層防禦架構</h3>
+<p>針對不同類型的隱私攻擊，需要建立多層次的防禦體系：</p>
+<table>
+<thead>
+<tr>
+<th>防禦層級</th>
+<th>防禦技術</th>
+<th>針對攻擊</th>
+<th>實現方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>API層</strong></td>
+<td>閘道模式、速率限制</td>
+<td>Model Extraction, Model Inversion</td>
+<td>存取控制、查詢限制</td>
+</tr>
+<tr>
+<td><strong>輸出層</strong></td>
+<td>輸出修改、雜訊添加</td>
+<td>Model Inversion, Membership Inference</td>
+<td>ArgMax輸出、信心分數雜訊化</td>
+</tr>
+<tr>
+<td><strong>模型層</strong></td>
+<td>正則化、差分隱私</td>
+<td>Membership Inference, Property Inference</td>
+<td>過擬合防止、數學隱私保證</td>
+</tr>
+<tr>
+<td><strong>數據層</strong></td>
+<td>匿名化、最小化</td>
+<td>所有攻擊</td>
+<td>K-anonymity、數據去識別化</td>
+</tr>
+<tr>
+<td><strong>監控層</strong></td>
+<td>異常偵測、行為分析</td>
+<td>所有攻擊</td>
+<td>查詢模式分析、警報系統</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_10">針對性防禦策略</h3>
+<h4 id="model-extraction">Model Extraction 防禦</h4>
+<ol>
+<li><strong>API安全防護</strong>：閘道模式、速率限制、身份驗證</li>
+<li><strong>輸出保護</strong>：模型蒸餾、對抗樣本</li>
+<li><strong>監控偵測</strong>：查詢模式分析、異常偵測</li>
+</ol>
+<h4 id="model-inversion">Model Inversion 防禦</h4>
+<ol>
+<li><strong>輸出修改</strong>：ArgMax輸出替代機率、信心分數雜訊化</li>
+<li><strong>存取控制</strong>：最小權限原則、模型治理</li>
+<li><strong>隱私保護ML</strong>：差分隱私技術、隱私感知訓練</li>
+</ol>
+<h4 id="membership-inference">Membership Inference 防禦</h4>
+<ol>
+<li><strong>防止過擬合</strong>：正則化技術、早期停止、資料擴增</li>
+<li><strong>差分隱私</strong>：DP-SGD、PATE、輸出擾動</li>
+<li><strong>架構防禦</strong>：Model Stacking、MemGuard雜訊防禦</li>
+</ol>
+<h4 id="property-inference">Property Inference 防禦</h4>
+<ol>
+<li><strong>數據保護</strong>：屬性隱藏、特徵混淆</li>
+<li><strong>模型多樣化</strong>：聯邦學習、模型分散</li>
+<li><strong>監控系統</strong>：異常查詢偵測、行為基線</li>
+</ol>
+<h3 id="_11">監控和偵測系統</h3>
+<h4 id="_12">查詢模式分析</h4>
+<ul>
+<li>監控特徵空間的系統探索模式</li>
+<li>偵測重複類似查詢的小變化</li>
+<li>識別異常高查詢量和頻率</li>
+</ul>
+<h4 id="_13">視覺化監控</h4>
+<ul>
+<li>實時查詢視覺化工具</li>
+<li>異常模式警報系統</li>
+<li>審計日誌和追蹤機制</li>
+</ul>
+<h4 id="_14">行為基線建立</h4>
+<ul>
+<li>不同用戶類型的正常使用模式</li>
+<li>自動化異常偵測和警報</li>
+<li>動態閾值調整機制</li>
+</ul>
+<h2 id="_15">📊 數據層隱私保護</h2>
+<h3 id="_16">基礎匿名化技術</h3>
+<table>
+<thead>
+<tr>
+<th>技術</th>
+<th>描述</th>
+<th>應用場景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>雜湊化 (Hashing)</strong></td>
+<td>將敏感數據替換為無法逆轉為原始資訊的雜湊值</td>
+<td>用戶 ID、密碼保護</td>
+</tr>
+<tr>
+<td><strong>遮罩 (Masking)</strong></td>
+<td>在欄位中使用佔位符隱藏數據的敏感部分</td>
+<td>郵遞區號、電話號碼部分遮蔽</td>
+</tr>
+<tr>
+<td><strong>混淆 (Obfuscation)</strong></td>
+<td>向數值數據添加隨機雜訊以模糊實際值，同時保持統計特性</td>
+<td>薪資、年齡數據</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_17">簡單匿名化的挑戰</h4>
+<p><strong>1. 直接重新識別</strong></p>
+<ul>
+<li>2006年 AOL 發布的 2000 萬次搜索查詢事件</li>
+<li>從數據集內的數據直接推斷用戶身份</li>
+</ul>
+<p><strong>2. 連結攻擊</strong></p>
+<ul>
+<li>2007年 Netflix 數據集去匿名化事件</li>
+<li>將匿名化數據與輔助數據集（如 IMDb 電影評分）連結以推斷身份</li>
+</ul>
+<p><strong>3. 保護不足</strong></p>
+<ul>
+<li>簡單技術通常無法提供足夠的保護，特別是面對擁有多個數據源的複雜對手</li>
+</ul>
+<h3 id="k-anonymity">K-Anonymity 高級匿名化</h3>
+<p>K-匿名性確保數據集中的每筆記錄在某些識別屬性方面與至少 <span class="arithmatex">\(k-1\)</span> 筆其他記錄無法區分，使得將數據連結到個人變得更加困難。</p>
+<h4 id="_18">屬性分類</h4>
+<table>
+<thead>
+<tr>
+<th>屬性類型</th>
+<th>定義</th>
+<th>範例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>關鍵屬性 (Key Attribute)</strong></td>
+<td>唯一識別符，發布前需要移除</td>
+<td>姓名、地址、電話號碼</td>
+</tr>
+<tr>
+<td><strong>準識別符 (Quasi Attribute)</strong></td>
+<td>本身不是唯一識別符，但可與其他準識別符結合創建唯一識別符</td>
+<td>5位數郵遞區號、出生日期、性別</td>
+</tr>
+<tr>
+<td><strong>敏感屬性 (Sensitive Attribute)</strong></td>
+<td>研究所需的屬性，通常直接發布</td>
+<td>醫療記錄、薪資</td>
+</tr>
+</tbody>
+</table>
+<h4 id="k-anonymity_1">K-Anonymity 實現流程</h4>
+<ol>
+<li><strong>數據準備</strong>：識別可用於重新識別的準識別符</li>
+<li><strong>群組形成</strong>：創建記錄在準識別符上共享相同值的群組</li>
+<li><strong>數據修改</strong>：泛化或抑制值以確保每個群組包含至少 <span class="arithmatex">\(k\)</span> 筆記錄</li>
+<li><strong>驗證</strong>：確認每筆記錄與至少 <span class="arithmatex">\(k-1\)</span> 筆其他記錄無法區分</li>
+</ol>
+<h4 id="_19">實現方法</h4>
+<p><strong>泛化 (Generalization)</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>原始：47677, 29, Female → 泛化：476**, $&lt;30$, Female
+</span></code></pre></div></p>
+<p><strong>抑制 (Suppression)</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>原始：47677, 29, Female → 抑制：*****, 29, Female
+</span></code></pre></div></p>
+<h4 id="k-anonymity_2">K-Anonymity 評估指標</h4>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>描述</th>
+<th>目標</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>等價類別大小指標 (CAVG)</strong></td>
+<td>測量匿名化後的變異數</td>
+<td>較高的值表示更好的匿名化</td>
+</tr>
+<tr>
+<td><strong>可辨識性指標 (DM)</strong></td>
+<td>評估匿名化後記錄的可辨識程度</td>
+<td>較低的值表示更好的隱私保護</td>
+</tr>
+<tr>
+<td><strong>標準化確定性懲罰 (NCP)</strong></td>
+<td>量化匿名化後的資訊損失</td>
+<td>平衡隱私保護與數據效用</td>
+</tr>
+</tbody>
+</table>
+<h4 id="k-anonymity_3">K-Anonymity 攻擊方法</h4>
+<p><strong>1. 同質性攻擊 (Homogeneity Attack)</strong></p>
+<ul>
+<li>當 <span class="arithmatex">\(k\)</span> 筆記錄的敏感值全部相同時</li>
+<li>即使數據已經 <span class="arithmatex">\(k\)</span> 匿名化，敏感值仍可被精確預測</li>
+</ul>
+<p><strong>2. 背景知識攻擊 (Background Knowledge Attack)</strong></p>
+<ul>
+<li>利用準識別符屬性與敏感屬性之間的關聯</li>
+<li>通過背景知識減少敏感屬性的可能值集合</li>
+</ul>
+<h4 id="_20">匿名化工具</h4>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>特點</th>
+<th>適用場景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ARX</strong></td>
+<td>Java 開源桌面應用程式，具有全面的隱私模型</td>
+<td>研究和開發環境</td>
+</tr>
+<tr>
+<td><strong>Anonimatron</strong></td>
+<td>保持參照完整性的數據庫內容匿名化工具</td>
+<td>數據庫匿名化</td>
+</tr>
+<tr>
+<td><strong>Amnesia</strong></td>
+<td>EU 資助的項目，提供桌面應用和 REST API</td>
+<td>自動化場景</td>
+</tr>
+<tr>
+<td><strong>K-anonymity Library</strong></td>
+<td>Python 實現，支援多種匿名化演算法</td>
+<td>程式化實現</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_21">地理位置數據挑戰</h3>
+<p>地理位置數據因其能夠揭示個人模式和行為而呈現獨特的隱私挑戰。</p>
+<h4 id="_22">主要風險</h4>
+<p><strong>1. 高重新識別風險</strong></p>
+<ul>
+<li>Jeffrey Burrill 因匿名數據揭露其移動而辭職</li>
+<li>位置模式可以唯一識別個人</li>
+</ul>
+<p><strong>2. 關聯漏洞</strong></p>
+<ul>
+<li>紐約時報調查追蹤川普總統移動的案例</li>
+<li>位置數據可與公共資訊關聯</li>
+</ul>
+<p><strong>3. 時間模式</strong></p>
+<ul>
+<li>位置數據中的規律模式（家庭、工作等）使其特別容易受到重新識別攻擊</li>
+</ul>
+<h4 id="_23">地理位置匿名化技術</h4>
+<table>
+<thead>
+<tr>
+<th>技術</th>
+<th>方法</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>地理遮罩</strong></td>
+<td>使用隨機擾動、高斯位移或甜甜圈遮罩改變座標</td>
+<td>防止逆向地理編碼</td>
+</tr>
+<tr>
+<td><strong>空間聚合</strong></td>
+<td>將個別位置分組到更大的空間單位</td>
+<td>降低重新識別風險</td>
+</tr>
+<tr>
+<td><strong>地理編碼系統</strong></td>
+<td>使用 what3words 等系統標準化編碼位置</td>
+<td>提供基本保護</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_24">富媒體匿名化</h3>
+<h4 id="_25">影像匿名化</h4>
+<table>
+<thead>
+<tr>
+<th>技術</th>
+<th>描述</th>
+<th>應用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模糊化</strong></td>
+<td>使用高斯模糊等技術模糊識別特徵</td>
+<td>臉部模糊化</td>
+</tr>
+<tr>
+<td><strong>像素化</strong></td>
+<td>使用最近鄰插值降低敏感區域解析度</td>
+<td>車牌、臉部像素化</td>
+</tr>
+<tr>
+<td><strong>遮罩</strong></td>
+<td>在影像敏感部分繪製形狀完全隱藏識別資訊</td>
+<td>完全隱藏特定區域</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_26">音訊和視訊匿名化</h4>
+<p><strong>音訊處理</strong>：
+- <strong>聲音變更</strong>：改變音調、速度或音色以防止識別
+- <strong>語音轉文字轉換</strong>：使用不同的合成聲音完全移除原始聲音特徵
+- <strong>背景雜訊添加</strong>：添加控制雜訊以遮罩可識別的聲音</p>
+<p><strong>視訊處理</strong>：
+- 結合影像技術（臉部模糊）與音訊匿名化
+- 通常需要專門工具進行大規模處理</p>
+<h2 id="differential-privacy">🎲 差分隱私 (Differential Privacy)</h2>
+<p>差分隱私是一個數學框架，用於量化和限制從統計數據庫查詢中洩露的隱私資訊。</p>
+<h3 id="_27">基本定義</h3>
+<p><strong>差分隱私定義</strong>：
+如果觀察者看到演算法的輸出無法確定特定個人的資訊是否用於計算，則該演算法是差分隱私的。</p>
+<h3 id="-_1"><span class="arithmatex">\((ε)\)</span>-差分隱私</h3>
+<p><strong>數學定義</strong>：
+演算法 <span class="arithmatex">\(M(·)\)</span> 是 <span class="arithmatex">\((ε)\)</span>-DP，當且僅當對於所有鄰近數據集 <span class="arithmatex">\(D\)</span> 和 <span class="arithmatex">\(D'\)</span>，以及所有輸出 <span class="arithmatex">\(O\)</span>：</p>
+<div class="arithmatex">\[Pr[M(D) = O] ≤ e^ε × Pr[M(D') = O]\]</div>
+<p><strong>參數說明</strong>：</p>
+<ul>
+<li><strong><span class="arithmatex">\(ε\)</span> (epsilon)</strong>：隱私損失參數，量化允許的個人資訊洩露</li>
+<li><strong><span class="arithmatex">\(D, D'\)</span></strong>：鄰近數據集，最多只有一個元素不同</li>
+<li><strong><span class="arithmatex">\(O\)</span></strong>：演算法 <span class="arithmatex">\(M\)</span> 可能的輸出</li>
+</ul>
+<h3 id="-_2"><span class="arithmatex">\((ε, δ)\)</span>-差分隱私</h3>
+<p><strong>數學定義</strong>：</p>
+<div class="arithmatex">\[Pr[M(D) = O] ≤ e^ε × Pr[M(D') = O] + δ\]</div>
+<p>這意味著演算法將以 <span class="arithmatex">\((1-δ)\)</span> 的機率滿足 <span class="arithmatex">\(ε\)</span>-DP，有小機率 <span class="arithmatex">\(δ\)</span> 可能違反 <span class="arithmatex">\((ε)\)</span>-DP。</p>
+<h3 id="sensitivity">敏感度 (Sensitivity)</h3>
+<p><strong>定義</strong>：
+對於函數 <span class="arithmatex">\(f: D → R^d\)</span>，對於所有鄰近數據集 <span class="arithmatex">\(D, D'\)</span>，函數 <span class="arithmatex">\(f\)</span> 的敏感度為：</p>
+<div class="arithmatex">\[Δf = \max_{(D,D')} ||f(D) - f(D')||₁\]</div>
+<h3 id="_28">雜訊分佈</h3>
+<h4 id="-dp">拉普拉斯雜訊 (用於 <span class="arithmatex">\(ε\)</span>-DP)</h4>
+<div class="arithmatex">\[η \sim \text{Laplace}(μ=0, b=Δf/ε)\]</div>
+<div class="arithmatex">\[\text{PDF}(η) = \frac{1}{2b} × e^{-|η-μ|/b}\]</div>
+<h4 id="-dp_1">高斯雜訊 (用於 <span class="arithmatex">\((ε,δ)\)</span>-DP)</h4>
+<div class="arithmatex">\[η \sim \text{Gaussian}(μ=0, σ²=Δf²×2\ln(1.25/δ)/ε²)\]</div>
+<div class="arithmatex">\[\text{PDF}(η) = \frac{1}{σ\sqrt{2π}} × e^{-(η-μ)²/2σ²}\]</div>
+<h3 id="_29">差分隱私實現層級</h3>
+<table>
+<thead>
+<tr>
+<th>層級</th>
+<th>描述</th>
+<th>應用時機</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>輸入擾動</strong></td>
+<td>在收集或預處理期間向輸入數據添加雜訊</td>
+<td>數據收集階段</td>
+</tr>
+<tr>
+<td><strong>目標擾動</strong></td>
+<td>在訓練期間向優化函數添加雜訊</td>
+<td>模型訓練階段</td>
+</tr>
+<tr>
+<td><strong>輸出擾動</strong></td>
+<td>向模型輸出添加雜訊以抵抗推論攻擊</td>
+<td>模型部署階段</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_30">差分隱私框架</h3>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>開發者</th>
+<th>特點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TensorFlow Privacy</strong></td>
+<td>Google</td>
+<td>TensorFlow 擴展，提供 DP-SGD 優化器</td>
+</tr>
+<tr>
+<td><strong>IBM Differential Privacy Library</strong></td>
+<td>IBM</td>
+<td>支援各種雜訊機制的數據分析工具</td>
+</tr>
+<tr>
+<td><strong>OpenDP</strong></td>
+<td>Harvard/Microsoft</td>
+<td>開源差分隱私函式庫</td>
+</tr>
+</tbody>
+</table>
+<h2 id="federated-learning">🌐 聯邦學習 (Federated Learning)</h2>
+<p>聯邦學習由 Google 於 2016 年引入，通過在數據源處處理數據而非集中化來解決隱私問題。</p>
+<h3 id="_31">聯邦學習流程</h3>
+<ol>
+<li><strong>模型分發</strong>：預訓練的基礎模型分享給協作方</li>
+<li><strong>本地訓練</strong>：每方使用自己的私人數據訓練模型</li>
+<li><strong>安全聚合</strong>：只有模型更新（權重）被加密並上傳</li>
+</ol>
+<h3 id="_32">聯邦學習類型</h3>
+<h4 id="_33">伺服器編排聯邦學習</h4>
+<pre class="mermaid"><code>graph TB
+    A[中央伺服器] --&gt; B[客戶端設備1]
+    A --&gt; C[客戶端設備2] 
+    A --&gt; D[客戶端設備3]
+    B --&gt; A
+    C --&gt; A
+    D --&gt; A</code></pre>
+<p><strong>特點</strong>：
+- 中央伺服器協調學習過程並聚合模型更新
+- 客戶端設備使用私人數據本地訓練模型
+- 使用密碼學技術保護個別更新
+- 只共享模型參數，不共享訓練數據</p>
+<h4 id="_34">去中心化聯邦學習</h4>
+<ul>
+<li>沒有中央協調者</li>
+<li>節點直接相互通信</li>
+<li>更高的容錯性但協調複雜度增加</li>
+</ul>
+<h3 id="_35">聯邦學習優缺點</h3>
+<table>
+<thead>
+<tr>
+<th>優點</th>
+<th>挑戰</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>數據保留在本地設備上，增強隱私</td>
+<td>伺服器和客戶端之間的通信開銷</td>
+</tr>
+<tr>
+<td>減少數據傳輸需求</td>
+<td>客戶端間的異質數據分佈</td>
+</tr>
+<tr>
+<td>允許在尊重數據所有權的情況下協作</td>
+<td>模型更新過程中的安全漏洞</td>
+</tr>
+<tr>
+<td>幫助滿足法規合規要求</td>
+<td>潛在的中毒和推論攻擊</td>
+</tr>
+<tr>
+<td>允許利用分散式計算資源</td>
+<td>通信和計算成本</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_36">聯邦學習威脅模型</h3>
+<p><strong>潛在攻擊者</strong>：
+- 惡意聚合伺服器
+- 對抗性參與者</p>
+<p><strong>攻擊目標</strong>：
+- <strong>隱私</strong>：推論攻擊
+- <strong>模型完整性</strong>：中毒攻擊</p>
+<h2 id="split-learning">🔄 Split Learning</h2>
+<p>Split Learning 將神經網路在客戶端和伺服器之間分割，與聯邦學習不同，完整的模型訓練不是在本地進行。</p>
+<h3 id="split-learning_1">Split Learning 流程</h3>
+<ol>
+<li><strong>客戶端處理</strong>：處理數據到特定層（切割層）</li>
+<li><strong>中間轉移</strong>：只有切割層的輸出發送到伺服器</li>
+<li><strong>伺服器完成</strong>：伺服器完成剩餘計算</li>
+<li><strong>模型學習</strong>：梯度回流進行訓練，無需暴露原始數據</li>
+</ol>
+<h3 id="split-learning-vs-federated-learning">Split Learning vs Federated Learning</h3>
+<table>
+<thead>
+<tr>
+<th>方面</th>
+<th>Split Learning</th>
+<th>Federated Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>數據位置</strong></td>
+<td>保留在客戶端</td>
+<td>保留在客戶端</td>
+</tr>
+<tr>
+<td><strong>計算分佈</strong></td>
+<td>客戶端和伺服器之間分割</td>
+<td>主要在客戶端</td>
+</tr>
+<tr>
+<td><strong>通信需求</strong></td>
+<td>中間啟動和梯度</td>
+<td>僅模型更新</td>
+</tr>
+<tr>
+<td><strong>客戶端資源需求</strong></td>
+<td>較低（部分計算）</td>
+<td>較高（完整模型訓練）</td>
+</tr>
+<tr>
+<td><strong>連接依賴性</strong></td>
+<td>需要持續連接</td>
+<td>可在間歇連接下工作</td>
+</tr>
+<tr>
+<td><strong>隱私漏洞</strong></td>
+<td>從啟動中可能推論</td>
+<td>從模型更新中可能推論</td>
+</tr>
+</tbody>
+</table>
+<h2 id="secure-multiparty-computation-smpc">🤝 安全多方計算 (Secure Multiparty Computation, SMPC)</h2>
+<p>SMPC 是一種密碼學方法，允許多方在不洩露各自輸入的情況下聯合計算函數。</p>
+<h3 id="smpc">SMPC 基本原理</h3>
+<ol>
+<li><strong>數據分割</strong>：每個參與者的數據使用密碼學演算法分割成加密份額</li>
+<li><strong>分散式密碼計算</strong>：各方對加密份額執行計算並交換加密中間結果</li>
+<li><strong>密碼結果聚合</strong>：從加密計算中安全重建最終結果</li>
+</ol>
+<h3 id="yaos">Yao's 百萬富翁問題</h3>
+<p><strong>場景</strong>：兩個百萬富翁想知道誰更富有，但不想洩露各自的財富資訊。</p>
+<p><strong>Yao's 解決方案</strong>：</p>
+<ol>
+<li><strong>Alice 發送公鑰給 Bob</strong></li>
+<li><strong>Bob 的操作</strong>：</li>
+<li>選擇隨機 <span class="arithmatex">\(N\)</span> 位整數 <span class="arithmatex">\(x\)</span></li>
+<li>計算 <span class="arithmatex">\(k = E_a(x)\)</span>（使用 Alice 的公鑰加密）</li>
+<li>
+<p>計算 <span class="arithmatex">\(k-7\)</span>（Bob 的財富）</p>
+</li>
+<li>
+<p><strong>Alice 的操作</strong>：</p>
+</li>
+<li>對所有可能的財富值 <span class="arithmatex">\(u=1,2,...\)</span> 計算 <span class="arithmatex">\(k-7+u\)</span></li>
+<li>
+<p>應用非對稱解密並發送給 Bob</p>
+</li>
+<li>
+<p><strong>Bob 的驗證</strong>：</p>
+</li>
+<li>檢查第 <span class="arithmatex">\(j-1\)</span> 個值是否等於 <span class="arithmatex">\(x\)</span></li>
+<li>確定誰更富有</li>
+</ol>
+<h3 id="_37">安全多方求和</h3>
+<p><strong>目標</strong>：在不洩露的情況下計算所有參與者數據的總和</p>
+<p><strong>步驟</strong>：</p>
+<ol>
+<li>每方 <span class="arithmatex">\(P_i\)</span> 向鄰居 <span class="arithmatex">\(P_j\)</span> 生成隨機數 <span class="arithmatex">\(r_{i,j}\)</span></li>
+<li>等待來自每個鄰居的 <span class="arithmatex">\(r_{j,i}\)</span></li>
+<li>計算 <span class="arithmatex">\(D'_i = D_i + \sum_j r_{i,j} - \sum_j r_{j,i}\)</span></li>
+<li>公布 <span class="arithmatex">\(D'_i\)</span></li>
+<li>輸出 = <span class="arithmatex">\(\sum_i D'_i\)</span></li>
+</ol>
+<h3 id="smpc_1">SMPC 在機器學習中的應用</h3>
+<table>
+<thead>
+<tr>
+<th>應用</th>
+<th>描述</th>
+<th>優勢</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>協作模型訓練</strong></td>
+<td>多組織聯合訓練模型而保持數據機密</td>
+<td>基因組研究等敏感領域</td>
+</tr>
+<tr>
+<td><strong>隱私保護分析</strong></td>
+<td>跨組織執行數據分析而不洩露原始數據</td>
+<td>獲得聯合數據集見解</td>
+</tr>
+<tr>
+<td><strong>安全推論</strong></td>
+<td>允許對敏感數據進行模型預測</td>
+<td>保護模型參數和輸入數據</td>
+</tr>
+<tr>
+<td><strong>聯邦學習增強</strong></td>
+<td>保護聯邦學習系統中的梯度和模型資訊交換</td>
+<td>防止推論攻擊</td>
+</tr>
+</tbody>
+</table>
+<h2 id="homomorphic-encryption">🔒 同態加密 (Homomorphic Encryption)</h2>
+<p>同態加密允許直接對加密數據進行計算，產生加密結果，解密後與在明文上執行操作的結果相匹配。</p>
+<h3 id="_38">同態性定義</h3>
+<p>如果 <span class="arithmatex">\((G,·)\)</span> 和 <span class="arithmatex">\((H,*)\)</span> 是兩個群，函數 <span class="arithmatex">\(f: G → H\)</span> 稱為群同態，當且僅當：</p>
+<div class="arithmatex">\[f(a · b) = f(a) * f(b) \text{ 對所有 } a, b ∈ G\]</div>
+<h3 id="_39">同態加密類型</h3>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>支援操作</th>
+<th>限制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>部分同態加密 (PHE)</strong></td>
+<td>單一操作（加法或乘法）</td>
+<td>無限次</td>
+</tr>
+<tr>
+<td><strong>稍微同態加密 (SWHE)</strong></td>
+<td>加法和乘法</td>
+<td>有限次</td>
+</tr>
+<tr>
+<td><strong>完全同態加密 (FHE)</strong></td>
+<td>加法和乘法</td>
+<td>無限次</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_40">部分同態加密範例</h3>
+<h4 id="elgamal">ElGamal 方案 (乘法同態)</h4>
+<p><strong>密鑰生成</strong>：</p>
+<div class="arithmatex">\[\text{選擇整數作為 } sk\]</div>
+<div class="arithmatex">\[\text{計算 } pk = g^{sk}\]</div>
+<p><strong>加密</strong>：</p>
+<div class="arithmatex">\[\text{選擇隨機整數 } r\]</div>
+<div class="arithmatex">\[c₁ = g^r\]</div>
+<div class="arithmatex">\[c₂ = m × pk^r\]</div>
+<div class="arithmatex">\[\text{密文 } C = (c₁, c₂) = (g^r, m × pk^r)\]</div>
+<p><strong>乘法評估</strong>：</p>
+<div class="arithmatex">\[E(m₁) ⊗ E(m₂) = (g^{(r₁+r₂)}, m₁ × m₂ × pk^{(r₁+r₂)}) = E(m₁ × m₂)\]</div>
+<h4 id="paillier">Paillier 方案 (加法同態)</h4>
+<p><strong>基於決策性複合剩餘假設</strong></p>
+<p><strong>密鑰生成</strong>：</p>
+<div class="arithmatex">\[N = pq \text{（p, q 為大質數）}\]</div>
+<div class="arithmatex">\[λ = \text{lcm}(p-1, q-1)\]</div>
+<div class="arithmatex">\[μ = (L(g^λ \bmod N²))^{-1} \bmod N\]</div>
+<div class="arithmatex">\[sk = (λ, μ), pk = (N, g=N+1)\]</div>
+<p><strong>加密</strong>：</p>
+<div class="arithmatex">\[C = g^m × r^N \bmod N²\]</div>
+<p><strong>加法評估</strong>：</p>
+<div class="arithmatex">\[E(m₁) ⊕ E(m₂) = g^{(m₁+m₂)} × r₃^N = E(m₁ + m₂)\]</div>
+<h3 id="_41">完全同態加密</h3>
+<h4 id="bgv">BGV 方案</h4>
+<p><strong>基於 LWE/RLWE 問題</strong></p>
+<p><strong>主要特點</strong>：</p>
+<ul>
+<li>支援精確整數運算</li>
+<li>使用模數切換控制雜訊增長</li>
+<li>需要 bootstrapping 刷新密文</li>
+</ul>
+<p><strong>BGV 流程</strong>：</p>
+<pre class="mermaid"><code>graph LR
+    A[密鑰生成] --&gt; B[加密]
+    B --&gt; C[加法/乘法]
+    C --&gt; D[重線性化]
+    D --&gt; E[模數切換]
+    E --&gt; F[Bootstrap]
+    F --&gt; G[解密]</code></pre>
+<h4 id="ckks">CKKS 方案</h4>
+<p><strong>支援浮點數運算</strong></p>
+<p><strong>特點</strong>：</p>
+<ul>
+<li>使用編碼方案允許數字近似表示</li>
+<li>支援複數運算</li>
+<li>使用 rescale 操作控制縮放因子</li>
+</ul>
+<p><strong>CKKS 流程</strong>：</p>
+<pre class="mermaid"><code>graph LR
+    A[密鑰生成] --&gt; B[編碼]
+    B --&gt; C[加密]
+    C --&gt; D[加法/乘法]
+    D --&gt; E[重線性化]
+    E --&gt; F[Rescale]
+    F --&gt; G[Bootstrap]
+    G --&gt; H[解密]
+    H --&gt; I[解碼]</code></pre>
+<h3 id="_42">同態加密工具</h3>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>開發者</th>
+<th>特點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Microsoft SEAL</strong></td>
+<td>Microsoft</td>
+<td>開源密碼學函式庫，支援 BGV 和 CKKS</td>
+</tr>
+<tr>
+<td><strong>IBM HElib</strong></td>
+<td>IBM</td>
+<td>專注於 BGV 方案的高效實現</td>
+</tr>
+<tr>
+<td><strong>PALISADE</strong></td>
+<td>社群</td>
+<td>格加密函式庫，提供標準化 API</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_43">📋 隱私保護策略</h2>
+<h3 id="_44">風險和使用案例評估</h3>
+<ol>
+<li><strong>風險評估</strong>：了解特定風險和合規要求</li>
+<li><strong>威脅建模</strong>：識別潛在威脅和隱私攻擊向量</li>
+<li><strong>數據最小化</strong>：減少敏感數據使用以最小化攻擊面</li>
+<li><strong>平衡效用和隱私</strong>：找到數據效用和保護之間的最佳權衡</li>
+<li><strong>深度防禦</strong>：應用多層隱私保護</li>
+</ol>
+<h3 id="_45">隱私保護技術選擇指南</h3>
+<table>
+<thead>
+<tr>
+<th>場景</th>
+<th>推薦技術</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>數據分析</strong></td>
+<td>差分隱私 + K-anonymity</td>
+<td>提供數學保證的隱私保護</td>
+</tr>
+<tr>
+<td><strong>協作學習</strong></td>
+<td>聯邦學習 + SMPC</td>
+<td>數據不離開本地且計算安全</td>
+</tr>
+<tr>
+<td><strong>雲端計算</strong></td>
+<td>同態加密</td>
+<td>在不解密的情況下進行計算</td>
+</tr>
+<tr>
+<td><strong>地理數據</strong></td>
+<td>空間聚合 + 地理遮罩</td>
+<td>針對位置數據的特殊保護</td>
+</tr>
+<tr>
+<td><strong>多媒體數據</strong></td>
+<td>模糊化 + 遮罩</td>
+<td>視覺化隱私保護</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../BlueTeamTools/" class="md-footer__link md-footer__link--prev" aria-label="Previous: BlueTeamTools">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                BlueTeamTools
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../Blogs/SleepyPickle/" class="md-footer__link md-footer__link--next" aria-label="Next: SleepyPickle">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                SleepyPickle
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2020 Martin Donath
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/seanchou1101" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/yunshiuan-chou-914701313/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/YunshiuanOAO" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "navigation.tabs", "navigation.top", "navigation.tracking", "header.autohide", "navigation.footer", "announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

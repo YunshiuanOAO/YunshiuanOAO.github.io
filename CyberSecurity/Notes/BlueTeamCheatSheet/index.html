@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="http://yunshiuan.com/CyberSecurity/Notes/BlueTeamTools/">
+        <link rel="canonical" href="http://yunshiuan.com/CyberSecurity/Notes/BlueTeamCheatSheet/">
       
       
         <link rel="prev" href="../pwn.note/">
@@ -22,7 +22,7 @@
     
     
       
-        <title>BlueTeamTools - yunshiaun.docs</title>
+        <title>BlueTeamCheatSheet - yunshiaun.docs</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#blueteamtools" class="md-skip">
+        <a href="#blueteam-cheatsheet" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              BlueTeamTools
+              BlueTeamCheatSheet
             
           </span>
         </div>
@@ -831,6 +831,8 @@
       
         
       
+        
+      
     
     
       
@@ -897,6 +899,28 @@
   
   <span class="md-ellipsis">
     Reverse.kr
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Writeups/2025AIS3PreExam-reverse/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2025AIS3PreExam-Reverse
     
   </span>
   
@@ -1006,7 +1030,7 @@
           
   
   <span class="md-ellipsis">
-    BlueTeamTools
+    BlueTeamCheatSheet
     
   </span>
   
@@ -1018,7 +1042,7 @@
         
   
   <span class="md-ellipsis">
-    BlueTeamTools
+    BlueTeamCheatSheet
     
   </span>
   
@@ -1041,6 +1065,39 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#event-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#winlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      winlog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sysmon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sysmon
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#idsips" class="md-nav__link">
     <span class="md-ellipsis">
       IDS/IPS
@@ -1055,6 +1112,81 @@
       SIEM
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="SIEM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elk-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      ELK Stack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ELK Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elastic-common-schema-ecs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Elastic Common Schema (ECS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-search-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Search Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-related-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process Related Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-related-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Related Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-related-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication Related Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用查詢語法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1086,6 +1218,117 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#memory-forensics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Forensics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Forensics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volatility-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volatility Framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volatility Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Profiling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processes-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Processes Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Connections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistence-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistence Techniques
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filesystem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malware-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Malware Detection
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用記憶體取證工具
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      記憶體取得方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#network-forensics" class="md-nav__link">
     <span class="md-ellipsis">
       Network Forensics
@@ -1100,6 +1343,21 @@
       disk Forensics
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="disk Forensics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zone-identifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zone Identifier
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1116,15 +1374,6 @@
   <a href="#acquision" class="md-nav__link">
     <span class="md-ellipsis">
       Acquision
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      reference
     </span>
   </a>
   
@@ -1661,6 +1910,39 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#event-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#winlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      winlog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sysmon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sysmon
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#idsips" class="md-nav__link">
     <span class="md-ellipsis">
       IDS/IPS
@@ -1675,6 +1957,81 @@
       SIEM
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="SIEM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elk-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      ELK Stack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ELK Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elastic-common-schema-ecs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Elastic Common Schema (ECS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-search-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Search Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-related-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process Related Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-related-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Related Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-related-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication Related Fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用查詢語法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1706,6 +2063,117 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#memory-forensics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Forensics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Forensics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volatility-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volatility Framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volatility Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Profiling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processes-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Processes Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Connections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistence-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistence Techniques
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filesystem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malware-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Malware Detection
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用記憶體取證工具
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      記憶體取得方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#network-forensics" class="md-nav__link">
     <span class="md-ellipsis">
       Network Forensics
@@ -1720,6 +2188,21 @@
       disk Forensics
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="disk Forensics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zone-identifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zone Identifier
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1741,15 +2224,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      reference
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1766,8 +2240,195 @@
 
 
 
-<h1 id="blueteamtools">BlueTeamTools</h1>
-<p>In this note, I organize the commons blue team tools </p>
+<h1 id="blueteam-cheatsheet">🛡️ BlueTeam CheatSheet</h1>
+<p>In this note, I organize the commons blue team skill</p>
+<h2 id="event-code">Event code</h2>
+<h3 id="winlog">winlog</h3>
+<table>
+<thead>
+<tr>
+<th>Event ID</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4104</td>
+<td>Windows powershell 執行日記</td>
+</tr>
+<tr>
+<td>4624</td>
+<td>登入成功</td>
+</tr>
+<tr>
+<td>4625</td>
+<td>登入失敗</td>
+</tr>
+<tr>
+<td>4648</td>
+<td>明確帳號登入（如 RunAs）</td>
+</tr>
+<tr>
+<td>4672</td>
+<td>特權登入（如 admin 登入）</td>
+</tr>
+<tr>
+<td>4634</td>
+<td>使用者登出</td>
+</tr>
+<tr>
+<td>4688</td>
+<td>建立新程序（程式啟動）</td>
+</tr>
+<tr>
+<td>4689</td>
+<td>程式結束</td>
+</tr>
+<tr>
+<td>4697</td>
+<td>安裝新服務（常用於惡意持久化）</td>
+</tr>
+<tr>
+<td>4720</td>
+<td>建立新帳號</td>
+</tr>
+<tr>
+<td>4722</td>
+<td>啟用帳戶</td>
+</tr>
+<tr>
+<td>4723</td>
+<td>嘗試變更自己的密碼</td>
+</tr>
+<tr>
+<td>4724</td>
+<td>嘗試為他人變更密碼</td>
+</tr>
+<tr>
+<td>4725</td>
+<td>停用帳戶</td>
+</tr>
+<tr>
+<td>4726</td>
+<td>刪除帳戶</td>
+</tr>
+<tr>
+<td>4732</td>
+<td>使用者被加入群組</td>
+</tr>
+<tr>
+<td>4768</td>
+<td>Kerberos TGT 請求</td>
+</tr>
+<tr>
+<td>4769</td>
+<td>Kerberos 服務票證請求</td>
+</tr>
+<tr>
+<td>4776</td>
+<td>NTLM 驗證請求</td>
+</tr>
+<tr>
+<td>5140</td>
+<td>存取共用資料夾</td>
+</tr>
+<tr>
+<td>5156</td>
+<td>防火牆允許的網路連線（NetConn 事件）</td>
+</tr>
+<tr>
+<td>7045</td>
+<td>安裝服務（System log，也可監控持久化）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sysmon">Sysmon</h3>
+<table>
+<thead>
+<tr>
+<th>Event ID</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Process Create（程式啟動）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>File creation time changed（時間戳被修改）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network connection（TCP 連線）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Process Terminate（程式終止）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Driver Loaded（驅動載入）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Image Loaded（DLL載入）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CreateRemoteThread（遠端執行緒注入）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>RawAccessRead（磁碟原始存取）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>ProcessAccess（程式存取他人記憶體）</td>
+</tr>
+<tr>
+<td>11</td>
+<td>File Create（檔案建立）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Registry Key Create（註冊表鍵建立）</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Registry Value Set（註冊表值修改）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Registry Key Delete（註冊表鍵刪除）</td>
+</tr>
+<tr>
+<td>15</td>
+<td>FileCreateStreamHash（建立 ADS）</td>
+</tr>
+<tr>
+<td>22</td>
+<td>DNS Query（DNS 查詢事件）</td>
+</tr>
+<tr>
+<td>23</td>
+<td>File Delete（檔案刪除）</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Process Tampering（程式記憶體被修改）</td>
+</tr>
+<tr>
+<td>26</td>
+<td>File Deleted and Overwritten（防止取證）</td>
+</tr>
+<tr>
+<td>255</td>
+<td>Sysmon 設定被修改（Config change）</td>
+</tr>
+</tbody>
+</table>
 <h2 id="idsips">IDS/IPS</h2>
 <ul>
 <li>
@@ -1782,7 +2443,7 @@
 <li>NIDS/NIPS</li>
 <li><code>ls -lah /etc/suricata/rules/</code> see all rulus</li>
 <li><code>suricata -r test.pcap</code> create various logs(etc eve.json,fast.log...)</li>
-<li><code>suricata --pcap=ens160 -vv</code>  Suricata’s (Live) LibPCAP mod</li>
+<li><code>suricata --pcap=ens160 -vv</code>  Suricata's (Live) LibPCAP mod</li>
 <li><code>cat /var/log/suricata/old_eve.json | jq -c 'select(.event_type == "http")' | head -1 | jq</code>quury example </li>
 </ul>
 </li>
@@ -1841,10 +2502,191 @@
 </span></code></pre></div></p>
 <h2 id="siem">SIEM</h2>
 <p>Continuously, for ongoing detection and alerting</p>
+<h3 id="elk-stack"><a href="https://www.elastic.co/elastic-stack">ELK Stack</a></h3>
+<h4 id="elastic-common-schema-ecs">Elastic Common Schema (ECS)</h4>
+<table>
+<thead>
+<tr>
+<th>字段類型</th>
+<th>描述</th>
+<th>KQL 範例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>event.category</td>
+<td>將事件按大型邏輯類別分組，通常與"event.category"字段結合使用進行過濾搜索</td>
+<td>• event.category: authentication<br>• event.category: process<br>• event.category: file<br>• event.category: malware<br>• event.category: network</td>
+</tr>
+<tr>
+<td>event.type</td>
+<td>作為子分類，通常與"event.category"字段結合使用過濾搜索</td>
+<td>• event.type: creation<br>• event.type: deletion<br>• event.type: access</td>
+</tr>
+<tr>
+<td>event.outcome</td>
+<td>指示事件是否成功或失敗</td>
+<td>• event.outcome: success<br>• event.outcome: failure</td>
+</tr>
+</tbody>
+</table>
+<h4 id="common-search-fields">Common Search Fields</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>KQL 範例</th>
+<th>輸出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@timestamp</td>
+<td>@timestamp: 2023-01-25</td>
+<td>事件發生時間的時間戳（事件來源於該時間而非更早或更晚）</td>
+</tr>
+<tr>
+<td>agent.name</td>
+<td>agent.name: "DESKTOP*"</td>
+<td>從代理名稱中搜索指定字符並顯示結果</td>
+</tr>
+<tr>
+<td>message</td>
+<td>message: powershell</td>
+<td>在任何含有"powershell"字符的消息中搜索</td>
+</tr>
+</tbody>
+</table>
+<h4 id="process-related-fields">Process Related Fields</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>KQL 範例</th>
+<th>輸出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>process.name</td>
+<td>event.category: process and process.name: svchost</td>
+<td>尋找進程名為svchost的所有進程</td>
+</tr>
+<tr>
+<td>process.command_line</td>
+<td>process.command_line: (cmd or "/c")</td>
+<td>尋找使用cmd並且含有命令行參數為"/c"的進程</td>
+</tr>
+<tr>
+<td>process.pid</td>
+<td>event.category: process and process.pid: 4360</td>
+<td>尋找PID為4360的進程</td>
+</tr>
+<tr>
+<td>process.parent.name</td>
+<td>event.category: process and process.parent.name: cmd.exe and process.name: powershell.exe</td>
+<td>尋找父進程為cmd.exe且該進程名為powershell的進程；尋找由cmd.exe父進程啟動的PowerShell進程</td>
+</tr>
+<tr>
+<td>process.parent.pid</td>
+<td>event.category: process and process.parent.pid: 1240</td>
+<td>尋找父進程PID為1240的進程</td>
+</tr>
+</tbody>
+</table>
+<h4 id="network-related-fields">Network Related Fields</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>KQL 範例</th>
+<th>輸出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source.ip</td>
+<td>source.ip: 127.0.0.1</td>
+<td>尋找源IP地址中的任何出站流量</td>
+</tr>
+<tr>
+<td>destination.ip</td>
+<td>destination.ip: 23.184.192.62</td>
+<td>尋找目的IP地址中的任何入站流量</td>
+</tr>
+<tr>
+<td>destination.port</td>
+<td>destination.port: 443</td>
+<td>尋找目的端口中的任何入站流量，例如目的端口443</td>
+</tr>
+<tr>
+<td>dns.question.name</td>
+<td>dns.question.name: "www.youtube.com"</td>
+<td>尋找DNS查詢記錄查看DNS解析，包括網站youtube.com</td>
+</tr>
+<tr>
+<td>dns.response_code</td>
+<td>dns.response_code: "NXDOMAIN"</td>
+<td>尋找DNS響應代碼的返回碼，包含NXDOMAIN</td>
+</tr>
+<tr>
+<td>destination.geo.country_name</td>
+<td>destination.geo.country_name: "Canada"</td>
+<td>尋找目的地理國家欄位，例如Canada</td>
+</tr>
+</tbody>
+</table>
+<h4 id="authentication-related-fields">Authentication Related Fields</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>KQL 範例</th>
+<th>輸出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user.name</td>
+<td>event.category: "authentication" and user.name: john</td>
+<td>尋找用戶名john的登錄嘗試</td>
+</tr>
+<tr>
+<td>winlog.logon.type</td>
+<td>event.category: "authentication" and winlog.logon.type: 3</td>
+<td>尋找logon type為3（網路登錄）的驗證事件</td>
+</tr>
+<tr>
+<td>winlog.event_data.AuthenticationPackageName</td>
+<td>event.category: "authentication" and winlog.event_data.AuthenticationPackageName: "NTLM"</td>
+<td>尋找使用NTLM驗證包的驗證事件</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_1">常用查詢語法</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>event.provider:<span class="w"> </span><span class="s2">&quot;Microsoft-Windows-Sysmon&quot;</span><span class="w"> </span>and<span class="w"> </span>event.code:<span class="w"> </span><span class="m">11</span><span class="w">  </span>and<span class="w"> </span>winlog.event_data.TargetFilename<span class="w">  </span>:<span class="w"> </span>*.aspx
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># DNS相關查詢</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>agent.type<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;packetbeat&quot;</span><span class="w"> </span>and<span class="w"> </span>type:<span class="s2">&quot;dns&quot;</span><span class="w">  </span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>dns.question.registered_domain<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;XXX&quot;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># 程序監控</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>event.category:<span class="w"> </span>process<span class="w"> </span>and<span class="w"> </span>process.name:<span class="w"> </span>powershell.exe
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>process.command_line:<span class="w"> </span>*encoded*<span class="w"> </span>and<span class="w"> </span>event.category:<span class="w"> </span>process
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># 網路流量分析</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>source.ip:<span class="w"> </span><span class="m">192</span>.168.1.0/24<span class="w"> </span>and<span class="w"> </span>destination.port:<span class="w"> </span><span class="o">(</span><span class="m">443</span><span class="w"> </span>or<span class="w"> </span><span class="m">80</span><span class="o">)</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>event.category:<span class="w"> </span>network<span class="w"> </span>and<span class="w"> </span>destination.geo.country_name:<span class="w"> </span><span class="s2">&quot;China&quot;</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1"># 驗證事件</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>event.category:<span class="w"> </span>authentication<span class="w"> </span>and<span class="w"> </span>event.outcome:<span class="w"> </span>failure
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>winlog.event_id:<span class="w"> </span><span class="m">4625</span><span class="w"> </span>and<span class="w"> </span>user.name:<span class="w"> </span>administrator
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1"># 檔案操作</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>event.category:<span class="w"> </span>file<span class="w"> </span>and<span class="w"> </span>event.type:<span class="w"> </span>creation
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>file.extension:<span class="w"> </span><span class="o">(</span>exe<span class="w"> </span>or<span class="w"> </span>dll<span class="o">)</span><span class="w"> </span>and<span class="w"> </span>file.path:<span class="w"> </span>*temp*
+</span></code></pre></div>
 <ul>
-<li>
-<p><a href="https://www.elastic.co/elastic-stack">ELK Stack</a></p>
-</li>
 <li>
 <p><a href="https://www.splunk.com/zh_tw">splunk</a></p>
 </li>
@@ -1874,12 +2716,298 @@
 </ul>
 </li>
 </ul>
+<h2 id="memory-forensics">Memory Forensics</h2>
+<h3 id="volatility-framework">Volatility Framework</h3>
+<p>記憶體取證分析工具，用於分析記憶體映像檔案</p>
+<h4 id="system-profiling">System Profiling</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>識別作業系統版本</td>
+<td>imageinfo</td>
+<td><code>python vol.py -f memory.dump imageinfo</code></td>
+</tr>
+<tr>
+<td>分析KDBG結構</td>
+<td>kdbgscan</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 kdbgscan</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="processes-analysis">Processes Analysis</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>程序列表</td>
+<td>pslist</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 pslist</code></td>
+</tr>
+<tr>
+<td>程序父子關係</td>
+<td>pstree</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 pstree</code></td>
+</tr>
+<tr>
+<td>掃描程序 (含隱藏/終止)</td>
+<td>psscan</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 psscan</code></td>
+</tr>
+<tr>
+<td>隱藏程序檢查</td>
+<td>psxview</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 psxview</code></td>
+</tr>
+<tr>
+<td>程序詳細資訊</td>
+<td>psinfo</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 psinfo -p 1640</code></td>
+</tr>
+<tr>
+<td>程序權限</td>
+<td>privs</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 privs -p 1640</code></td>
+</tr>
+<tr>
+<td>程序執行緒</td>
+<td>threads</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 threads -p 1640</code></td>
+</tr>
+<tr>
+<td>程序SID</td>
+<td>getsids</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 getsids -p 1640</code></td>
+</tr>
+<tr>
+<td>程序令牌</td>
+<td>tokens</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 tokens -p 1640</code></td>
+</tr>
+<tr>
+<td>轉儲程序執行檔</td>
+<td>procdump</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 procdump -p 1640 --dump-dir=./</code></td>
+</tr>
+<tr>
+<td>虛擬位址描述符</td>
+<td>vadinfo</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 vadinfo -p 1640</code></td>
+</tr>
+<tr>
+<td>VAD樹結構</td>
+<td>vadtree</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 vadtree -p 1640</code></td>
+</tr>
+<tr>
+<td>遍歷VAD</td>
+<td>vadwalk</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 vadwalk -p 1640</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="network-connections">Network Connections</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>網路連線/網路活動</td>
+<td>netscan</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 netscan</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="persistence-techniques">Persistence Techniques</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>註冊表鍵值</td>
+<td>printkey</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 printkey -K "Software\Microsoft\Windows\CurrentVersion\Run"</code></td>
+</tr>
+<tr>
+<td>查找所有持久化機制</td>
+<td>autoruns</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 autoruns</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="filesystem">Filesystem</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>解析MFT項目</td>
+<td>mftparser</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 mftparser</code></td>
+</tr>
+<tr>
+<td>掃描檔案物件</td>
+<td>filescan</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 filescan</code></td>
+</tr>
+<tr>
+<td>轉儲檔案</td>
+<td>dumpfiles</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 dumpfiles -Q 0x000000007e410890 --dump-dir=./</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="advanced-analysis">Advanced Analysis</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>掃描DLL</td>
+<td>dlllist</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 dlllist -p 1640</code></td>
+</tr>
+<tr>
+<td>檢查處理程序句柄</td>
+<td>handles</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 handles -p 1640 -t Process,Thread</code></td>
+</tr>
+<tr>
+<td>命令行歷史</td>
+<td>cmdline</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 cmdline</code></td>
+</tr>
+<tr>
+<td>環境變數</td>
+<td>envars</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 envars</code></td>
+</tr>
+<tr>
+<td>記憶體字串搜尋</td>
+<td>strings</td>
+<td><code>strings memory.dump \| grep -i password</code></td>
+</tr>
+<tr>
+<td>轉儲程序記憶體</td>
+<td>memdump</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 memdump -p 1640 --dump-dir=./</code></td>
+</tr>
+<tr>
+<td>拿evtx</td>
+<td>dumpfiles + Evtxcmd</td>
+<td><code>python vol.py –f Win7SP1x86.vmem --profile=Win7SP1x86 dumpfiles --regex .evtx$ --ignore-case --dump-dir output</code> <code>EvtxECmd.exe -f "C:\Temp\Application.evtx" --csv "c:\temp\out"</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="malware-detection">Malware Detection</h4>
+<table>
+<thead>
+<tr>
+<th>分析項目</th>
+<th>插件</th>
+<th>命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>檢查程序注入</td>
+<td>malfind</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 malfind</code></td>
+</tr>
+<tr>
+<td>Hook檢測</td>
+<td>apihooks</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 apihooks</code></td>
+</tr>
+<tr>
+<td>SSDT Hook檢測</td>
+<td>ssdt</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 ssdt</code></td>
+</tr>
+<tr>
+<td>驅動程式掃描</td>
+<td>driverscan</td>
+<td><code>python vol.py -f memory.dump --profile=Win7SP1x64 driverscan</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">常用記憶體取證工具</h3>
+<ul>
+<li><a href="https://github.com/volatilityfoundation/volatility">Volatility</a><ul>
+<li>最流行的記憶體取證框架</li>
+<li>支援多種作業系統記憶體分析</li>
+</ul>
+</li>
+<li><a href="http://www.rekall-forensic.com/">Rekall</a><ul>
+<li>Google開發的記憶體取證工具</li>
+</ul>
+</li>
+<li><a href="https://github.com/ufrisk/MemProcFS">MemProcFS</a><ul>
+<li>將記憶體dump檔案掛載為虛擬檔案系統</li>
+</ul>
+</li>
+</ul>
+<h3 id="_3">記憶體取得方法</h3>
+<ul>
+<li><strong>Windows</strong><ul>
+<li>DumpIt.exe - 快速記憶體dump</li>
+<li>WinPmem - Google開發的記憶體取得工具</li>
+<li>hiberfil.sys - 休眠檔案（當系統關機時）</li>
+<li>pagefile.sys - 虛擬記憶體檔案</li>
+</ul>
+</li>
+<li><strong>Linux</strong><ul>
+<li><a href="https://github.com/504ensicsLabs/LiME">LiME</a> - Linux Memory Extractor</li>
+<li>dd指令 - <code>dd if=/dev/mem of=memory.dump</code></li>
+</ul>
+</li>
+<li><strong>Virtual Machines</strong><ul>
+<li>VMware: .vmem檔案</li>
+<li>VirtualBox: 儲存狀態檔案</li>
+</ul>
+</li>
+</ul>
 <h2 id="network-forensics">Network Forensics</h2>
 <ul>
 <li>wireshark</li>
 <li>NetworkMiner</li>
 <li>Zui <ul>
-<li>find who is attacker by alert</li>
+<li>find who is attacker by alert
+查看attacker掃描主機port指令
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>_path==&quot;conn&quot; and id.resp_h = xxx.xxx.xxx.xxx | cut id.resp_p | sort | uniq
+</span></code></pre></div></li>
 </ul>
 </li>
 </ul>
@@ -1961,65 +3089,102 @@
 <table>
 <thead>
 <tr>
-<th>Aspect</th>
+<th>項目</th>
 <th><strong>Shellbags</strong></th>
-<th><strong>$MFT (Master File Table)</strong></th>
+<th><strong>$MFT (主檔案表)</strong></th>
 <th><strong>$LogFile</strong></th>
 <th><code>$UsnJrnl:$J</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>📦 Source</td>
-<td>Registry (NTUSER.DAT / USRCLASS.DAT)</td>
-<td>NTFS file system metadata</td>
-<td>NTFS transactional log (operation history)</td>
-<td>NTFS update sequence number journal (USN Journal)</td>
+<td>📦 <strong>來源</strong></td>
+<td>註冊表 (NTUSER.DAT / USRCLASS.DAT)</td>
+<td>NTFS檔案系統中繼資料</td>
+<td>NTFS交易日誌 (操作歷程記錄)</td>
+<td>NTFS更新序號日誌 (USN Journal)</td>
 </tr>
 <tr>
-<td>📂 Tracks</td>
-<td>Folders accessed via File Explorer GUI (local, USB, network)</td>
-<td>Metadata and timestamps for every file/folder</td>
-<td>Low-level file/folder changes (create, rename, delete)</td>
-<td>All file/folder change events with USN IDs and timestamps</td>
+<td>📂 <strong>追蹤內容</strong></td>
+<td>透過檔案總管GUI存取的資料夾 (本機、USB、網路)</td>
+<td>每個檔案/資料夾的中繼資料和時間戳記</td>
+<td>低階檔案/資料夾變更 (建立、重新命名、刪除)</td>
+<td>所有檔案/資料夾變更事件，包含USN ID和時間戳記</td>
 </tr>
 <tr>
-<td>⏱️ Timestamps Included</td>
-<td>✅ Yes – folder access/creation timestamps</td>
-<td>✅ Yes – MACB timestamps (Modified, Accessed, Created, Entry Modified)</td>
-<td>✅ Yes – change timestamps (no content changes recorded)</td>
-<td>✅ Yes – detailed change times</td>
+<td>⏱️ <strong>包含時間戳記</strong></td>
+<td>✅ 是 – 資料夾存取/建立時間戳記</td>
+<td>✅ 是 – MACB時間戳記 (修改、存取、建立、項目修改時間)</td>
+<td>✅ 是 – 變更時間戳記 (不記錄內容變更)</td>
+<td>✅ 是 – 詳細的變更時間</td>
 </tr>
 <tr>
-<td>👁️ Focus of Analysis</td>
-<td>User GUI behavior: which folders were clicked/viewed?</td>
-<td>File presence and lifecycle metadata</td>
-<td>Change log, like a transaction record</td>
-<td>Tracks entire change history of files/folders</td>
+<td>👁️ <strong>分析重點</strong></td>
+<td>使用者GUI行為：哪些資料夾被點擊/檢視？</td>
+<td>檔案存在性和生命週期中繼資料</td>
+<td>變更日誌，類似交易記錄</td>
+<td>追蹤檔案/資料夾的完整變更歷史</td>
 </tr>
 <tr>
-<td>🧠 Purpose of Retention</td>
-<td>Store folder view settings and history (for UI consistency)</td>
-<td>Core structure for NTFS operation</td>
-<td>Provides file system consistency and crash recovery</td>
-<td>Enables quick file change lookup (for apps, indexing, backup)</td>
+<td>🧠 <strong>保留目的</strong></td>
+<td>儲存資料夾檢視設定和歷程 (維持UI一致性)</td>
+<td>NTFS操作的核心結構</td>
+<td>提供檔案系統一致性和當機復原</td>
+<td>提供快速檔案變更查詢 (應用程式、索引、備份使用)</td>
 </tr>
 <tr>
-<td>👣 Common Forensic Use Cases</td>
-<td>- Detect if a user accessed <code>\\10.10.5.86\shared</code><br>- Track lateral movement or USB use</td>
-<td>- Check if a file existed, when it was created<br>- Identify malicious file activity</td>
-<td>- Reconstruct sequence of malicious activity (e.g., payload creation)</td>
-<td>- Identify file usage and renaming/deletion events</td>
+<td>👣 <strong>常見鑑識用途</strong></td>
+<td>- 偵測使用者是否存取 <code>\\10.10.5.86\shared</code><br>- 追蹤橫向移動或USB使用</td>
+<td>- 檢查檔案是否存在、建立時間<br>- 識別惡意檔案活動</td>
+<td>- 重建惡意活動序列 (例如：惡意程式建立過程)</td>
+<td>- 識別檔案使用和重新命名/刪除事件</td>
 </tr>
 <tr>
-<td>🧪 Can Recover Deleted Files?</td>
-<td>❌ No – folder-based, does not retain deleted file info</td>
-<td>✅ Yes – traces may remain unless overwritten</td>
-<td>✅ Possibly – recover some actions if log is intact</td>
-<td>✅ Yes – shows file creation, renaming, deletion history</td>
+<td>🧪 <strong>可恢復刪除檔案？</strong></td>
+<td>❌ 否 – 基於資料夾，不保留刪除檔案資訊</td>
+<td>✅ 是 – 除非被覆寫，否則可能留有痕跡</td>
+<td>✅ 可能 – 如果日誌完整可恢復部分操作</td>
+<td>✅ 是 – 顯示檔案建立、重新命名、刪除歷史</td>
+</tr>
+<tr>
+<td>🔍 <strong>資料保留期間</strong></td>
+<td>長期保存 (直到使用者清理註冊表)</td>
+<td>永久保存 (直到檔案系統格式化或損毀)</td>
+<td>循環覆寫 (取決於系統活動量)</td>
+<td>循環覆寫 (預設約3天到數週)</td>
+</tr>
+<tr>
+<td>💾 <strong>檔案位置</strong></td>
+<td><code>C:\Users\[用戶]\NTUSER.DAT</code><br><code>C:\Users\[用戶]\AppData\Local\Microsoft\Windows\UsrClass.dat</code></td>
+<td><code>$MFT</code> (NTFS根目錄)</td>
+<td><code>$LogFile</code> (NTFS根目錄)</td>
+<td><code>$Extend\$UsnJrnl:$J</code> (NTFS)</td>
+</tr>
+<tr>
+<td>🛠️ <strong>分析工具</strong></td>
+<td>- Registry Explorer<br>- ShellBags Explorer<br>- RegRipper</td>
+<td>- MFTECmd<br>- FTK Imager<br>- Autopsy<br>- X-Ways Forensics</td>
+<td>- LogFileParser<br>- NTFS Log Tracker</td>
+<td>- UsnJrnl2Csv<br>- USN Analytics<br>- NTFS Log Tracker</td>
+</tr>
+<tr>
+<td>⚠️ <strong>限制</strong></td>
+<td>僅追蹤GUI操作，不包含命令列存取</td>
+<td>不包含檔案內容，僅中繼資料</td>
+<td>日誌大小有限，舊記錄會被覆寫</td>
+<td>不追蹤檔案內容變更，僅追蹤檔案系統變更</td>
 </tr>
 </tbody>
 </table>
+<h3 id="zone-identifier">Zone Identifier</h3>
+<p>當從瀏覽器（如 Edge、Chrome、IE）下載檔案時，Windows 會建立一個 NTFS 區段資料（ADS） 來記錄檔案來源，例如：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[ZoneTransfer]
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ZoneId=3
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ReferrerUrl=https://example.com
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>HostUrl=https://example.com/download/file.exe
+</span></code></pre></div>
+這通常儲存在 Zone.Identifier 流裡。</p>
+<p>要查看可以從FTK imager 中點擊下載的檔案看有沒有附加的Zone.Identifier</p>
 <hr />
 <h2 id="rapid-triage-tool">Rapid Triage tool</h2>
 <ul>
@@ -2086,7 +3251,6 @@
 <p>pagefile.sys C:/</p>
 </li>
 </ul>
-<h2 id="reference">reference</h2>
 
 
 

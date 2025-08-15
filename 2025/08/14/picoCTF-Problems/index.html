@@ -208,7 +208,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">picoCTF 題解整理</h1>
           <div class="last-updated">
-            Last updated: 2025-08-15 13:25:40
+            Last updated: 2025-08-15 13:54:41
           </div>
           <!-- 文章 -->
           <p>EASY :</p>
@@ -311,7 +311,6 @@
     <span class="token keyword">this</span><span class="token punctuation">.</span>moveDirection<span class="token punctuation">.</span>y <span class="token operator">=</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>讓玩家一跳就跳很高</p>
-<p>DEMO:<br><img src="/./gif/NoWayOut_sol1.gif"></p>
 <ol start="2">
 <li>刪除限制條件</li>
 </ol>
@@ -325,7 +324,6 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>讓玩家可以在空中連續跳</p>
-<p>DEMO:<br><img src="/./gif/NoWayOut_sol2.gif"></p>
 <p>另外，也可以注意到在APTX的 class中有一個條件</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>collision<span class="token punctuation">.</span>gameObject <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>player<span class="token punctuation">)</span>
 <span class="token punctuation">&#123;</span>
@@ -366,7 +364,7 @@
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>DEMO:<br><img src="/./gif/NoWayOut_sol3.gif"></p>
+
 <h4 id="解法二-CheatEngine"><a href="#解法二-CheatEngine" class="headerlink" title="解法二: CheatEngine"></a>解法二: CheatEngine</h4><p>使用cheatEngin獲得玩家位置的記憶體位置，修改掉數值達成穿牆<br><a target="_blank" rel="noopener" href="https://youtu.be/QgF4PQjeG-o?si=qvckIAU1Cr03s50d&t=604">參考影片</a></p>
 <p>flag:</p>
 <blockquote>
@@ -377,9 +375,9 @@
               <!-- 文章tags -->
               
                 
-                  <cosy-label href="/tags/picoCTF/" size="sm"># picoCTF</cosy-label>
-                  
                   <cosy-label href="/tags/Writeup/" size="sm"># Writeup</cosy-label>
+                  
+                  <cosy-label href="/tags/picoCTF/" size="sm"># picoCTF</cosy-label>
                   
                     
             </div>

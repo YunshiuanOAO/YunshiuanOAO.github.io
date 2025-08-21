@@ -95,10 +95,24 @@
         </a>
       </li></ul>
   <ul><li class="active">
-        <a href="/categories/CyberSecurity/">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M6.75 16.1a3 3 0 0 1 5.5 1.9"></path><path d="M17.25 16.1a3 3 0 0 0-5.5 1.9"></path></g></svg>
+        <a href="/categories/Blog/">
+          
           <div class="ellipsis">
-            <span>CyberSecurity</span>
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
           </div>
         </a>
       </li></ul>
@@ -158,8 +172,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/CyberSecurity/">
-      CyberSecurity
+    <a class="ellipsis" href="/categories/Blog/">
+      Blog
     </a>
     
     
@@ -208,7 +222,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">🛡️ BlueTeam CheatSheet</h1>
           <div class="last-updated">
-            Last updated: 2025-08-14 15:53:53
+            Last updated: 2025-08-20 20:14:07
           </div>
           <!-- 文章 -->
           <p>In this note, I organize the commons blue team skill</p>
@@ -876,40 +890,6 @@ file.extension: <span class="token punctuation">(</span>exe or dll<span class="t
 <td><code>python vol.py -f memory.dump --profile=Win7SP1x64 driverscan</code></td>
 </tr>
 </tbody></table>
-<h3 id="常用記憶體取證工具"><a href="#常用記憶體取證工具" class="headerlink" title="常用記憶體取證工具"></a>常用記憶體取證工具</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">Volatility</a><ul>
-<li>最流行的記憶體取證框架</li>
-<li>支援多種作業系統記憶體分析</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="http://www.rekall-forensic.com/">Rekall</a><ul>
-<li>Google開發的記憶體取證工具</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ufrisk/MemProcFS">MemProcFS</a><ul>
-<li>將記憶體dump檔案掛載為虛擬檔案系統</li>
-</ul>
-</li>
-</ul>
-<h3 id="記憶體取得方法"><a href="#記憶體取得方法" class="headerlink" title="記憶體取得方法"></a>記憶體取得方法</h3><ul>
-<li><strong>Windows</strong><ul>
-<li>DumpIt.exe - 快速記憶體dump</li>
-<li>WinPmem - Google開發的記憶體取得工具</li>
-<li>hiberfil.sys - 休眠檔案（當系統關機時）</li>
-<li>pagefile.sys - 虛擬記憶體檔案</li>
-</ul>
-</li>
-<li><strong>Linux</strong><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/504ensicsLabs/LiME">LiME</a> - Linux Memory Extractor</li>
-<li>dd指令 - <code>dd if=/dev/mem of=memory.dump</code></li>
-</ul>
-</li>
-<li><strong>Virtual Machines</strong><ul>
-<li>VMware: .vmem檔案</li>
-<li>VirtualBox: 儲存狀態檔案</li>
-</ul>
-</li>
-</ul>
 <h2 id="Network-Forensics"><a href="#Network-Forensics" class="headerlink" title="Network Forensics"></a>Network Forensics</h2><ul>
 <li>wireshark</li>
 <li>NetworkMiner</li>
@@ -1173,7 +1153,7 @@ HostUrl&#x3D;https:&#x2F;&#x2F;example.com&#x2F;download&#x2F;file.exe<span aria
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Event-code"><span class="toc-number">1.</span> <span class="toc-text">Event code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#winlog"><span class="toc-number">1.1.</span> <span class="toc-text">winlog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sysmon"><span class="toc-number">1.2.</span> <span class="toc-text">Sysmon</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDS-IPS"><span class="toc-number">2.</span> <span class="toc-text">IDS&#x2F;IPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SIEM"><span class="toc-number">3.</span> <span class="toc-text">SIEM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ELK-Stack"><span class="toc-number">3.1.</span> <span class="toc-text">ELK Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DFIR"><span class="toc-number">4.</span> <span class="toc-text">DFIR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTI"><span class="toc-number">5.</span> <span class="toc-text">CTI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#malware-analysis"><span class="toc-number">6.</span> <span class="toc-text">malware analysis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Memory-Forensics"><span class="toc-number">7.</span> <span class="toc-text">Memory Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volatility-Framework"><span class="toc-number">7.1.</span> <span class="toc-text">Volatility Framework</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E8%A8%98%E6%86%B6%E9%AB%94%E5%8F%96%E8%AD%89%E5%B7%A5%E5%85%B7"><span class="toc-number">7.2.</span> <span class="toc-text">常用記憶體取證工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%98%E6%86%B6%E9%AB%94%E5%8F%96%E5%BE%97%E6%96%B9%E6%B3%95"><span class="toc-number">7.3.</span> <span class="toc-text">記憶體取得方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Forensics"><span class="toc-number">8.</span> <span class="toc-text">Network Forensics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#disk-Forensics"><span class="toc-number">9.</span> <span class="toc-text">disk Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zone-Identifier"><span class="toc-number">9.1.</span> <span class="toc-text">Zone Identifier</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rapid-Triage-tool"><span class="toc-number">10.</span> <span class="toc-text">Rapid Triage tool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Acquision"><span class="toc-number">11.</span> <span class="toc-text">Acquision</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Event-code"><span class="toc-number">1.</span> <span class="toc-text">Event code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#winlog"><span class="toc-number">1.1.</span> <span class="toc-text">winlog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sysmon"><span class="toc-number">1.2.</span> <span class="toc-text">Sysmon</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDS-IPS"><span class="toc-number">2.</span> <span class="toc-text">IDS&#x2F;IPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SIEM"><span class="toc-number">3.</span> <span class="toc-text">SIEM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ELK-Stack"><span class="toc-number">3.1.</span> <span class="toc-text">ELK Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DFIR"><span class="toc-number">4.</span> <span class="toc-text">DFIR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTI"><span class="toc-number">5.</span> <span class="toc-text">CTI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#malware-analysis"><span class="toc-number">6.</span> <span class="toc-text">malware analysis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Memory-Forensics"><span class="toc-number">7.</span> <span class="toc-text">Memory Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volatility-Framework"><span class="toc-number">7.1.</span> <span class="toc-text">Volatility Framework</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Forensics"><span class="toc-number">8.</span> <span class="toc-text">Network Forensics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#disk-Forensics"><span class="toc-number">9.</span> <span class="toc-text">disk Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zone-Identifier"><span class="toc-number">9.1.</span> <span class="toc-text">Zone Identifier</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rapid-Triage-tool"><span class="toc-number">10.</span> <span class="toc-text">Rapid Triage tool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Acquision"><span class="toc-number">11.</span> <span class="toc-text">Acquision</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

@@ -222,7 +222,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">2025 SEKAICTF Web 題解</h1>
           <div class="last-updated">
-            Last updated: 2025-08-20 21:47:18
+            Last updated: 2025-08-21 15:11:43
           </div>
           <!-- 文章 -->
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這場比賽的題解會以學習Web為主，Writeup會參考<a target="_blank" rel="noopener" href="https://github.com/project-sekai-ctf/sekaictf-2025/tree/main/web">官方github連結</a>以及其他參賽者在網路上討論的內容</p>
@@ -231,8 +231,16 @@
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">5001</span><span class="token punctuation">,</span> debug<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>發現到他有開啟debug mod，根據<a target="_blank" rel="noopener" href="https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html#werkzeug--flask-debug">這篇blog</a>可以試試看<code>/console</code>路徑</p>
-<p>但是這個console會需要用到密碼</p>
+<p>發現到他有開啟debug mod，根據<a target="_blank" rel="noopener" href="https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html#werkzeug--flask-debug">這篇blog</a>可以試試看<code>/console</code>路徑但是這個console會需要用到pin碼，這個密碼是可以爆破的，需要兩個<code>probably_public_bits</code>、<code>private_bits</code></p>
+<ul>
+<li><p>probably_public_bits</p>
+<ul>
+<li><code>username</code></li>
+</ul>
+</li>
+<li><p>private_bits</p>
+</li>
+</ul>
 <p>另外從源碼可以發現到</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/view'</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -247,7 +255,7 @@
         <span class="token keyword">return</span> <span class="token string">"File not found"</span><span class="token punctuation">,</span> <span class="token number">404</span>
     <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
         <span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f"Error: </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">str</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span> <span class="token number">500</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>訪問到view後他會訪問filename的參數，因此可以任意讀檔</p>
+<p>訪問到view後他會訪問filename的參數，因此可以任意讀檔，透過這個</p>
 
             <div class="post-tags">
               <!-- 文章tags -->

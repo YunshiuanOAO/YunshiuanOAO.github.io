@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    有時候 pslist 與 pstree 不可信
+  </title>
+  <meta name="description" content="記憶體鑑識技巧">
+  <meta name="keywords" content="Volatility,forensic,memoryforensic">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/21/psxview/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/Blog/">
+      Blog
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      有時候 pslist 與 pstree 
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">有時候 pslist 與 pstree 不可信</h1>
+          <div class="last-updated">
+            Last updated: 2025-09-21 19:46:17
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天想要介紹 psxview 這個plugin，有時候惡意程式不會出現在pslist或者pstree上，因此會需要使用psxview 幫我們進行比對，找出可疑進程</p>
+<hr>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Volatility"><a href="#Volatility" class="headerlink" title="Volatility"></a>Volatility</h2><p>下載連結：</p>
+<p>Volatility 2 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></p>
+<p>Volatility 3 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></p>
+<p>經典的記憶體分析工具，利用指令可以分析 memory dump 中的關鍵訊息，像是進程、網路連線、檔案……等等。</p>
+<p>基本的操作這邊推薦可以直接上網查有人整理好的指令doc</p>
+<p>而Volatility分為2與3版，差別就是一個是要使用 python2 執行，另一個是用 python3 執行，並且現在Volatility 2 已經沒有在維護了，但是一些 Plugin 的完整度在目前為止還是比 Volatility 3 還要高並且豐富，所以有些人還是會比較會偏向使用 Volatility 2 </p>
+<hr>
+<h1 id="什麼是pslist-pstree"><a href="#什麼是pslist-pstree" class="headerlink" title="什麼是pslist&#x2F;pstree"></a>什麼是pslist&#x2F;pstree</h1><p><del>對沒錯，講了六天的記憶體鑑識，現在才要談什麼是pslist&#x2F;pstree</del></p>
+<p>pslist&#x2F;pstree 可以幫助我們去查看這台電腦跑了什麼process，他們分析的方式是會根據Symbol Table 找到Windows Kernel的 PsActiveProcessHead 的位址，然後從那個鏈表開始沿 ActiveProcessLinks 指標逐一讀出 EPROCESS 結構並解析必要欄位，如：ImageFileName、UniqueProcessId、CreateTime、ExitTime 等</p>
+<p><img src="/assets/cghIGl_AaCJnL5zsvyk6TDeHL4Zf5T7ugVayuyE-uDo=.png" title="source:https:&#x2F;&#x2F;www.tophertimzen.com&#x2F;resources&#x2F;cs407&#x2F;slides&#x2F;week02_02-Processes.html#slide13"></p>
+<p>另外的pstree 以 pslist 的結果為基礎，轉成父子樹狀。</p>
+<p>那如果參考 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/m/articles/10321120">https://ithelp.ithome.com.tw/m/articles/10321120</a> 或者 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10335699">https://ithelp.ithome.com.tw/articles/10335699</a> 的其中一個方式， 可以發現其實惡意程式是可以去將process 隱藏起來的，並且讓pslist 與 pstree 無法偵測，因此我們可以使用 psscan 嘗試去偵測</p>
+<hr>
+<h1 id="什麼是psscan"><a href="#什麼是psscan" class="headerlink" title="什麼是psscan?"></a>什麼是psscan?</h1><p>首先要說明，Windows kernel 在為許多核心物件（例如 EPROCESS、ETHREAD、FILE_OBJECT）分配記憶體時，會在 <code>_POOL_HEADER</code> 中放置一個 4-byte 的 pool tag，用來標示該分配的用途或來源。</p>
+<p>psscan是一個使用 pool-tag scanning 的掃描器：它會在 memory dump 中搜尋<code>_POOL_HEADER</code> 與 pool tag，並且對找到的候選區塊做結構一致性檢查（例如欄位範圍、指標是否指向可讀記憶體、ProcessName 是否可讀等），來判定該區塊是否為一個有效的 EPROCESS／ETHREAD。因此，即使該程序物件已被從 kernel 的 active list unlink（例如被某些 rootkit 隱藏），只要其 pool 分配尚存在記憶體且尚未被覆寫，psscan 通常可以把它找到。</p>
+<pre class="line-numbers language-none"><code class="language-none">$vol -f MemoryDump.mem windows.psscan
+Volatility 3 Framework 2.11.0
+Progress:  100.00		PDB scanning finished
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime	File output
+
+832	676	msdtc.exe	0xad8185861280	9	-	0	False	2023-05-21 22:29:25.000000 UTC	N&#x2F;A	Disabled
+4	0	System	0xad8185883180	157	-	N&#x2F;A	False	2023-05-21 22:27:10.000000 UTC	N&#x2F;A	Disabled
+108	4	Registry	0xad81858f2080	4	-	N&#x2F;A	False	2023-05-21 22:26:54.000000 UTC	N&#x2F;A	Disabled
+3028	676	dllhost.exe	0xad8185907080	12	-	0	False	2023-05-21 22:29:20.000000 UTC	N&#x2F;A	Disabled
+5704	824	RuntimeBroker.	0xad8185962080	5	-	1	False	2023-05-21 22:32:44.000000 UTC	N&#x2F;A	Disabled
+332	4	smss.exe	0xad81860dc040	2	-	N&#x2F;A	False	2023-05-21 22:27:10.000000 UTC	N&#x2F;A	Disabled
+452	444	csrss.exe	0xad81861cd080	12	-	0	False	2023-05-21 22:27:22.000000 UTC	N&#x2F;A	Disabled
+2404	2152	vm3dservice.ex	0xad8186619200	2	-	1	False	2023-05-21 22:28:32.000000 UTC	N&#x2F;A	Disabled
+528	520	csrss.exe	0xad8186f1b140	14	-	1	False	2023-05-21 22:27:25.000000 UTC	N&#x2F;A	Disabled
+552	444	wininit.exe	0xad8186f2b080	1	-	0	False	2023-05-21 22:27:25.000000 UTC	N&#x2F;A	Disabled
+588	520	winlogon.exe	0xad8186f450c0	5	-	1	False	2023-05-21 22:27:25.000000 UTC	N&#x2F;A	Disabled
+372	824	SkypeBackgroun	0xad8186f49080	3	-	1	False	2023-05-21 22:10:00.000000 UTC	N&#x2F;A	Disabled
+1232	676	svchost.exe	0xad8186f4a2c0	7	-	0	False	2023-05-21 22:29:39.000000 UTC	N&#x2F;A	Disabled
+676	552	services.exe	0xad8186f4d080	7	-	0	False	2023-05-21 22:27:29.000000 UTC	N&#x2F;A	Disabled
+696	552	lsass.exe	0xad8186fc6080	10	-	0	False	2023-05-21 22:27:29.000000 UTC	N&#x2F;A	Disabled
+852	552	fontdrvhost.ex	0xad818761b0c0	5	-	0	False	2023-05-21 22:27:33.000000 UTC	N&#x2F;A	Disabled
+824	676	svchost.exe	0xad818761d240	22	-	0	False	2023-05-21 22:27:32.000000 UTC	N&#x2F;A	Disabled
+860	588	fontdrvhost.ex	0xad818761f140	5	-	1	False	2023-05-21 22:27:33.000000 UTC	N&#x2F;A	Disabled
+952	676	svchost.exe	0xad81876802c0	12	-	0	False	2023-05-21 22:27:36.000000 UTC	N&#x2F;A	Disabled
+1016	588	dwm.exe	0xad81876e4340	15	-	1	False	2023-05-21 22:27:38.000000 UTC	N&#x2F;A	Disabled
+5656	824	RuntimeBroker.	0xad81876e8080	0	-	1	False	2023-05-21 21:58:19.000000 UTC	2023-05-21 22:02:01.000000 UTC	Disabled
+448	676	svchost.exe	0xad8187721240	54	-	0	False	2023-05-21 22:27:41.000000 UTC	N&#x2F;A	Disabled
+1012	676	svchost.exe	0xad818774c080	19	-	0	False	2023-05-21 22:27:43.000000 UTC	N&#x2F;A	Disabled
+752	676	svchost.exe	0xad8187758280	21	-	0	False	2023-05-21 22:27:43.000000 UTC	N&#x2F;A	Disabled
+1196	676	svchost.exe	0xad81877972c0	34	-	0	False	2023-05-21 22:27:46.000000 UTC	N&#x2F;A	Disabled
+1376	676	svchost.exe	0xad81878020c0	15	-	0	False	2023-05-21 22:27:49.000000 UTC	N&#x2F;A	Disabled
+1280	4	MemCompression	0xad8187835080	62	-	N&#x2F;A	False	2023-05-21 22:27:49.000000 UTC	N&#x2F;A	Disabled
+1448	676	svchost.exe	0xad818796c2c0	30	-	0	False	2023-05-21 22:27:52.000000 UTC	N&#x2F;A	Disabled
+1496	676	svchost.exe	0xad81879752c0	12	-	0	False	2023-05-21 22:27:52.000000 UTC	N&#x2F;A	Disabled
+1644	676	svchost.exe	0xad8187a112c0	6	-	0	False	2023-05-21 22:27:58.000000 UTC	N&#x2F;A	Disabled
+1652	676	svchost.exe	0xad8187a2d2c0	10	-	0	False	2023-05-21 22:27:58.000000 UTC	N&#x2F;A	Disabled
+8896	5328	msedge.exe	0xad8187a39080	18	-	1	False	2023-05-21 22:28:21.000000 UTC	N&#x2F;A	Disabled
+1840	676	spoolsv.exe	0xad8187acb200	10	-	0	False	2023-05-21 22:28:03.000000 UTC	N&#x2F;A	Disabled
+1892	676	svchost.exe	0xad8187b34080	14	-	0	False	2023-05-21 22:28:05.000000 UTC	N&#x2F;A	Disabled
+2024	676	svchost.exe	0xad8187b65240	7	-	0	False	2023-05-21 22:28:11.000000 UTC	N&#x2F;A	Disabled
+2076	676	svchost.exe	0xad8187b94080	10	-	0	False	2023-05-21 22:28:19.000000 UTC	N&#x2F;A	Disabled
+1120	676	MsMpEng.exe	0xad818945c080	12	-	0	False	2023-05-21 22:10:01.000000 UTC	N&#x2F;A	Disabled
+2144	676	vmtoolsd.exe	0xad81896ab080	11	-	0	False	2023-05-21 22:28:19.000000 UTC	N&#x2F;A	Disabled
+2152	676	vm3dservice.ex	0xad81896ae240	2	-	0	False	2023-05-21 22:28:19.000000 UTC	N&#x2F;A	Disabled
+2200	676	VGAuthService.	0xad81896b3300	2	-	0	False	2023-05-21 22:28:19.000000 UTC	N&#x2F;A	Disabled
+3252	3580	vmtoolsd.exe	0xad8189796300	8	-	1	False	2023-05-21 22:31:59.000000 UTC	N&#x2F;A	Disabled
+464	3580	SecurityHealth	0xad818979d080	3	-	1	False	2023-05-21 22:31:59.000000 UTC	N&#x2F;A	Disabled
+130195296305516	127577716190325	�	0xad818997494d	1342177466	-	-	True	2000-08-31 04:07:25.000000 UTC	-	Disabled
+2044	676	svchost.exe	0xad8189b27080	28	-	0	False	2023-05-21 22:49:29.000000 UTC	N&#x2F;A	Disabled
+3876	448	taskhostw.exe	0xad8189b30080	8	-	1	False	2023-05-21 22:08:02.000000 UTC	N&#x2F;A	Disabled
+5896	8844	oneetx.exe	0xad8189b41080	5	-	1	True	2023-05-21 22:30:56.000000 UTC	N&#x2F;A	Disabled
+3204	752	ctfmon.exe	0xad8189c8b280	12	-	1	False	2023-05-21 22:30:11.000000 UTC	N&#x2F;A	Disabled
+1600	448	taskhostw.exe	0xad8189d07300	10	-	1	False	2023-05-21 22:30:09.000000 UTC	N&#x2F;A	Disabled
+1064	676	svchost.exe	0xad8189d7c2c0	15	-	1	False	2023-05-21 22:30:09.000000 UTC	N&#x2F;A	Disabled
+1392	448	sihost.exe	0xad8189e94280	11	-	1	False	2023-05-21 22:30:08.000000 UTC	N&#x2F;A	Disabled
+3556	588	userinit.exe	0xad818c02f340	0	-	1	False	2023-05-21 22:30:28.000000 UTC	2023-05-21 22:30:43.000000 UTC	Disabled
+3580	3556	explorer.exe	0xad818c047340	76	-	1	False	2023-05-21 22:30:28.000000 UTC	N&#x2F;A	Disabled
+3944	824	WmiPrvSE.exe	0xad818c054080	13	-	0	False	2023-05-21 22:30:44.000000 UTC	N&#x2F;A	Disabled
+4448	824	RuntimeBroker.	0xad818c09a080	9	-	1	False	2023-05-21 22:31:33.000000 UTC	N&#x2F;A	Disabled
+6544	5328	msedge.exe	0xad818c0ea080	18	-	1	False	2023-05-21 22:22:35.000000 UTC	N&#x2F;A	Disabled
+3004	676	svchost.exe	0xad818c4212c0	7	-	0	False	2023-05-21 22:30:55.000000 UTC	N&#x2F;A	Disabled
+1116	676	svchost.exe	0xad818c426080	6	-	1	False	2023-05-21 22:31:00.000000 UTC	N&#x2F;A	Disabled
+6696	676	svchost.exe	0xad818c532080	8	-	0	False	2023-05-21 22:34:07.000000 UTC	N&#x2F;A	Disabled
+5156	5328	msedge.exe	0xad818c553080	14	-	1	False	2023-05-21 22:28:22.000000 UTC	N&#x2F;A	Disabled
+3160	824	StartMenuExper	0xad818cad3240	14	-	1	False	2023-05-21 22:31:21.000000 UTC	N&#x2F;A	Disabled
+7160	824	SearchApp.exe	0xad818ccc4080	57	-	1	False	2023-05-21 22:39:13.000000 UTC	N&#x2F;A	Disabled
+4116	824	RuntimeBroker.	0xad818cd93300	3	-	1	False	2023-05-21 22:31:24.000000 UTC	N&#x2F;A	Disabled
+4228	676	SearchIndexer.	0xad818ce06240	15	-	0	False	2023-05-21 22:31:27.000000 UTC	N&#x2F;A	Disabled
+3608	676	svchost.exe	0xad818d07a080	3	-	0	False	2023-05-21 22:41:28.000000 UTC	N&#x2F;A	Disabled
+5328	3580	msedge.exe	0xad818d0980c0	54	-	1	False	2023-05-21 22:32:02.000000 UTC	N&#x2F;A	Disabled
+1916	824	SearchApp.exe	0xad818d099080	24	-	1	False	2023-05-21 22:33:05.000000 UTC	N&#x2F;A	Disabled
+6200	676	SgrmBroker.exe	0xad818d09f080	7	-	0	False	2023-05-21 22:33:42.000000 UTC	N&#x2F;A	Disabled
+2228	3580	FTK Imager.exe	0xad818d143080	10	-	1	False	2023-05-21 22:43:56.000000 UTC	N&#x2F;A	Disabled
+1764	824	dllhost.exe	0xad818d176080	7	-	1	False	2023-05-21 22:32:48.000000 UTC	N&#x2F;A	Disabled
+7732	5896	rundll32.exe	0xad818d1912c0	1	-	1	True	2023-05-21 22:31:53.000000 UTC	N&#x2F;A	Disabled
+5136	676	SecurityHealth	0xad818d374280	7	-	0	False	2023-05-21 22:32:01.000000 UTC	N&#x2F;A	Disabled
+6644	824	SkypeApp.exe	0xad818d3ac080	49	-	1	False	2023-05-21 22:41:52.000000 UTC	N&#x2F;A	Disabled
+5480	448	oneetx.exe	0xad818d3d6080	6	-	1	True	2023-05-21 23:03:00.000000 UTC	N&#x2F;A	Disabled
+8708	676	svchost.exe	0xad818d431080	5	-	0	False	2023-05-21 22:57:33.000000 UTC	N&#x2F;A	Disabled
+4396	5328	msedge.exe	0xad818d515080	7	-	1	False	2023-05-21 22:32:19.000000 UTC	N&#x2F;A	Disabled
+4544	5328	msedge.exe	0xad818d75b080	14	-	1	False	2023-05-21 22:32:39.000000 UTC	N&#x2F;A	Disabled
+1144	5328	msedge.exe	0xad818d75f080	18	-	1	False	2023-05-21 22:32:38.000000 UTC	N&#x2F;A	Disabled
+6292	5328	msedge.exe	0xad818d7a1080	20	-	1	False	2023-05-21 22:06:15.000000 UTC	N&#x2F;A	Disabled
+5340	5328	msedge.exe	0xad818d7b3080	10	-	1	False	2023-05-21 22:32:39.000000 UTC	N&#x2F;A	Disabled
+5636	3580	notepad.exe	0xad818db45080	1	-	1	False	2023-05-21 22:46:50.000000 UTC	N&#x2F;A	Disabled
+6048	448	taskhostw.exe	0xad818dc5d080	5	-	1	False	2023-05-21 22:40:20.000000 UTC	N&#x2F;A	Disabled
+6596	676	TrustedInstall	0xad818dc88080	4	-	0	False	2023-05-21 22:58:13.000000 UTC	N&#x2F;A	Disabled
+5808	824	HxTsr.exe	0xad818de5d080	0	-	1	False	2023-05-21 21:59:58.000000 UTC	2023-05-21 22:07:45.000000 UTC	Disabled
+4628	6724	tun2socks.exe	0xad818de82340	0	-	1	True	2023-05-21 22:40:10.000000 UTC	2023-05-21 23:01:24.000000 UTC	Disabled
+7964	5328	msedge.exe	0xad818dee5080	19	-	1	False	2023-05-21 22:22:09.000000 UTC	N&#x2F;A	Disabled
+7696	824	dllhost.exe	0xad818dee6080	0	-	1	False	2023-05-21 23:02:40.000000 UTC	2023-05-21 23:02:45.000000 UTC	Disabled
+6324	1496	audiodg.exe	0xad818df2e080	4	-	0	False	2023-05-21 22:42:56.000000 UTC	N&#x2F;A	Disabled
+2388	5328	msedge.exe	0xad818e54c340	18	-	1	False	2023-05-21 22:05:35.000000 UTC	N&#x2F;A	Disabled
+6724	3580	Outline.exe	0xad818e578080	0	-	1	True	2023-05-21 22:36:09.000000 UTC	2023-05-21 23:01:24.000000 UTC	Disabled
+8952	824	TextInputHost.	0xad818e6db080	10	-	1	False	2023-05-21 21:59:11.000000 UTC	N&#x2F;A	Disabled
+5476	676	svchost.exe	0xad818e752080	9	-	0	False	2023-05-21 22:58:08.000000 UTC	N&#x2F;A	Disabled
+2332	824	TiWorker.exe	0xad818e780080	4	-	0	False	2023-05-21 22:58:13.000000 UTC	N&#x2F;A	Disabled
+7312	824	ApplicationFra	0xad818e84f300	10	-	1	False	2023-05-21 22:35:44.000000 UTC	N&#x2F;A	Disabled
+4340	676	VSSVC.exe	0xad818e888080	3	-	0	False	2023-05-21 23:01:06.000000 UTC	N&#x2F;A	Disabled
+4224	6724	Outline.exe	0xad818e88b080	0	-	1	True	2023-05-21 22:36:23.000000 UTC	2023-05-21 23:01:24.000000 UTC	Disabled
+7772	676	svchost.exe	0xad818e88e140	3	-	0	False	2023-05-21 22:36:03.000000 UTC	N&#x2F;A	Disabled
+7540	824	smartscreen.ex	0xad818e893080	14	-	1	False	2023-05-21 23:02:26.000000 UTC	N&#x2F;A	Disabled
+7788	2916	conhost.exe	0xad818e8a1080	0	-	0	False	2023-05-21 23:01:27.000000 UTC	2023-05-21 23:01:48.000000 UTC	Disabled
+7336	824	RuntimeBroker.	0xad818e8bb080	2	-	1	False	2023-05-21 22:11:39.000000 UTC	N&#x2F;A	Disabled
+6076	824	ShellExperienc	0xad818eb18080	14	-	1	False	2023-05-21 22:11:36.000000 UTC	N&#x2F;A	Disabled
+8264	824	RuntimeBroker.	0xad818eec8080	4	-	1	False	2023-05-21 22:40:33.000000 UTC	N&#x2F;A	Disabled
+8920	3580	FTK Imager.exe	0xad818ef81080	20	-	1	False	2023-05-21 23:02:28.000000 UTC	N&#x2F;A	Disabled
+5964	676	svchost.exe	0xad818ef86080	5	-	0	False	2023-05-21 22:27:56.000000 UTC	N&#x2F;A	Disabled
+125689842201708	208586546348048	dexer	0xad818f4f62ad	16777219	-	-	True	2000-08-31 04:05:52.000000 UTC	-	Disabled
+4396	5328	msedge.exe	0xbe8505fbf080	7	-	1	False	2023-05-21 22:32:19.000000 UTC	N&#x2F;A	Disabled<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>那我們知道psscan之後我們如果要比對跟pslist 的結果太麻煩了，因此有一個plugin 可以幫助我們進行比對，這個 plugin就是我們今天的主題 <strong>psxview</strong></p>
+<hr>
+<h1 id="什麼是psxview"><a href="#什麼是psxview" class="headerlink" title="什麼是psxview ?"></a>什麼是psxview ?</h1><p>這個plugin 會將我們剛剛提到的pslist&#x2F;pstree與psscan以及其他thrdscan、csrss作比較，如果沒有出現在相對應的掃描上就會出現 False， 否則就會出現 true，因此如果有一個process 他在pslist 出現False 但在psscan出現True 那就可以嘗試去分析看看是不是rootkit</p>
+<pre class="line-numbers language-none"><code class="language-none">$ vol -f MemoryDump.mem windows.psxview.PsXView
+Volatility 3 Framework 2.11.0
+Progress:  100.00		PDB scanning finished
+Offset(Virtual)	Name	PID	pslist	psscan	thrdscan	csrss	Exit Time
+
+0xad8187acb200	spoolsv.exe	1840	True	True	True	True
+0xad81896ab080	vmtoolsd.exe	2144	True	True	True	True
+0xad8185907080	dllhost.exe	3028	True	True	True	True
+0xad818d75b080	msedge.exe	4544	True	True	True	True
+0xad818d75f080	msedge.exe	1144	True	True	True	True
+0xad818d09f080	SgrmBroker.exe	6200	True	True	True	True
+0xad818e88b080	Outline.exe	4224	True	True	False	False	2023-05-21 23:01:24+00:00
+0xad818e6db080	TextInputHost.	8952	True	True	True	True
+0xad818d7b3080	msedge.exe	5340	True	True	True	True
+0xad818e8bb080	RuntimeBroker.	7336	True	True	True	True
+0xad818c553080	msedge.exe	5156	True	True	True	True
+0xad8189c8b280	ctfmon.exe	3204	True	True	True	True
+0xad818db45080	notepad.exe	5636	True	True	True	True
+0xad81860dc040	smss.exe	332	True	True	True	False
+0xad818761d240	svchost.exe	824	True	True	True	True
+0xad8187721240	svchost.exe	448	True	True	True	True
+0xad8187b65240	svchost.exe	2024	True	True	True	True
+0xad818cad3240	StartMenuExper	3160	True	True	True	True
+0xad818ce06240	SearchIndexer.	4228	True	True	True	True
+0xad818c4212c0	svchost.exe	3004	True	True	True	True
+0xad818e893080	smartscreen.ex	7540	True	True	True	True
+0xad818e578080	Outline.exe	6724	True	True	True	False	2023-05-21 23:01:24+00:00
+0xad81858f2080	Registry	108	True	True	True	False
+0xad81861cd080	csrss.exe	452	True	True	True	False
+0xad8186f2b080	wininit.exe	552	True	True	True	True
+0xad8186f4d080	services.exe	676	True	True	True	True
+0xad8186fc6080	lsass.exe	696	True	True	True	True
+0xad818774c080	svchost.exe	1012	True	True	True	True
+0xad8187835080	MemCompression	1280	True	True	True	False
+0xad8187758280	svchost.exe	752	True	True	True	True
+0xad8187b34080	svchost.exe	1892	True	True	True	True
+0xad8187b94080	svchost.exe	2076	True	True	True	True
+0xad818c054080	WmiPrvSE.exe	3944	True	True	True	True
+0xad818945c080	MsMpEng.exe	1120	True	True	True	True
+0xad818ccc4080	SearchApp.exe	7160	True	True	True	True
+0xad818eec8080	RuntimeBroker.	8264	True	True	True	True
+0xad81876e8080	RuntimeBroker.	5656	True	True	False	False	2023-05-21 22:02:01+00:00
+0xad8189e94280	sihost.exe	1392	True	True	True	True
+0xad818d374280	SecurityHealth	5136	True	True	True	True
+0xad818e780080	TiWorker.exe	2332	True	True	True	True
+0xad818f4f62ad	dexer	125689842201708	False	True	False	False
+0xad8189b27080	svchost.exe	2044	True	True	True	True
+0xad818dc88080	TrustedInstall	6596	True	True	True	True
+0xad818e888080	VSSVC.exe	4340	True	True	True	True
+0xad8186f450c0	winlogon.exe	588	True	True	True	True
+0xad818761b0c0	fontdrvhost.ex	852	True	True	True	True
+0xad81877972c0	svchost.exe	1196	True	True	True	True
+0xad81876802c0	svchost.exe	952	True	True	True	True
+0xad81878020c0	svchost.exe	1376	True	True	True	True
+0xad818d0980c0	msedge.exe	5328	True	True	True	True
+0xad818796c2c0	svchost.exe	1448	True	True	True	True
+0xad81879752c0	svchost.exe	1496	True	True	True	True
+0xad8187a112c0	svchost.exe	1644	True	True	True	True
+0xad8187a2d2c0	svchost.exe	1652	True	True	True	True
+0xad8186f4a2c0	svchost.exe	1232	True	True	True	True
+0xad818d3d6080	oneetx.exe	5480	True	True	True	True
+0xad818eb18080	ShellExperienc	6076	True	True	True	True
+0xad81896b3300	VGAuthService.	2200	True	True	True	True
+0xad8189d07300	taskhostw.exe	1600	True	True	True	True
+0xad818cd93300	RuntimeBroker.	4116	True	True	True	True
+0xad8189796300	vmtoolsd.exe	3252	True	True	True	True
+0xad818e84f300	ApplicationFra	7312	True	True	True	True
+0xad818979d080	SecurityHealth	464	True	True	True	True
+0xad818dc5d080	taskhostw.exe	6048	True	True	True	True
+0xad818de5d080	HxTsr.exe	5808	True	True	False	False	2023-05-21 22:07:45+00:00
+0xad818d7a1080	msedge.exe	6292	True	True	True	True
+0xad8186f49080	SkypeBackgroun	372	True	True	True	True
+0xad818d515080	msedge.exe	4396	True	True	True	True
+0xad818d099080	SearchApp.exe	1916	True	True	True	True
+0xad818dee5080	msedge.exe	7964	True	True	True	True
+0xad8187a39080	msedge.exe	8896	True	True	True	True
+0xad8189b41080	oneetx.exe	5896	True	True	True	True
+0xad8185861280	msdtc.exe	832	True	True	True	True
+0xbe8505fbf080	msedge.exe	4396	False	True	False	False
+0xad818ef81080	FTK Imager.exe	8920	True	True	True	True
+0xad818d143080	FTK Imager.exe	2228	True	True	True	True
+0xad818dee6080	dllhost.exe	7696	False	True	False	False	2023-05-21 23:02:45+00:00
+0xad8186f1b140	csrss.exe	528	True	True	True	False
+0xad818761f140	fontdrvhost.ex	860	True	True	True	True
+0xad81876e4340	dwm.exe	1016	True	True	True	True
+0xad818e88e140	svchost.exe	7772	True	True	True	True
+0xad818c02f340	userinit.exe	3556	True	True	False	False	2023-05-21 22:30:43+00:00
+0xad818c047340	explorer.exe	3580	True	True	True	True
+0xad818e54c340	msedge.exe	2388	True	True	True	True
+0xad818d3ac080	SkypeApp.exe	6644	True	True	True	True
+0xad8189b30080	taskhostw.exe	3876	True	True	True	True
+0xad8185883180	System	4	True	True	True	False
+0xad818c09a080	RuntimeBroker.	4448	True	True	True	True
+0xad818d07a080	svchost.exe	3608	True	True	True	True
+0xad8185962080	RuntimeBroker.	5704	True	True	True	True
+0xad818c426080	svchost.exe	1116	True	True	True	True
+0xad818c532080	svchost.exe	6696	True	True	True	True
+0xad818d176080	dllhost.exe	1764	True	True	True	True
+0xad818c0ea080	msedge.exe	6544	True	True	True	True
+0xad818ef86080	svchost.exe	5964	True	True	True	True
+0xad818df2e080	audiodg.exe	6324	True	True	True	True
+0xad818e752080	svchost.exe	5476	True	True	True	True
+0xad818e8a1080	conhost.exe	7788	False	True	False	False	2023-05-21 23:01:48+00:00
+0xad8189d7c2c0	svchost.exe	1064	True	True	True	True
+0xad818d431080	svchost.exe	8708	True	True	True	True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h1 id="結論："><a href="#結論：" class="headerlink" title="結論："></a>結論：</h1><p>在記憶體鑑識時，有些惡意程式會隱藏自己讓pslist與pstree找不到，因此可以用PsXView 這個Plugin幫助我們去比對是否有可疑的程式。</p>
+<hr>
+<h1 id="📚-參考資料："><a href="#📚-參考資料：" class="headerlink" title="📚 參考資料："></a>📚 參考資料：</h1><p><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility/wiki/command-reference?utm%5C_source=chatgpt.com">https://github.com/volatilityfoundation/volatility/wiki/command-reference?utm\_source=chatgpt.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tophertimzen.com/resources/cs407/slides/week02/_02-Processes.html#slide6">https://www.tophertimzen.com/resources/cs407/slides/week02\_02-Processes.html#slide6</a></p>
+<p><a target="_blank" rel="noopener" href="https://dfrws.org/sites/default/files/session-files/2016/_EU/_pres/_pool/_tag/_-/_quick/_scanning/_for/_windows/_memory/_analysis.pdf?utm%5C_source=chatgpt.com">https://dfrws.org/sites/default/files/session-files/2016\_EU\_pres\_pool\_tag\_-\_quick\_scanning\_for\_windows\_memory\_analysis.pdf?utm\_source=chatgpt.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://notes.qazeer.io/dfir/common/memory/_forensics?utm%5C_source=chatgpt.com">https://notes.qazeer.io/dfir/common/memory\_forensics?utm\_source=chatgpt.com</a></p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Volatility/" size="sm"># Volatility</cosy-label>
+                  
+                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/memoryforensic/" size="sm"># memoryforensic</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility"><span class="toc-number">2.1.</span> <span class="toc-text">Volatility</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFpslist-pstree"><span class="toc-number">3.</span> <span class="toc-text">什麼是pslist&#x2F;pstree</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFpsscan"><span class="toc-number">4.</span> <span class="toc-text">什麼是psscan?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFpsxview"><span class="toc-number">5.</span> <span class="toc-text">什麼是psxview ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">結論：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">📚 參考資料：</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

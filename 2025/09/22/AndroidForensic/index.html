@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    撥開電腦的記憶找出最黑暗的部分
+    對小綠人進行一波大調查
   </title>
-  <meta name="description" content="Volatility介紹、記憶體鑑識介紹">
-  <meta name="keywords" content="Volatility,forensic,memoryforensic">
+  <meta name="description" content="Android Forensic">
+  <meta name="keywords" content="ALEAPP,forensic,Androidforensic">
   <meta name="author" content="yunshiuan">
-  <link rel="canonical" href="https://yunshiuan.com/2025/09/16/memoryforensic/">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/22/AndroidForensic/">
   
   
   <link rel="icon" href='/assets/favicon.png'>
@@ -184,7 +184,7 @@
       </g>
     </svg>
     <span class="ellipsis">
-      撥開電腦的記憶找出最黑暗的部分
+      對小綠人進行一波大調查
     </span>
     
   </section>
@@ -220,86 +220,62 @@
         <!-- 渲染文章内容 -->
         <article>
           <!-- 文章标题 -->
-          <h1 class="post-title">撥開電腦的記憶找出最黑暗的部分</h1>
+          <h1 class="post-title">對小綠人進行一波大調查</h1>
           <div class="last-updated">
-            Last updated: 2025-09-16 12:46:33
+            Last updated: 2025-09-22 17:27:37
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>記憶體分析我認為是如果在一個 CTF 的 Forensic 分類上是比較有趣的題目，因為他不像硬碟鑑事隨隨便便就需要很大的空間，但是可以體驗到在一台被攻擊的電腦上尋找線索的感覺，因此今天要分享的是什麼是記憶體分析，以及最常使用的記憶體分析工具 Volatility。</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>大家不知道最近有沒有看過最新的 Netflix 紀錄片《陌生號碼：高校簡訊詐騙疑雲》，以及之前的《網路煉獄：揭發N 號房》，劇中都有出現一幕是鑑識人員將嫌疑犯的手機拿去進行證據採集，這讓我想到我可以研究看看如何對常見的 Android 以及 IOS 系統手機進行鑑識，但是因為直接買類似 Cellebrite UFED 的設備或者Magnet AXIOM軟體來玩需要花錢，因此今明兩天我會使用開源的分析工具並利用最近剛結束的MVS CTF 2025的android 與IOS 分類提供的dumpfiles來玩玩看。</p>
 <hr>
-<h1 id="🧠-什麼是記憶體鑑識"><a href="#🧠-什麼是記憶體鑑識" class="headerlink" title="🧠 什麼是記憶體鑑識?"></a>🧠 什麼是記憶體鑑識?</h1><p>記憶體鑑識是從電腦的隨機存取記憶體（RAM）中提取、分析和解釋數位證據的過程。其中會需要得知的是正在執行的程式、process、載入的library、網路連線狀態、使用者輸入、甚至密碼或加密金鑰，有些是根本沒寫到硬碟的那種。 ￼</p>
-<p>那為什麼需要記憶體鑑識?</p>
-<ol>
-<li>易失性資料保存<ol>
-<li>RAM中的資料在斷電後會消失</li>
-<li>許多重要證據只存在於記憶體中</li>
-<li>需要及時捕獲這些易失性資訊</li>
-</ol>
-</li>
-<li>惡意軟體分析<ol>
-<li>現代惡意軟體常駐記憶體，不留檔案痕跡</li>
-<li>Rootkit、無檔案攻擊</li>
-<li>記憶體注入技術</li>
-</ol>
-</li>
-<li>攻擊行為追蹤<ol>
-<li>網路連線狀態</li>
-<li>執行中的程序</li>
-<li>系統呼叫和API使用</li>
-</ol>
-</li>
-</ol>
-<p>所以如果拿到一台受攻擊的電腦，第一部會先對記憶體進行 dump ，因為有可能攻擊者會對 disk 做清除或者煙滅證據，但記憶體通常還是會紀錄這些攻擊證據，這就是為什麼記憶體分析這麼重要。</p>
-<p>而記憶體鑑識工具大家最常用的就是<strong>Volatility</strong> </p>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="ALEAPP"><a href="#ALEAPP" class="headerlink" title="ALEAPP"></a>ALEAPP</h2><p>下載連結：</p>
+<p>ALEAPP : <a target="_blank" rel="noopener" href="https://github.com/abrignoni/ALEAPP"> https://github.com/abrignoni/ALEAPP</a></p>
+<p>是由 Alexis Brignoni 開發的一個開源工具，用來做 Android 裝置的 證據檔案分析（forensic artifacts parsing）。其目的在於整理 Android 裝置中常見的 log、事件、Protobuf（如 Google Play Services 或其他使用 Protobuf 的 apps）等資料，協助數位鑑識與 incident response 調查人員快速取出與分析有用資料。</p>
 <hr>
-<h1 id="📈-Volatility"><a href="#📈-Volatility" class="headerlink" title="📈 Volatility"></a>📈 Volatility</h1><p>Volatility 是一個 memory forensics框架，用來從memory dump中提取系統運作時的各種資訊，包含正在跑的 process、網路連線、註冊表資料、開啟的 file handles 等等</p>
-<p><img src="/assets/4x0S5xFsoEzzfSCA27Jem2vPeA6639E9lqBBWVLKuk0=.png"></p>
-<p>最初的版本是 Volatility 2 ，因為寫在 Python 2 上，之後推出了 Volatility 3，並使用 Python3 編寫</p>
-<p>下載連結：</p>
-<ul>
-<li>Volatility 2 : <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></li>
-<li>Volatility 3 : <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></li>
-</ul>
-<p>Github 中安裝步驟都有寫在README.md上，而 Volatility 2 的安裝方式會比 3 的安裝會多一步是需要先安裝Python2 </p>
-<p>以下介紹一些 Volatility 2 跟 3 的基本操作</p>
-<h2 id="Volatility-2-基本操作"><a href="#Volatility-2-基本操作" class="headerlink" title="Volatility 2 基本操作"></a>Volatility 2 基本操作</h2><p>當你有一個記憶體 dump 的檔案，例如 memdump.img</p>
-<ol>
-<li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pslist
-python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pstree<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li>查看網路連線<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 netscan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>列出檔案<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 filescan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>dump files<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 dumpfiles dumpfiles -Q 0x000000003fc61be0 -D c:\files -u<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-<p>其他對應指令可以下 <code>-h</code> 查看或者看官方的doc </p>
+<p>今天的Android 的 dumpfiles 檔 以今年初剛結束的 MVS CTF 2025 檔中的Android 分類來分享</p>
+<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><p>下載連結 ： <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Ay-T4kE8J3NX-XLh0krarFvE9j8SK_LT/view">https://drive.google.com/file/d/1Ay-T4kE8J3NX-XLh0krarFvE9j8SK_LT/view</a></p>
+<p>這個連結下載會給一個Android 手機的 data 資料夾內容，並且是壓縮過後的。</p>
+<p>這邊可以分享一下在Android 11 後，沒有 root 的權限是沒有辦法去存取到 data 資料夾的，因此會需要一些第三方的工具才可以把它 dump 下來。</p>
+<p>我的猜測，這個 dump 的製作是使用一個<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk">Magisk</a> 工具安裝到裝置上，這個工具可以讓你獲得到 root 權限並無需修改系統分區，<a target="_blank" rel="noopener" href="https://izaka.tw/magisk-tutorial-and-installation-guide/">參考連結</a></p>
+<p>ALEPP他只支援tar&#x2F;zip&#x2F;gz檔案，因此我是先從連結上下載後解壓在重新壓縮成zip一次</p>
+<p>那得到檔案之後就可以丟給ALEAPP，上面是填題目給的檔案，下面是選他產生的分析結果要輸出到哪裡的資料夾</p>
+<p>下面的Module可以全選</p>
+<p><img src="/assets/mDASlDFj6hHZvVJoPZZZ210DAqwMwVXbJ-mrViOr-w4=.png"></p>
+<p>接下來按左下角的Process 他就會開始做分析，分析完之後他會再你跟剛剛填的路徑下新增一個資料夾，</p>
+<p><img src="/assets/lDtakJToWuHInXS9qc6ldb-xieSy0NSlWyeQBwburCs=.png"></p>
+<p>這些就是他將分析的結果轉成html ，類似生成一個報告，主要的頁面會在<code>index.html</code> 點開之後會進入到這個頁面</p>
+<p><img src="/assets/IvCPZq8bj5obL1jWJ0mLYUYg_gNCe6EhCRZm-CpzJGE=.png"></p>
+<p>之後就可以開始去翻有沒有什麼可疑的東西</p>
+<p>因為功能很多所以這邊今天這邊先介紹一部分內容。</p>
+<h2 id="Home-page"><a href="#Home-page" class="headerlink" title="Home page"></a>Home page</h2><p>首頁就會顯示一些手機的名稱、SIM卡資訊等等</p>
+<p><img src="/assets/Z2AoWqFIXBkawKwp5jiAnGuJy122aa8Tyd-SZjcOsOc=.png"></p>
+<h2 id="APP"><a href="#APP" class="headerlink" title="APP"></a>APP</h2><h3 id="APP-Icons"><a href="#APP-Icons" class="headerlink" title="APP Icons"></a>APP Icons</h3><p>這邊可以查看使用者在裝置上安裝了什麼app</p>
+<p><img src="/assets/5hibQen43Jn1ThRdY0x2r67KBkQ_yTAxbqaeRzwTUNA=.png"></p>
+<h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p>他會解析<code>packages.xml</code> ，紀錄了裝置上安裝過的所有套件（應用程式），包含：</p>
+<p>•	系統應用（隨 ROM 出廠）</p>
+<p>•	OEM 廠商附加應用</p>
+<p>•	使用者自行安裝的應用（例如從 Google Play Store、adb sideload 等）</p>
+<p><img src="/assets/lE9NediFoYvRMhSRjJrXjxl-wX8-nBMapXtwwlAYmJM=.png"></p>
+<h2 id="Bluetooth"><a href="#Bluetooth" class="headerlink" title="Bluetooth"></a>Bluetooth</h2><h3 id="Bluetooth-Adapter-Information"><a href="#Bluetooth-Adapter-Information" class="headerlink" title="Bluetooth Adapter Information"></a>Bluetooth Adapter Information</h3><p>這邊可以看到藍牙的一些設定</p>
+<p><img src="/assets/Jl_I6EruZUlSFYviq3RPTFNfNMnoUY4vPQckU9-sKpc=.png"></p>
+<h3 id="Bluetooth-Connections"><a href="#Bluetooth-Connections" class="headerlink" title="Bluetooth Connections"></a>Bluetooth Connections</h3><p>這邊可以看藍牙裝置連線紀錄</p>
+<p><img src="/assets/tTj3bI9f-yMf1GKbRGqfxsjClNGrxo9di4EThFU7qTw=.png"></p>
 <hr>
-<h2 id="Volatility-3-基本操作"><a href="#Volatility-3-基本操作" class="headerlink" title="Volatility 3 基本操作"></a>Volatility 3 基本操作</h2><p>Volatility 3 就不用再下 profile ，先假設 memdump.img 是 Windows </p>
-<ol>
-<li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.pslist
-python3 vol.py -f memdump.img windows.pstree<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li>查看網路連線<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.netscan
-python3 vol.py -f memdump.img windows.netstat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li>列出檔案<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.filescan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>dump files<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img -o .&#x2F;files_out windows.dumpfiles --pid 1234<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-<p>其他指令可以下 <code>-h</code> 查看或者看官方的doc </p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天簡單介紹ALEAPP 工具，以及如何使用，之後希望可以再更深入研究這部分，如：如何在手機未解鎖或在未授權的情況下還是可以把data 資料 dump 出來，以及更進階的分析技巧</p>
 <hr>
-<h1 id="要選Volatility2-還是-Volatility3"><a href="#要選Volatility2-還是-Volatility3" class="headerlink" title="要選Volatility2 還是 Volatility3 ?"></a>要選Volatility2 還是 Volatility3 ?</h1><p>我個人會建議兩個都裝， 因為有時候會出現Volatility2 跑出不來的，Volatility3 就可以，不然就是Volatility2有的插件Volatility3 沒有……等等，另外現在Volatility2 已經沒有再維護了，現在主要都是Volatility3還在持續的更新，但是Volatility2 以目前來說 Plugin 的完整度還是大於Volatility3，因此常常會看到有些人到現在還是會使用Volatility2 進行記憶體分析</p>
-<hr>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是記憶體鑑識以及Volatilty 工具使用，接下來幾天會分享我在學習記憶體分析時學到的有趣技術或者</p>
+<h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=eG55F8glV0o">https://www.youtube.com/watch?v=eG55F8glV0o</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L_rELVckEAA">https://www.youtube.com/watch?v=L_rELVckEAA</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BWDdwHL15og">https://www.youtube.com/watch?v=BWDdwHL15og</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-android.html">https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-android.html</a></p>
 
             <div class="post-tags">
               <!-- 文章tags -->
               
                 
+                  <cosy-label href="/tags/ALEAPP/" size="sm"># ALEAPP</cosy-label>
+                  
                   <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
                   
-                  <cosy-label href="/tags/Volatility/" size="sm"># Volatility</cosy-label>
-                  
-                  <cosy-label href="/tags/memoryforensic/" size="sm"># memoryforensic</cosy-label>
+                  <cosy-label href="/tags/Androidforensic/" size="sm"># Androidforensic</cosy-label>
                   
                     
             </div>
@@ -331,7 +307,7 @@ python3 vol.py -f memdump.img windows.netstat<span aria-hidden="true" class="lin
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%BB%80%E9%BA%BC%E6%98%AF%E8%A8%98%E6%86%B6%E9%AB%94%E9%91%91%E8%AD%98"><span class="toc-number">2.</span> <span class="toc-text">🧠 什麼是記憶體鑑識?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%88-Volatility"><span class="toc-number">3.</span> <span class="toc-text">📈 Volatility</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility-2-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">Volatility 2 基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility-3-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.</span> <span class="toc-text">Volatility 3 基本操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A6%81%E9%81%B8Volatility2-%E9%82%84%E6%98%AF-Volatility3"><span class="toc-number">4.</span> <span class="toc-text">要選Volatility2 還是 Volatility3 ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ALEAPP"><span class="toc-number">2.1.</span> <span class="toc-text">ALEAPP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android"><span class="toc-number">3.</span> <span class="toc-text">Android</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Home-page"><span class="toc-number">3.1.</span> <span class="toc-text">Home page</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APP"><span class="toc-number">3.2.</span> <span class="toc-text">APP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APP-Icons"><span class="toc-number">3.2.1.</span> <span class="toc-text">APP Icons</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packages"><span class="toc-number">3.2.2.</span> <span class="toc-text">Packages</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bluetooth"><span class="toc-number">3.3.</span> <span class="toc-text">Bluetooth</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth-Adapter-Information"><span class="toc-number">3.3.1.</span> <span class="toc-text">Bluetooth Adapter Information</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth-Connections"><span class="toc-number">3.3.2.</span> <span class="toc-text">Bluetooth Connections</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">總結</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">📚 參考資料</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

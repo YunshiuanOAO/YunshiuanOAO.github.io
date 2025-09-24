@@ -222,7 +222,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">特別的圖片給特別的你</h1>
           <div class="last-updated">
-            Last updated: 2025-09-24 18:04:18
+            Last updated: 2025-09-24 20:03:00
           </div>
           <!-- 文章 -->
           <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>關於圖片類型的Forensic 如果出現在 CTF 上，<del>我都覺得是通靈題</del></p>
@@ -266,7 +266,7 @@ Analysis params:
 PARAMS SHORTCUT
 	zsteg fname.png 2b,b,lsb,xy  &#x3D;&#x3D;&gt;  --bits 2 --channel b --lsb --order xy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>例子：[Picoctf 2022 St3g0](<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/305?assigned=0%5C&bookmarked=0%5C&category=4%5C&originalEvent=70%5C&page=1%5C&search=%5C&solved=0">https://play.picoctf.org/practice/challenge/305?assigned=0\&amp;bookmarked=0\&amp;category=4\&amp;originalEvent=70\&amp;page=1\&amp;search=\&amp;solved=0</a>)</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/305?assigned=0&bookmarked=0&category=4&originalEvent=70&page=1&search=&solved=0">Picoctf 2022 St3g0</a></p>
 <p>直接把圖片用zsteg分析</p>
 <pre class="line-numbers language-none"><code class="language-none">$ zsteg pico.flag.png
 b1,r,lsb,xy         .. text: &quot;~__B&gt;wV_G@&quot;
@@ -289,7 +289,7 @@ b4,abgr,lsb,xy      .. file: Novell LANalyzer capture file<span aria-hidden="tru
 <hr>
 <h1 id="Binwalk"><a href="#Binwalk" class="headerlink" title="Binwalk"></a>Binwalk</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/ReFirmLabs/binwalk">https://github.com/ReFirmLabs/binwalk</a></p>
 <p>他可以分析圖片是否有隱藏的檔案，並將隱藏檔案塊挖出來。對於圖片裡面被 embed 的檔案或壓縮段非常方便。</p>
-<p>例子：[picoctf 2021 Matryoshka doll](<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/129">https://play.picoctf.org/practice/challenge/129</a>)</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/129">picoctf 2021 Matryoshka doll</a></p>
 <p>這題下載後可以用binwalk 看看</p>
 <pre class="line-numbers language-none"><code class="language-none">$ binwalk dolls.jpg
                                                           &#x2F;Users&#x2F;yunshiuan&#x2F;lab&#x2F;dolls.jpg
@@ -332,7 +332,7 @@ Processing: dolls.jpg
 <h1 id="stegsolve"><a href="#stegsolve" class="headerlink" title="stegsolve"></a>stegsolve</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/Giotino/stegsolve">https://github.com/Giotino/stegsolve</a></p>
 <p>網頁版：<a target="_blank" rel="noopener" href="https://georgeom.net/StegOnline/upload">https://georgeom.net/StegOnline/upload</a></p>
 <p>GUI 工具，可視化地查看圖片像素 &#x2F; RGB &#x2F; alpha 通道 &#x2F;做 XOR &#x2F;顏色通道切割，適合人工探索圖片裡的變化／隱寫的痕跡，這個工具也可以解LSB。</p>
-<p>例子：[Hackme-corgi can fly](<a target="_blank" rel="noopener" href="https://ctf.hackme.quest/scoreboard/">https://ctf.hackme.quest/scoreboard/</a>)</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://ctf.hackme.quest/scoreboard/">Hackme-corgi can fly</a></p>
 <p>這題下載後是一個png 檔，丟進 stegsolve 看一下</p>
 <p><img src="/assets/svxGPJ6n_RFSDrrRZy1LQQxpNMEHQ-EnOSysmDm9Ux0=.png"></p>
 <p>下面會有左右箭頭都按按看</p>
@@ -360,9 +360,9 @@ Processing: dolls.jpg
               <!-- 文章tags -->
               
                 
-                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
-                  
                   <cosy-label href="/tags/photo/" size="sm"># photo</cosy-label>
+                  
+                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
                   
                   <cosy-label href="/tags/Photoforensic/" size="sm"># Photoforensic</cosy-label>
                   

@@ -197,11 +197,60 @@
     <div class="center">
       <!-- 分页代码 -->
       
+      <div class="pagination">
+        <cosy-tooltip placement="bottom-right">
+          <span slot="content">Prev Page</span>
+          <cosy-icon bordered disabled href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path d="M4.147 12.353a.5.5 0 0 1-.001-.707L9.61 6.162a.55.55 0 0 1 .779 0l5.465 5.484a.5.5 0 0 1-.708.706L10 7.188l-5.146 5.164a.5.5 0 0 1-.707.001z" fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        <span class="current">1 <em>/ 2</em></span>
+        <cosy-tooltip placement="bottom-right">
+          <span slot="content">Next Page</span>
+          <cosy-icon bordered  href="/categories/Blog/page/2/">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path d="M15.854 7.646a.5.5 0 0 1 .001.707l-5.465 5.484a.55.55 0 0 1-.78 0L4.147 8.353a.5.5 0 1 1 .708-.706L10 12.812l5.147-5.165a.5.5 0 0 1 .707-.001z" fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+      </div>
+      
     </div>
   </header>
 
   <!-- 分类文章列表 -->
   <ul class="post-list cosy-scrollbar">
+    
+    <li data-status="published">
+      <a href="/2025/09/25/OSINT/">
+        
+        <cosy-tooltip><span slot="content">Other</span><cosy-icon size="sm"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.042 16.045A9 9 0 0 0 7.955 3.958M5.637 5.635a9 9 0 1 0 12.725 12.73"></path><path d="M3 3l18 18"></path></g></svg></cosy-icon></cosy-tooltip>
+        
+        <p class="ellipsis">
+          <span>O熊學院準備開課了</span>
+          <!-- <cosy-tooltip placement="bottom-left" max-width="250px">
+            <span slot="content">🧂 前言今天要介紹一下什麼是OSINT，我覺得OSINT並沒有想像中這麼簡單，除了需要對任何訊息都擁有很高的敏感度，也</span>
+            <span></span>
+          </cosy-tooltip> -->
+
+        </p>
+        <span class="post-date">
+          
+          <cosy-label color="red" bordered>Top</cosy-label>
+          
+          <cosy-tooltip placement="left">
+            <span slot="content">Created: 2025-09-25 13:40:12</span>
+            Sep 25
+          </cosy-tooltip>
+        </span>
+      </a>
+    </li>
     
     <li data-status="published">
       <a href="/2025/09/24/photoforensic/">
@@ -427,32 +476,6 @@
           <cosy-tooltip placement="left">
             <span slot="content">Created: 2025-08-14 15:53:53</span>
             Aug 14
-          </cosy-tooltip>
-        </span>
-      </a>
-    </li>
-    
-    <li data-status="published">
-      <a href="/2025/08/12/BlueTeamCheatSheet/">
-        
-        <cosy-tooltip><span slot="content">Other</span><cosy-icon size="sm"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.042 16.045A9 9 0 0 0 7.955 3.958M5.637 5.635a9 9 0 1 0 12.725 12.73"></path><path d="M3 3l18 18"></path></g></svg></cosy-icon></cosy-tooltip>
-        
-        <p class="ellipsis">
-          <span>🛡️ BlueTeam CheatSheet</span>
-          <!-- <cosy-tooltip placement="bottom-left" max-width="250px">
-            <span slot="content">In this note, I organize the commons blue team skill
-Event c</span>
-            <span></span>
-          </cosy-tooltip> -->
-
-        </p>
-        <span class="post-date">
-          
-          <cosy-label color="red" bordered>Top</cosy-label>
-          
-          <cosy-tooltip placement="left">
-            <span slot="content">Created: 2025-08-12 18:50:59</span>
-            Aug 12
           </cosy-tooltip>
         </span>
       </a>

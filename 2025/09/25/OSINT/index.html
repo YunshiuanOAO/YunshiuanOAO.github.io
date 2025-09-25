@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    對小綠人進行一波大調查
+    O熊學院準備開課了
   </title>
-  <meta name="description" content="Android Forensic">
-  <meta name="keywords" content="ALEAPP,forensic,Androidforensic">
+  <meta name="description" content="OSINT 介紹">
+  <meta name="keywords" content="OSINT">
   <meta name="author" content="yunshiuan">
-  <link rel="canonical" href="https://yunshiuan.com/2025/09/22/AndroidForensic/">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/25/OSINT/">
   
   
   <link rel="icon" href='/assets/favicon.png'>
@@ -184,7 +184,7 @@
       </g>
     </svg>
     <span class="ellipsis">
-      對小綠人進行一波大調查
+      O熊學院準備開課了
     </span>
     
   </section>
@@ -220,62 +220,53 @@
         <!-- 渲染文章内容 -->
         <article>
           <!-- 文章标题 -->
-          <h1 class="post-title">對小綠人進行一波大調查</h1>
+          <h1 class="post-title">O熊學院準備開課了</h1>
           <div class="last-updated">
-            Last updated: 2025-09-22 17:29:13
+            Last updated: 2025-09-25 13:41:10
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>大家不知道最近有沒有看過最新的 Netflix 紀錄片《陌生號碼：高校簡訊詐騙疑雲》，以及之前的《網路煉獄：揭發N 號房》，劇中都有出現一幕是鑑識人員將嫌疑犯的手機拿去進行證據採集，這讓我想到我可以研究看看如何對常見的 Android 以及 IOS 系統手機進行鑑識，但是因為直接買類似 Cellebrite UFED 的設備或者Magnet AXIOM軟體來玩需要花錢，因此今明兩天我會使用開源的分析工具並利用最近剛結束的MVS CTF 2025的android 與IOS 分類提供的dumpfiles來玩玩看。</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要介紹一下什麼是OSINT，我覺得OSINT並沒有想像中這麼簡單，除了需要對任何訊息都擁有很高的敏感度，也要了解很多工具的使用，因此趁這個機會跟大家分享，也是對我自己做一個筆記，下次遇到OSINT 題目就不會選擇直接放棄</p>
 <hr>
-<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="ALEAPP"><a href="#ALEAPP" class="headerlink" title="ALEAPP"></a>ALEAPP</h2><p>下載連結：</p>
-<p>ALEAPP : <a target="_blank" rel="noopener" href="https://github.com/abrignoni/ALEAPP"> https://github.com/abrignoni/ALEAPP</a></p>
-<p>是由 Alexis Brignoni 開發的一個開源工具，用來做 Android 裝置的 證據檔案分析（forensic artifacts parsing）。其目的在於整理 Android 裝置中常見的 log、事件、Protobuf（如 Google Play Services 或其他使用 Protobuf 的 apps）等資料，協助數位鑑識與 incident response 調查人員快速取出與分析有用資料。</p>
+<h1 id="😯-什麼是OSINT"><a href="#😯-什麼是OSINT" class="headerlink" title="😯 什麼是OSINT ?"></a>😯 什麼是OSINT ?</h1><p>OSINT 是指從公開可取得的資料來源收集、過濾、分析並應用於情報／調查／安全防禦的過程。這些資料來源可能是新聞媒體、政府資料、公眾報告、社交媒體貼文、論壇、學術研究、公開資料庫、專利／商標資訊、網域註冊資料、照片與影音 metadata 等</p>
+<p>這邊簡單舉個例子：</p>
+<p>Bob 一直覺得女友 Alice 有點怪，因為她說自己 3 月中跑去東京玩，還傳了幾張「在日本拍的」櫻花、神社跟街景照片給他看。</p>
+<p>但是 Bob 心裡總覺得哪裡不對勁，所以就決定要尋找證據</p>
+<p><strong>第一步：看照片的資訊</strong></p>
+<p>Bob 把照片丟進工具一看，GPS 座標全部都在台北，像是大安森林公園、龍山寺、西門町。</p>
+<p>另外時間顯示的是台灣時區 UTC+8，但如果真在東京，應該會是 UTC+9。</p>
+<p><strong>第二步：看環境</strong></p>
+<p>照片裡的櫻花一查公開的植物科普網站，竟然是台灣常見的「山櫻花」，而不是日本三月盛開的染井吉野。</p>
+<p>背景還有榕樹跟鳳凰木，這些植物日本三月很少見。</p>
+<p><strong>第三步：看建築</strong></p>
+<p>Alice 說的「神社」照片，Bob 一看就覺得不對，上網查建築的資訊發現是台北龍山寺。屋頂是中式歇山頂，還有龍雕跟獅子，完全不是日式神社的鳥居跟簡潔風格。</p>
+<p><strong>第四步：看社群紀錄</strong></p>
+<p>Bob 又去翻 Alice 的 IG 定位跟 FB 打卡，全部都顯示她 3 月 15 號人在台北，沒有任何日本的蹤跡。</p>
+<p><strong>最後結論：</strong></p>
+<p>Alice 根本沒去日本，而是用台北拍的照片假裝在日本旅遊。Bob 靠公開資訊（GPS、植物、建築、社群紀錄）就把謊拆穿了，這就是常見的 OSINT。</p>
+<p>因此在做OSINT 時常常會需要涉及到其他領域的東西，例如：</p>
+<ul>
+<li><strong>航空領域</strong>：飛機航班資訊、機場代碼、飛行軌跡</li>
+<li><strong>地理領域</strong>：地圖資訊、地標識別、天氣資料</li>
+<li><strong>生物領域</strong>：植物識別、動物行為、生態環境</li>
+</ul>
+<p>每個人都有各自擅長的領域的話是ok，但是通常都會是自己一個人需要去獲得各式各樣的資訊，所以需要工具去輔助OSINT 的整個過程。</p>
+<p>這邊有一個網站，名稱叫做<a target="_blank" rel="noopener" href="https://osintframework.com/">OSINT Framework</a>，他把所有OSINT 的工具做了一個分類，遇到了不同類型的就可以到這邊查有什麼</p>
+<p><img src="/assets/zYQ_R3gzcg-X3IVmzl4suvZ_54mlzbnb79u5JkXoW3c=.png"></p>
+<p>目前以CTF 來說，很常遇到的以下三個題目</p>
+<ol>
+<li>給一個情境以及一個username，要回答有關於這個username的線索，例如：USERNAME的帳號密碼被洩漏了，請找出他是在哪裡洩漏的</li>
+<li>給一張圖片，問這個地點在哪或者有關於圖片內相關的資訊</li>
+<li>給一個組織或者某個企業的domain，問一些相關的問題</li>
+</ol>
+<p>OSINT 也會伴隨一些通靈的成分，需要在腦內中中思考各種關聯，也會需要用到一些技巧，因此接下來幾天我想要研究的是OSINT 的工具以及尋找線索的技巧。</p>
 <hr>
-<p>今天的Android 的 dumpfiles 會以今年初剛結束的 MVS CTF 2025 中的Android 分類來分享</p>
-<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><p>下載連結 ： <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Ay-T4kE8J3NX-XLh0krarFvE9j8SK_LT/view">https://drive.google.com/file/d/1Ay-T4kE8J3NX-XLh0krarFvE9j8SK_LT/view</a></p>
-<p>這個連結下載會給一個Android 手機的 data 資料夾內容，並且是壓縮過後的。</p>
-<p>這邊可以分享一下在Android 11 後，沒有 root 的權限是沒有辦法去存取到 data 資料夾的，因此會需要一些第三方的工具才可以把它 dump 下來。</p>
-<p>我的猜測，這個 dump 的製作是使用一個<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk">Magisk</a> 工具安裝到裝置上，這個工具可以讓你獲得到 root 權限並無需修改系統分區，<a target="_blank" rel="noopener" href="https://izaka.tw/magisk-tutorial-and-installation-guide/">參考連結</a></p>
-<p>ALEPP他只支援tar&#x2F;zip&#x2F;gz檔案，因此我是先從連結上下載後解壓在重新壓縮成zip一次</p>
-<p>那得到檔案之後就可以丟給ALEAPP，上面是填題目給的檔案，下面是選他產生的分析結果要輸出到哪裡的資料夾</p>
-<p>下面的Module可以全選</p>
-<p><img src="/assets/mDASlDFj6hHZvVJoPZZZ210DAqwMwVXbJ-mrViOr-w4=.png"></p>
-<p>接下來按左下角的Process 他就會開始做分析，分析完之後他會再你跟剛剛填的路徑下新增一個資料夾，</p>
-<p><img src="/assets/lDtakJToWuHInXS9qc6ldb-xieSy0NSlWyeQBwburCs=.png"></p>
-<p>這些就是他將分析的結果轉成html ，類似生成一個報告，主要的頁面會在<code>index.html</code> 點開之後會進入到這個頁面</p>
-<p><img src="/assets/IvCPZq8bj5obL1jWJ0mLYUYg_gNCe6EhCRZm-CpzJGE=.png"></p>
-<p>之後就可以開始去翻有沒有什麼可疑的東西</p>
-<p>其中的功能很多，這邊介紹其中一部分的內容</p>
-<h2 id="Home-page"><a href="#Home-page" class="headerlink" title="Home page"></a>Home page</h2><p>首頁就會顯示一些手機的名稱、SIM卡資訊等等</p>
-<p><img src="/assets/Z2AoWqFIXBkawKwp5jiAnGuJy122aa8Tyd-SZjcOsOc=.png"></p>
-<h2 id="APP"><a href="#APP" class="headerlink" title="APP"></a>APP</h2><h3 id="APP-Icons"><a href="#APP-Icons" class="headerlink" title="APP Icons"></a>APP Icons</h3><p>這邊可以查看使用者在裝置上安裝了什麼app</p>
-<p><img src="/assets/5hibQen43Jn1ThRdY0x2r67KBkQ_yTAxbqaeRzwTUNA=.png"></p>
-<h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p>他會解析<code>packages.xml</code> ，紀錄了裝置上安裝過的所有套件（應用程式），包含：</p>
-<p>•	系統應用（隨 ROM 出廠）</p>
-<p>•	OEM 廠商附加應用</p>
-<p>•	使用者自行安裝的應用（例如從 Google Play Store、adb sideload 等）</p>
-<p><img src="/assets/lE9NediFoYvRMhSRjJrXjxl-wX8-nBMapXtwwlAYmJM=.png"></p>
-<h2 id="Bluetooth"><a href="#Bluetooth" class="headerlink" title="Bluetooth"></a>Bluetooth</h2><h3 id="Bluetooth-Adapter-Information"><a href="#Bluetooth-Adapter-Information" class="headerlink" title="Bluetooth Adapter Information"></a>Bluetooth Adapter Information</h3><p>這邊可以看到藍牙的一些設定</p>
-<p><img src="/assets/Jl_I6EruZUlSFYviq3RPTFNfNMnoUY4vPQckU9-sKpc=.png"></p>
-<h3 id="Bluetooth-Connections"><a href="#Bluetooth-Connections" class="headerlink" title="Bluetooth Connections"></a>Bluetooth Connections</h3><p>這邊可以看藍牙裝置連線紀錄</p>
-<p><img src="/assets/tTj3bI9f-yMf1GKbRGqfxsjClNGrxo9di4EThFU7qTw=.png"></p>
-<hr>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天簡單介紹ALEAPP 工具，以及如何使用，之後希望可以再更深入研究這部分，如：如何在手機未解鎖或在未授權的情況下還是可以把data 資料 dump 出來，以及更進階的分析技巧</p>
-<hr>
-<h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=eG55F8glV0o">https://www.youtube.com/watch?v=eG55F8glV0o</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L_rELVckEAA">https://www.youtube.com/watch?v=L_rELVckEAA</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BWDdwHL15og">https://www.youtube.com/watch?v=BWDdwHL15og</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-android.html">https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-android.html</a></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了OSINT 的概念，接下來幾天會分別以人的資訊、地點以及網站這三大分類分享一些工具的使用</p>
 
             <div class="post-tags">
               <!-- 文章tags -->
               
                 
-                  <cosy-label href="/tags/ALEAPP/" size="sm"># ALEAPP</cosy-label>
-                  
-                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
-                  
-                  <cosy-label href="/tags/Androidforensic/" size="sm"># Androidforensic</cosy-label>
+                  <cosy-label href="/tags/OSINT/" size="sm"># OSINT</cosy-label>
                   
                     
             </div>
@@ -307,7 +298,7 @@
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ALEAPP"><span class="toc-number">2.1.</span> <span class="toc-text">ALEAPP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android"><span class="toc-number">3.</span> <span class="toc-text">Android</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Home-page"><span class="toc-number">3.1.</span> <span class="toc-text">Home page</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APP"><span class="toc-number">3.2.</span> <span class="toc-text">APP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APP-Icons"><span class="toc-number">3.2.1.</span> <span class="toc-text">APP Icons</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packages"><span class="toc-number">3.2.2.</span> <span class="toc-text">Packages</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bluetooth"><span class="toc-number">3.3.</span> <span class="toc-text">Bluetooth</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth-Adapter-Information"><span class="toc-number">3.3.1.</span> <span class="toc-text">Bluetooth Adapter Information</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth-Connections"><span class="toc-number">3.3.2.</span> <span class="toc-text">Bluetooth Connections</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">總結</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">📚 參考資料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%98%AF-%E4%BB%80%E9%BA%BC%E6%98%AFOSINT"><span class="toc-number">2.</span> <span class="toc-text">😯 什麼是OSINT ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

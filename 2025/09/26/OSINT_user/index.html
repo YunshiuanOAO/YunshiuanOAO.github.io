@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    2025 SEKAICTF Web 題解
+    開啟大肉搜時代
   </title>
-  <meta name="description" content="2025 2025 Sekai Web 題目分析與解法">
-  <meta name="keywords" content="SEKAI ,Web, Writeup">
+  <meta name="description" content="OSINT 介紹">
+  <meta name="keywords" content="OSINT">
   <meta name="author" content="yunshiuan">
-  <link rel="canonical" href="https://yunshiuan.com/2025/08/20/2025sekaiCTF2025/">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/26/OSINT_user/">
   
   
   <link rel="icon" href='/assets/favicon.png'>
@@ -94,7 +94,7 @@
           <div class="ellipsis">Resume</div>
         </a>
       </li></ul>
-  <ul><li class="">
+  <ul><li class="active">
         <a href="/categories/Blog/">
           
           <div class="ellipsis">
@@ -108,7 +108,7 @@
             <span>Certificate</span>
           </div>
         </a>
-      </li><li class="active">
+      </li><li class="">
         <a href="/categories/Writeup/">
           
           <div class="ellipsis">
@@ -172,8 +172,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/Writeup/">
-      Writeup
+    <a class="ellipsis" href="/categories/Blog/">
+      Blog
     </a>
     
     
@@ -184,7 +184,7 @@
       </g>
     </svg>
     <span class="ellipsis">
-      2025 SEKAICTF Web 題解
+      開啟大肉搜時代
     </span>
     
   </section>
@@ -220,54 +220,61 @@
         <!-- 渲染文章内容 -->
         <article>
           <!-- 文章标题 -->
-          <h1 class="post-title">2025 SEKAICTF Web 題解</h1>
+          <h1 class="post-title">開啟大肉搜時代</h1>
           <div class="last-updated">
-            Last updated: 2025-08-21 15:11:43
+            Last updated: 2025-09-26 13:53:22
           </div>
           <!-- 文章 -->
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這場比賽的題解會以學習Web為主，Writeup會參考<a target="_blank" rel="noopener" href="https://github.com/project-sekai-ctf/sekaictf-2025/tree/main/web">官方github連結</a>以及其他參賽者在網路上討論的內容</p>
-<h1 id="My-flask-app"><a href="#My-flask-app" class="headerlink" title="My flask app"></a>My flask app</h1><p>這是一個flask製作的網頁</p>
-<p>原始碼可以看到</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">5001</span><span class="token punctuation">,</span> debug<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要介紹OSINT 中關於一個人的資訊要怎麼從公開平台中快速的被搜集，關於一個人的訊息，我們可以從他的用戶名、信箱、電話號碼…等等訊息下手，並搭配工具搜集資料，快速找到切入點，獲得到我們想要的訊息。</p>
+<hr>
+<h1 id="Sherlock"><a href="#Sherlock" class="headerlink" title="Sherlock"></a>Sherlock</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/sherlock-project/sherlock">https://github.com/sherlock-project/sherlock</a></p>
+<p>這是一個可以快速搜尋各大平台用戶名的工具</p>
+<p>假設今天我們獲得到了一個用戶叫做<code>yunshiuan</code> 接下來丟進sherlock</p>
+<p><img src="/assets/Rf9_ZONhV5xhlOF3CzJfPYdew6Xk7vKZLSNlSOWvBJc=.png"></p>
+<p>發現了跑出許多用戶名稱是yunshiuan 的平台，接下來就可以一一去看是不是自己想要的</p>
+<hr>
+<h1 id="HaveIBeenPwned"><a href="#HaveIBeenPwned" class="headerlink" title="HaveIBeenPwned"></a>HaveIBeenPwned</h1><p>連結：<a target="_blank" rel="noopener" href="https://haveibeenpwned.com/">https://haveibeenpwned.com/</a></p>
+<p>這是一個可以輸入信箱，他會說輸入的信箱是否已經被洩漏出去了</p>
+<p>假設輸入一個大家在測試時很常輸入的<code>aaaaa@gamil.com</code></p>
+<p><img src="/assets/YRv_jjfeqpWoNVRieLp2g4zT9Gl5_wRnteRh9wW8GYE=.png"></p>
+<p>可以看到這個email 在20 多個平台被洩漏了，底下會跟你說是在何時因為什麼而被洩漏</p>
+<p><img src="/assets/bfiSjA3fimrdDE8iTnRwjRZ3OuPwZ0oK4S-_tCSbWiU=.png"></p>
+<hr>
+<h1 id="Epieos"><a href="#Epieos" class="headerlink" title="Epieos"></a>Epieos</h1><p>網站連結：<a target="_blank" rel="noopener" href="https://epieos.com/">https://epieos.com/</a></p>
+<p>他提供了email與手機號碼的反向查詢，幫你把和該email &#x2F; phone 有關的社群帳號、Google 活動、評價、公開痕跡等串起來顯示，方便做初步調查或驗證線索</p>
+<p><img src="/assets/9PHebz4gf0c55xyN-fS-TDK_HvYakSfp-GV0gIzMo_c=.png"></p>
+<p>底下其實還有其他網站或者應用程式的掃描，但那些就會需要付費才能觀看</p>
+<hr>
+<h1 id="Phoneinfoga"><a href="#Phoneinfoga" class="headerlink" title="Phoneinfoga"></a>Phoneinfoga</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/sundowndev/phoneinfoga">https://github.com/sundowndev/phoneinfoga</a></p>
+<p>這個工具可以查詢這個電話號碼的基本metadata</p>
+<pre class="line-numbers language-none"><code class="language-none">$ .&#x2F;phoneinfoga scan -n +886911111111<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>發現到他有開啟debug mod，根據<a target="_blank" rel="noopener" href="https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html#werkzeug--flask-debug">這篇blog</a>可以試試看<code>/console</code>路徑但是這個console會需要用到pin碼，這個密碼是可以爆破的，需要兩個<code>probably_public_bits</code>、<code>private_bits</code></p>
-<ul>
-<li><p>probably_public_bits</p>
-<ul>
-<li><code>username</code></li>
-</ul>
-</li>
-<li><p>private_bits</p>
-</li>
-</ul>
-<p>另外從源碼可以發現到</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/view'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    filename <span class="token operator">=</span> request<span class="token punctuation">.</span>args<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'filename'</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token keyword">not</span> filename<span class="token punctuation">:</span>
-        <span class="token keyword">return</span> <span class="token string">"Filename is required"</span><span class="token punctuation">,</span> <span class="token number">400</span>
-    <span class="token keyword">try</span><span class="token punctuation">:</span>
-        <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token builtin">file</span><span class="token punctuation">:</span>
-            content <span class="token operator">=</span> <span class="token builtin">file</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> content<span class="token punctuation">,</span> <span class="token number">200</span>
-    <span class="token keyword">except</span> FileNotFoundError<span class="token punctuation">:</span>
-        <span class="token keyword">return</span> <span class="token string">"File not found"</span><span class="token punctuation">,</span> <span class="token number">404</span>
-    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
-        <span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f"Error: </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">str</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span> <span class="token number">500</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>訪問到view後他會訪問filename的參數，因此可以任意讀檔，透過這個</p>
+<p><img src="/assets/d6GCUzEdKWX2Yyr2GDw1FAU4ikSOyZx1De-DMHItZZc=.png"></p>
+<p>另外也可以用開server 的方式用網頁查詢</p>
+<pre class="line-numbers language-none"><code class="language-none">$ .&#x2F;phoneinfoga serve -p 8080
+
+Listening on :8080<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/PxCHUVESvr-Z_zTZpqgN7nlQQxibied7gFqCAL27Y40=.png"></p>
+<hr>
+<h1 id="Google-Hacking"><a href="#Google-Hacking" class="headerlink" title="Google Hacking"></a>Google Hacking</h1><p>這是Google 提供的進階搜尋法，他提供一些方式可以更準確地找到我們想要的資歷或網站。</p>
+<p>以下是常見的搜尋</p>
+<p>•	<code>site:domain.com</code> — 限定在某個網域搜尋，ex:<code>site:github.com</code>。</p>
+<p>•	<code>filetype:pdf / filetype:env / filetype:sql</code> — 找特定檔案類型。</p>
+<p>•	<code>inurl:admin / inurl:login</code> — URL 中含特定字串（找管理頁面）。</p>
+<p>•	<code>intitle:&quot;index of&quot;</code> — 找目錄列舉頁面（常暴露檔案列表）。</p>
+<p>•	<code>&quot;exact phrase&quot;</code> — 精確比對字串（例如機密檔名或參數名）。</p>
+<p>•	-（負號）排除字詞，ex: <code>site:example.com</code> <code>-site:blog.example.com</code>。</p>
+<p>另外也可以用<code>OR</code> 、 <code>+</code>  來串接多個進階搜尋結果</p>
+<p><img src="/assets/DxLpxVnMZEKL_lROU9xsoRvZnZu_3iecohb79vO3gzU=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了一些關於搜集個人資訊相關的工具或技巧，我個人認為關於這類的工具算是偏少，並且有些好用的都是要錢，因此還是比較常用瀏覽器直接去搜尋個人訊息，因此如果有碰到更好用或者功能更強大的工具歡迎分享跟我分享。</p>
 
             <div class="post-tags">
               <!-- 文章tags -->
               
                 
-                  <cosy-label href="/tags/sekai/" size="sm"># sekai</cosy-label>
-                  
-                  <cosy-label href="/tags/Web/" size="sm"># Web</cosy-label>
-                  
-                  <cosy-label href="/tags/Writeup/" size="sm"># Writeup</cosy-label>
-                  
-                  <cosy-label href="/tags/CTF/" size="sm"># CTF</cosy-label>
+                  <cosy-label href="/tags/OSINT/" size="sm"># OSINT</cosy-label>
                   
                     
             </div>
@@ -299,7 +306,7 @@
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#My-flask-app"><span class="toc-number">2.</span> <span class="toc-text">My flask app</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sherlock"><span class="toc-number">2.</span> <span class="toc-text">Sherlock</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HaveIBeenPwned"><span class="toc-number">3.</span> <span class="toc-text">HaveIBeenPwned</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Epieos"><span class="toc-number">4.</span> <span class="toc-text">Epieos</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Phoneinfoga"><span class="toc-number">5.</span> <span class="toc-text">Phoneinfoga</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Google-Hacking"><span class="toc-number">6.</span> <span class="toc-text">Google Hacking</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">7.</span> <span class="toc-text">總結</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

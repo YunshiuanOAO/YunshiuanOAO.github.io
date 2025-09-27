@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    在GEOGUESSER 當個 Cheater
+  </title>
+  <meta name="description" content="OSINT 介紹">
+  <meta name="keywords" content="OSINT">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/27/OSINT-GEO/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/Blog/">
+      Blog
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      在GEOGUESSER 當個 Cheat
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">在GEOGUESSER 當個 Cheater</h1>
+          <div class="last-updated">
+            Last updated: 2025-09-27 21:04:04
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要分享的是 OSINT當中非常常出現的看圖片猜地方的，身為對地理一竅不通的我，非常需要很多的工具幫助我去分析各種資訊，而這類問題有一個還蠻廣為人知的遊戲，叫做<a target="_blank" rel="noopener" href="https://www.geoguessr.com/">GEOGUESSER</a>，他是會隨機把你放在一個地點，你要靠自己發現說這裡是哪裡，有興趣可以去玩玩看，裡面有很多不同模式。</p>
+<p><img src="/assets/aRw5hJ4AYt6oTv4PJFBjtflN0dsH4NhjE5pF0rqShN4=.png"></p>
+<p><code>source : GeoGuessr Steam Edition</code></p>
+<p>而在CTF 版的 GeoGuessr 因為不用在短時間內就需要知道地點，並且可能會需要非常精確的位置才會拿到flag，另外GeoGuessr會限制玩家不能查任何資料。</p>
+<p>而遇到關於這樣的OSINT 題目，如果只用google map 硬查會沒有效率，因此如果有工具幫助的話會輕鬆很多，所以今天的內容是分享關於這類的工具</p>
+<hr>
+<h2 id="Google-map-Google-Earth"><a href="#Google-map-Google-Earth" class="headerlink" title="Google map &#x2F; Google Earth"></a>Google map &#x2F; Google Earth</h2><p>Google 地圖是 Google提供的網路地圖服務，這個服務提供了多種視圖模式，包括衛星圖、街道圖和地形圖，讓用戶可以根據需求選擇最適合的視角來查看地圖</p>
+<p><img src="/assets/AM7XkPseqHtJ64J0lHNKzlYK_NjHdww-qvZ-EDJlbQY=.png"></p>
+<p>Google Earth 是一個更進階的 3D 地球瀏覽器，讓用戶能夠以立體的方式探索世界。歷史影像功能讓用戶可以查看不同時期的衛星影像，觀察城市的發展變化，而街景整合功能則在 3D 環境中嵌入了街景視圖，並且可以匯入KML檔</p>
+<p><img src="/assets/Nqm0R92EVsQ60NoKlkI9vqtx9kdYYYIJFoBYZhEUTA0=.png"></p>
+<hr>
+<h2 id="Google-智慧鏡頭"><a href="#Google-智慧鏡頭" class="headerlink" title="Google 智慧鏡頭"></a>Google 智慧鏡頭</h2><p>Google 智慧鏡頭是一個基於 AI 的視覺搜尋工具，你可以把你想要辨識的圖片丟進去，他會把網路上類似的圖片丟給你</p>
+<p>在搜尋列就可以找到智慧鏡頭的icon</p>
+<p><img src="/assets/jZWhq_f9A2B3eBaFBL80Oolkc6_952uiK4kCQq7InJ0=.png"></p>
+<p>點擊後把圖片丟進去他就會幫你查有沒有類似的圖片</p>
+<p><img src="/assets/kKnQobr1ng3IbFvcC_9I5sWMSVUr-T2nkvQ_24bhC3M=.png"></p>
+<hr>
+<h1 id="Geohints"><a href="#Geohints" class="headerlink" title="Geohints"></a>Geohints</h1><p>網站連結：<a target="_blank" rel="noopener" href="https://geohints.com/">https://geohints.com/</a></p>
+<p>這個網站整理了很多每個國家的google 街景具有特色的部分，像是車牌，道路、電線竿、標誌….照片，如果遇到沒看過的都可以來這邊查</p>
+<p><img src="/assets/hvedPNXTINc-yVUpWuTxXMSQBGihsp3dkifiHQYigmk=.png"></p>
+<hr>
+<h1 id="Overpass-turbo"><a href="#Overpass-turbo" class="headerlink" title="Overpass turbo"></a>Overpass turbo</h1><p>網址：<a target="_blank" rel="noopener" href="https://overpass-turbo.eu/">https://overpass-turbo.eu/</a></p>
+<p>Overpass Turbo 是一個基於網頁的查詢工具，專門用於查詢 OpenStreetMap 資料庫。它提供了一個直觀的介面，讓用戶能夠使用 Overpass QL 查詢語言來搜尋和提取 OSM 中的地理資料。</p>
+<p>而 <a target="_blank" rel="noopener" href="https://www.openstreetmap.org/#map=12/56.4984/16.6010">OpenStreetMap</a> 是世界上最大的開放地理資料庫，包含了全球各地的道路、建築物、興趣點等詳細資訊。</p>
+<p><img src="/assets/OCrdN1c5cGeTKK0BCCkvA-6cWK104_wpnCDz_fT2D5s=.png"></p>
+<p>接下來介紹一下要怎麼使用Overpass QL 查詢我們想要的東西。</p>
+<p>首先是 OSM 的資料結構，它使用節點 (nodes)、路徑 (ways) 和關係 (relations) 三種基本元素來描述地理物件：</p>
+<ul>
+<li><strong>節點 (Nodes)</strong>：代表點狀物件，如商店或地標</li>
+<li><strong>路徑 (Ways)</strong>：代表線狀或面狀物件，如道路或建築物</li>
+<li><strong>關係 (Relations)</strong>：用於描述複雜的物件，如多個部分組成的建築物群</li>
+</ul>
+<p>最基本的查詢以 <code>[out:json];</code> 開始，這指定了輸出格式。接著使用 <code>node</code>、<code>way</code> 或 <code>relation</code> 來指定要查詢的物件類型，而<code>nwr</code>則可以將三者都包含，然後在方括號中指定搜尋條件，關於搜尋條件的所有的key 跟value 都可以在這邊查到 <a target="_blank" rel="noopener" href="https://wiki.openstreetmap.org/wiki/Map/_features">https://wiki.openstreetmap.org/wiki/Map\_features</a> 。</p>
+<p>像圖示中是L3akCTF 2025的其中一題<a target="_blank" rel="noopener" href="https://medium.com/@shibaosint/l3akctf-2025-fidget-spinner-writeup-cd94eafc2828">Fidget Spinner</a>我們想要找在厄蘭島上所有的風車地點，可以這樣寫</p>
+<pre class="line-numbers language-none"><code class="language-none">[out:json][timeout:25];
+&#x2F;&#x2F;restrict our search to the island
+area[name&#x3D;&quot;Öland&quot;];
+(
+  &#x2F;&#x2F; search for windmills
+  nwr[&quot;man_made&quot;&#x3D;&quot;windmill&quot;](area); &#x2F;&#x2F;(area)的功能是限制在Öland地點上查詢
+);
+&#x2F;&#x2F; print results
+out geom;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>之後出來的結果就會是這樣</p>
+<p><img src="/assets/hLt5ujf8M4p8aGhdbo4CVsi7_xOwj5CBfN3zKMmBMMo=.png"></p>
+<p>接下來他也可以匯出成KML檔，然後放到Google Map &#x2F; Google Earth 上，</p>
+<p><img src="/assets/BoYcPTrtyYVX4YFzs6DzQ9bPESm3RDAuLS-dqbSBsUk=.png"></p>
+<p>接下來就可以去一一驗證是否是題目想要的位置</p>
+<p>另外也可以像這樣把想要的區域先匡起來然後查詢</p>
+<p><img src="/assets/TEiO_tKmOGHWcEVH1ynu8k2Lze8ViVkW0SaFlpMOXQI=.png"></p>
+<p><code>source : ``https://medium.com/@PretendNotToBe/ea6e8f3fb763</code></p>
+<hr>
+<h1 id="Exiftool"><a href="#Exiftool" class="headerlink" title="Exiftool"></a>Exiftool</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://exiftool.org/">https://exiftool.org/</a></p>
+<p>他可以去看圖片的基本資料，例如圖片大小、修改時間……等等，但他可以去看這張照片他的拍攝地點在哪裡，並且會給你GPS定位。</p>
+<p>舉個例子：<a target="_blank" rel="noopener" href="https://drive.google.com/file/d/17rE9LAp7TNk8u09EwguZB3RQ4H3WNIMB/view">DownUnderCTF 2023 Excellent Vista!</a></p>
+<p>下載之後用exiftool 看一下</p>
+<pre class="line-numbers language-none"><code class="language-none">$ exiftool ExcellentVista.jpg
+
+ExifTool Version Number         : 13.10
+File Name                       : ExcellentVista.jpg
+Directory                       : .
+File Size                       : 2.7 MB
+File Modification Date&#x2F;Time     : 2025:09:23 15:41:41+08:00
+File Access Date&#x2F;Time           : 2025:09:23 15:41:45+08:00
+File Inode Change Date&#x2F;Time     : 2025:09:23 15:41:44+08:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image&#x2F;jpeg
+Exif Byte Order                 : Big-endian (Motorola, MM)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Y Cb Cr Positioning             : Centered
+Date&#x2F;Time Original              : 2023:08:31 22:58:56
+Create Date                     : 2023:08:31 22:58:56
+Sub Sec Time Original           : 00
+Sub Sec Time Digitized          : 00
+GPS Version ID                  : 2.3.0.0
+GPS Latitude Ref                : South
+GPS Longitude Ref               : East
+GPS Altitude Ref                : Above Sea Level
+GPS Speed Ref                   : km&#x2F;h
+GPS Speed                       : 0
+GPS Img Direction Ref           : True North
+GPS Img Direction               : 122.5013812
+GPS Dest Bearing Ref            : True North
+GPS Dest Bearing                : 122.5013812
+GPS Horizontal Positioning Error: 6.055886243 m
+Padding                         : (Binary data 2060 bytes, use -b option to extract)
+About                           : uuid:faf5bdd5-ba3d-11da-ad31-d33d75182f1b
+Image Width                     : 4032
+Image Height                    : 3024
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Image Size                      : 4032x3024
+Megapixels                      : 12.2
+Create Date                     : 2023:08:31 22:58:56.00
+Date&#x2F;Time Original              : 2023:08:31 22:58:56.00
+GPS Altitude                    : 70.5 m Above Sea Level
+GPS Latitude                    : 29 deg 30&#39; 34.33&quot; S
+GPS Longitude                   : 153 deg 21&#39; 34.46&quot; E
+GPS Position                    : 29 deg 30&#39; 34.33&quot; S, 153 deg 21&#39; 34.46&quot; E<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最後他提供了拍照的地點。</p>
+<hr>
+<h1 id="What3words"><a href="#What3words" class="headerlink" title="What3words"></a>What3words</h1><p>網站連結：<a target="_blank" rel="noopener" href="https://what3words.com/">https://what3words.com/</a></p>
+<p>這個網站可以只利用三個相關的詞彙去定位到想要的地點，因為有些地方會沒有地址，所以會需要靠這個方式定位</p>
+<p>像是成功大學資訊系館是<code>imported.dull.buns</code> 之後去這個網站查就一樣會定位到這邊</p>
+<p><img src="/assets/tVfxyDKTRPL6hxH59oD19ORtuhNS5r4Y-V8fsrTCtn8=.png"></p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了一些輔助我們辨識圖片地點的工具，直接變成GEOGUESSER大師，但其實有些題目還會需要結合航班或者看太陽判斷南北向等等，可以出的線索都太廣了，因此這類題目可能會需要多多去練習才會熟練。</p>
+<p><a target="_blank" rel="noopener" href="https://affine.yunshiuan.com/workspace/91859651-79f1-43b6-a129-67eee2f2a9fb/8oe0ApePipBuFf53JA5Qq"></a></p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/OSINT/" size="sm"># OSINT</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-map-Google-Earth"><span class="toc-number">1.1.</span> <span class="toc-text">Google map &#x2F; Google Earth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-%E6%99%BA%E6%85%A7%E9%8F%A1%E9%A0%AD"><span class="toc-number">1.2.</span> <span class="toc-text">Google 智慧鏡頭</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Geohints"><span class="toc-number">2.</span> <span class="toc-text">Geohints</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Overpass-turbo"><span class="toc-number">3.</span> <span class="toc-text">Overpass turbo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Exiftool"><span class="toc-number">4.</span> <span class="toc-text">Exiftool</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What3words"><span class="toc-number">5.</span> <span class="toc-text">What3words</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">6.</span> <span class="toc-text">結論</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

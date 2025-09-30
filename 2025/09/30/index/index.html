@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    對小綠人進行一波大調查
+    🦈 ✌️
   </title>
-  <meta name="description" content="Android Forensic">
-  <meta name="keywords" content="ALEAPP,forensic,Androidforensic">
+  <meta name="description" content="Wireshark 介紹,Network Forensic 介紹">
+  <meta name="keywords" content="Wireshark,Network Forensic">
   <meta name="author" content="yunshiuan">
-  <link rel="canonical" href="https://yunshiuan.com/2025/09/22/AndroidForensic/">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/30/index/">
   
   
   <link rel="icon" href='/assets/favicon.png'>
@@ -184,7 +184,7 @@
       </g>
     </svg>
     <span class="ellipsis">
-      對小綠人進行一波大調查
+      🦈 ✌️
     </span>
     
   </section>
@@ -220,62 +220,72 @@
         <!-- 渲染文章内容 -->
         <article>
           <!-- 文章标题 -->
-          <h1 class="post-title">對小綠人進行一波大調查</h1>
+          <h1 class="post-title">🦈 ✌️</h1>
           <div class="last-updated">
-            Last updated: 2025-09-22 17:29:13
+            Last updated: 2025-09-30 16:03:57
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>大家不知道最近有沒有看過最新的 Netflix 紀錄片《陌生號碼：高校簡訊詐騙疑雲》，以及之前的《網路煉獄：揭發N 號房》，劇中都有出現一幕是鑑識人員將嫌疑犯的手機拿去進行證據採集，這讓我想到我可以研究看看如何對常見的 Android 以及 IOS 系統手機進行鑑識，但是因為直接買類似 Cellebrite UFED 的設備或者Magnet AXIOM軟體來玩需要花錢，因此今明兩天我會使用開源的分析工具並利用最近剛結束的MVS CTF 2025的android 與IOS 分類提供的dumpfiles來玩玩看。</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹 Wireshark 的兩個特別的用法，一個是可以匯入key 去解密封包內容，另一個是可以將http的傳輸物件下載下來。</p>
 <hr>
-<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="ALEAPP"><a href="#ALEAPP" class="headerlink" title="ALEAPP"></a>ALEAPP</h2><p>下載連結：</p>
-<p>ALEAPP : <a target="_blank" rel="noopener" href="https://github.com/abrignoni/ALEAPP"> https://github.com/abrignoni/ALEAPP</a></p>
-<p>是由 Alexis Brignoni 開發的一個開源工具，用來做 Android 裝置的 證據檔案分析（forensic artifacts parsing）。其目的在於整理 Android 裝置中常見的 log、事件、Protobuf（如 Google Play Services 或其他使用 Protobuf 的 apps）等資料，協助數位鑑識與 incident response 調查人員快速取出與分析有用資料。</p>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">https://www.wireshark.org/download.html</a></p>
+<p>Wireshark是目前最受歡迎的開源網路協定分析器。</p>
+<p>這款功能強大的軟體不僅能夠即時監控網路流量，更能深入分析各種網路協定的詳細內容，為網路故障排除、協定開發和安全分析提供全方位的支援，</p>
+<p>另外也能夠識別和解析超過2000種不同的網路協定，從常見的TCP&#x2F;IP協定族到專用的工業控制協定，幾乎涵蓋了所有可能遇到的網路通訊場景。這種全面的協定支援不僅包括即時協定解析，還允許用戶根據需要添加自定義協定支援。</p>
 <hr>
-<p>今天的Android 的 dumpfiles 會以今年初剛結束的 MVS CTF 2025 中的Android 分類來分享</p>
-<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><p>下載連結 ： <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1Ay-T4kE8J3NX-XLh0krarFvE9j8SK_LT/view">https://drive.google.com/file/d/1Ay-T4kE8J3NX-XLh0krarFvE9j8SK_LT/view</a></p>
-<p>這個連結下載會給一個Android 手機的 data 資料夾內容，並且是壓縮過後的。</p>
-<p>這邊可以分享一下在Android 11 後，沒有 root 的權限是沒有辦法去存取到 data 資料夾的，因此會需要一些第三方的工具才可以把它 dump 下來。</p>
-<p>我的猜測，這個 dump 的製作是使用一個<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk">Magisk</a> 工具安裝到裝置上，這個工具可以讓你獲得到 root 權限並無需修改系統分區，<a target="_blank" rel="noopener" href="https://izaka.tw/magisk-tutorial-and-installation-guide/">參考連結</a></p>
-<p>ALEPP他只支援tar&#x2F;zip&#x2F;gz檔案，因此我是先從連結上下載後解壓在重新壓縮成zip一次</p>
-<p>那得到檔案之後就可以丟給ALEAPP，上面是填題目給的檔案，下面是選他產生的分析結果要輸出到哪裡的資料夾</p>
-<p>下面的Module可以全選</p>
-<p><img src="/assets/mDASlDFj6hHZvVJoPZZZ210DAqwMwVXbJ-mrViOr-w4=.png"></p>
-<p>接下來按左下角的Process 他就會開始做分析，分析完之後他會再你跟剛剛填的路徑下新增一個資料夾，</p>
-<p><img src="/assets/lDtakJToWuHInXS9qc6ldb-xieSy0NSlWyeQBwburCs=.png"></p>
-<p>這些就是他將分析的結果轉成html ，類似生成一個報告，主要的頁面會在<code>index.html</code> 點開之後會進入到這個頁面</p>
-<p><img src="/assets/IvCPZq8bj5obL1jWJ0mLYUYg_gNCe6EhCRZm-CpzJGE=.png"></p>
-<p>之後就可以開始去翻有沒有什麼可疑的東西</p>
-<p>其中的功能很多，這邊介紹其中一部分的內容</p>
-<h2 id="Home-page"><a href="#Home-page" class="headerlink" title="Home page"></a>Home page</h2><p>首頁就會顯示一些手機的名稱、SIM卡資訊等等</p>
-<p><img src="/assets/Z2AoWqFIXBkawKwp5jiAnGuJy122aa8Tyd-SZjcOsOc=.png"></p>
-<h2 id="APP"><a href="#APP" class="headerlink" title="APP"></a>APP</h2><h3 id="APP-Icons"><a href="#APP-Icons" class="headerlink" title="APP Icons"></a>APP Icons</h3><p>這邊可以查看使用者在裝置上安裝了什麼app</p>
-<p><img src="/assets/5hibQen43Jn1ThRdY0x2r67KBkQ_yTAxbqaeRzwTUNA=.png"></p>
-<h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p>他會解析<code>packages.xml</code> ，紀錄了裝置上安裝過的所有套件（應用程式），包含：</p>
-<p>•	系統應用（隨 ROM 出廠）</p>
-<p>•	OEM 廠商附加應用</p>
-<p>•	使用者自行安裝的應用（例如從 Google Play Store、adb sideload 等）</p>
-<p><img src="/assets/lE9NediFoYvRMhSRjJrXjxl-wX8-nBMapXtwwlAYmJM=.png"></p>
-<h2 id="Bluetooth"><a href="#Bluetooth" class="headerlink" title="Bluetooth"></a>Bluetooth</h2><h3 id="Bluetooth-Adapter-Information"><a href="#Bluetooth-Adapter-Information" class="headerlink" title="Bluetooth Adapter Information"></a>Bluetooth Adapter Information</h3><p>這邊可以看到藍牙的一些設定</p>
-<p><img src="/assets/Jl_I6EruZUlSFYviq3RPTFNfNMnoUY4vPQckU9-sKpc=.png"></p>
-<h3 id="Bluetooth-Connections"><a href="#Bluetooth-Connections" class="headerlink" title="Bluetooth Connections"></a>Bluetooth Connections</h3><p>這邊可以看藍牙裝置連線紀錄</p>
-<p><img src="/assets/tTj3bI9f-yMf1GKbRGqfxsjClNGrxo9di4EThFU7qTw=.png"></p>
+<h1 id="🔐-解密封包"><a href="#🔐-解密封包" class="headerlink" title="🔐 解密封包"></a>🔐 解密封包</h1><p>Wireshark 支援可以匯入key ，將加密過後的HTTPS 流量還原成明文</p>
+<p>因為HTTPS 多了一層SSL&#x2F;TLS，他會將封包進行加密保護傳輸內容不被竊聽</p>
+<p>解密流程如下：</p>
+<p>假設我們要分析一個HTTPS網站的登入過程，將加解密的key 先存在一個檔案中</p>
+<pre class="line-numbers language-shellscript" data-language="shellscript"><code class="language-shellscript">export SSLKEYLOGFILE&#x3D;&quot;&#x2F;home&#x2F;user&#x2F;ssl-keys.log&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然後再Preferences-&gt; Prorocols 裡面找到TLS ，接下來把剛剛儲存的key 路徑丟進去最底下<code>(Pre)-Master-Screct log filename</code>裡面</p>
+<p><img src="/assets/CeYJy0OyLQdOSSNNFOSwGR4xwqu41W5ftRSrnPAi5Lg=.png"></p>
+<p>例子：<a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/wiredive/">CyberDefender - WireDive Lab</a></p>
+<p>在 https.pcap 題目組底下的問題會需要先匯入加解密key 才能回答</p>
+<p>首先先看一下原本加密過後的樣子</p>
+<p><img src="/assets/3rXSAIopoocNAvtVDzzctTj5X9hm0JhZHcO5-i4gu-U=.png"></p>
+<p>題目有提供解密的key </p>
+<p><img src="/assets/EY4dTiYlp5mig0M30KBOHHoUCHfGxAa7Bzx-ppyk3kc=.png"></p>
+<p>接下來將這個檔案匯入到wireshark 當中</p>
+<p><img src="/assets/D4ilH3Dc85XfxfCIv41WPnC3Y9CcxtoPs7qrVjOifos=.png"></p>
+<p>OK 之後就可以看到解密過後的封包內容並且也跑出了HTTP2</p>
+<p><img src="/assets/3AYASExUaD5r4And5rGCmhGYg2eO2SqDrTuWxIXNtyY=.png"></p>
+<p>另外wireshark 支援的解密為</p>
+<ol>
+<li><strong>SSL&#x2F;TLS解密</strong>：最常見的HTTPS流量解密</li>
+<li><strong>WEP&#x2F;WPA&#x2F;WPA2解密</strong>：WiFi加密流量</li>
+<li><strong>IPsec解密</strong>：VPN流量</li>
+<li><strong>Kerberos解密</strong>：Windows認證流量</li>
+<li><strong>自定義加密</strong>：透過Lua腳本支援</li>
+</ol>
 <hr>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天簡單介紹ALEAPP 工具，以及如何使用，之後希望可以再更深入研究這部分，如：如何在手機未解鎖或在未授權的情況下還是可以把data 資料 dump 出來，以及更進階的分析技巧</p>
+<h1 id="📦-匯出物件"><a href="#📦-匯出物件" class="headerlink" title="📦 匯出物件"></a>📦 匯出物件</h1><p>wireshark 提供了可以將封包傳輸的物件(如：圖片、檔案、網頁……) dump 下來的功能</p>
+<p><img src="/assets/3ddxe9oKXt86KtV1SU35U9aQ4UFkfBXaD7uXQ3UaAbA=.png"></p>
+<p>例子：<a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/solardisruption/">CyberDefender-</a><strong><a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/solardisruption/">SolarDisruption Lab</a></strong></p>
+<p>這個題目其中有一題問：</p>
+<blockquote>
+<p>Q10 The PLC’s configuration webserver enables engineers to configure and monitor various parameters of the PLC device. This access can also allow an attacker to identify the I&#x2F;O points or the registers&#x2F;coils numbers and their mappings. How many I&#x2F;O points were in use on the PLC?</p>
+</blockquote>
+<p>而這題的解法會需要把整個網站檔案都載下來查看才會得知</p>
+<p><img src="/assets/ss49Kd80lpo7W22MLHwdRQf3jPcnbcmACWlBz01R1Nc=.png"></p>
+<p>接下來按Save all 後選擇其中一個資料夾放所有Object </p>
+<p><img src="/assets/1j_cxT6Bqc47dU8b26jm1am1Qw4nZcqCwNLTLpSUQeU=.png"></p>
+<p>去到那個資料夾後會看到所有的東西都存在裡面了</p>
+<p><img src="/assets/G7vhR5BVsvLM6slvFAU79KvycpYMD767Mk4KclH-thI=.png"></p>
+<p>點開dashboard.html後發現會正常顯示當時網頁的dashboard 頁面</p>
+<p><img src="/assets/3opa4X8R6u1a5dbtiTWgHkni3DeYiQMYIVUBrkJGGrc=.png"></p>
+<p>點開Monitoring 後即可回答答案</p>
+<p><img src="/assets/hsdRZ8vGbIApQpcWw_b3szwFn4xe8oEzoUq6ox9PWQM=.png"></p>
 <hr>
-<h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=eG55F8glV0o">https://www.youtube.com/watch?v=eG55F8glV0o</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L_rELVckEAA">https://www.youtube.com/watch?v=L_rELVckEAA</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BWDdwHL15og">https://www.youtube.com/watch?v=BWDdwHL15og</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-android.html">https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-android.html</a></p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了兩個特別的功能，當初接觸到的時候有被驚艷到，Wireshark 的功能真的挺強大的，接下來會介紹其他Network fornesic 工具</p>
 
             <div class="post-tags">
               <!-- 文章tags -->
               
                 
-                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
+                  <cosy-label href="/tags/Wireshark/" size="sm"># Wireshark</cosy-label>
                   
-                  <cosy-label href="/tags/ALEAPP/" size="sm"># ALEAPP</cosy-label>
-                  
-                  <cosy-label href="/tags/Androidforensic/" size="sm"># Androidforensic</cosy-label>
+                  <cosy-label href="/tags/Network-Forensic/" size="sm"># Network Forensic</cosy-label>
                   
                     
             </div>
@@ -307,7 +317,7 @@
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ALEAPP"><span class="toc-number">2.1.</span> <span class="toc-text">ALEAPP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android"><span class="toc-number">3.</span> <span class="toc-text">Android</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Home-page"><span class="toc-number">3.1.</span> <span class="toc-text">Home page</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APP"><span class="toc-number">3.2.</span> <span class="toc-text">APP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APP-Icons"><span class="toc-number">3.2.1.</span> <span class="toc-text">APP Icons</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packages"><span class="toc-number">3.2.2.</span> <span class="toc-text">Packages</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bluetooth"><span class="toc-number">3.3.</span> <span class="toc-text">Bluetooth</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth-Adapter-Information"><span class="toc-number">3.3.1.</span> <span class="toc-text">Bluetooth Adapter Information</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth-Connections"><span class="toc-number">3.3.2.</span> <span class="toc-text">Bluetooth Connections</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">總結</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">📚 參考資料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wireshark"><span class="toc-number">2.1.</span> <span class="toc-text">Wireshark</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%94%90-%E8%A7%A3%E5%AF%86%E5%B0%81%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text">🔐 解密封包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%A6-%E5%8C%AF%E5%87%BA%E7%89%A9%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">📦 匯出物件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

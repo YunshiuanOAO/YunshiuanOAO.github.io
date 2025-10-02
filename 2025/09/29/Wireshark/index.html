@@ -95,10 +95,10 @@
         </a>
       </li></ul>
   <ul><li class="active">
-        <a href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
           
           <div class="ellipsis">
-            <span>2025鐵人賽</span>
+            <span>2025 鐵人賽</span>
           </div>
         </a>
       </li><li class="">
@@ -179,8 +179,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
-      2025鐵人賽
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
     </a>
     
     
@@ -229,7 +229,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">🦈</h1>
           <div class="last-updated">
-            Last updated: 2025-10-01 18:40:19
+            Last updated: 2025-10-02 22:20:31
           </div>
           <!-- 文章 -->
           <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享什麼是Network Forensic，以及經典分析工具Wireshark的使用</p>
@@ -252,13 +252,13 @@
 <hr>
 <h1 id="🦈-Wireshark"><a href="#🦈-Wireshark" class="headerlink" title="🦈 Wireshark"></a>🦈 Wireshark</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">https://www.wireshark.org/download.html</a></p>
 <p>Wireshark是目前最受歡迎的開源網路協定分析器。這款功能強大的軟體不僅能夠即時監控網路流量，更能深入分析各種網路協定的詳細內容，為網路故障排除、協定開發和安全分析提供全方位的支援，另外也能夠識別和解析超過2000種不同的網路協定，從常見的TCP&#x2F;IP協定族到專用的工業控制協定，幾乎涵蓋了所有可能遇到的網路通訊場景。這種全面的協定支援不僅包括即時協定解析，還允許用戶根據需要添加自定義協定支援。</p>
-<p>下載後打開主頁會有兩個部分，第一個open，另一個是Capture</p>
+<p>下載後打開主頁會有兩個部分，第一個是 open，另一個是 Capture</p>
 <ul>
-<li>open 是開啟已經錄好的 pacap 檔</li>
+<li>open 是開啟已經錄好的 pcap 檔</li>
 <li>Capture 是可以選擇你的網卡，點進去後可以開始抓封包</li>
 </ul>
 <p><img src="/assets/b6EW4dgBH6-Vezc9bkG5ui2GbZr68QxayKMvEpv53tE=.png"></p>
-<p>假設我們打開了一個錄好的pcap 封包</p>
+<p>假設我們打開了一個錄好的 pcap 封包</p>
 <p><img src="/assets/1qX2ViLKOm5_QxrvpdRWjxU3u05hPTe7El2vWQFO6No=.png"></p>
 <h2 id="中間主視窗"><a href="#中間主視窗" class="headerlink" title="中間主視窗"></a>中間主視窗</h2><p>顯示抓到的所有封包</p>
 <p>•	No.：封包編號（依捕獲順序）</p>
@@ -268,7 +268,7 @@
 <p>•	Protocol：協定類型（如 TCP、HTTP、SSH）</p>
 <p>•	Length：封包大小（bytes）</p>
 <p>•	Info：協定的摘要資訊（像是 TCP 的 SYN&#x2F;ACK、HTTP 的 GET 請求等等</p>
-<p>中間封包的顏色也會根據不同的protocol 或狀態更改顏色 </p>
+<p>中間封包的顏色也會根據不同的 protocol 或狀態更改顏色 </p>
 <p><img src="/assets/Sk5dWFvQR_SCOx_aoPZkaC4gpm9J67Yhotddqr1L-mM=.png"></p>
 <h2 id="左下方視窗"><a href="#左下方視窗" class="headerlink" title="左下方視窗"></a>左下方視窗</h2><p>顯示選中封包的協定分層解析</p>
 <p>•	Frame：物理層資訊（長度、介面等）</p>
@@ -278,24 +278,24 @@
 <p>•	HTTP：協定層解析到 GET &#x2F; HTTP&#x2F;1.1</p>
 <h2 id="右下方視窗"><a href="#右下方視窗" class="headerlink" title="右下方視窗"></a>右下方視窗</h2><p>以十六進制（左半邊）+ ASCII（右半邊）顯示原始封包內容。</p>
 <hr>
-<p>另外也可以對選中的封包按右鍵，以其他功能，除了copy之後還可以follow。</p>
+<p>另外也可以對選中的封包按右鍵，使用其他功能，除了 copy 之後還可以 follow。</p>
 <p><img src="/assets/QY-EQZJMkEyHF8FFoUi1N3LXDcd1ydgpLgXGICT8HjQ=.png"></p>
-<p>follow 的功能是將 一個 TCP 連線裡的 HTTP 封包資料串起來，可以看到完整的瀏覽器請求或伺服器回應</p>
+<p>follow 的功能是將一個 TCP 連線裡的 HTTP 封包資料串起來，可以看到完整的瀏覽器請求或伺服器回應</p>
 <p><img src="/assets/HUMkwZM-FQaDF63u8o94ACLKpYvWuw5rwxU9XbcD5tI=.png"></p>
 <hr>
-<p>另外最上方有一個Statistic 可以選，他會幫你整理一些資訊並統計</p>
+<p>另外最上方有一個 Statistic 可以選，它會幫你整理一些資訊並統計</p>
 <p><img src="/assets/S56NHuYS5NMQrQU_pjvvQb1Y2kUALT9vC8yZL4ODYis=.png"></p>
 <p>這邊介紹幾個常用功能</p>
-<h2 id="Conversation"><a href="#Conversation" class="headerlink" title="Conversation"></a>Conversation</h2><p>這裡可以看到wireshark 統計的所有兩個ip 地址之間的傳輸狀況</p>
+<h2 id="Conversation"><a href="#Conversation" class="headerlink" title="Conversation"></a>Conversation</h2><p>這裡可以看到 Wireshark 統計的所有兩個 IP 地址之間的傳輸狀況</p>
 <p><img src="/assets/jSWnSFdc5hkpW1oaY6wC88ZqfXCXAhkA-aKTyF1MmuA=.png"></p>
 <h2 id="Path-length"><a href="#Path-length" class="headerlink" title="Path length"></a>Path length</h2><p>這邊可以看到封包長度的統計</p>
 <p><img src="/assets/i4NR_mBwxqb7XN0ldbpK3FH9kOhZX0TeNF9V8DwNaQQ=.png"></p>
 <h2 id="Protocol-Hierarchy"><a href="#Protocol-Hierarchy" class="headerlink" title="Protocol Hierarchy"></a>Protocol Hierarchy</h2><p>這邊會看到所有封包協定的統計結果</p>
 <p><img src="/assets/A-yURmMM36hnnwHZPVkuBjJnRXHIYXXWqbmzXKoJ_7I=.png"></p>
 <hr>
-<p>除此之外，wireshark 提供了filter 的功能，可以快速的過濾出想要看的封包</p>
+<p>除此之外，Wireshark 提供了 filter 的功能，可以快速過濾出想要看的封包</p>
 <p><img src="/assets/Pa8-siGHwexyA9rXbQyPRcMA-_VJ_It7Sp41jbj-KvQ=.png"></p>
-<p>這邊整理了一些基本filter 語法</p>
+<p>這邊整理了一些基本 filter 語法</p>
 <pre class="line-numbers language-none"><code class="language-none"># 特定IP位址
 ip.addr &#x3D;&#x3D; 192.168.1.1
 
@@ -370,7 +370,7 @@ tcp.len &gt; 500
 udp.length &gt; 100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <hr>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是 Network Forensic ，以及Wireshark 的使用，Wireshark 的功能還有很多，接下來幾天也會介紹一些其他的工具或者Wireshark 其他功能。</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是 Network Forensic，以及 Wireshark 的使用，Wireshark 的功能還有很多，接下來幾天也會介紹一些其他的工具或者 Wireshark 的其他功能。</p>
 
             <div class="post-tags">
               <!-- 文章tags -->

@@ -95,10 +95,10 @@
         </a>
       </li></ul>
   <ul><li class="active">
-        <a href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
           
           <div class="ellipsis">
-            <span>2025鐵人賽</span>
+            <span>2025 鐵人賽</span>
           </div>
         </a>
       </li><li class="">
@@ -179,8 +179,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
-      2025鐵人賽
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
     </a>
     
     
@@ -229,16 +229,16 @@
           <!-- 文章标题 -->
           <h1 class="post-title">網頁資訊大補帖-圖解講義</h1>
           <div class="last-updated">
-            Last updated: 2025-10-01 18:40:13
+            Last updated: 2025-10-02 22:26:54
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要分享的是 OSINT當中對網站或domain 進行資料的收集，在平常打網頁漏洞或者滲透測試時也會需要先對這個網站進行一些偵查找出可以突破的入口，今天會分享一些平常會使用到的一些工具</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要分享的是 OSINT 當中對網站或 domain 進行資料的收集，在平常打網頁漏洞或者滲透測試時也會需要先對這個網站進行一些偵查找出可以突破的入口，今天會分享一些平常會使用到的工具</p>
 <hr>
 <h1 id="WaybackMachine"><a href="#WaybackMachine" class="headerlink" title="WaybackMachine"></a>WaybackMachine</h1><p>網站連結：<a target="_blank" rel="noopener" href="http://web.archive.org/">http://web.archive.org/</a></p>
-<p>這個網站是由 Internet Archive 維護的一個線上服務。它可以定期將網站的網頁內容snapshot存檔，讓人們能夠查看某個網站在過去不同時間點的樣子</p>
+<p>這個網站是由 Internet Archive 維護的一個線上服務。它可以定期將網站的網頁內容 snapshot 存檔，讓人們能夠查看某個網站在過去不同時間點的樣子</p>
 <p>例如我想要看一下 <a href="https://yunshiuan.com/">https://yunshiuan.com/</a> 網站之前的樣子，就可以將網址輸入進去後看看。</p>
 <p><img src="/assets/1XCkWh3EsZrt_VK1tm_gQRoafiqcVr9vfBjomnlVdBQ=.png"></p>
-<p>發現他在8&#x2F;15 有被打了一個snapshot，點進去看看後就可以看到在8&#x2F;15這個網頁時的樣子</p>
+<p>發現它在 8&#x2F;15 有被打了一個 snapshot，點進去看看後就可以看到在 8&#x2F;15 這個網頁時的樣子</p>
 <p><img src="/assets/DgnhK5fhsurE8l2P3XwB4UKENppv9MiZ4XfVIDMUv1o=.png"></p>
 <hr>
 <h1 id="Recon-ng"><a href="#Recon-ng" class="headerlink" title="Recon-ng"></a>Recon-ng</h1><p>下載方式</p>
@@ -246,8 +246,8 @@
 
 <p>Recon-ng 是一個用 Python 寫成、以模組化、指令列互動介面為設計的 OSINT 收集框架。它把各類資訊收集功能（DNS、WHOIS、搜尋引擎、API 查詢等）包成「模組」，用戶可以在工作區（workspace）中逐步執行、存檔與匯出調查結果</p>
 <p>Recon-ng  的 tutorial 連結： <a target="_blank" rel="noopener" href="https://hackertarget.com/recon-ng-tutorial/">https://hackertarget.com/recon-ng-tutorial/</a> </p>
-<p>整體的操作會類似於Metasploit ， 一樣會先引入模組，設定參數然後執行</p>
-<p>直接執行<code>recon-ng</code> 後可以使用<code>marketplace search</code> 查看有什麼可以用的 modules</p>
+<p>整體的操作會類似於 Metasploit，一樣會先引入模組，設定參數然後執行</p>
+<p>直接執行 <code>recon-ng</code> 後可以使用 <code>marketplace search</code> 查看有什麼可以用的 modules</p>
 <pre class="line-numbers language-none"><code class="language-none">$ [recon-ng][default] &gt; marketplace search
 
   +--------------------------------------------------------------------------------------------------+
@@ -364,14 +364,14 @@
   | reporting&#x2F;xml                                     | 1.1     | not installed | 2019-06-24 |   |   |
   +--------------------------------------------------------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>接下來示範用<code>hackertarget</code>去尋找 hostname </p>
-<p>首先先把<code>hackertarget</code>先下載下來</p>
+<p>接下來示範用 <code>hackertarget</code> 去尋找 hostname</p>
+<p>首先先把 <code>hackertarget</code> 先下載下來</p>
 <pre class="line-numbers language-none"><code class="language-none">marketplace install hackertarget<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>在把它load 進來</p>
+<p>再把它 load 進來</p>
 <pre class="line-numbers language-none"><code class="language-none">modules load hackertarget<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>接下來用info 看一下會需要什麼參數</p>
+<p>接下來用 info 看一下會需要什麼參數</p>
 <pre class="line-numbers language-none"><code class="language-none">$ [recon-ng][default][hackertarget] &gt; info
 
       Name: HackerTarget Lookup
@@ -392,11 +392,11 @@ Source Options:
   &lt;path&gt;         path to a file containing a list of inputs
   query &lt;sql&gt;    database query returning one column of inputs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>接下來可以看到SOURCE 會需要填東西，那這欄就是要填要偵查的domain，以<code>google.com</code>舉例。</p>
-<p>用下面指令設定SOURCE</p>
+<p>接下來可以看到 SOURCE 會需要填東西，那這欄就是要填要偵查的 domain，以 <code>google.com</code> 舉例。</p>
+<p>用下面指令設定 SOURCE</p>
 <pre class="line-numbers language-none"><code class="language-none">options set SOURCE google.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>再看一次info，可以看到他被設定成了 <code>google.com</code> </p>
+<p>再看一次 info，可以看到它被設定成了 <code>google.com</code> </p>
 <pre class="line-numbers language-none"><code class="language-none">$ [recon-ng][default][hackertarget] &gt; info
 
       Name: HackerTarget Lookup
@@ -418,14 +418,14 @@ Source Options:
   query &lt;sql&gt;    database query returning one column of inputs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>接下來打 run 就會開始執行</p>
-<p>執行的過程中也會出現結果，最後在下<code>show hosts</code> 指令就會出現表格樣式的結果</p>
+<p>執行的過程中也會出現結果，最後在下 <code>show hosts</code> 指令就會出現表格樣式的結果</p>
 <p><img src="/assets/svj4PUeEf1nUKpRCQjze7nr5oPS1zt2QQ496e2hZ8sw=.png"></p>
 <hr>
 <h1 id="Whois-domaintools"><a href="#Whois-domaintools" class="headerlink" title="Whois.domaintools"></a>Whois.domaintools</h1><p>網站連結：<a target="_blank" rel="noopener" href="https://whois.domaintools.com/">https://whois.domaintools.com/</a></p>
-<p>這個網站可以找到關於domain 的一些資訊，包括註冊商、何時註冊、何時到期與最後更新時間等等</p>
+<p>這個網站可以找到關於 domain 的一些資訊，包括註冊商、何時註冊、何時到期與最後更新時間等等</p>
 <p><img src="/assets/TBoAsZNRu4upfnloA9-lYEkUGjBbWF1mTuprg7Q2T_4=.png"></p>
 <hr>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了幾個可以得知到網站domain 上一些資訊的工具，幫助我們在之後需要對網站進行滲透測試或者當作線索都有幫助。</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了幾個可以得知網站 domain 上一些資訊的工具，幫助我們在之後需要對網站進行滲透測試或者當作線索都有幫助。</p>
 
             <div class="post-tags">
               <!-- 文章tags -->

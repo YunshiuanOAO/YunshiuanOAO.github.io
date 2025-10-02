@@ -95,10 +95,10 @@
         </a>
       </li></ul>
   <ul><li class="active">
-        <a href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
           
           <div class="ellipsis">
-            <span>2025鐵人賽</span>
+            <span>2025 鐵人賽</span>
           </div>
         </a>
       </li><li class="">
@@ -179,8 +179,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
-      2025鐵人賽
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
     </a>
     
     
@@ -229,16 +229,16 @@
           <!-- 文章标题 -->
           <h1 class="post-title">撥開電腦的記憶找出最黑暗的部分</h1>
           <div class="last-updated">
-            Last updated: 2025-10-01 18:40:05
+            Last updated: 2025-10-02 22:26:54
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>記憶體分析我認為是如果在一個 CTF 的 Forensic 分類上是比較有趣的題目，因為他不像硬碟鑑事隨隨便便就需要很大的空間，但是可以體驗到在一台被攻擊的電腦上尋找線索的感覺，因此今天要分享的是什麼是記憶體分析，以及最常使用的記憶體分析工具 Volatility。</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>記憶體分析我認為是如果在一個 CTF 的 Forensic 分類上是比較有趣的題目，因為它不像硬碟鑑識隨隨便便就需要很大的空間，但是可以體驗到在一台被攻擊的電腦上尋找線索的感覺，因此今天要分享的是什麼是記憶體分析，以及最常使用的記憶體分析工具 Volatility。</p>
 <hr>
-<h1 id="🧠-什麼是記憶體鑑識"><a href="#🧠-什麼是記憶體鑑識" class="headerlink" title="🧠 什麼是記憶體鑑識?"></a>🧠 什麼是記憶體鑑識?</h1><p>記憶體鑑識是從電腦的隨機存取記憶體（RAM）中提取、分析和解釋數位證據的過程。其中會需要得知的是正在執行的程式、process、載入的library、網路連線狀態、使用者輸入、甚至密碼或加密金鑰，有些是根本沒寫到硬碟的那種。 ￼</p>
-<p>那為什麼需要記憶體鑑識?</p>
+<h1 id="🧠-什麼是記憶體鑑識？"><a href="#🧠-什麼是記憶體鑑識？" class="headerlink" title="🧠 什麼是記憶體鑑識？"></a>🧠 什麼是記憶體鑑識？</h1><p>記憶體鑑識是從電腦的隨機存取記憶體（RAM）中提取、分析和解釋數位證據的過程。其中會需要得知的是正在執行的程式、process、載入的 library、網路連線狀態、使用者輸入、甚至密碼或加密金鑰，有些是根本沒寫到硬碟的那種。</p>
+<p>那為什麼需要記憶體鑑識？</p>
 <ol>
 <li>易失性資料保存<ol>
-<li>RAM中的資料在斷電後會消失</li>
+<li>RAM 中的資料在斷電後會消失</li>
 <li>許多重要證據只存在於記憶體中</li>
 <li>需要及時捕獲這些易失性資訊</li>
 </ol>
@@ -256,10 +256,10 @@
 </ol>
 </li>
 </ol>
-<p>所以如果拿到一台受攻擊的電腦，第一部會先對記憶體進行 dump ，因為有可能攻擊者會對 disk 做清除或者煙滅證據，但記憶體通常還是會紀錄這些攻擊證據，這就是為什麼記憶體分析這麼重要。</p>
-<p>而記憶體鑑識工具大家最常用的就是<strong>Volatility</strong> </p>
+<p>所以如果拿到一台受攻擊的電腦，第一步會先對記憶體進行 dump，因為有可能攻擊者會對 disk 做清除或者湮滅證據，但記憶體通常還是會記錄這些攻擊證據，這就是為什麼記憶體分析這麼重要。</p>
+<p>而記憶體鑑識工具大家最常用的就是 <strong>Volatility</strong> </p>
 <hr>
-<h1 id="📈-Volatility"><a href="#📈-Volatility" class="headerlink" title="📈 Volatility"></a>📈 Volatility</h1><p>Volatility 是一個 memory forensics框架，用來從memory dump中提取系統運作時的各種資訊，包含正在跑的 process、網路連線、註冊表資料、開啟的 file handles 等等</p>
+<h1 id="📈-Volatility"><a href="#📈-Volatility" class="headerlink" title="📈 Volatility"></a>📈 Volatility</h1><p>Volatility 是一個 memory forensics 框架，用來從 memory dump 中提取系統運作時的各種資訊，包含正在跑的 process、網路連線、註冊表資料、開啟的 file handles 等等</p>
 <p><img src="/assets/4x0S5xFsoEzzfSCA27Jem2vPeA6639E9lqBBWVLKuk0=.png"></p>
 <p>最初的版本是 Volatility 2 ，因為寫在 Python 2 上，之後推出了 Volatility 3，並使用 Python3 編寫</p>
 <p>下載連結：</p>
@@ -267,7 +267,7 @@
 <li>Volatility 2 : <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></li>
 <li>Volatility 3 : <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></li>
 </ul>
-<p>Github 中安裝步驟都有寫在README.md上，而 Volatility 2 的安裝方式會比 3 的安裝會多一步是需要先安裝Python2 </p>
+<p>Github 中安裝步驟都有寫在 README.md 上，而 Volatility 2 的安裝方式會比 3 的安裝會多一步是需要先安裝 Python2 </p>
 <p>以下介紹一些 Volatility 2 跟 3 的基本操作</p>
 <h2 id="Volatility-2-基本操作"><a href="#Volatility-2-基本操作" class="headerlink" title="Volatility 2 基本操作"></a>Volatility 2 基本操作</h2><p>當你有一個記憶體 dump 的檔案，例如 memdump.img</p>
 <ol>
@@ -279,9 +279,9 @@ python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pstree<span aria-hidden=
 <li>dump files<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 dumpfiles dumpfiles -Q 0x000000003fc61be0 -D c:\files -u<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
-<p>其他對應指令可以下 <code>-h</code> 查看或者看官方的doc </p>
+<p>其他對應指令可以下 <code>-h</code> 查看或者看官方的 doc </p>
 <hr>
-<h2 id="Volatility-3-基本操作"><a href="#Volatility-3-基本操作" class="headerlink" title="Volatility 3 基本操作"></a>Volatility 3 基本操作</h2><p>Volatility 3 就不用再下 profile ，先假設 memdump.img 是 Windows </p>
+<h2 id="Volatility-3-基本操作"><a href="#Volatility-3-基本操作" class="headerlink" title="Volatility 3 基本操作"></a>Volatility 3 基本操作</h2><p>Volatility 3 就不用再下 profile，先假設 memdump.img 是 Windows </p>
 <ol>
 <li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.pslist
@@ -292,11 +292,11 @@ python3 vol.py -f memdump.img windows.netstat<span aria-hidden="true" class="lin
 <li>dump files<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img -o .&#x2F;files_out windows.dumpfiles --pid 1234<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
-<p>其他指令可以下 <code>-h</code> 查看或者看官方的doc </p>
+<p>其他指令可以下 <code>-h</code> 查看或者看官方的 doc </p>
 <hr>
-<h1 id="要選Volatility2-還是-Volatility3"><a href="#要選Volatility2-還是-Volatility3" class="headerlink" title="要選Volatility2 還是 Volatility3 ?"></a>要選Volatility2 還是 Volatility3 ?</h1><p>我個人會建議兩個都裝， 因為有時候會出現Volatility2 跑出不來的，Volatility3 就可以，不然就是Volatility2有的插件Volatility3 沒有……等等，另外現在Volatility2 已經沒有再維護了，現在主要都是Volatility3還在持續的更新，但是Volatility2 以目前來說 Plugin 的完整度還是大於Volatility3，因此常常會看到有些人到現在還是會使用Volatility2 進行記憶體分析</p>
+<h1 id="要選-Volatility2-還是-Volatility3？"><a href="#要選-Volatility2-還是-Volatility3？" class="headerlink" title="要選 Volatility2 還是 Volatility3？"></a>要選 Volatility2 還是 Volatility3？</h1><p>我個人會建議兩個都裝，因為有時候會出現 Volatility2 跑不出來的，Volatility3 就可以，不然就是 Volatility2 有的插件 Volatility3 沒有等等，另外現在 Volatility2 已經沒有再維護了，現在主要都是 Volatility3 還在持續的更新，但是 Volatility2 以目前來說 Plugin 的完整度還是大於 Volatility3，因此常常會看到有些人到現在還是會使用 Volatility2 進行記憶體分析</p>
 <hr>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是記憶體鑑識以及Volatilty 工具使用，接下來幾天會分享我在學習記憶體分析時學到的有趣技術或者</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是記憶體鑑識以及 Volatility 工具使用，接下來幾天會分享我在學習記憶體分析時學到的有趣技術或者</p>
 
             <div class="post-tags">
               <!-- 文章tags -->
@@ -338,7 +338,7 @@ python3 vol.py -f memdump.img windows.netstat<span aria-hidden="true" class="lin
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%BB%80%E9%BA%BC%E6%98%AF%E8%A8%98%E6%86%B6%E9%AB%94%E9%91%91%E8%AD%98"><span class="toc-number">2.</span> <span class="toc-text">🧠 什麼是記憶體鑑識?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%88-Volatility"><span class="toc-number">3.</span> <span class="toc-text">📈 Volatility</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility-2-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">Volatility 2 基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility-3-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.</span> <span class="toc-text">Volatility 3 基本操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A6%81%E9%81%B8Volatility2-%E9%82%84%E6%98%AF-Volatility3"><span class="toc-number">4.</span> <span class="toc-text">要選Volatility2 還是 Volatility3 ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%BB%80%E9%BA%BC%E6%98%AF%E8%A8%98%E6%86%B6%E9%AB%94%E9%91%91%E8%AD%98%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">🧠 什麼是記憶體鑑識？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%88-Volatility"><span class="toc-number">3.</span> <span class="toc-text">📈 Volatility</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility-2-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">Volatility 2 基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility-3-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.</span> <span class="toc-text">Volatility 3 基本操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A6%81%E9%81%B8-Volatility2-%E9%82%84%E6%98%AF-Volatility3%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">要選 Volatility2 還是 Volatility3？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

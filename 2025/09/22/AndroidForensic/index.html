@@ -95,10 +95,10 @@
         </a>
       </li></ul>
   <ul><li class="active">
-        <a href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
           
           <div class="ellipsis">
-            <span>2025鐵人賽</span>
+            <span>2025 鐵人賽</span>
           </div>
         </a>
       </li><li class="">
@@ -179,8 +179,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
-      2025鐵人賽
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
     </a>
     
     
@@ -229,7 +229,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">對小綠人進行一波大調查</h1>
           <div class="last-updated">
-            Last updated: 2025-10-01 18:40:19
+            Last updated: 2025-10-02 22:20:31
           </div>
           <!-- 文章 -->
           <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>大家不知道最近有沒有看過最新的 Netflix 紀錄片《陌生號碼：高校簡訊詐騙疑雲》，以及之前的《網路煉獄：揭發N 號房》，劇中都有出現一幕是鑑識人員將嫌疑犯的手機拿去進行證據採集，這讓我想到我可以研究看看如何對常見的 Android 以及 IOS 系統手機進行鑑識，但是因為直接買類似 Cellebrite UFED 的設備或者Magnet AXIOM軟體來玩需要花錢，因此今明兩天我會使用開源的分析工具並利用最近剛結束的MVS CTF 2025的android 與IOS 分類提供的dumpfiles來玩玩看。</p>
@@ -243,13 +243,13 @@
 <p>這個連結下載會給一個Android 手機的 data 資料夾內容，並且是壓縮過後的。</p>
 <p>這邊可以分享一下在Android 11 後，沒有 root 的權限是沒有辦法去存取到 data 資料夾的，因此會需要一些第三方的工具才可以把它 dump 下來。</p>
 <p>我的猜測，這個 dump 的製作是使用一個<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk">Magisk</a> 工具安裝到裝置上，這個工具可以讓你獲得到 root 權限並無需修改系統分區，<a target="_blank" rel="noopener" href="https://izaka.tw/magisk-tutorial-and-installation-guide/">參考連結</a></p>
-<p>ALEPP他只支援tar&#x2F;zip&#x2F;gz檔案，因此我是先從連結上下載後解壓在重新壓縮成zip一次</p>
-<p>那得到檔案之後就可以丟給ALEAPP，上面是填題目給的檔案，下面是選他產生的分析結果要輸出到哪裡的資料夾</p>
-<p>下面的Module可以全選</p>
+<p>ALEAPP 只支援 tar&#x2F;zip&#x2F;gz 檔案，因此我是先從連結上下載後解壓再重新壓縮成 zip 一次</p>
+<p>得到檔案之後就可以丟給 ALEAPP，上面是填題目給的檔案，下面是選它產生的分析結果要輸出到哪裡的資料夾</p>
+<p>下面的 Module 可以全選</p>
 <p><img src="/assets/mDASlDFj6hHZvVJoPZZZ210DAqwMwVXbJ-mrViOr-w4=.png"></p>
-<p>接下來按左下角的Process 他就會開始做分析，分析完之後他會再你跟剛剛填的路徑下新增一個資料夾，</p>
+<p>接下來按左下角的 Process 它就會開始做分析，分析完之後它會在你跟剛剛填的路徑下新增一個資料夾</p>
 <p><img src="/assets/lDtakJToWuHInXS9qc6ldb-xieSy0NSlWyeQBwburCs=.png"></p>
-<p>這些就是他將分析的結果轉成html ，類似生成一個報告，主要的頁面會在<code>index.html</code> 點開之後會進入到這個頁面</p>
+<p>這些就是它將分析的結果轉成 HTML，類似生成一個報告，主要的頁面會在 <code>index.html</code>，點開之後會進入到這個頁面</p>
 <p><img src="/assets/IvCPZq8bj5obL1jWJ0mLYUYg_gNCe6EhCRZm-CpzJGE=.png"></p>
 <p>之後就可以開始去翻有沒有什麼可疑的東西</p>
 <p>其中的功能很多，這邊介紹其中一部分的內容</p>
@@ -257,7 +257,7 @@
 <p><img src="/assets/Z2AoWqFIXBkawKwp5jiAnGuJy122aa8Tyd-SZjcOsOc=.png"></p>
 <h2 id="APP"><a href="#APP" class="headerlink" title="APP"></a>APP</h2><h3 id="APP-Icons"><a href="#APP-Icons" class="headerlink" title="APP Icons"></a>APP Icons</h3><p>這邊可以查看使用者在裝置上安裝了什麼app</p>
 <p><img src="/assets/5hibQen43Jn1ThRdY0x2r67KBkQ_yTAxbqaeRzwTUNA=.png"></p>
-<h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p>他會解析<code>packages.xml</code> ，紀錄了裝置上安裝過的所有套件（應用程式），包含：</p>
+<h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p>它會解析 <code>packages.xml</code>，記錄了裝置上安裝過的所有套件（應用程式），包含：</p>
 <p>•	系統應用（隨 ROM 出廠）</p>
 <p>•	OEM 廠商附加應用</p>
 <p>•	使用者自行安裝的應用（例如從 Google Play Store、adb sideload 等）</p>
@@ -267,7 +267,7 @@
 <h3 id="Bluetooth-Connections"><a href="#Bluetooth-Connections" class="headerlink" title="Bluetooth Connections"></a>Bluetooth Connections</h3><p>這邊可以看藍牙裝置連線紀錄</p>
 <p><img src="/assets/tTj3bI9f-yMf1GKbRGqfxsjClNGrxo9di4EThFU7qTw=.png"></p>
 <hr>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天簡單介紹ALEAPP 工具，以及如何使用，之後希望可以再更深入研究這部分，如：如何在手機未解鎖或在未授權的情況下還是可以把data 資料 dump 出來，以及更進階的分析技巧</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天簡單介紹 ALEAPP 工具，以及如何使用，之後希望可以再更深入研究這部分，如：如何在手機未解鎖或在未授權的情況下還是可以把 data 資料 dump 出來，以及更進階的分析技巧</p>
 <hr>
 <h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=eG55F8glV0o">https://www.youtube.com/watch?v=eG55F8glV0o</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L_rELVckEAA">https://www.youtube.com/watch?v=L_rELVckEAA</a></p>

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    你知道到 Volatility 也可以帶 cookie 傳入嗎 ？
+    你知道 Volatility 也可以帶 cookie 傳入嗎？
   </title>
   <meta name="description" content="記憶體鑑識技巧">
   <meta name="keywords" content="Volatility,forensic,memoryforensic">
@@ -95,10 +95,10 @@
         </a>
       </li></ul>
   <ul><li class="active">
-        <a href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
           
           <div class="ellipsis">
-            <span>2025鐵人賽</span>
+            <span>2025 鐵人賽</span>
           </div>
         </a>
       </li><li class="">
@@ -179,8 +179,8 @@
         <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
       </g>
     </svg>
-    <a class="ellipsis" href="/categories/2025%E9%90%B5%E4%BA%BA%E8%B3%BD/">
-      2025鐵人賽
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
     </a>
     
     
@@ -191,7 +191,7 @@
       </g>
     </svg>
     <span class="ellipsis">
-      你知道到 Volatility 也可以帶
+      你知道 Volatility 也可以帶 
     </span>
     
   </section>
@@ -227,19 +227,19 @@
         <!-- 渲染文章内容 -->
         <article>
           <!-- 文章标题 -->
-          <h1 class="post-title">你知道到 Volatility 也可以帶 cookie 傳入嗎 ？</h1>
+          <h1 class="post-title">你知道 Volatility 也可以帶 cookie 傳入嗎？</h1>
           <div class="last-updated">
-            Last updated: 2025-10-01 18:40:11
+            Last updated: 2025-10-02 22:26:54
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>在使用 Volatility 2 分析 Win10 記憶體時，會出現 Cannot find nt!ObGetObjectType 問題，需要傳入cookie 才能解決，今天會分享為什麼會出現這個問題，並且如何解決</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>在使用 Volatility 2 分析 Win10 記憶體時，會出現 Cannot find nt!ObGetObjectType 問題，需要傳入 cookie 才能解決，今天會分享為什麼會出現這個問題，並且如何解決</p>
 <hr>
 <h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Volatility"><a href="#Volatility" class="headerlink" title="Volatility"></a>Volatility</h2><p>下載連結：</p>
 <p>Volatility 2 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></p>
 <p>Volatility 3 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></p>
 <p>經典的記憶體分析工具，利用指令可以分析 memory dump 中的關鍵訊息，像是進程、網路連線、檔案……等等。</p>
-<p>基本的操作這邊推薦可以直接上網查有人整理好的指令doc</p>
-<p>而Volatility分為2與3版，差別就是一個是要使用 python2 執行，另一個是用 python3 執行，並且現在Volatility 2 已經沒有在維護了，但是一些 Plugin 的完整度在目前為止還是比 Volatility 3 還要高並且豐富，所以有些人還是會比較會偏向使用 Volatility 2 ，今天分享會主要使用 Volatility 2</p>
+<p>基本的操作這邊推薦可以直接上網查有人整理好的指令 doc</p>
+<p>而 Volatility 分為 2 與 3 版，差別就是一個是要使用 python2 執行，另一個是用 python3 執行，並且現在 Volatility 2 已經沒有在維護了，但是一些 Plugin 的完整度在目前為止還是比 Volatility 3 還要高並且豐富，所以有些人還是會比較會偏向使用 Volatility 2，今天分享會主要使用 Volatility 2</p>
 <hr>
 <p>如果你在 Win10 的記憶體 dump 使用 Volatility 2 的 psscan 時，有可能會出現以下的錯誤</p>
 <pre class="line-numbers language-none"><code class="language-none">$ vol.py -f MemoryDump.mem --profile&#x3D;Win10x64_19041 psscan

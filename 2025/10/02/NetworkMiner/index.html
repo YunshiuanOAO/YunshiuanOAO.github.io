@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    🦈 ✌️
+    在網路上挖呀挖呀挖
   </title>
-  <meta name="description" content="Wireshark 介紹,Network Forensic 介紹">
-  <meta name="keywords" content="Wireshark,Network Forensic">
+  <meta name="description" content="NetworkMiner 介紹,Network Forensic 介紹">
+  <meta name="keywords" content="NetworkMiner,Network Forensic">
   <meta name="author" content="yunshiuan">
-  <link rel="canonical" href="https://yunshiuan.com/2025/09/30/Wireshark2/">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/02/NetworkMiner/">
   
   
   <link rel="icon" href='/assets/favicon.png'>
@@ -191,7 +191,7 @@
       </g>
     </svg>
     <span class="ellipsis">
-      🦈 ✌️
+      在網路上挖呀挖呀挖
     </span>
     
   </section>
@@ -227,72 +227,63 @@
         <!-- 渲染文章内容 -->
         <article>
           <!-- 文章标题 -->
-          <h1 class="post-title">🦈 ✌️</h1>
+          <h1 class="post-title">在網路上挖呀挖呀挖</h1>
           <div class="last-updated">
-            Last updated: 2025-10-01 18:40:19
+            Last updated: 2025-10-02 17:39:13
           </div>
           <!-- 文章 -->
-          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹 Wireshark 的兩個特別的功能，一個是可以匯入key 去解密封包內容，另一個是可以將http的傳輸物件下載下來。</p>
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>有時候會想要看一下整個通訊過程傳了東西什麼或者是否有 Credentials 洩漏 ，今天介紹一個network forensic 工具-NetworkMiner，他可以用來從網路流量中萃取有用資訊</p>
 <hr>
-<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">https://www.wireshark.org/download.html</a></p>
-<p>Wireshark是目前最受歡迎的開源網路協定分析器。</p>
-<p>這款功能強大的軟體不僅能夠即時監控網路流量，更能深入分析各種網路協定的詳細內容，為網路故障排除、協定開發和安全分析提供全方位的支援，</p>
-<p>另外也能夠識別和解析超過2000種不同的網路協定，從常見的TCP&#x2F;IP協定族到專用的工業控制協定，幾乎涵蓋了所有可能遇到的網路通訊場景。這種全面的協定支援不僅包括即時協定解析，還允許用戶根據需要添加自定義協定支援。</p>
-<hr>
-<h1 id="🔐-解密封包"><a href="#🔐-解密封包" class="headerlink" title="🔐 解密封包"></a>🔐 解密封包</h1><p>Wireshark 支援可以匯入key ，將加密過後的HTTPS 流量還原成明文</p>
-<p>因為HTTPS 多了一層SSL&#x2F;TLS，他會將封包進行加密保護傳輸內容不被竊聽</p>
-<p>解密流程如下：</p>
-<p>假設我們要分析一個HTTPS網站的登入過程，將加解密的key 先存在一個檔案中</p>
-<pre class="line-numbers language-shellscript" data-language="shellscript"><code class="language-shellscript">export SSLKEYLOGFILE&#x3D;&quot;&#x2F;home&#x2F;user&#x2F;ssl-keys.log&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>然後再Preferences-&gt; Prorocols 裡面找到TLS ，接下來把剛剛儲存的key 路徑丟進去最底下<code>(Pre)-Master-Screct log filename</code>裡面</p>
-<p><img src="/assets/CeYJy0OyLQdOSSNNFOSwGR4xwqu41W5ftRSrnPAi5Lg=.png"></p>
-<p>例子：<a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/wiredive/">CyberDefender - WireDive Lab</a></p>
-<p>在 https.pcap 題目組底下的問題會需要先匯入加解密key 才能回答</p>
-<p>首先先看一下原本加密過後的樣子</p>
-<p><img src="/assets/3rXSAIopoocNAvtVDzzctTj5X9hm0JhZHcO5-i4gu-U=.png"></p>
-<p>題目有提供解密的key </p>
-<p><img src="/assets/EY4dTiYlp5mig0M30KBOHHoUCHfGxAa7Bzx-ppyk3kc=.png"></p>
-<p>接下來將這個檔案匯入到wireshark 當中</p>
-<p><img src="/assets/D4ilH3Dc85XfxfCIv41WPnC3Y9CcxtoPs7qrVjOifos=.png"></p>
-<p>OK 之後就可以看到解密過後的封包內容並且也跑出了HTTP2</p>
-<p><img src="/assets/3AYASExUaD5r4And5rGCmhGYg2eO2SqDrTuWxIXNtyY=.png"></p>
-<p>另外wireshark 支援的解密為</p>
-<ol>
-<li><strong>SSL&#x2F;TLS解密</strong>：最常見的HTTPS流量解密</li>
-<li><strong>WEP&#x2F;WPA&#x2F;WPA2解密</strong>：WiFi加密流量</li>
-<li><strong>IPsec解密</strong>：VPN流量</li>
-<li><strong>Kerberos解密</strong>：Windows認證流量</li>
-<li><strong>自定義加密</strong>：透過Lua腳本支援</li>
-</ol>
-<hr>
-<h1 id="📦-匯出物件"><a href="#📦-匯出物件" class="headerlink" title="📦 匯出物件"></a>📦 匯出物件</h1><p>wireshark 提供了可以將封包傳輸的物件(如：圖片、檔案、網頁……) dump 下來的功能</p>
-<p><img src="/assets/3ddxe9oKXt86KtV1SU35U9aQ4UFkfBXaD7uXQ3UaAbA=.png"></p>
-<p>例子：<a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/solardisruption/">CyberDefender-</a><strong><a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/solardisruption/">SolarDisruption Lab</a></strong></p>
-<p>這個題目其中有一題問：</p>
+<h1 id="🪏-NetworkMiner"><a href="#🪏-NetworkMiner" class="headerlink" title="🪏 NetworkMiner"></a>🪏 NetworkMiner</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.netresec.com/?page=NetworkMiner">https://www.netresec.com/?page=NetworkMiner</a></p>
+<p>NetworkMiner 他目前是只給Windows 作業系統使用，但是也可以另外使用其他工具讓他在 Linux 或者Mac 執行，他可以將pcap 內的封包拆開、解析、重組，嘗試把裡面的檔案、圖片、郵件、憑證／SSL 證書、使用者帳號密碼之類的東西直接還原出來，另外他也可以即時的監聽封包並分析</p>
+<p><img src="/assets/BJmkNL7Wg-jT87SnETdJ3A595Aq2fIzDb_OTbU6yD3A=.png"></p>
+<p>但是，NetworkMiner 免費版他只可以分析 pcap 檔案，如果是pcapng 的話是需要付費才能分析的，付費會需要 1300 USD </p>
 <blockquote>
-<p>Q10 The PLC’s configuration webserver enables engineers to configure and monitor various parameters of the PLC device. This access can also allow an attacker to identify the I&#x2F;O points or the registers&#x2F;coils numbers and their mappings. How many I&#x2F;O points were in use on the PLC?</p>
+<p>pcapng 也是一種用來儲存網路封包捕捉資料的檔案格式，是舊的 pcap 格式的進化版，他會比 pcap 存的資料還要多，可以分析的資訊也越多，目前 Wireshark 從 v1.8 開始，預設就把存封包的格式改成 pcapng</p>
 </blockquote>
-<p>而這題的解法會需要把整個網站檔案都載下來查看才會得知</p>
-<p><img src="/assets/ss49Kd80lpo7W22MLHwdRQf3jPcnbcmACWlBz01R1Nc=.png"></p>
-<p>接下來按Save all 後選擇其中一個資料夾放所有Object </p>
-<p><img src="/assets/1j_cxT6Bqc47dU8b26jm1am1Qw4nZcqCwNLTLpSUQeU=.png"></p>
-<p>去到那個資料夾後會看到所有的東西都存在裡面了</p>
-<p><img src="/assets/G7vhR5BVsvLM6slvFAU79KvycpYMD767Mk4KclH-thI=.png"></p>
-<p>點開dashboard.html後發現會正常顯示當時網頁的dashboard 頁面</p>
-<p><img src="/assets/3opa4X8R6u1a5dbtiTWgHkni3DeYiQMYIVUBrkJGGrc=.png"></p>
-<p>點開Monitoring 後即可回答答案</p>
-<p><img src="/assets/hsdRZ8vGbIApQpcWw_b3szwFn4xe8oEzoUq6ox9PWQM=.png"></p>
+<p>今天的 pcap 檔案會從 <a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/bluesky-ransomware/">Cyberdefender - BlueSky Ransomware Lab</a> 的題目下載，並用 NetworkMiner 分析。</p>
+<p>首先先把pcap 檔案丟進去 NetworkMiner 當中分析</p>
+<p>分析完後會先顯示的頁面是封包出現的主機，當中包含了主機的ip、host、以及他開放的port等等</p>
+<p><img src="/assets/ph7PtZ3V5BQdwb-Ydw4F3REbX7JTN7lnT8jb2t-AaFk=.png"></p>
+<p>接下來Host 選項的右邊Files 頁面，他會截取未加密的檔案，Files 右邊的Image 頁面也是相同功能，只能變成截取未加密的圖片</p>
+<p><img src="/assets/r1pOmKePhCIduAI1NSobXhTklz4T0OAlhUZFv262TQ8=.png"></p>
+<p>接下來是 Credential 頁面，他會提取出封包當中明文傳送的帳號密碼</p>
+<p><img src="/assets/WNIxyDDfpQujh5Et_ftU49MYnps6LG0zx4DXDiAs6Ew=.png"></p>
+<p>Session 頁面會顯示所有封包的兩方通訊紀錄</p>
+<p><img src="/assets/A51jXoR59A2DBYx9JUsUsyrpeddE4RYjKBqYmY-CrDU=.png"></p>
+<p>Paramter 是將應用層的各種參數、字串、指令、欄位內容提取出來</p>
+<p><img src="/assets/0gxBBumg_tI0HRU2imVUeMb0Ie3WWeElILZltOaYY_A=.png"></p>
+<p>有了以上的功能解BlueSky Ransomware 這個 Lab 的一些題目會一下就看出來了。</p>
+<blockquote>
+<p>Q1 : Knowing the source IP of the attack allows security teams to respond to potential threats quickly. Can you identify the source IP responsible for potential port scanning activity?</p>
+</blockquote>
+<p>開啟Host 頁面，發現他的Hostname、Web Server Banner 可以確定他是可疑ip</p>
+<p><img src="/assets/UGF8TahyMhF6uykmGTkeaHiyip-HzdKSWcenQRuliXg=.png"></p>
+<blockquote>
+<p>Q2 : During the investigation, it’s essential to determine the account targeted by the attacker. Can you identify the targeted account username?</p>
+<p>Q3 : We need to determine if the attacker succeeded in gaining access. Can you provide the correct password discovered by the attacker?</p>
+</blockquote>
+<p>直接去看 Credential 就會看到帳號以及他的密碼</p>
+<p><img src="/assets/3-f_D5PH0T3ruezDWmbBZP8Zg1_hOAOXNYLFfb-UwPQ=.png"></p>
+<blockquote>
+<p>Q4 : Attackers often change some settings to facilitate lateral movement within a network. What setting did the attacker enable to control the target host further and execute further commands?</p>
+</blockquote>
+<p>直接去看 Paramter 頁面，就會看到這串指令</p>
+<p><img src="/assets/GZowieiiZRU3vzTq1vh9b_WCm4HcayfzgnE6GaGQ448=.png"></p>
+<p>可以發現到他就是執行了</p>
+<pre class="line-numbers language-none"><code class="language-none">EXEC sp_configure &#39;xp_cmdshell&#39;, 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>將xp_cmdshell 啟用後去執行後面的惡意操作</p>
 <hr>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了兩個特別的功能，當初接觸到的時候有被驚艷到，Wireshark 的功能真的挺強大的，接下來會介紹其他Network fornesic 工具</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了 Network Miner 工具與他的功能，快速提取封包當中的資訊，在配合解題時會很方便，但可惜的是最近出現的題目都會使用 pcapng 儲存，除非是特地轉成 pcap 或者使用 tcpdump 提取 pcap ，但是這個工具還是很好用。</p>
 
             <div class="post-tags">
               <!-- 文章tags -->
               
                 
-                  <cosy-label href="/tags/Network-Forensic/" size="sm"># Network Forensic</cosy-label>
+                  <cosy-label href="/tags/NetworkMiner/" size="sm"># NetworkMiner</cosy-label>
                   
-                  <cosy-label href="/tags/Wireshark/" size="sm"># Wireshark</cosy-label>
+                  <cosy-label href="/tags/Network-Forensic/" size="sm"># Network Forensic</cosy-label>
                   
                     
             </div>
@@ -324,7 +315,7 @@
               </span>
             </cosy-tooltip>
             <!-- 文章toc -->
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wireshark"><span class="toc-number">2.1.</span> <span class="toc-text">Wireshark</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%94%90-%E8%A7%A3%E5%AF%86%E5%B0%81%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text">🔐 解密封包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%A6-%E5%8C%AF%E5%87%BA%E7%89%A9%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">📦 匯出物件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%AA%8F-NetworkMiner"><span class="toc-number">2.</span> <span class="toc-text">🪏 NetworkMiner</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li></ol>
           </div>
         </div>
       </cosy-drag-box>

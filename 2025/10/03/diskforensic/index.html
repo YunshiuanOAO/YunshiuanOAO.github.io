@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    襲來！大硬碟邪神
+  </title>
+  <meta name="description" content="Disk Forensic 基礎介紹">
+  <meta name="keywords" content="Disk Forensic,FTK Imager,KAPE,Windows Event Logs,Windows Registry">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/03/diskforensic/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      襲來！大硬碟邪神
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">襲來！大硬碟邪神</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-03 20:58:56
+          </div>
+          <!-- 文章 -->
+          <h1 id="Day19-襲來！大硬碟邪神"><a href="#Day19-襲來！大硬碟邪神" class="headerlink" title="Day19 襲來！大硬碟邪神"></a>Day19 襲來！大硬碟邪神</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹我覺得在 Forensic 當中最難的一個類別 - Disk Forensic，因為它單單一題的檔案就容量超大，裡面的內容超級無敵多，所以工具的使用與觀察就會很重要，所以今天的內容會包含基本的流程與會用到的工具</p>
+<hr>
+<h1 id="💾-Disk-Forensic"><a href="#💾-Disk-Forensic" class="headerlink" title="💾 Disk Forensic"></a>💾 Disk Forensic</h1><p>Disk Forensic 是專注於從磁碟或存儲媒體，如：硬碟、固態硬碟、USB 隨身碟、記憶卡……等等中取得、分析與復原資料，以作為法律或調查用途的證據，目標是在不改變原始資料的前提下，盡可能還原被刪除的資料、隱藏資料、檔案相關 metadata、檔案修改紀錄、時間戳記等，以協助重建案情、時間軸或找出惡意行為</p>
+<p>目前藍隊 CTF 的 Disk Forensic 題目會給兩種檔案，一種是 Image 檔案</p>
+<p><img src="/assets/oDFmynDID1wASC74E8JhHkOGRBWp6HlPgGIxwDDrxyk=.png"></p>
+<p>另一種會是類似完整的硬碟內的檔案，但是又不是完整的</p>
+<p><img src="/assets/Ozqkhi6MZzMBqEVpU-N7YsdubEKdT7GFkzUiDSApOTc=.png"></p>
+<p>這兩個差別是什麼呢？</p>
+<p>上面的是由 FTK Imager 或是其他取證工具將完整的 disk 資料把它轉成 image，因此原本留在 disk 裡面有什麼資料，在 Image 裡就會留著這些資料，所以檔案有可能會超級大。如果要查看也可以使用 FTK Imager 查看或者掛載到電腦上</p>
+<h2 id="FTK-Imager"><a href="#FTK-Imager" class="headerlink" title="FTK Imager"></a>FTK Imager</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.exterro.com/digital-forensics-software/ftk-imager">https://www.exterro.com/digital-forensics-software/ftk-imager</a></p>
+<p>FTK Imager 是由 AccessData 開發的一款磁碟／資料映像與預覽工具，它可用於在不改變原始資料的情況下，取得一個與原始儲存裝置（硬碟、USB、記憶卡等），以供日後分析、法律調查等用途</p>
+<p><img src="/assets/S2YDDW_pvvqkgTX-VY-mzsjJHhXOaZWC7VuDo6AALNY=.png"></p>
+<p>如果要掛載 Image，點選左上角的 File -&gt; Add Evidence Item </p>
+<p><img src="/assets/3G-zS_FR8MBfROUm_4KJZA9u1dnXaISTERQDc41Ehug=.png"></p>
+<p>選擇 Image File </p>
+<p><img src="/assets/5g5pMNHdEt-j-KirrHJ_8pilhzUFSZG_0-qk1cxUw9s=.png"></p>
+<p>選擇 disk image 路徑</p>
+<p><img src="/assets/oxH-L__SfkLyUcn3Xb4mr0btii2BukbcZhAbaOoDFXI=.png"></p>
+<p>之後就可以查看 image 內容了</p>
+<p><img src="/assets/aHLeONLXQFx5rQkTMEL6kQ2gHFvUF9BKwhs_Cc2a-W8=.png"></p>
+<hr>
+<p>另一個則是另外使用一個 KAPE 工具將 disk 中關鍵的一些檔案（如：evtx、NTUSER.DAT、tmp 等）提取出來再整理成一包壓縮檔，解壓後就會出現整理過後的硬碟內容，因此檔案大小會比使用 FTK Imager 轉換的 Image 小很多，並且可以直接查看，又稱為 <strong>triage image</strong></p>
+<p><img src="/assets/wMDJiZ9OQ_f2fWU2px0YDtSZa61O7WhUkSWQP1iUlAo=.png"></p>
+<h2 id="KAPE"><a href="#KAPE" class="headerlink" title="KAPE"></a>KAPE</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.kroll.com/en/services/cyber/incident-response-recovery/kroll-artifact-parser-and-extractor-kape">https://www.kroll.com/en/services/cyber/incident-response-recovery/kroll-artifact-parser-and-extractor-kape</a></p>
+<p>KAPE 是由 Eric Zimmerman 為 Kroll 所開發的 DFIR 工具，它是一個快速收集 artifacts 並初步處理的工具，用於從現場系統或儲存媒體中迅速抓取對鑑識有用的檔案或資訊，再利用 modules 來解析／整理這些資料。目的在於在完整映像完成前就能有可用線索。</p>
+<p><img src="/assets/YKbSdl2jMO9MqNDpsrp_TVlLOYv6Ux8ptGfCK7pTTrA=.png"></p>
+<p><code>source : ``https://isc.sans.edu/diary/25258</code></p>
+<hr>
+<p>接下來得到了 image 檔之後，就可以開始看我們想要得知的一些內容</p>
+<h2 id="Windows-Event-Logs"><a href="#Windows-Event-Logs" class="headerlink" title="Windows Event Logs"></a>Windows Event Logs</h2><p>路徑：<code>%WinDir%\System32\winevt\logs</code></p>
+<p>此資料夾底下會有很多 evtx 檔案，其中記錄了很多事件，主要會看的有這三個</p>
+<ul>
+<li>Security.evtx : 用於記錄系統的安全性事件（稽核、登入／登出、帳戶變更、安全性相關操作）</li>
+<li>Application.evtx : 用來記錄各個應用程式或程式元件本身所產生的事件</li>
+<li>System.evtx : 記錄 Windows 系統組件、驅動程式、核心服務等所產生的事件</li>
+</ul>
+<p>可以用內建的 Windows Event Viewer 查看，或者使用第三方程式，如：<a target="_blank" rel="noopener" href="https://eventlogxp.com/">Event Log Explorer</a> 介面比較好看一點</p>
+<p><img src="/assets/QqTatollrpV9sGe0aa8lvmntm1cXjWShrTfLos8__ww=.png"></p>
+<p>查詢時會需要搭配一下 Event ID，這邊列出一些很常會使用到的</p>
+<table>
+<thead>
+<tr>
+<th><strong>Event ID</strong></th>
+<th><strong>Log 來源</strong></th>
+<th><strong>說明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4624</td>
+<td>Security</td>
+<td>成功登入事件</td>
+</tr>
+<tr>
+<td>4625</td>
+<td>Security</td>
+<td>登入失敗事件</td>
+</tr>
+<tr>
+<td>4634</td>
+<td>Security</td>
+<td>使用者登出</td>
+</tr>
+<tr>
+<td>4672</td>
+<td>Security</td>
+<td>特殊權限帳號登入 (例如系統管理員)</td>
+</tr>
+<tr>
+<td>4688</td>
+<td>Security</td>
+<td>建立新行程 (process creation)</td>
+</tr>
+<tr>
+<td>4689</td>
+<td>Security</td>
+<td>行程結束 (process termination)</td>
+</tr>
+<tr>
+<td>4697</td>
+<td>Security</td>
+<td>安裝新的服務</td>
+</tr>
+<tr>
+<td>4720</td>
+<td>Security</td>
+<td>建立新的使用者帳號</td>
+</tr>
+<tr>
+<td>4722</td>
+<td>Security</td>
+<td>啟用使用者帳號</td>
+</tr>
+<tr>
+<td>4723</td>
+<td>Security</td>
+<td>使用者嘗試變更自己的密碼</td>
+</tr>
+<tr>
+<td>4724</td>
+<td>Security</td>
+<td>嘗試重設其他帳號密碼</td>
+</tr>
+<tr>
+<td>4725</td>
+<td>Security</td>
+<td>停用使用者帳號</td>
+</tr>
+<tr>
+<td>4726</td>
+<td>Security</td>
+<td>刪除使用者帳號</td>
+</tr>
+<tr>
+<td>4732</td>
+<td>Security</td>
+<td>使用者被新增至本機群組</td>
+</tr>
+<tr>
+<td>4733</td>
+<td>Security</td>
+<td>使用者被移出本機群組</td>
+</tr>
+<tr>
+<td>4740</td>
+<td>Security</td>
+<td>使用者帳號被鎖定</td>
+</tr>
+<tr>
+<td>1102</td>
+<td>Security</td>
+<td>清除稽核日誌 (Event Log 被清除)</td>
+</tr>
+<tr>
+<td>6005</td>
+<td>System</td>
+<td>Event Log 服務啟動 (通常代表開機)</td>
+</tr>
+<tr>
+<td>6006</td>
+<td>System</td>
+<td>Event Log 服務關閉 (通常代表關機)</td>
+</tr>
+<tr>
+<td>6008</td>
+<td>System</td>
+<td>非正常關機事件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Windows-Registry"><a href="#Windows-Registry" class="headerlink" title="Windows Registry"></a>Windows Registry</h2><p>路徑：<code>%WinDir%\System32\Config</code></p>
+<p>Windows Registry 是 Windows 的中央設定資料庫，系統與應用程式把大量設定、狀態與活動資訊寫入其中。它不是單一文字檔，而是以樹狀結構儲存的二進位資料庫，供作業系統、驅動程式與應用程式查詢與修改</p>
+<p>它是由這三個基本結構儲存</p>
+<ul>
+<li><strong>Hive</strong>：Windows 註冊表的最高層級結構單位，每個 Hive 都是一個獨立的檔案，儲存在硬碟上。可以把 Hive 想像成一個大型的資料庫檔案。</li>
+<li><strong>Key</strong>：類似資料夾，可包含 subkeys 與 values。每個 key 在 metadata 裡有屬性，形成樹狀結構。</li>
+<li><strong>Value</strong>：key 下面的項目，真正在存資料的地方。每個 value 有三個部分：name、type、data。</li>
+</ul>
+<p>而 HKEY_LOCAL_MACHINE (HKLM) 是存放針對整個電腦的設定，如驅動程式、已安裝軟體、系統服務、硬體資訊等</p>
+<p><img src="/assets/Pb6ezxh7M5yBNelER6EFjpzDTr3VEMjRHQYPJAl2xzI=.png"></p>
+<p><code>source :  ``https://www.lifewire.com/what-is-a-registry-value-2626042</code></p>
+<p>以下四個是很常會去查看的 Hive </p>
+<ul>
+<li>SAM：儲存本地使用者帳號與群組的資訊，例如使用者名稱、建立時間、最後登入時間。</li>
+<li>SECURITY：包含使用者帳號的安全相關資訊，例如密碼政策。</li>
+<li>SOFTWARE：紀錄所有已安裝軟體（包含 Windows 內建與第三方軟體）。</li>
+<li>SYSTEM：儲存系統層級的組態資訊，例如事件日誌設定、硬體（像是 USB 裝置）相關的設定。</li>
+</ul>
+<p>可以使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer</a> 幫助查看</p>
+<p><img src="/assets/U_Af3Nuy6jkoJVOBYMEK0JxMY0oldryrcEpKqJiiFYg=.png"></p>
+<p>另外有時候匯入 Hive 時會出現這樣的警告</p>
+<p><img src="/assets/1R6SsxPjf6RH4H9TTieYwGk_l_SPDaEw3IEEwytPx7U=.png"></p>
+<p>此警告表示主 hive 檔案與其 transaction logs (.LOG) 的序號不一致，代表 transaction log 中存在尚未同步到主檔案的變更。</p>
+<p>Windows Registry 採用 write-ahead logging 機制：修改時先寫入記憶體快取，再記錄到 transaction log，最後才定期 flush 到主 hive 檔案。而當 log 檔案的序號大於主檔案時，這個 hive 就會被稱為 <strong>Dirty Hive</strong> </p>
+<p>按下 Yes 之後就會開始進行與 transaction logs 的合併</p>
+<p><img src="/assets/aMqvxrwhRPljyqQ9q7YZGnDq-qwqUj9tamap8pHlCCI=.png"></p>
+<p>選擇 transaction logs</p>
+<p><img src="/assets/vV7W6Z8NLSy3_PqzONNNI-lZkXLVGK3gjQLIHimlGyA=.png"></p>
+<p>選擇後它就會幫你合併，合併完後先儲存到一個地方</p>
+<p><img src="/assets/zWmyczb4k7Jxotypg0j4NvhrhaU-1uXbQ3tgONIuTxo=.png"></p>
+<p>存完後就可以看這個合併過後的 Hive </p>
+<p><img src="/assets/-Nlg6ItibiOChztpvL-_Bj38i8jwo1N9KOo1v6D0c30=.png"></p>
+<p>Registry Explorer 工具除了可以查看之外它還有預設書籤可以使用，快速定位到想要看的 key </p>
+<p><img src="/assets/ias4TQfhKvlTF0pKOS0CDMBbNHwjRZQ8-186lYojnGA=.png"></p>
+<p>以下列出常見的 key 路徑</p>
+<table>
+<thead>
+<tr>
+<th><strong>Registry 路徑</strong></th>
+<th><strong>說明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HKLM\SYSTEM\CurrentControlSet\Services</td>
+<td>系統服務與驅動程式資訊</td>
+</tr>
+<tr>
+<td>HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName</td>
+<td>電腦名稱</td>
+</tr>
+<tr>
+<td>HKLM\SYSTEM\MountedDevices</td>
+<td>磁碟&#x2F;USB 裝置掛載資訊</td>
+</tr>
+<tr>
+<td>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</td>
+<td>系統啟動時自動執行程式</td>
+</tr>
+<tr>
+<td>HKLM\SAM\SAM\Domains\Account\Users</td>
+<td>本機帳號資訊</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了什麼是 disk forensic 以及一些會想要先查看的線索，接下來幾天會繼續介紹其他在 Disk 中值得分析的檔案</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Disk-Forensic/" size="sm"># Disk Forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/FTK-Imager/" size="sm"># FTK Imager</cosy-label>
+                  
+                  <cosy-label href="/tags/KAPE/" size="sm"># KAPE</cosy-label>
+                  
+                  <cosy-label href="/tags/Windows-Event-Logs/" size="sm"># Windows Event Logs</cosy-label>
+                  
+                  <cosy-label href="/tags/Windows-Registry/" size="sm"># Windows Registry</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day19-%E8%A5%B2%E4%BE%86%EF%BC%81%E5%A4%A7%E7%A1%AC%E7%A2%9F%E9%82%AA%E7%A5%9E"><span class="toc-number">1.</span> <span class="toc-text">Day19 襲來！大硬碟邪神</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%92%BE-Disk-Forensic"><span class="toc-number">3.</span> <span class="toc-text">💾 Disk Forensic</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FTK-Imager"><span class="toc-number">3.1.</span> <span class="toc-text">FTK Imager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KAPE"><span class="toc-number">3.2.</span> <span class="toc-text">KAPE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-Event-Logs"><span class="toc-number">3.3.</span> <span class="toc-text">Windows Event Logs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-Registry"><span class="toc-number">3.4.</span> <span class="toc-text">Windows Registry</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

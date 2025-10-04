@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶
+  </title>
+  <meta name="description" content="Amcache 和 NTUSER.DAT 分析">
+  <meta name="keywords" content="Amcache,NTUSER.DAT,Registry,UserAssist,ShellBags,AmcacheParser,ShellBags Explorer">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/04/Amcache_NTUSER/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      Config 不養它們，Amcache 
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-04 14:18:04
+          </div>
+          <!-- 文章 -->
+          <h1 id="Day20-Config-不養它們，Amcache-跟-NTUSER-DAT-自己開小灶"><a href="#Day20-Config-不養它們，Amcache-跟-NTUSER-DAT-自己開小灶" class="headerlink" title="Day20 Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶"></a>Day20 Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享沒有放在 <code>%WinDir%\System32\Config</code>，但是很值得去查看的其他兩個 hive，分別是 Amcache.hve、NTUSER.DAT。</p>
+<hr>
+<h1 id="Amcache-hve"><a href="#Amcache-hve" class="headerlink" title="Amcache.hve"></a>Amcache.hve</h1><p>路徑位置：<code>%WinDir%\AppCompat\Programs\Amcache.hve</code></p>
+<p><img src="/assets/Ybc_QgFK9UsOKi7pW8blJhLBDXDmoh5zkDgOjPsqhkw=.png"></p>
+<p>自 Windows 8 起引入，記錄了已執行應用程式的詳細資訊，包括檔案路徑、SHA-1 雜湊值、時間戳記等。</p>
+<p><strong>若惡意程式本體被刪除或遭清除，無法從映像直接看到該檔案本身時</strong>，可以透過 Amcache 的記錄去驗證該程式曾經被執行過</p>
+<p>可以先使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer </a> 合併 Transport logs 後直接查看或者使用 Eric Zimmerman’s tools 中的 AmcacheParser 轉成 CSV 檔</p>
+<p><img src="/assets/OZlv8y4NKybwgKVheToBnYUFk2xmh7wPekUkky8pRuQ=.png"></p>
+<h2 id="AmcacheParser"><a href="#AmcacheParser" class="headerlink" title="AmcacheParser"></a>AmcacheParser</h2><p>AmcacheParser 是由數位鑑識專家 Eric Zimmerman 所開發的一款命令列工具，專門用於解析 Windows 系統中的 Amcache.hve 註冊檔，支援將解析結果輸出為 CSV 格式，方便後續分析與處理</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token function">PS</span> C:\Users\yunshiuan\Desktop\net9 > <span class="token punctuation">.</span>\AmcacheParser<span class="token punctuation">.</span>exe <span class="token operator">-</span>f C:\Users\yunshiuan\Desktop\Amcache<span class="token punctuation">.</span>hve_clean <span class="token operator">--</span>csv C:\Users\yunshiuan\Desktop
+AmcacheParser version 1<span class="token punctuation">.</span>5<span class="token punctuation">.</span>2<span class="token punctuation">.</span>0
+
+Author: Eric Zimmerman <span class="token punctuation">(</span>saericzimmerman@gmail<span class="token punctuation">.</span>com<span class="token punctuation">)</span>
+https:<span class="token operator">/</span><span class="token operator">/</span>github<span class="token punctuation">.</span>com/EricZimmerman/AmcacheParser
+
+Command line: <span class="token operator">-</span>f C:\Users\yunshiuan\Desktop\Amcache<span class="token punctuation">.</span>hve_clean <span class="token operator">--</span>csv C:\Users\yunshiuan\Desktop
+
+Warning: Administrator privileges not found!
+
+Unknown value name when processing DevicePnp at path <span class="token punctuation">&#123;</span>11517B7C-E79D-4e20-961B-75A811715ADD<span class="token punctuation">&#125;</span>\Root\InventoryDevicePnp\display/default_monitor/1&amp;1f0c3c2f&amp;0&amp;uid256: ManifestPath
+
+C:\Users\yunshiuan\Desktop\Amcache<span class="token punctuation">.</span>hve_clean is in new format!
+
+Total file entries found: 240
+Total shortcuts found: 51
+Total device containers found: 13
+Total device PnPs found: 94
+Total drive binaries found: 373
+Total driver packages found: 4
+
+Found 123 unassociated file entry
+
+Results saved to: C:\Users\yunshiuan\Desktop
+
+Total parsing time: 0<span class="token punctuation">.</span>909 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>它的輸出會有很多 CSV 檔，可能會出現下面檔案</p>
+<table>
+<thead>
+<tr>
+<th><strong>Amcache_ProgramEntries.csv</strong></th>
+<th>程式條目（Programs Entry）</th>
+<th>描述註冊在 Amcache “Programs” 分支下的應用程式資訊，如安裝資訊或註冊的程式條目。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Amcache_AssociatedFileEntries.csv</strong></td>
+<td>關聯的檔案條目</td>
+<td>指那些能夠被對應（或關聯）到程式條目的檔案條目（File entries）。即那些被安裝程式所擁有或管理的檔案。</td>
+</tr>
+<tr>
+<td><strong>Amcache_UnassociatedFileEntries.csv</strong></td>
+<td>無關聯的檔案條目</td>
+<td>指那些沒有被關聯到任何程式條目的檔案條目，也就是那些孤立的可執行檔 &#x2F; 檔案。這是很多調查中重點查看的部分，因為可能是惡意工具或獨立執行檔。</td>
+</tr>
+<tr>
+<td><strong>Amcache_Shortcuts.csv</strong></td>
+<td>快捷方式 &#x2F; 連結資訊</td>
+<td>描述系統或應用程式捷徑（.lnk 或類似連結）相關的資訊，例如快捷目標、路徑等。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DeviceContainers.csv</strong></td>
+<td>裝置容器 (Device Container)</td>
+<td>與裝置（例如 USB 裝置、硬體裝置）或其容器有關的條目。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DevicePnps.csv</strong></td>
+<td>裝置 PnP 條目 (Plug-and-Play 裝置)</td>
+<td>描述插拔裝置 (PnP 裝置) 的資訊，例如硬體 ID、裝置名稱、相關時間等。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DriveBinaries.csv</strong></td>
+<td>驅動程式二進位檔</td>
+<td>涉及驅動程式（driver binaries）或在磁碟上可執行但屬驅動程式範疇的條目。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DriverPackages.csv</strong></td>
+<td>驅動套件 (Driver Packages)</td>
+<td>關於驅動程式套件安裝、驅動套件版本、封裝資訊等。</td>
+</tr>
+</tbody></table>
+<p>接下來就可以用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">Timeline Explorer</a> 或者其他可以查看 CSV 檔的程式查看內容</p>
+<p><img src="/assets/mPcDCME75qRv_jdBbz7s7O_MXQtHhoV6h36PvLThoFc=.png"></p>
+<p>假設想要知道 notepad.exe 的實際路徑以及它的 SHA-1 值，按照上面的步驟並在 <code>&lt;XXX_UnassociatedFileEntries.csv&gt;</code> 搜尋 notepad.exe</p>
+<p><img src="/assets/x-tZ0wFWbbmTkDMDwjC0KcLnXum2pc_9t6A4oT2z3Bg=.png"></p>
+<p>可以馬上就看到相關資訊</p>
+<hr>
+<h1 id="NTUSER-DAT"><a href="#NTUSER-DAT" class="headerlink" title="NTUSER.DAT"></a>NTUSER.DAT</h1><p>路徑位置：<code>C:\Users\&lt;username&gt;\NTUSER.DAT</code></p>
+<p><img src="/assets/HbBDSu1lraXx3pIgsNxHGOqZHdhNnyuWDrcCEMR8-1A=.png"></p>
+<p>NTUSER.DAT 是 Windows 每個使用者帳戶在其使用者設定檔底下的一個檔案，用來儲存與該帳戶相關的 Registry 設定與使用者偏好，在使用者登入時，系統會將這個檔案對應到註冊表的 HKEY_CURRENT_USER（HKCU） 分支，讓該使用者的作業與應用程式可以讀寫其個人設定；在登出或關機時，這些變更會回寫到 NTUSER.DAT。</p>
+<p>可以直接用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer</a> 查看。</p>
+<p><img src="/assets/RIvMLfCdh5rrb81bTPyBEaPuSO1d-zFoxpUOjAMwYo8=.png"></p>
+<p>這邊重點提兩個比較特別的 key</p>
+<h2 id="UserAssist"><a href="#UserAssist" class="headerlink" title="UserAssist"></a>UserAssist</h2><p>key 路徑：<code>Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\&#123;GUID&#125;\Count</code></p>
+<p>UserAssist 是 Windows 用來追蹤使用者透過圖形介面啟動應用程式或捷徑的統計記錄機制，裡面會包含程式的執行次數、最後執行時間、<strong>Focus Count、Focus Time</strong></p>
+<p><img src="/assets/EX1XBHpXaNJ2rj-3d0M_GUZyaVjDpWQwmaKNE1NvYuY=.png"></p>
+<hr>
+<h2 id="ShellBags"><a href="#ShellBags" class="headerlink" title="ShellBags"></a>ShellBags</h2><p>ShellBags 是 Windows 用於記錄使用者在檔案總管中瀏覽<strong>資料夾</strong>時的設定偏好與檔案夾訪問紀錄，包括資料夾的視窗配置 &#x2F; 檢視樣式 &#x2F; 排列方式 &#x2F; 大小 &#x2F; 位置等，代表如有刪除或存取資料夾的操作會被記錄在 ShellBags 當中。</p>
+<p>它會依照作業系統存在不同地方</p>
+<ul>
+<li><code>&lt;NTUSER.DAT&gt;\Software\Microsoft\Windows\Shell\BagMRU </code></li>
+<li><code>&lt;NTUSER.DAT&gt;\Software\Microsoft\Windows\Shell\Bags</code></li>
+<li>在較新 Windows 版本（如 Windows 7 之後），部分 ShellBags 資料會存於 <code>C:\Users\&lt;username&gt;\AppData\Local\Microsoft\Windows\UsrClass.dat</code></li>
+<li>在某些 Windows 版本或使用者設定中，部分 ShellBags 條目只存在於 UsrClass.dat 而非 NTUSER.DAT</li>
+</ul>
+<p><img src="/assets/pnKEJ4vqw21ZBolGw34xhCg7XGai0iP7POjOr8NtI2I=.png"></p>
+<p>如果直接使用 RegistryExplorer 會很難閱讀，建議使用 Eric Zimmerman’s tools 中的 ShellBags Explorer 查看</p>
+<h3 id="ShellBags-Explorer"><a href="#ShellBags-Explorer" class="headerlink" title="ShellBags Explorer"></a>ShellBags Explorer</h3><p>下載連結：<a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">https://ericzimmerman.github.io/#!index.md</a></p>
+<p>ShellBags Explorer 是由 Eric Zimmerman 所開發的一款專門用來瀏覽與解析 Windows ShellBags 資料的工具，將 BagMRU &#x2F; Bags 的註冊表資料解析為資料夾層級樹狀視圖，可以看到使用者曾瀏覽過哪些資料夾</p>
+<p>它的介面跟 RegistryExplorer 差不多，一樣需要匯入 hive，看作業系統版本匯入 <code>NTUSER.DAT</code> 或者 <code>UsrClass.dat</code></p>
+<p><img src="/assets/MvUItWpVpa5jnJsYBxUDs0mF7EWLYanjudpkwnoJOs8=.png"></p>
+<p>匯入後就可以看到 ShellBags 資訊</p>
+<p><img src="/assets/wVsOpk-GTmT9mXzGHEOn72qufR43sE350d2ofw13oh4=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Amcache.hve、NTUSER.DAT 兩個 Hive，多了一點線索可以分析，這兩個 Hive 對於 Disk Forensic 來說挺重要也挺常用到的，在打藍隊 Lab 或 CTF 時如果沒什麼線索也會跑來看這兩個 Hive，明天也會持續分享其他可分析的部分。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Amcache/" size="sm"># Amcache</cosy-label>
+                  
+                  <cosy-label href="/tags/NTUSER-DAT/" size="sm"># NTUSER.DAT</cosy-label>
+                  
+                  <cosy-label href="/tags/Registry/" size="sm"># Registry</cosy-label>
+                  
+                  <cosy-label href="/tags/UserAssist/" size="sm"># UserAssist</cosy-label>
+                  
+                  <cosy-label href="/tags/ShellBags/" size="sm"># ShellBags</cosy-label>
+                  
+                  <cosy-label href="/tags/AmcacheParser/" size="sm"># AmcacheParser</cosy-label>
+                  
+                  <cosy-label href="/tags/ShellBags-Explorer/" size="sm"># ShellBags Explorer</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day20-Config-%E4%B8%8D%E9%A4%8A%E5%AE%83%E5%80%91%EF%BC%8CAmcache-%E8%B7%9F-NTUSER-DAT-%E8%87%AA%E5%B7%B1%E9%96%8B%E5%B0%8F%E7%81%B6"><span class="toc-number">1.</span> <span class="toc-text">Day20 Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amcache-hve"><span class="toc-number">3.</span> <span class="toc-text">Amcache.hve</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AmcacheParser"><span class="toc-number">3.1.</span> <span class="toc-text">AmcacheParser</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NTUSER-DAT"><span class="toc-number">4.</span> <span class="toc-text">NTUSER.DAT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UserAssist"><span class="toc-number">4.1.</span> <span class="toc-text">UserAssist</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ShellBags"><span class="toc-number">4.2.</span> <span class="toc-text">ShellBags</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ShellBags-Explorer"><span class="toc-number">4.2.1.</span> <span class="toc-text">ShellBags Explorer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">5.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

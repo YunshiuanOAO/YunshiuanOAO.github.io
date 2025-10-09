@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    🦈
+  </title>
+  <meta name="description" content="Wireshark 工具介紹與網路鑑識分析">
+  <meta name="keywords" content="Wireshark,Network Forensic,網路鑑識,封包分析">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/29/Wireshark/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      🦈
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">🦈</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-06 22:05:53
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享什麼是Network Forensic，以及經典分析工具Wireshark的使用</p>
+<hr>
+<h1 id="🛜-Network-Forensic"><a href="#🛜-Network-Forensic" class="headerlink" title="🛜 Network Forensic"></a>🛜 Network Forensic</h1><p>首先講一下什麼是封包，封包是網路通訊的基本單位，就像郵件一樣。當你在網路上傳送資料時，這些資料不會一次全部送出去，而是被切割成很多小塊，每一塊就是一個封包。比如說，當你下載一個1MB的檔案時，這個檔案會被切割成幾千個封包，每個封包大約1500位元組左右。每個封包都有固定的結構，就像信封一樣。</p>
+<p>封包的最外層是標頭（Header），裡面包含了這個封包要去哪裡、從哪裡來、用什麼方式傳送等資訊。標頭裡最重要的資訊包括：</p>
+<ul>
+<li><strong>來源IP位址</strong>：這個封包是從哪台電腦送出來的</li>
+<li><strong>目標IP位址</strong>：這個封包要送到哪台電腦</li>
+<li><strong>協定類型</strong>：這個封包使用什麼通訊協定（HTTP、HTTPS、FTP等）</li>
+<li><strong>時間戳記</strong>：這個封包是什麼時候產生的</li>
+<li><strong>封包大小</strong>：這個封包有多大</li>
+<li><strong>序號</strong>：這個封包在整個資料流中的位置</li>
+</ul>
+<p>封包的內容部分（Payload）則是實際要傳送的資料。比如說，如果你在瀏覽網頁，HTTP封包的內容就是網頁的HTML程式碼。如果你在登入網站，封包的內容可能包含你的帳號密碼。</p>
+<p><img src="/assets/b97gLrlgcv1usSzdq-JWxlG0a0ninhlWRadfFBadf8g=.png"></p>
+<p><code>source : https://webhostinggeeks.com/blog/what-is-data-packet/</code></p>
+<p>網路層面追蹤和分析資料傳輸的過程。當網路攻擊發生時，攻擊者會在網路中留下痕跡，這些痕跡就記錄在網路封包裡。Network Forensic 就是找出攻擊者是怎麼進來的、做了什麼、拿走了什麼資料</p>
+<p>常見的網路鑑識工具是Wireshark</p>
+<hr>
+<h1 id="🦈-Wireshark"><a href="#🦈-Wireshark" class="headerlink" title="🦈 Wireshark"></a>🦈 Wireshark</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">https://www.wireshark.org/download.html</a></p>
+<p>Wireshark是目前最受歡迎的開源網路協定分析器。這款功能強大的軟體不僅能夠即時監控網路流量，更能深入分析各種網路協定的詳細內容，為網路故障排除、協定開發和安全分析提供全方位的支援，另外也能夠識別和解析超過2000種不同的網路協定，從常見的TCP&#x2F;IP協定族到專用的工業控制協定，幾乎涵蓋了所有可能遇到的網路通訊場景。這種全面的協定支援不僅包括即時協定解析，還允許用戶根據需要添加自定義協定支援。</p>
+<p>下載後打開主頁會有兩個部分，第一個是 open，另一個是 Capture</p>
+<ul>
+<li>open 是開啟已經錄好的 pcap 檔</li>
+<li>Capture 是可以選擇你的網卡，點進去後可以開始抓封包</li>
+</ul>
+<p><img src="/assets/b6EW4dgBH6-Vezc9bkG5ui2GbZr68QxayKMvEpv53tE=.png"></p>
+<p>假設我們打開了一個錄好的 pcap 封包</p>
+<p><img src="/assets/1qX2ViLKOm5_QxrvpdRWjxU3u05hPTe7El2vWQFO6No=.png"></p>
+<h2 id="中間主視窗"><a href="#中間主視窗" class="headerlink" title="中間主視窗"></a>中間主視窗</h2><p>顯示抓到的所有封包</p>
+<p>•	No.：封包編號（依捕獲順序）</p>
+<p>•	Time：相對於第一個封包的時間戳記</p>
+<p>•	Source：封包來源 IP</p>
+<p>•	Destination：封包目的 IP</p>
+<p>•	Protocol：協定類型（如 TCP、HTTP、SSH）</p>
+<p>•	Length：封包大小（bytes）</p>
+<p>•	Info：協定的摘要資訊（像是 TCP 的 SYN&#x2F;ACK、HTTP 的 GET 請求等等</p>
+<p>中間封包的顏色也會根據不同的 protocol 或狀態更改顏色 </p>
+<p><img src="/assets/Sk5dWFvQR_SCOx_aoPZkaC4gpm9J67Yhotddqr1L-mM=.png"></p>
+<h2 id="左下方視窗"><a href="#左下方視窗" class="headerlink" title="左下方視窗"></a>左下方視窗</h2><p>顯示選中封包的協定分層解析</p>
+<p>•	Frame：物理層資訊（長度、介面等）</p>
+<p>•	Ethernet &#x2F; Data-link 層（此例省略，因為用 utun8 介面抓）</p>
+<p>•	Internet Protocol Version 4 (IPv4)：來源 IP 100.112.165.2 → 目的 IP 192.168.1.125</p>
+<p>•	TCP：來源埠 60665 → 目的埠 5000，Seq &#x2F; Ack &#x2F; WinSize 等控制資訊</p>
+<p>•	HTTP：協定層解析到 GET &#x2F; HTTP&#x2F;1.1</p>
+<h2 id="右下方視窗"><a href="#右下方視窗" class="headerlink" title="右下方視窗"></a>右下方視窗</h2><p>以十六進制（左半邊）+ ASCII（右半邊）顯示原始封包內容。</p>
+<hr>
+<p>另外也可以對選中的封包按右鍵，使用其他功能，除了 copy 之後還可以 follow。</p>
+<p><img src="/assets/QY-EQZJMkEyHF8FFoUi1N3LXDcd1ydgpLgXGICT8HjQ=.png"></p>
+<p>follow 的功能是將一個 TCP 連線裡的 HTTP 封包資料串起來，可以看到完整的瀏覽器請求或伺服器回應</p>
+<p><img src="/assets/HUMkwZM-FQaDF63u8o94ACLKpYvWuw5rwxU9XbcD5tI=.png"></p>
+<hr>
+<p>另外最上方有一個 Statistic 可以選，它會幫你整理一些資訊並統計</p>
+<p><img src="/assets/S56NHuYS5NMQrQU_pjvvQb1Y2kUALT9vC8yZL4ODYis=.png"></p>
+<p>這邊介紹幾個常用功能</p>
+<h2 id="Conversation"><a href="#Conversation" class="headerlink" title="Conversation"></a>Conversation</h2><p>這裡可以看到 Wireshark 統計的所有兩個 IP 地址之間的傳輸狀況</p>
+<p><img src="/assets/jSWnSFdc5hkpW1oaY6wC88ZqfXCXAhkA-aKTyF1MmuA=.png"></p>
+<h2 id="Path-length"><a href="#Path-length" class="headerlink" title="Path length"></a>Path length</h2><p>這邊可以看到封包長度的統計</p>
+<p><img src="/assets/i4NR_mBwxqb7XN0ldbpK3FH9kOhZX0TeNF9V8DwNaQQ=.png"></p>
+<h2 id="Protocol-Hierarchy"><a href="#Protocol-Hierarchy" class="headerlink" title="Protocol Hierarchy"></a>Protocol Hierarchy</h2><p>這邊會看到所有封包協定的統計結果</p>
+<p><img src="/assets/A-yURmMM36hnnwHZPVkuBjJnRXHIYXXWqbmzXKoJ_7I=.png"></p>
+<hr>
+<p>除此之外，Wireshark 提供了 filter 的功能，可以快速過濾出想要看的封包</p>
+<p><img src="/assets/Pa8-siGHwexyA9rXbQyPRcMA-_VJ_It7Sp41jbj-KvQ=.png"></p>
+<p>這邊整理了一些基本 filter 語法</p>
+<pre class="line-numbers language-none"><code class="language-none"># 特定IP位址
+ip.addr &#x3D;&#x3D; 192.168.1.1
+
+# 來源IP
+ip.src &#x3D;&#x3D; 192.168.1.1
+
+# 目標IP
+ip.dst &#x3D;&#x3D; 192.168.1.1
+
+# IP範圍
+ip.addr &gt;&#x3D; 192.168.1.1 and ip.addr &lt;&#x3D; 192.168.1.100
+
+# 網段
+ip.addr &#x3D;&#x3D; 192.168.1.0&#x2F;24
+
+# 特定埠號
+tcp.port &#x3D;&#x3D; 80
+udp.port &#x3D;&#x3D; 53
+
+# 來源埠
+tcp.srcport &#x3D;&#x3D; 22
+
+# 目標埠
+tcp.dstport &#x3D;&#x3D; 443
+
+# 埠範圍
+tcp.port &gt;&#x3D; 8000 and tcp.port &lt;&#x3D; 9000
+
+# 基本協定
+tcp
+udp
+icmp
+http
+https
+dns
+ssh
+ftp
+
+# 組合協定
+tcp and http
+udp and dns
+
+# HTTP請求方法
+http.request.method &#x3D;&#x3D; &quot;GET&quot;
+http.request.method &#x3D;&#x3D; &quot;POST&quot;
+http.request.method &#x3D;&#x3D; &quot;PUT&quot;
+
+# HTTP狀態碼
+http.response.code &#x3D;&#x3D; 200
+http.response.code &gt;&#x3D; 400
+
+# HTTP主機
+http.host &#x3D;&#x3D; &quot;example.com&quot;
+
+# HTTP URI
+http.request.uri contains &quot;login&quot;
+http.request.uri contains &quot;admin&quot;
+
+# 特定時間範圍
+frame.time &gt;&#x3D; &quot;2024-01-01 10:00:00&quot;
+frame.time &lt;&#x3D; &quot;2024-01-01 11:00:00&quot;
+
+# 相對時間
+frame.time &gt;&#x3D; &quot;2024-01-01 10:00:00&quot; and frame.time &lt;&#x3D; &quot;2024-01-01 10:30:00&quot;
+
+# 封包大小
+frame.len &gt; 1000
+frame.len &lt; 100
+
+# 資料長度
+tcp.len &gt; 500
+udp.length &gt; 100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是 Network Forensic，以及 Wireshark 的使用，Wireshark 的功能還有很多，接下來幾天也會介紹一些其他的工具或者 Wireshark 的其他功能。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Network-Forensic/" size="sm"># Network Forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/%E7%B6%B2%E8%B7%AF%E9%91%91%E8%AD%98/" size="sm"># 網路鑑識</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%B0%81%E5%8C%85%E5%88%86%E6%9E%90/" size="sm"># 封包分析</cosy-label>
+                  
+                  <cosy-label href="/tags/Wireshark/" size="sm"># Wireshark</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%9B%9C-Network-Forensic"><span class="toc-number">2.</span> <span class="toc-text">🛜 Network Forensic</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A6%88-Wireshark"><span class="toc-number">3.</span> <span class="toc-text">🦈 Wireshark</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%96%93%E4%B8%BB%E8%A6%96%E7%AA%97"><span class="toc-number">3.1.</span> <span class="toc-text">中間主視窗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A6%E4%B8%8B%E6%96%B9%E8%A6%96%E7%AA%97"><span class="toc-number">3.2.</span> <span class="toc-text">左下方視窗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B3%E4%B8%8B%E6%96%B9%E8%A6%96%E7%AA%97"><span class="toc-number">3.3.</span> <span class="toc-text">右下方視窗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conversation"><span class="toc-number">3.4.</span> <span class="toc-text">Conversation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Path-length"><span class="toc-number">3.5.</span> <span class="toc-text">Path length</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocol-Hierarchy"><span class="toc-number">3.6.</span> <span class="toc-text">Protocol Hierarchy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">4.</span> <span class="toc-text">結論</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

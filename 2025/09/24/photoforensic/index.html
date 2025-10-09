@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    特別的圖片給特別的你
+  </title>
+  <meta name="description" content="圖片鑑識工具與技術介紹">
+  <meta name="keywords" content="圖片鑑識,forensic,Photoforensic,數位鑑識">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/24/photoforensic/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      特別的圖片給特別的你
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">特別的圖片給特別的你</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-09 20:48:37
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>關於圖片類型的Forensic 如果出現在 CTF 上，<del>我都覺得是通靈題</del></p>
+<p>所以只要遇到圖片的 forensic 題，我都會盡可能找可以無腦砸下去就可以解出來的工具，因此今天要來介紹幾個我覺得好用的圖片鑑識工具。</p>
+<hr>
+<h1 id="Zsteg"><a href="#Zsteg" class="headerlink" title="Zsteg"></a>Zsteg</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/zed-0xff/zsteg">https://github.com/zed-0xff/zsteg</a></p>
+<p>專門針對 PNG 跟 BMP 做 steganography 探測。例如偵測 LSB 隱寫、ZLIB 壓縮後的隱藏資料、OpenStego、Camouflage 等格式。用於 CTF 隱藏資料快速找訊息</p>
+<pre class="line-numbers language-none"><code class="language-none">$ zsteg -h
+Usage: zsteg [options] filename.png [param_string]
+
+    -a, --all                        try all known methods
+    -E, --extract NAME               extract specified payload, NAME is like &#39;1b,rgb,lsb&#39;
+
+Iteration&#x2F;extraction params:
+    -o, --order X                    pixel iteration order (default: &#39;auto&#39;)
+                                     valid values: ALL,xy,yx,XY,YX,xY,Xy,bY,...
+    -c, --channels X                 channels (R&#x2F;G&#x2F;B&#x2F;A) or any combination, comma separated
+                                     valid values: r,g,b,a,rg,bgr,rgba,r3g2b3,...
+    -b, --bits N                     number of bits, single int value or &#39;1,3,5&#39; or range &#39;1-8&#39;
+                                     advanced: specify individual bits like &#39;00001110&#39; or &#39;0x88&#39;
+        --lsb                        least significant bit comes first
+        --msb                        most significant bit comes first
+    -P, --prime                      analyze&#x2F;extract only prime bytes&#x2F;pixels
+        --shift N                    prepend N zero bits
+        --invert                     invert bits (XOR 0xff)
+        --pixel-align                pixel-align hidden data
+
+Analysis params:
+    -l, --limit N                    limit bytes checked, 0 &#x3D; no limit (default: 256)
+
+        --[no-]file                  use &#39;file&#39; command to detect data type (default: YES)
+        --no-strings                 disable ASCII strings finding (default: enabled)
+    -s, --strings X                  ASCII strings find mode: first, all, longest, none
+                                     (default: first)
+    -n, --min-str-len X              minimum string length (default: 8)
+
+    -v, --verbose                    Run verbosely (can be used multiple times)
+    -q, --quiet                      Silent any warnings (can be used multiple times)
+    -C, --[no-]color                 Force (or disable) color output (default: auto)
+
+PARAMS SHORTCUT
+	zsteg fname.png 2b,b,lsb,xy  &#x3D;&#x3D;&gt;  --bits 2 --channel b --lsb --order xy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例子：<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/305?assigned=0&bookmarked=0&category=4&originalEvent=70&page=1&search=&solved=0">Picoctf 2022 St3g0</a></p>
+<p>直接把圖片用zsteg分析</p>
+<pre class="line-numbers language-none"><code class="language-none">$ zsteg pico.flag.png
+b1,r,lsb,xy         .. text: &quot;~__B&gt;wV_G@&quot;
+b1,rgb,lsb,xy       .. text: &quot;picoCTF&#123;7h3r3_15_n0_5p00n_96ae0ac1&#125;$t3g0&quot;
+b1,abgr,lsb,xy      .. text: &quot;E2A5q4E%uSA&quot;
+b2,b,lsb,xy         .. text: &quot;AAPAAQTAAA&quot;
+b2,b,msb,xy         .. text: &quot;HWUUUUUU&quot;
+b2,a,lsb,xy         .. file: Matlab v4 mat-file (little endian) &gt;&lt;�P, numeric, rows 0, columns 0
+b2,a,msb,xy         .. file: Matlab v4 mat-file (little endian) | &lt;�, numeric, rows 0, columns 0
+b3,r,lsb,xy         .. file: gfxboot compiled html help file
+b4,r,lsb,xy         .. file: Targa image data (16-273) 65536 x 4097 x 1 +4352 +4369 - 1-bit alpha - right &quot;&quot;
+b4,g,lsb,xy         .. file: 0420 Alliant virtual executable not stripped
+b4,b,lsb,xy         .. file: Targa image data - Map 272 x 17 x 16 +257 +272 - 1-bit alpha &quot;&quot;
+b4,bgr,lsb,xy       .. file: Targa image data - Map 273 x 272 x 16 +1 +4113 - 1-bit alpha &quot;&quot;
+b4,rgba,lsb,xy      .. file: Novell LANalyzer capture file
+b4,rgba,msb,xy      .. file: Applesoft BASIC program data, first line number 8
+b4,abgr,lsb,xy      .. file: Novell LANalyzer capture file<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>就直接得到了flag</p>
+<hr>
+<h1 id="Binwalk"><a href="#Binwalk" class="headerlink" title="Binwalk"></a>Binwalk</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/ReFirmLabs/binwalk">https://github.com/ReFirmLabs/binwalk</a></p>
+<p>他可以分析圖片是否有隱藏的檔案，並將隱藏檔案塊挖出來。對於圖片裡面被 embed 的檔案或壓縮段非常方便。</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/129">picoctf 2021 Matryoshka doll</a></p>
+<p>這題下載後可以用binwalk 看看</p>
+<pre class="line-numbers language-none"><code class="language-none">$ binwalk dolls.jpg
+                                                          &#x2F;Users&#x2F;yunshiuan&#x2F;lab&#x2F;dolls.jpg
+--------------------------------------------------------------------------------------------------------------------------------------------------
+DECIMAL                            HEXADECIMAL                        DESCRIPTION
+--------------------------------------------------------------------------------------------------------------------------------------------------
+0                                  0x0                                PNG image, total size: 272492 bytes
+272492                             0x4286C                            ZIP archive, file count: 1, total size: 379130 bytes
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Analyzed 1 file for 85 file signatures (187 magic patterns) in 6.0 milliseconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>發現他裡面有zip 檔 可以把它extra 出來</p>
+<pre class="line-numbers language-none"><code class="language-none">$ binwalk -e dolls.jpg
+
+                                                    &#x2F;Users&#x2F;yunshiuan&#x2F;lab&#x2F;extractions&#x2F;dolls.jpg
+--------------------------------------------------------------------------------------------------------------------------------------------------
+DECIMAL                            HEXADECIMAL                        DESCRIPTION
+--------------------------------------------------------------------------------------------------------------------------------------------------
+0                                  0x0                                PNG image, total size: 272492 bytes
+272492                             0x4286C                            ZIP archive, file count: 1, total size: 379130 bytes
+--------------------------------------------------------------------------------------------------------------------------------------------------
+[#] Extraction of png data at offset 0x0 declined
+[+] Extraction of zip data at offset 0x4286C completed successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>他會在現在的所在位置創建一個 extractions 資料夾，進入之後裡面後又有一個jpg，就跟他的圖片一樣一層一層的用 binwalk 解。最後就會拿到flag</p>
+<p><img src="/assets/dg1UrqvNNxMAE2Rzt1OeWnbQ54tbqmbOvntjCy7qxYs=.png"></p>
+<hr>
+<h1 id="foremost"><a href="#foremost" class="headerlink" title="foremost"></a>foremost</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.kali.org/tools/foremost/">https://www.kali.org/tools/foremost/</a></p>
+<p>foremost 跟 binwalk 類似，也是在分離隱寫的檔案，foremost 也可以拿來恢復資料。</p>
+<p>剛剛 binwalk 那題也可以用 foremost 解</p>
+<pre class="line-numbers language-none"><code class="language-none">$ foremost dolls.jpg -T
+foremost: &#x2F;opt&#x2F;homebrew&#x2F;etc&#x2F;foremost.conf: No such file or directory
+Processing: dolls.jpg
+|foundat&#x3D;base_images&#x2F;2_c.jpgUT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<hr>
+<h1 id="stegsolve"><a href="#stegsolve" class="headerlink" title="stegsolve"></a>stegsolve</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/Giotino/stegsolve">https://github.com/Giotino/stegsolve</a></p>
+<p>網頁版：<a target="_blank" rel="noopener" href="https://georgeom.net/StegOnline/upload">https://georgeom.net/StegOnline/upload</a></p>
+<p>GUI 工具，可視化地查看圖片像素 &#x2F; RGB &#x2F; alpha 通道 &#x2F;做 XOR &#x2F;顏色通道切割，適合人工探索圖片裡的變化／隱寫的痕跡，這個工具也可以解LSB。</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://ctf.hackme.quest/scoreboard/">Hackme-corgi can fly</a></p>
+<p>這題下載後是一個png 檔，丟進 stegsolve 看一下</p>
+<p><img src="/assets/svxGPJ6n_RFSDrrRZy1LQQxpNMEHQ-EnOSysmDm9Ux0=.png"></p>
+<p>下面會有左右箭頭都按按看</p>
+<p><img src="/assets/x0IQlpA_Lr559rMRbo1xoRIMfUrPv5LRlNMz4AznJkE=.png"></p>
+<p>在 Red plane 0 的情況下出現 QRcode ，掃了就會是 flag </p>
+<p>除了看每個通道外還可以去Analyse 功能中可以看 File format 以及提出LSB 資料…等等</p>
+<hr>
+<h1 id="imhex"><a href="#imhex" class="headerlink" title="imhex"></a>imhex</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://imhex.werwolv.net/">https://imhex.werwolv.net/</a></p>
+<p>十六進位／二進位編輯器，可用來檢查圖片的 header、檔案結構、metadata 有沒有被動過或有異常，介面還不錯看。</p>
+<p><img src="/assets/Sr1iJHVi4_VHOdC2qiX2mwOQLsSufSikmb1fvuU-J5s=.png"></p>
+<hr>
+<h1 id="pngcheck"><a href="#pngcheck" class="headerlink" title="pngcheck"></a>pngcheck</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.libpng.org/pub/png/apps/pngcheck.html">https://www.libpng.org/pub/png/apps/pngcheck.html</a></p>
+<p>檢查 PNG 檔案的結構正確性，檢測 chunk 是否完整、CRC 是否正確。若隱寫工具改動了部分 chunk，檔案可能破壞或檢查出錯。</p>
+<hr>
+<h1 id="modsize"><a href="#modsize" class="headerlink" title="modsize"></a>modsize</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/flawwan/modsize">https://github.com/flawwan/modsize</a></p>
+<p>一款專門調整圖片尺寸 metadata 的工具，或檢查圖片尺寸／metadata 跟真實圖像的 mismatch（我自己找的這個 library 可以用來看 image metadata 裡頭尺寸標記會不會被偽造）。</p>
+<p>以他github 的X-MAS CTF 2018 的題目測試</p>
+<p><img src="/assets/6bYCs-GKcKN1f5mTfMyq2cbErO6KB3eIRMMv3bgFbg0=.png"></p>
+<p><img src="/assets/OiiTgm89fXAK35ThIDY4XFSMA8Bj_JxpkHG7Hz9Wpic=.png"></p>
+<p>可以成功修改 height </p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>有這些工具之後還蠻大程度幫助我在遇到圖片鑑識時可以很快就解決，<del>或很快直接放棄</del>，如果有什麼其他好用的圖鑑鑑識工具也歡迎跟我說。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%9C%96%E7%89%87%E9%91%91%E8%AD%98/" size="sm"># 圖片鑑識</cosy-label>
+                  
+                  <cosy-label href="/tags/Photoforensic/" size="sm"># Photoforensic</cosy-label>
+                  
+                  <cosy-label href="/tags/%E6%95%B8%E4%BD%8D%E9%91%91%E8%AD%98/" size="sm"># 數位鑑識</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Zsteg"><span class="toc-number">2.</span> <span class="toc-text">Zsteg</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Binwalk"><span class="toc-number">3.</span> <span class="toc-text">Binwalk</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#foremost"><span class="toc-number">4.</span> <span class="toc-text">foremost</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#stegsolve"><span class="toc-number">5.</span> <span class="toc-text">stegsolve</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#imhex"><span class="toc-number">6.</span> <span class="toc-text">imhex</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pngcheck"><span class="toc-number">7.</span> <span class="toc-text">pngcheck</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#modsize"><span class="toc-number">8.</span> <span class="toc-text">modsize</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">9.</span> <span class="toc-text">結論</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

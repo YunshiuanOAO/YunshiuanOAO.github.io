@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    如果我獲得到了一個讀心術，我想要分析企鵝先生的記憶
+  </title>
+  <meta name="description" content="記憶體鑑識技巧">
+  <meta name="keywords" content="Volatility,forensic,memoryforensic">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/09/18/LinuxMemoryForensic/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      如果我獲得到了一個讀心術，我想要分析企鵝
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">如果我獲得到了一個讀心術，我想要分析企鵝先生的記憶</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-02 22:37:54
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天我想要分享關於在做Linux Memory Forensic 時會遇到的問題，現在搜尋的記憶體鑑識相關的入門文章與介紹，大多都是以分析 Windows 記憶體 Dump 為主，我個人在入門時也是從 Windows 開始，而我是參加 2025 AIS3的 CTF 組時剛好趁這個機會可以試試看學習 Linux 記憶體鑑識的部分，發現其實分析 Linux 記憶體 Dump 會出現一些有趣的問題，也藉由這次的機會跟大家分享。</p>
+<p>今天的鐵人賽分分享會主要會用自己製作出的 Linux Memory Dump，檔案會放在 <a target="_blank" rel="noopener" href="https://class.nckuctf.org/challenges#%E4%BC%81%E9%B5%9D%E5%85%88%E7%94%9F%E8%A8%98%E6%86%B6%E5%88%86%E6%9E%90%E8%A1%93%F0%9F%90%A7-186">NCKUCTF ctfd</a> 上，如果你對 Linux 的記憶體分析已經很熟悉的，可以先挑戰看看。</p>
+<hr>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Volatility"><a href="#Volatility" class="headerlink" title="Volatility"></a>Volatility</h2><p>下載連結：</p>
+<p>Volatility 2 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></p>
+<p>Volatility 3 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></p>
+<p>經典的記憶體分析工具，利用指令可以分析 memory dump 中的關鍵訊息，像是進程、網路連線、檔案……等等。</p>
+<p>基本的操作這邊推薦可以直接上網查有人整理好的指令doc</p>
+<p>而Volatility分為2與3版，差別就是一個是要使用 python2 執行，另一個是用 python3 執行，並且現在Volatility 2 已經沒有在維護了，但是一些 Plugin 的完整度在目前為止還是比 Volatility 3 還要高並且豐富，所以有些人還是會比較會偏向使用 Volatility 2 ，今天分享會主要使用 Volatility 3</p>
+<hr>
+<h1 id="問題1-Symbol-Table-缺失"><a href="#問題1-Symbol-Table-缺失" class="headerlink" title="問題1 : Symbol Table 缺失"></a>問題1 : Symbol Table 缺失</h1><p>首先，拿到一個 Memory 檔，起手式大家可能會想要先看一下這個 Memory 檔是什麼作業系統，並且Linux 版本是什麼？所以都會先下這個指令</p>
+<pre class="line-numbers language-none"><code class="language-none">python3 .\vol.py -f &quot;C:\Users\yunshiuan\Desktop\demo.mem&quot; banners<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/lp9id3l03MN-2YvGo6MD_4MBcxEHXvGNGoVYb-RtZHU=.png"></p>
+<p>得知了他的作業系統與版本後，接下來可能會想要用 pslist 或者 pstree 去看有什麼可疑的進程，</p>
+<pre class="line-numbers language-none"><code class="language-none">python3 .\vol.py -f &quot;C:\Users\yunshiuan\Desktop\demo.mem&quot; linux.pslist<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>但是有很大的機率會出現下面的錯誤</p>
+<p><img src="/assets/Sdu9b3WAFJUHgbvA1O6nrf3I3MMzvQ9wi0rtwjHDoYc=.png"></p>
+<p>這個錯誤是什麼意思？這時候就需要提到 Volatility 是怎麼對一個記憶體進行分析的</p>
+<h2 id="什麼是Symbol-Table"><a href="#什麼是Symbol-Table" class="headerlink" title="什麼是Symbol Table"></a>什麼是Symbol Table</h2><p>如果有人把這個錯誤丟進GPT或者賞網查，你應該會得知到說他是缺少Symbol Table </p>
+<p>Volatility 在分析一個記憶體時會需要這張 Symbol Table ，是因為這個包含了函式的名稱，函式的偏移量以及函式的type等等，因此 Volatitily 在分析時才能定位到正確的進入點進行分析，另外他會存在volility3 指定位置中並且是json檔</p>
+<p><img src="/assets/iW_yfumwDFTW1j-QAqBUVt1_7KU10wIRbrQgY0BhswM=.png"></p>
+<p>其實在官網有給一些基本的 Symbol Table ，但是因為 Linux 核心更新的速度很快，因此官網給的根本完全不夠。</p>
+<p><img src="/assets/FHI0Frf79z8wy1J9jl88-pRVprqUw1DlPrkbBNRyhZA=.png"></p>
+<p>那怎麼辦？這邊提供兩個解決方式：</p>
+<h2 id="解法一：下載別人整理的"><a href="#解法一：下載別人整理的" class="headerlink" title="解法一：下載別人整理的"></a>解法一：下載別人整理的</h2><p>有開源者定期會去抓最新出的 Linux  核心版本的 Symbol Table 這邊推薦github 連結</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Abyss-W4tcher/volatility3-symbols">https://github.com/Abyss-W4tcher/volatility3-symbols</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Abyss-W4tcher/volatility2-profiles">https://github.com/Abyss-W4tcher/volatility2-profiles</a></p>
+<p>這個 github repo 最近都還有持續在維護，更新的很快，可以參考看看，下載後放在volatility 指定放 Symbol 的目錄即可<code>/volatility3/symbols/linux/</code></p>
+<h2 id="解法二：自己做一個"><a href="#解法二：自己做一個" class="headerlink" title="解法二：自己做一個"></a>解法二：自己做一個</h2><p>如果需要的 Symbol Table 太新了還沒有人做怎麼辦，那就是自己做的一個。</p>
+<p>官網的<a target="_blank" rel="noopener" href="https://volatility3.readthedocs.io/en/latest/symbol-tables.html#mac-or-linux-symbol-tables">doc</a>中有提供製作的步驟，我們可以照著他的順序製作。這邊提供的是其中一個製作的方式，網路上其實有其他人分享其他方式，這邊給大家參考</p>
+<p><img src="/assets/K6Eljy3kKpfYZiGEchOsK-DwHLqEvoHC33diWpBhNxI=.png"></p>
+<p>首先就是run banners 看他的 Linux Kernel 版本以及對應的作業系統</p>
+<p>以我們最一開始看到的 Linux Kernel  版本是 5.15.0-151 並且作業系統是 Ubuntu，上網查會發現他是Ubuntu 22.04。</p>
+<p>我們接下來開一台 Ubuntu 22.04 環境的虛擬機，獲得官網步驟當中提到的 debug kernel 副本</p>
+<p>首先先看一下現在環境的Linux 版本</p>
+<p><img src="/assets/ofV0zLwzXtZRygWX59xFrO1LxDqOIm3YSvVuRWhJOA0=.png"></p>
+<p>現在是5.15.0-153，跟我們 banners 出來的版本有差別，不過沒關係因為之後我們可以選擇下載我們想要的版本。</p>
+<p>接下來執行以下指令去下載一個叫做 vmlinux-5.15.0-151-generic 的檔案，這個檔案就是我們需要debug kernel 副本檔，因為他裡面就是存著函式的名稱，函式的偏移量以及函式的type等等</p>
+<pre class="line-numbers language-none"><code class="language-none">echo &quot;deb http:&#x2F;&#x2F;ddebs.ubuntu.com $(lsb_release -cs) main restricted universe multiverse
+deb http:&#x2F;&#x2F;ddebs.ubuntu.com $(lsb_release -cs)-updates main restricted universe multiverse
+deb http:&#x2F;&#x2F;ddebs.ubuntu.com $(lsb_release -cs)-proposed main restricted universe multiverse&quot; | \
+sudo tee -a &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;ddebs.list
+sudo apt install ubuntu-dbgsym-keyring
+sudo apt-get update
+sudo apt-get install linux-image-5.15.0-151-generic-dbgsym<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>下載完後我們就可以在<code>/usr/lib/debug/boot</code>這個路徑看到我們下載的vmlinux-5.15.0-151-generic。</p>
+<p><img src="/assets/TcDmGP--_7m_wvB8KF7YNFkvWwW5NNx8ugo7krHhZu0=.png"></p>
+<p>接下來官方建議使用 <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/dwarf2json">dwarf2json</a> 這個工具將我們剛剛下載的vmlinux 檔案轉化成 json 檔，變成 Volatility 可以讀取的 Symbol table ，然後因為他是用 Golang 寫的所以要安裝一下 Golang </p>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;volatilityfoundation&#x2F;dwarf2json
+cd dwarf2json&#x2F;
+sudo apt install golang-go
+go mod download github.com&#x2F;spf13&#x2F;pflag
+go build<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接下來工具跟檔案都用好後就可以開始進行轉換。</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo .&#x2F;dwarf2json linux --elf &#x2F;usr&#x2F;lib&#x2F;debug&#x2F;boot&#x2F;vmlinux-5.15.0-151-generic &gt; vmlinux-5.15.0-151-generic.json<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>轉換後看你要開http server 把檔案抓下來放到你自己的環境 還是要直接在裝一個volatility 在虛擬機都ok，之後把它丟進 Volatility 放 Symbol Table 的指定位置<code>/volatility3/symbols/linux/</code></p>
+<p><img src="/assets/sys27bqGg2bYia4Z06Moo4Ae1LGDz43LnZVqqLyc42w=.png"></p>
+<p>放好後這樣就完成了，可以驗證一下有沒有 work ，可以再跑一次pslist 看看</p>
+<p><img src="/assets/pxqLWFwoscWIgWBZfGOf03-i4EGu5tl_mBz5769DUl0=.png"></p>
+<p>發現成功執行，並且驗證我們製作的Symbol Table 可以 work </p>
+<h1 id="問題2-HOW-TO-DUMPFILE"><a href="#問題2-HOW-TO-DUMPFILE" class="headerlink" title="問題2 : HOW TO DUMPFILE ?"></a>問題2 : HOW TO DUMPFILE ?</h1><p>在Linux 記憶體分析部分，他並沒有跟 Windows 一樣有 dumpflies 一樣的 Plugin，但是根據這個 <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3/issues/1312">issues</a> 有人有整理出了dump 的方式</p>
+<ul>
+<li>Processes: <code>linux.pslist.PsList --dump</code></li>
+<li>ELFs: <code>linux.elfs.Elfs --dump</code></li>
+<li>Memory maps: <code>linux.proc.Maps --dump</code></li>
+<li>Files from the page cache: <code>linux.pagecache.InodePages --dump</code></li>
+</ul>
+<p>那根據他所整理出來的資訊，我們就可以跟 windows 的 dumpfiles 一樣，將 Linux 記憶體中我們想要的檔案 dump 出來。</p>
+<p>這邊一樣用同樣的記憶體 Dump 做 demo </p>
+<p>你如果想要把&#x2F;etc&#x2F;passwd dump 出來，可以先看一下怎麼用<code>linux.pagecache.InodePages</code> 這個Plugin</p>
+<pre class="line-numbers language-none"><code class="language-none">PS C:\Users\yunshiuan\Desktop\Tools\volatility3 &gt; python3 .\vol.py -f &quot;C:\Users\yunshiuan\Desktop\demo.mem&quot; linux.pagecache.InodePages -h
+Volatility 3 Framework 2.26.2
+usage: vol.py linux.pagecache.InodePages [-h] [--find FIND] [--inode INODE] [--dump]
+
+Lists and recovers cached inode pages
+
+options:
+  -h, --help     show this help message and exit
+  --find FIND    Filename (full path) to find
+  --inode INODE  Inode address
+  --dump         Extract inode content<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以用<code>--find</code>直接用字串搜尋想要的檔案，也可以用<code>--inode</code> 用Inode address 去搜尋，要用Inode address 搜尋之前需要先用<code>linux.pagecache.Files</code>查詢檔案的 Inode address ，最後再下一個<code>--dump</code>把檔案dump 出來</p>
+<p>之後dump file 就可以用下面的指令</p>
+<pre class="line-numbers language-none"><code class="language-none">PS C:\Users\yunshiuan\Desktop\Tools\volatility3 &gt; python3 .\vol.py -f &quot;C:\Users\yunshiuan\Desktop\demo.mem&quot; linux.pagecache.InodePages --find &quot;&#x2F;etc&#x2F;passwd&quot; --dump
+Volatility 3 Framework 2.26.2
+Progress:  100.00               Stacking attempts finished
+PageVAddr       PagePAddr       MappingAddr     Index   DumpSafe        Flags   Output File
+
+0xdaac04525100  0x114944000     0x9615004ade70  0       True    active,has_hwpoisoned,lru,mappedtodisk,referenced,reported,uptodate     inode_0x9615004adcf8.dmp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最後看一下<code>inode_0x9615004adcf8.dmp</code>是不是我們要的</p>
+<p><img src="/assets/T012mjhPrjq3Q2mlie0u6nVQKXmBq4zg2NaS0U8MzPw=.png"></p>
+<p>那我們就成功將我們想要的東西 dump 出來</p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>其實 Windows 似乎也會遇到 Sysbol Table 缺失的問題，有機會的話我應該也會研究看看 Windows 的 Symbol Table 怎麼做，其他 Linux 記憶體分析的步驟跟 Windows 也大同小異，只是也多了一些 Plugin 可以使用，大家有興趣可以自己再嘗試看看，另外也可以去 NCKUCTF ctfd 把我放的 flag 解出來喔！</p>
+<hr>
+<h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3/issues/1312">https://github.com/volatilityfoundation/volatility3/issues/1312</a></p>
+<p><a target="_blank" rel="noopener" href="https://volatility3.readthedocs.io/en/latest/symbol-tables.html">https://volatility3.readthedocs.io/en/latest/symbol-tables.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cpuu.hashnode.dev/how-to-perform-memory-forensic-analysis-in-linux-using-volatility-3">https://cpuu.hashnode.dev/how-to-perform-memory-forensic-analysis-in-linux-using-volatility-3</a></p>
+<p><a target="_blank" rel="noopener" href="https://daniel-schwarzentraub.medium.com/tryhackme-free-room-profiles-using-volatility3-ba94240e2f57">https://daniel-schwarzentraub.medium.com/tryhackme-free-room-profiles-using-volatility3-ba94240e2f57</a></p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/forensic/" size="sm"># forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/Volatility/" size="sm"># Volatility</cosy-label>
+                  
+                  <cosy-label href="/tags/memoryforensic/" size="sm"># memoryforensic</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8D%98-%E4%BB%99%E8%B2%9D%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">🍘 仙貝工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatility"><span class="toc-number">2.1.</span> <span class="toc-text">Volatility</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%95%8F%E9%A1%8C1-Symbol-Table-%E7%BC%BA%E5%A4%B1"><span class="toc-number">3.</span> <span class="toc-text">問題1 : Symbol Table 缺失</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFSymbol-Table"><span class="toc-number">3.1.</span> <span class="toc-text">什麼是Symbol Table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%80%EF%BC%9A%E4%B8%8B%E8%BC%89%E5%88%A5%E4%BA%BA%E6%95%B4%E7%90%86%E7%9A%84"><span class="toc-number">3.2.</span> <span class="toc-text">解法一：下載別人整理的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BA%8C%EF%BC%9A%E8%87%AA%E5%B7%B1%E5%81%9A%E4%B8%80%E5%80%8B"><span class="toc-number">3.3.</span> <span class="toc-text">解法二：自己做一個</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%95%8F%E9%A1%8C2-HOW-TO-DUMPFILE"><span class="toc-number">4.</span> <span class="toc-text">問題2 : HOW TO DUMPFILE ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-number">5.</span> <span class="toc-text">結論</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">📚 參考資料</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

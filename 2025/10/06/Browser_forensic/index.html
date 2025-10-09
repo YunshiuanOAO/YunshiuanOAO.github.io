@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    現在請讓我看看你的瀏覽器紀錄
+  </title>
+  <meta name="description" content="瀏覽器鑑識分析與資料提取技術">
+  <meta name="keywords" content="瀏覽器鑑識,Browser Forensic,Chrome,Firefox,Edge,SQLite">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/06/Browser_forensic/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      現在請讓我看看你的瀏覽器紀錄
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">現在請讓我看看你的瀏覽器紀錄</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-06 22:17:15
+          </div>
+          <!-- 文章 -->
+          <h1 id="Day22-現在請讓我看看你的瀏覽器紀錄"><a href="#Day22-現在請讓我看看你的瀏覽器紀錄" class="headerlink" title="Day22 現在請讓我看看你的瀏覽器紀錄"></a>Day22 現在請讓我看看你的瀏覽器紀錄</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享在 Disk Forensic 下，如何分析瀏覽器中的各種記錄，包括下載記錄、瀏覽歷史、Cookie、密碼、書籤等，以及如何讀取和分析這些資料。</p>
+<hr>
+<h2 id="瀏覽器-Web-Browser"><a href="#瀏覽器-Web-Browser" class="headerlink" title="瀏覽器 Web Browser"></a>瀏覽器 Web Browser</h2><p>Web Browser 是應用程式，用於存取和顯示網頁內容。瀏覽器不僅能顯示網頁，還能儲存使用者偏好設定、記錄瀏覽歷史、管理書籤和密碼、快取網頁內容、儲存 Cookie 和會話資料、記錄下載檔案資訊。</p>
+<p><img src="/assets/PME2ctLgsmW5gOdGRY1b9s3H5NB99taFKugq3i_bB0o=.png"></p>
+<p><code>source: https://3c.ltn.com.tw/news/39285</code></p>
+<p>以下是目前的瀏覽器系列</p>
+<ul>
+<li>Chromium 系列<ul>
+<li>Google Chrome </li>
+<li>Microsoft Edge</li>
+<li>Opera</li>
+<li>Brave</li>
+</ul>
+</li>
+<li>Firefox 系列<ul>
+<li>Mozilla Firefox</li>
+<li>Waterfox</li>
+</ul>
+</li>
+<li>其他瀏覽器<ul>
+<li>Safari </li>
+<li>Internet Explorer</li>
+</ul>
+</li>
+</ul>
+<p>通常資料會存在 <code>C:\Users\&lt;username&gt;\AppData</code></p>
+<hr>
+<h1 id="AppData-目錄結構"><a href="#AppData-目錄結構" class="headerlink" title="AppData 目錄結構"></a>AppData 目錄結構</h1><p>Windows 系統中，應用程式的使用者資料通常儲存在 <code>AppData</code> 目錄下：</p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;username&gt;\AppData\
+├── Local\
+├── Roaming\        
+└── LocalLow\       <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>Local : 儲存大容量，臨時或易刪除的資料</li>
+<li>Roaming : 跨裝置同步資料，會跟著使用者帳戶移動到其他電腦</li>
+<li>LocalLow：與 Local 類似，但是應用程式被授予的權限較低</li>
+</ul>
+<p>以下介紹一些常用的瀏覽器的資料儲存位置以及可以分析的檔案</p>
+<hr>
+<h1 id="🌐-瀏覽器資料鑑識"><a href="#🌐-瀏覽器資料鑑識" class="headerlink" title="🌐  瀏覽器資料鑑識"></a>🌐  瀏覽器資料鑑識</h1><h2 id="Google-Chrome"><a href="#Google-Chrome" class="headerlink" title="Google Chrome"></a>Google Chrome</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default</code></p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default\
+├── History               # 瀏覽歷史和下載記錄
+├── Network\Cookies       # Cookie 資料
+├── Login Data            # 儲存的密碼
+├── Web Data              # 自動填入資料
+├── Bookmarks             # 書籤
+├── Preferences           # 使用者偏好設定
+├── Cache\                # 快取資料
+├── Local Storage\        # 本地儲存
+├── Session Storage\      # 會話儲存
+└── IndexedDB\            # 索引資料庫<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/t3wC0oXhNjW5IAY58wESdbEguCnaBPvkbUMzF7wKS0w=.png"></p>
+<h2 id="Microsoft-Edge"><a href="#Microsoft-Edge" class="headerlink" title="Microsoft Edge"></a>Microsoft Edge</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User Data\Default</code></p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User Data\Default\
+├── History               # 瀏覽歷史和下載記錄
+├── Cookies               # Cookie 資料
+├── Login Data            # 儲存的密碼
+├── Web Data              # 自動填入資料
+├── Preferences           # 使用者偏好設定
+├── Cache\                # 快取資料
+├── Local Storage\        # 本地儲存
+├── Session Storage\      # 會話儲存
+└── IndexedDB\            # 索引資料庫<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/c8YUdhLtLG-xs03GspLLfxg5lXWwJaANvvFQ00ftp9E=.png"></p>
+<h2 id="Mozilla-Firefox"><a href="#Mozilla-Firefox" class="headerlink" title="Mozilla Firefox"></a>Mozilla Firefox</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;</code></p>
+<p><code>&lt;profile&gt;</code> 常常會以xxxx.default-release 表示</p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;\
+├── places.sqlite        # 瀏覽歷史、書籤、下載記錄
+├── cookies.sqlite       # Cookie 資料
+├── logins.json          # 儲存的密碼
+├── formhistory.sqlite   # 表單歷史
+├── permissions.sqlite   # 網站權限
+├── prefs.js            # 使用者偏好設定
+├── user.js             # 使用者自訂設定
+└── storage\            # 本地儲存<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/MH-kVAb81up_baCG59UVWSc7VpFwFHxrAKgKZVGoG5c=.png"></p>
+<p>有些檔案會是 SQLite 儲存的，這邊推薦一個 GUI 應用程式可以查看 SQLite 資料庫內的內容：<strong>DB Browser for SQLite</strong></p>
+<hr>
+<h1 id="DB-Browser-for-SQLite"><a href="#DB-Browser-for-SQLite" class="headerlink" title="DB Browser for SQLite"></a>DB Browser for SQLite</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://sqlitebrowser.org/">https://sqlitebrowser.org/</a></p>
+<p>DB Browser for SQLite 是一款開源的、跨平台的視覺化 SQLite 資料庫管理工具。它讓使用者不用深入指令列就能開啟、瀏覽、查詢、修改 SQLite 資料庫檔案。它支援標準的 SQLite 檔案（.sqlite, .db, .sqlite3 等），也支援匯入／匯出 CSV、SQL dump 等格式</p>
+<p>假設我要查看使用者在 Google Chrome 的瀏覽與下載紀錄</p>
+<p>首先先把 <code>C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default\History</code> dump 下來</p>
+<p><img src="/assets/9FgyVU4gE0qZHD_cPbKAPnJZwqx-YWgxBiESlAA1ZAI=.png"></p>
+<p>然後開啟 DB Browser for SQLite，將剛剛 dump 下來的 history 資料丟進 DB Browser for SQLite 內</p>
+<p><img src="/assets/jev_UQgFrTH7os7vKMbXlqQFHHDiJf7N7AUvGTDCoto=.png"></p>
+<p>下面可以看到資料庫內的 Table，如果想要看裡面的資料就點選瀏覽資料的頁面</p>
+<p><img src="/assets/E_xTSK3RQjQUtRC4oW8-bFfy_f8KdXiWu4GJ3viGkWs=.png"></p>
+<p>如果是要看瀏覽記錄就選擇 <code>urls</code>，如果要看下載紀錄的話就看 <code>downloads</code> Table</p>
+<p><img src="/assets/Wy19Ca-3LR-VWh2fqEcZKglEGOWIsqVcTY9cYyQt-8I=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了在 Disk Forensic 時如何獲取瀏覽器相關的資訊，但其實還有很多瀏覽器留下的檔案可以去分析，常常會遇到題目詢問相關內容時不知道要怎麼去尋找，會需要上網查很多資料，還會遇到各式各樣的問題，但是可以獲得到的資訊是挺龐大的。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/%E7%80%8F%E8%A6%BD%E5%99%A8%E9%91%91%E8%AD%98/" size="sm"># 瀏覽器鑑識</cosy-label>
+                  
+                  <cosy-label href="/tags/Browser-Forensic/" size="sm"># Browser Forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/Chrome/" size="sm"># Chrome</cosy-label>
+                  
+                  <cosy-label href="/tags/Firefox/" size="sm"># Firefox</cosy-label>
+                  
+                  <cosy-label href="/tags/Edge/" size="sm"># Edge</cosy-label>
+                  
+                  <cosy-label href="/tags/SQLite/" size="sm"># SQLite</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day22-%E7%8F%BE%E5%9C%A8%E8%AB%8B%E8%AE%93%E6%88%91%E7%9C%8B%E7%9C%8B%E4%BD%A0%E7%9A%84%E7%80%8F%E8%A6%BD%E5%99%A8%E7%B4%80%E9%8C%84"><span class="toc-number">1.</span> <span class="toc-text">Day22 現在請讓我看看你的瀏覽器紀錄</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">🧂 前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E5%99%A8-Web-Browser"><span class="toc-number">2.1.</span> <span class="toc-text">瀏覽器 Web Browser</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AppData-%E7%9B%AE%E9%8C%84%E7%B5%90%E6%A7%8B"><span class="toc-number">3.</span> <span class="toc-text">AppData 目錄結構</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8C%90-%E7%80%8F%E8%A6%BD%E5%99%A8%E8%B3%87%E6%96%99%E9%91%91%E8%AD%98"><span class="toc-number">4.</span> <span class="toc-text">🌐  瀏覽器資料鑑識</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-Chrome"><span class="toc-number">4.1.</span> <span class="toc-text">Google Chrome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microsoft-Edge"><span class="toc-number">4.2.</span> <span class="toc-text">Microsoft Edge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mozilla-Firefox"><span class="toc-number">4.3.</span> <span class="toc-text">Mozilla Firefox</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DB-Browser-for-SQLite"><span class="toc-number">5.</span> <span class="toc-text">DB Browser for SQLite</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">6.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

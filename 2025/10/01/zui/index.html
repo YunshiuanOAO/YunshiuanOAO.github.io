@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    ZED USER INTERFACE
+  </title>
+  <meta name="description" content="Zui 介紹,Network Forensic 介紹">
+  <meta name="keywords" content="Zui,Network Forensic">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/01/zui/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      ZED USER INTERFACE
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">ZED USER INTERFACE</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-05 15:01:54
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹另一個network forensic 工具-Zui ，另外也會介紹一下 Zui 當中使用到的 Zeek 與以及Suricata pcap 分析工具 </p>
+<hr>
+<h1 id="Zui"><a href="#Zui" class="headerlink" title="Zui"></a>Zui</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://zui.brimdata.io/docs">https://zui.brimdata.io/docs</a></p>
+<p>Zui 它的前身是Brim ， 是一款用於網路流量分析的工具，它提供了使用者友善的圖形化介面，可以讓使用者能夠快速分析與視覺化大量網路流量</p>
+<p><img src="/assets/aEB_E59Bb6Ghcjk57wLkzd5kCFR_ATktueWQUMrKugE=.png"></p>
+<p>這個工具裡面整合了兩個網路封包分析工具，分別是Zeek、Suricata</p>
+<hr>
+<h2 id="Zeek"><a href="#Zeek" class="headerlink" title="Zeek"></a>Zeek</h2><p>連結：<a target="_blank" rel="noopener" href="https://github.com/zeek/zeek">https://github.com/zeek/zeek</a></p>
+<p>Zeek 是一個開源的網路安全監控工具，以強大的資料記錄功能聞名。它能將原始的 pcap 封包檔轉換成結構化的日誌，方便在 Zeek 內查詢與分析，快速提供網路行為的概覽。</p>
+<p>指令如下</p>
+<pre class="line-numbers language-none"><code class="language-none">zeek -C -r B33F50up_blog.pcapng<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>他會產生以下檔案</p>
+<ul>
+<li>conn.log  : 記錄了所有的網路連接</li>
+<li>dns.log：記錄了所有的 DNS查詢活動</li>
+<li>files.log：記錄了通過 HTTP 傳輸的檔案</li>
+<li>http.log：這是一個 HTTP 協議的流量日誌，記錄了網頁瀏覽和API 請求</li>
+<li>packet_filter.log：記錄了封包過濾器的配置</li>
+</ul>
+<p><img src="/assets/wEXC7MUEGLZqmjPBWvXxb9gL4cWzTN2L6JHdh9dc1cA=.png"></p>
+<p>以下是http.log 的形式</p>
+<pre class="line-numbers language-none"><code class="language-none">#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	http
+#open	2025-09-27-22-26-52
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	trans_depth	method	host	uri	referrer	version	user_agent	origin	request_body_len	response_body_len	status_code	status_msg	info_code	info_msg	tags	username	password	proxied	orig_fuids	orig_filenames	orig_mime_types	resp_fuids	resp_filenames	resp_mime_types
+#types	time	string	addr	port	addr	port	count	string	string	string	string	string	string	string	count	count	count	string	count	string	set[enum]	string	string	set[string]	vector[string]	vector[string]	vector[string]	vector[string]	vector[string]	vector[string]
+1754678828.272075	CAuRo91flufxXutAke	100.112.165.2	60665	192.168.1.125	5000	1	GET	192.168.1.125:5000	&#x2F;	-	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	-	0	24859	200	OK	-	-	(empty)	-	-	-	-	-	-	FA9Bk7Ikrr1LVrys	-	text&#x2F;html
+1754678857.820963	CIRhMK1X97Z1MzFRD1	100.112.165.2	60676	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	15	727	200	OK	-	-	(empty)	-	-	-	FIUrzJ3sbt6deYBXf3	-	text&#x2F;plain	FyILV9CHbcmUMGtc6	-	text&#x2F;json
+1754678865.293310	CZnidTF5LIgaMzbRe	100.112.165.2	60677	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;system	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	141	185	200	OK	-	-	(empty)	-	-	-	Fvs6lg41SIyuYsReh2	-	-	FqFYD91bNrEWRNR501	-	text&#x2F;json
+1754679070.738945	CWlCIn4qK2ntw6CuJl	100.112.165.2	60757	192.168.1.125	5000	1	GET	192.168.1.125:5000	&#x2F;	-	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	-	0	24859	200	OK	-	-	(empty)	-	-	-	-	-	-	FG2QH72aF2jeG9CYC9	-	text&#x2F;html
+1754679165.228123	C5V1Fn3nYAvFuSQeE	100.112.165.2	60778	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;system	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	141	287	200	OK	-	-	(empty)	-	-	-	FnwtMr2TZ1qIS6LLmj	-	-	Fq827u4xABcX563I21	-	text&#x2F;json
+1754679173.669096	CWXpsv3zrBE7Lx66Sg	100.112.165.2	60779	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;system	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	144	13177	200	OK	-	-	(empty)	-	-	-	FxvTqN3Pid7VWQP7y3	-	-	Fi4rGH32Y4P77kznf3	-	text&#x2F;json
+1754679180.268390	Co6odn3WTbf9HKGcO6	100.112.165.2	60780	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	15	728	200	OK	-	-	(empty)	-	-	-	FYW00SjDihqYC30xe	-	text&#x2F;plain	FQGbYm3SH1rsO8o9ng	-	text&#x2F;json
+1754679196.383809	CGjLWoznypKV0Pgt	100.112.165.2	60809	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	16	738	200	OK	-	-	(empty)	-	-	-	FVCJDglco6ai9lzi4	-	text&#x2F;plain	FB2a4L3x3ZELSSdCQ1	-	text&#x2F;json
+1754679223.696243	C0s1KA7ZrfQvnIpj	100.112.165.2	60865	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	30	851	200	OK	-	-	(empty)	-	-	-	FA2p79sD6MkhyaCEb	-	text&#x2F;plain	FwUGICEULGQRyBs78	-	text&#x2F;json
+1754679257.891805	CtwrhY2Kw9bscBOsX7	100.112.165.2	60874	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	34	755	200	OK	-	-	(empty)	-	-	-	FybSTDKXBk5dCiaYl	-	text&#x2F;plain	F55jsD1S1vWW8IVBY4	-	text&#x2F;json
+1754679265.650887	CFgfqH2IasZxXsovkd	100.112.165.2	60875	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	30	869	200	OK	-	-	(empty)	-	-	-	FtvRcZ3D5kRIP1ijy5	-	text&#x2F;plain	FTYdr5iKtJX11Efma	-	text&#x2F;json
+1754679315.090163	CEAuN63ly0lHS2zRrj	100.112.165.2	60895	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	30	869	200	OK	-	-	(empty)	-	-	-	Fyt7jP30AEKPs4C0Uj	-	text&#x2F;plain	F0zHt852ycC25Gpkf	-	text&#x2F;json
+1754679319.217264	CRWcyt2bda4K3g6Xub	100.112.165.2	60912	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	36	900	200	OK	-	-	(empty)	-	-	-	FUAgus1sr4pPeGnidg	-	text&#x2F;plain	FqnOWw20dfXD0koyIi	-	text&#x2F;json
+1754679354.845803	CulPOq3A9IP8ab4Zqd	100.112.165.2	60981	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	48	769	200	OK	-	-	(empty)	-	-	-	FZw17aZHAnZltVkJ	-	text&#x2F;plain	FQvAYSOVPIbUCfRm7	-	text&#x2F;json
+1754679406.575000	C9iy0scrJKJuDpi07	100.112.165.2	61207	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	49	2621	200	OK	-	-	(empty)	-	-	-	FiejrYnJjwTaJ5db7	-	text&#x2F;plain	FKZoSb4yddnL4uzkZf	-	text&#x2F;json
+1754679827.575533	CV2dqm3aNuGOi4EC0h	100.112.165.2	63113	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	36	912	200	OK	-	-	(empty)	-	-	-	FDaXYp2bh8hJpHMYCi	-	text&#x2F;plain	FdsBU41nDrcCQ9mTV9	-	text&#x2F;json
+1754679851.757452	CWSzgl4AsTyJVyRpJf	100.112.165.2	63213	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	44	800	200	OK	-	-	(empty)	-	-	-	FAGwfWDdjCLhcrZX2	-	text&#x2F;plain	F89dhl1uFy7r4oRtf	-	text&#x2F;json
+1754679859.655497	C0LErP2jTxCqKmUESd	100.112.165.2	63216	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	47	781	200	OK	-	-	(empty)	-	-	-	FoNYJj2QlLyZkd9tEe	-	text&#x2F;plain	FUaGCH2RbcOlDQcaOi	-	text&#x2F;json
+1754679875.655339	CqC0qj2SMoQnSfaju6	100.112.165.2	63217	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	31	762	200	OK	-	-	(empty)	-	-	-	FRGjia4iHeyPzIDRC3	-	text&#x2F;plain	FwGgDTGi2gHDik2P5	-	text&#x2F;json
+1754679999.499748	CtN1Vk4RrwIRGOgwHc	100.112.165.2	63280	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	142	836	200	OK	-	-	(empty)	-	-	-	FFJx4j4PnbpIi0mfD6	-	text&#x2F;plain	FYpDmc37JMpCuz4Zac	-	text&#x2F;json
+#close	2025-09-27-22-26-52
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>另外他也會根據 pcap 檔產生其他log ，參考網址：<a target="_blank" rel="noopener" href="https://docs.zeek.org/en/master/logs/index.html">https://docs.zeek.org/en/master/logs/index.html</a> </p>
+<hr>
+<h2 id="Suricata"><a href="#Suricata" class="headerlink" title="Suricata"></a>Suricata</h2><p>連結：<a target="_blank" rel="noopener" href="https://suricata.io/">https://suricata.io/</a></p>
+<p>Suricata 是一個開源的入侵偵測系統（IDS）與入侵防禦系統（IPS），以深度封包檢測、流量分析與威脅偵測聞名。能使用 Suricata 的龐大規則集快速評估網路資料並辨識異常。</p>
+<p>指令如下</p>
+<pre class="line-numbers language-none"><code class="language-none">suricata -r B33F50up_blog.pcapng <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>他會產生四個檔案</p>
+<ul>
+<li>eve.json : Suricata的結構化日誌檔案，包含多種事件類型的詳細記錄</li>
+<li>fast.log : Suricata 快速警報日誌，包含檢測到的安全威脅警報</li>
+<li>stats.log : Suricata 運行統計資料，包含詳細的系統運行統計</li>
+<li>suricata.log : Suricata 主要運行日誌，包含系統啟動和運行資訊</li>
+</ul>
+<p><img src="/assets/5LROwbAnig-tGtRpsi7V6Ig8OL3X9F9e3CxpqHcjWvs=.png"></p>
+<p>以下是 fast.log 資訊</p>
+<pre class="line-numbers language-none"><code class="language-none">08&#x2F;09&#x2F;2025-02:53:47.165861  [**] [1:2019284:3] ET ATTACK_RESPONSE Output of id command from HTTP server [**] [Classification: Potentially Bad Traffic] [Priority: 2] &#123;TCP&#125; 192.168.1.125:5000 -&gt; 100.112.165.2:60865
+08&#x2F;09&#x2F;2025-02:56:49.767871  [**] [1:2002034:13] ET ATTACK_RESPONSE Possible &#x2F;etc&#x2F;passwd via HTTP (linux style) [**] [Classification: Information Leak] [Priority: 2] &#123;TCP&#125; 192.168.1.125:5000 -&gt; 100.112.165.2:61207<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<hr>
+<p>總結來說 Zui 的做法是先用 <a target="_blank" rel="noopener" href="https://github.com/brimdata/brimcap">brimcap</a> 將 pcap 送到 Zeek&#x2F;Suricata 做 summary&#x2F;log，再在 Zui 內用 correlation view、alert 視窗、或 detail pane 分析事件與原始封包。</p>
+<p>所以只要將pcap 封包丟進去 zeek ，他就會開始進行分析</p>
+<p><img src="/assets/gyCnmYGl_VfYEuqKAOa8TyKLnNYYC6tohyAziYN13Ck=.png"></p>
+<p>分析完後按下<code>Query Pool</code> 就可以看到視覺化的頁面</p>
+<p><img src="/assets/aEB_E59Bb6Ghcjk57wLkzd5kCFR_ATktueWQUMrKugE=.png"></p>
+<p>另外 Zui 使用 Zed（或稱 Zed query &#x2F; SuperSQL）來做過濾與轉換查詢可以更快處理大量資料</p>
+<p>以下分享幾個操作</p>
+<p>首先可以篩選出Suricata 警報</p>
+<pre class="line-numbers language-none"><code class="language-none">event_type&#x3D;&#x3D;&quot;alert&quot; #可篩選出 Suricata 警報<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/s_W7IAAYyK-10fAyW9KpXLDpZhCSm8jgPMVAQABdehY=.png"></p>
+<p>也有像wireshark 一樣可以篩選 ip scr or ip dst </p>
+<pre class="line-numbers language-none"><code class="language-none">id.orig_h&#x3D;&#x3D;100.112.165.2 and id.resp_p&#x3D;&#x3D;53 #來源ip &#x3D; 100.112.165.2 目標port &#x3D; 53<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/tWu_XB4kP452AJbgpcIQ0vOiRSROoPhmTNH13gBxRPg=.png"></p>
+<p>另外他也可以進行統計與排序</p>
+<pre class="line-numbers language-none"><code class="language-none">count() by id.resp_p | sort -r  # 對目標port 進行統計，並降冪排序<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/mq6sPm0cAJqgKEiREZUwTYXNAvnegIR2DAfkVtRs4GQ=.png"></p>
+<p>對你想要篩選的資料按右鍵可以自動生成查詢指令</p>
+<p><img src="/assets/T2wzAhndl8-IWt4PObDgOI8JbPrlO9uiPokk5yl27do=.png"></p>
+<p>最後也可以下載官方提供預先寫好的查詢</p>
+<p>連結：[<a target="_blank" rel="noopener" href="https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries">https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries</a></p>
+<p>](<a target="_blank" rel="noopener" href="https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries)%E4%B8%8B%E8%BC%89%E5%BE%8Cqueries.json">https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries)下載後queries.json</a> 後按下+的藍色按鈕，點選Import Queries</p>
+<p><img src="/assets/777onBmZHXrrhqyTl2BNjPp328hH_BsS0lh761qK6Aw=.png"></p>
+<p>把剛剛下載的json 檔丟進去，就會匯入預先寫好的query </p>
+<p><img src="/assets/kndUjYMJJCjbP4n4KenQWusY9yA4lv4sKzYL_6Ke0lA=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了Zui 以及其中Zeek 與Suricata功能，也有分享zui 的基本操作，zui 在解一些CTF 題時也會有奇效，雖然沒辦法查看詳細封包內容，但在快速查詢可疑行為或可疑流量時會很好用。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Network-Forensic/" size="sm"># Network Forensic</cosy-label>
+                  
+                  <cosy-label href="/tags/Zui/" size="sm"># Zui</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Zui"><span class="toc-number">2.</span> <span class="toc-text">Zui</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zeek"><span class="toc-number">2.1.</span> <span class="toc-text">Zeek</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Suricata"><span class="toc-number">2.2.</span> <span class="toc-text">Suricata</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

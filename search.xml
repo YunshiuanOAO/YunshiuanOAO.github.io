@@ -387,11 +387,11 @@
             
             <tag> OSINT </tag>
             
-            <tag> 網路偵查 </tag>
-            
             <tag> 網站分析 </tag>
             
             <tag> 域名資訊 </tag>
+            
+            <tag> 網路偵查 </tag>
             
         </tags>
       
@@ -480,11 +480,11 @@
             
             <tag> OSINT </tag>
             
+            <tag> 網路偵查 </tag>
+            
             <tag> 開源情報 </tag>
             
             <tag> 情報收集 </tag>
-            
-            <tag> 網路偵查 </tag>
             
         </tags>
       
@@ -873,9 +873,9 @@
             
             <tag> CTF </tag>
             
-            <tag> AIS3 </tag>
-            
             <tag> Reverse </tag>
+            
+            <tag> AIS3 </tag>
             
             <tag> 逆向工程 </tag>
             

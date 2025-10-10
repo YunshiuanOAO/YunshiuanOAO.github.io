@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    尋找蟑螂是不是也算是一種威脅狩獵？
+  </title>
+  <meta name="description" content="威脅狩獵入門：從被動防禦到主動出擊的資安思維轉變">
+  <meta name="keywords" content="">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/10/ThreatHunting_intro/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      尋找蟑螂是不是也算是一種威脅狩獵？
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">尋找蟑螂是不是也算是一種威脅狩獵？</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-10 20:34:59
+          </div>
+          <!-- 文章 -->
+          <p>現在科技持續進步的時代，網路架構與技術越來越複雜，攻擊也越來越精密，如果只是依賴原有的自動化工具去達成防禦效果，常常還是會有漏網之魚，因此今天會分享什麼是 Threat Hunting，以及在 Threat Hunting 中會需要使用到什麼技術或工具。</p>
+<hr>
+<h1 id="🔫-Threat-Hunting"><a href="#🔫-Threat-Hunting" class="headerlink" title="🔫 Threat Hunting"></a>🔫 Threat Hunting</h1><p>傳統的資安防禦方式是使用自動化工具（如：防火牆、IDS&#x2F;IPS）去偵測已知攻擊行為，像是病毒特徵碼、惡意 IP 或異常登入，如果自動化工具偵測到就會發送警報，資安人員接收到後就開始進行處理。</p>
+<p>而 Threat Hunting 是一個<strong>主動式</strong>的防禦，資安人員會主動去看 SIEM（安全資訊與事件管理）或各式數據，分析可疑行為，而不是等警報出現才處理；分析過程會根據自己假設的攻擊情境或威脅情資，檢視日誌（Log）或網路流量（Network Traffic）。</p>
+<p>例如：</p>
+<ul>
+<li>近期 PowerShell 活動量增加，由於攻擊者常利用 PowerShell 進行偵查、橫向移動或憑證竊取，會不會是遭受到了什麼攻擊？<ul>
+<li>查詢 Event ID 4104（Script Block Logging） 的記錄</li>
+</ul>
+</li>
+<li>如果近期某個漏洞被廣泛利用，我們的系統會不會也正遭到相同的攻擊？<ul>
+<li><a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/cve-2021-44228">Log4Shell (CVE-2021-44228)</a></li>
+<li>檢查是否有連接到可疑的 LDAP 或 RMI 伺服器</li>
+<li>搜尋包含 <code>$&#123;jndi:</code> 字串的日誌記錄</li>
+<li>查詢 Event ID 4688（Process Creation） 包含 <code>java</code> 且父進程是 Web 應用程式</li>
+<li>搜尋是否有可疑的 .class 或 .jar 檔案被建立</li>
+</ul>
+</li>
+</ul>
+<p>如果發現蒐集到的證據使假設成立，會需要進一步地解析整個攻擊流程，後續也需要進行相關的處理，包括啟動事件回應程序、通報相關單位、隔離與清除威脅以及事件後檢討，但如果假設沒有成立，也可以當作一次經驗參考。</p>
+<p>整體來說可以發現 Threat Hunting 的基本流程是 Trigger&#x2F;Hypotheses（從異常&#x2F;已知行為或威脅情資建立假設）→ Investigation（蒐集證據）→ Uncover（進一步分析）→ Inform &amp; Enrich，並且在威脅狩獵中這流程會持續循環。</p>
+<p><img src="/assets/of-U2Ye_YQ9AateRbdTn0JX6zAyJ2iWWj6YU5isWn3o=.png"></p>
+<p>source : <a target="_blank" rel="noopener" href="https://www.nist.gov/system/files/documents/2017/04/20/2017-04-10_-_sqrrl_enterprise.pdf">NIST</a></p>
+<hr>
+<p>在威脅狩獵的過程中會需要站在攻擊者的角度思考，<strong>MITRE ATT&amp;CK 框架</strong>可以很好地幫助我們預測攻擊者的下一步，並建立更精準的獵捕策略。</p>
+<h1 id="MITRE-ATT-CK"><a href="#MITRE-ATT-CK" class="headerlink" title="MITRE ATT&amp;CK"></a>MITRE ATT&amp;CK</h1><p>網站：<a target="_blank" rel="noopener" href="https://attack.mitre.org/">https://attack.mitre.org/</a></p>
+<p>MITRE ATT&amp;CK (Adversarial Tactics, Techniques, and Common Knowledge) 是一個全球可存取、基於現實世界觀察的網路對手戰術和技術知識庫。它由 MITRE 公司開發，旨在幫助資安專業人員更好地理解、檢測和防禦網路攻擊。</p>
+<p>這個框架將攻擊行為分為三個層級：</p>
+<ul>
+<li><strong>Tactics（戰術）</strong>：攻擊者在特定階段的目標</li>
+<li><strong>Techniques（技術）</strong>：達成該目標的方法。</li>
+<li><strong>Sub-Techniques（子技術）</strong>：更細節的具體實作方式。</li>
+</ul>
+<p><img src="/assets/UdPk5OTiE-5Q08137RurBVranBuDvwPROyjrNzk0N5A=.png"></p>
+<p>以下介紹常見的 ATT&amp;CK 戰術範例</p>
+<table>
+<thead>
+<tr>
+<th><strong>Initial Access（初始存取）</strong></th>
+<th>攻擊者如何進入你的系統或網路</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Execution（執行）</strong></td>
+<td>攻擊者如何執行惡意程式碼</td>
+</tr>
+<tr>
+<td><strong>Persistence（持久化）</strong></td>
+<td>攻擊者如何維持長期存取</td>
+</tr>
+<tr>
+<td><strong>Discovery（探索）</strong></td>
+<td>攻擊者如何蒐集環境資訊</td>
+</tr>
+<tr>
+<td><strong>Privilege Escalation（權限提升）</strong></td>
+<td>攻擊者如何取得更高權限</td>
+</tr>
+<tr>
+<td><strong>Lateral Movement（橫向移動）</strong></td>
+<td>攻擊者如何在網路內擴散</td>
+</tr>
+<tr>
+<td><strong>Command and Control（C2 控制）</strong></td>
+<td>攻擊者如何遠端操控受害系統</td>
+</tr>
+<tr>
+<td><strong>Exfiltration（資料外洩）</strong></td>
+<td>攻擊者如何竊取資料</td>
+</tr>
+</tbody></table>
+<p>這邊舉昨天提到的釣魚攻擊為例，釣魚攻擊屬於 Initial Access 分類中的 Techniques，編號為 <a target="_blank" rel="noopener" href="https://attack.mitre.org/techniques/T1566/">T1566</a>。</p>
+<p><img src="/assets/u_yIEtavx4bbjApsHpG1TQ3Yqv1d7OrxjrxVS9oiCfI=.png"></p>
+<p>點進後會進入到關於釣魚攻擊介紹以及它的 Sub-Techniques，像是關於釣魚信件中的惡意附件的子技術就是 T1566.001。</p>
+<p><img src="/assets/bEXBHcsJGE2XMfRSaNVultYj33MSp9nVu5yqYKOyCO4=.png"></p>
+<hr>
+<p>一開始提到 Threat Hunting 的過程中會需要主動去看 SIEM，目前最常見的 SIEM 分別是 ELK 以及 Splunk。</p>
+<h2 id="Elastic-Stack"><a href="#Elastic-Stack" class="headerlink" title="Elastic Stack"></a>Elastic Stack</h2><p>官網：<a target="_blank" rel="noopener" href="https://www.elastic.co/elastic-stack">https://www.elastic.co/elastic-stack</a></p>
+<p>Elastic Stack 是一套在業界非常常用的日誌／資料搜尋、分析、可視化平台，Elastic Stack 是由三個開源工具的縮寫：Elasticsearch、Logstash、Kibana，並將這三者整合起來，另外 Elastic Stack是開源軟體。</p>
+<p><img src="/assets/QGoCaXWy-l_hx5rXtdkXyElqXszPLW75psYcSr19bus=.png"></p>
+<p><code>source: https://www.geeksforgeeks.org/software-engineering/what-is-elastic-stack-and-elasticsearch/</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>元件</strong></th>
+<th><strong>功能 &#x2F; 角色</strong></th>
+<th><strong>特點補充</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Elasticsearch</strong></td>
+<td>搜索與分析引擎：負責儲存、索引與查詢資料</td>
+<td>基於 Lucene，支援分散式架構、橫向擴展、近即時查詢。</td>
+</tr>
+<tr>
+<td><strong>Logstash</strong></td>
+<td>資料收集與轉換管道</td>
+<td>從多個來源收資料、做過濾／解析／變換，然後輸出到 Elasticsearch 或其他目標。</td>
+</tr>
+<tr>
+<td><strong>Kibana</strong></td>
+<td>資料視覺化與探索介面</td>
+<td>對 Elasticsearch 中的資料做查詢、分析、繪圖、做 Dashboard／報表。</td>
+</tr>
+</tbody></table>
+<h2 id="Splunk"><a href="#Splunk" class="headerlink" title="Splunk"></a>Splunk</h2><p>官網連結：<a target="_blank" rel="noopener" href="https://www.splunk.com/zh/_tw">https://www.splunk.com/zh\_tw</a></p>
+<p>Splunk 是一套專為機器產生資料（machine-generated data，如日誌、事件、度量、流量資料等）而設計的平台，能將這些資料進行接收、索引、搜尋、分析、視覺化。</p>
+<p><img src="/assets/YV0SlHH_JnWflN_GVbRkyNQBowxdGQ7fZMEbWiEC6kk=.png"></p>
+<p><code>source: https://www.splunk.com/zh_tw/products.html</code></p>
+<p>接下來的三天我會使用 Splunk 進行 Threat Hunting 挑戰，題目會來自 Splunk 舉辦的 Boss Of The SOC，過程中也會介紹 Splunk 的使用方式。</p>
+<h2 id="Boss-Of-The-SOC"><a href="#Boss-Of-The-SOC" class="headerlink" title="Boss Of The SOC"></a>Boss Of The SOC</h2><p>Boss Of The SOC (BOTS) 是 Splunk 舉辦的全球性網路安全競賽，這是一個基於真實世界攻擊場景的威脅狩獵競賽，參賽者需要在模擬的企業環境中識別、分析和回應各種網路攻擊。</p>
+<p><img src="/assets/EZVoHdZRfHrOWC7SjpB6d75R399yqpqqNj5Z9dV2yow=.png"></p>
+<p><a target="_blank" rel="noopener" href="https://www.wepro180.com/221130_splunkbots/">相關報導</a></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Threat Hunting 的概念以及當中使用到的 MITRE ATT&amp;CK 與 SIEM 工具；接下來三天會透過 Boss Of The SOC 學習並分享 Threat Hunting 的詳細過程。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Threat-Hunting/" size="sm"># Threat Hunting</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%A8%81%E8%84%85%E7%8B%A9%E7%8D%B5/" size="sm"># 威脅狩獵</cosy-label>
+                  
+                  <cosy-label href="/tags/MITRE-ATT-CK/" size="sm"># MITRE ATT&CK</cosy-label>
+                  
+                  <cosy-label href="/tags/SIEM/" size="sm"># SIEM</cosy-label>
+                  
+                  <cosy-label href="/tags/Elastic-Stack/" size="sm"># Elastic Stack</cosy-label>
+                  
+                  <cosy-label href="/tags/Splunk/" size="sm"># Splunk</cosy-label>
+                  
+                  <cosy-label href="/tags/Boss-Of-The-SOC/" size="sm"># Boss Of The SOC</cosy-label>
+                  
+                  <cosy-label href="/tags/%E8%B3%87%E5%AE%89%E9%98%B2%E7%A6%A6/" size="sm"># 資安防禦</cosy-label>
+                  
+                  <cosy-label href="/tags/%E4%B8%BB%E5%8B%95%E5%BC%8F%E9%98%B2%E7%A6%A6/" size="sm"># 主動式防禦</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%94%AB-Threat-Hunting"><span class="toc-number">1.</span> <span class="toc-text">🔫 Threat Hunting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MITRE-ATT-CK"><span class="toc-number">2.</span> <span class="toc-text">MITRE ATT&amp;CK</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Elastic-Stack"><span class="toc-number">2.1.</span> <span class="toc-text">Elastic Stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Splunk"><span class="toc-number">2.2.</span> <span class="toc-text">Splunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Boss-Of-The-SOC"><span class="toc-number">2.3.</span> <span class="toc-text">Boss Of The SOC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

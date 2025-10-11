@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>Day27 Boss Of The SOC v1 上</title>
+      <title>Boss Of The SOC v1 上</title>
       <link href="/2025/10/11/BossOfSOC_1/"/>
       <url>/2025/10/11/BossOfSOC_1/</url>
       
@@ -475,11 +475,11 @@
             
             <tag> OSINT </tag>
             
+            <tag> 網路偵查 </tag>
+            
             <tag> 網站分析 </tag>
             
             <tag> 域名資訊 </tag>
-            
-            <tag> 網路偵查 </tag>
             
         </tags>
       
@@ -568,11 +568,11 @@
             
             <tag> OSINT </tag>
             
-            <tag> 網路偵查 </tag>
-            
             <tag> 開源情報 </tag>
             
             <tag> 情報收集 </tag>
+            
+            <tag> 網路偵查 </tag>
             
         </tags>
       
@@ -628,9 +628,9 @@
       
         <tags>
             
-            <tag> forensic </tag>
-            
             <tag> ILEAPP </tag>
+            
+            <tag> forensic </tag>
             
             <tag> IOSforensic </tag>
             
@@ -690,9 +690,9 @@
             
             <tag> 記憶體鑑識 </tag>
             
-            <tag> Volatility </tag>
-            
             <tag> forensic </tag>
+            
+            <tag> Volatility </tag>
             
             <tag> memoryforensic </tag>
             
@@ -723,9 +723,9 @@
             
             <tag> 記憶體鑑識 </tag>
             
-            <tag> Volatility </tag>
-            
             <tag> forensic </tag>
+            
+            <tag> Volatility </tag>
             
             <tag> memoryforensic </tag>
             
@@ -756,9 +756,9 @@
             
             <tag> CTF </tag>
             
-            <tag> Forensic </tag>
-            
             <tag> ACSC </tag>
+            
+            <tag> Forensic </tag>
             
             <tag> Linux </tag>
             
@@ -787,9 +787,9 @@
       
         <tags>
             
-            <tag> Volatility </tag>
-            
             <tag> forensic </tag>
+            
+            <tag> Volatility </tag>
             
             <tag> memoryforensic </tag>
             
@@ -816,9 +816,9 @@
       
         <tags>
             
-            <tag> Volatility </tag>
-            
             <tag> forensic </tag>
+            
+            <tag> Volatility </tag>
             
             <tag> memoryforensic </tag>
             
@@ -847,9 +847,9 @@
             
             <tag> 記憶體鑑識 </tag>
             
-            <tag> Volatility </tag>
-            
             <tag> forensic </tag>
+            
+            <tag> Volatility </tag>
             
             <tag> memoryforensic </tag>
             
@@ -895,13 +895,13 @@
       
         <tags>
             
-            <tag> Writeup </tag>
-            
-            <tag> CTF </tag>
-            
             <tag> sekai </tag>
             
             <tag> Web </tag>
+            
+            <tag> Writeup </tag>
+            
+            <tag> CTF </tag>
             
             <tag> 網頁安全 </tag>
             
@@ -957,13 +957,13 @@
       
         <tags>
             
-            <tag> AIS3 </tag>
-            
-            <tag> Reverse </tag>
-            
             <tag> Writeup </tag>
             
             <tag> CTF </tag>
+            
+            <tag> Reverse </tag>
+            
+            <tag> AIS3 </tag>
             
             <tag> 逆向工程 </tag>
             
@@ -1048,9 +1048,9 @@
       
         <tags>
             
-            <tag> Reverse </tag>
-            
             <tag> Writeup </tag>
+            
+            <tag> Reverse </tag>
             
             <tag> Ghidra </tag>
             
@@ -1077,9 +1077,9 @@
       
         <tags>
             
-            <tag> BlueTeam </tag>
-            
             <tag> Forensic </tag>
+            
+            <tag> BlueTeam </tag>
             
         </tags>
       

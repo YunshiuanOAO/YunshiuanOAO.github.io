@@ -4,6 +4,53 @@
   
     
     <entry>
+      <title>Day27 Boss Of The SOC v1 上</title>
+      <link href="/2025/10/11/BossOfSOC_1/"/>
+      <url>/2025/10/11/BossOfSOC_1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Day27-Boss-Of-The-SOC-v1-上"><a href="#Day27-Boss-Of-The-SOC-v1-上" class="headerlink" title="Day27 Boss Of The SOC v1 上"></a>Day27 Boss Of The SOC v1 上</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享 Boss Of The SOC v1 Q1 ~ Q10 的解題過程，解題平台會使用 CyberDefender，因為 Splunk 環境已經幫我們架設好了，也可以在平台上驗證答案的正確性。</p><hr><h1 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h1><p>本次實作實驗聚焦在 APT（高階持續性威脅）情境與勒索軟體情境。你將扮演 Alice Bluebird 的角色——剛被聘為 Wayne Enterprises 的 SOC 分析師，負責偵測與防禦各類網路攻擊。</p><h2 id="場景-1（APT）："><a href="#場景-1（APT）：" class="headerlink" title="場景 1（APT）："></a>場景 1（APT）：</h2><p>今天是 Alice 在 Wayne Enterprises 安全部門（Security Operations Center，SOC）的第一天。Lucius 叫 Alice 坐下並給她第一個任務：一份來自高譚市警察局（Gotham City Police Department, GCPD）的備忘錄。GCPD 發現線上有證據（<a href="http://pastebin.com/Gw6dWjS9%EF%BC%89%E9%A1%AF%E7%A4%BA%E7%B6%B2%E7%AB%99">http://pastebin.com/Gw6dWjS9）顯示網站</a> <a href="http://www.imreallynotbatman.com/">www.imreallynotbatman.com</a> 在 Wayne Enterprises 的 IP 位址空間內被入侵。該駭客組織有多重目標……但他們的作案手法之一是篡改網站以羞辱被害者。Lucius 要求 Alice 判定 <a href="http://www.imreallynotbatman.com(wayne/">www.imreallynotbatman.com（Wayne</a> 企業執行長的個人部落格）是否確實遭到入侵。</p><p>在此情境中，使用者社群在瀏覽 Wayne Enterprises 網站時回報看到下列被篡改的圖片，且部分回報提到「P01s0n1vy」。若你不熟悉，P01s0n1vy 是一個曾針對 Wayne Enterprises 的 APT 組織。你作為 Alice 的目標是調查該網站篡改事件，並嘗試依照 Lockheed Martin Kill Chain 重建攻擊流程。</p><p><img src="/assets/kNpb6q5LoVBZaQL696hxc5NUhEZYM2Y6amfiOkUtQXA=.png"></p><h2 id="場景-2（勒索軟體）："><a href="#場景-2（勒索軟體）：" class="headerlink" title="場景 2（勒索軟體）："></a>場景 2（勒索軟體）：</h2><p>在第二個情境中，你的一位使用者在 Windows 桌面上看到一張圖片，表示系統上的檔案已被加密，必須付款才能取回檔案。看起來 Wayne Enterprises 有一台主機感染了 Cerber 勒索軟體，你的目標是調查這起勒索事件。</p><p><img src="/assets/XMxnyYYAgsqi2e8fgkpYi93wDgWY461l01mIV_P_MgM=.png"></p><hr><blockquote><p>Q1 : This is a simple question to get you familiar with submitting answers. What is the name of the company that makes the software that you are using for this competition? Just a six-letter word with no punctuation.</p></blockquote><p>因為題目給的環境是 Splunk，這邊回答 splunk 即可。</p><p><img src="/assets/icMNAy1R14lhSyuRYQVk2lmq8FB6TmKnw5bcI1zeRa8=.png"></p><blockquote><p>Ans :  splunk</p></blockquote><hr><blockquote><p>Q2 : Web Defacement: What content management system is imreallynotbatman.com likely using? (Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)</p></blockquote><p>題目想要找出 <code>imreallynotbatman.com</code> 網站使用了什麼 CMS 系統。</p><p>因此我們會用到 Search 功能。</p><p>來到 Search &amp; Report 頁面在 Search 欄位搜尋：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>在 Splunk 收到日誌或事件後，會根據設定儲存在不同的 index<br>這段搜尋語法的意思是在資料索引為botsv1中，找出字串中包含 <code>imreallynotbatman.com</code>。<br>data indexes 可以在 Setting-&gt; DATA -&gt; Index 中得知<br><img src="/assets/s7Yn9AMSgsP7iMFp1_kteGCWUZgVydpg8wxoXVaY1Mw=.png"></p><p>看第一個 Log 就可以發現使用的是 <code>joomla</code>。</p><p><img src="/assets/6KmCQjyMKDS5-zRyLEXLBBfFIzOziopvdBwhCd6LJiM=.png"></p><blockquote><p>ans : <code>joomla</code></p></blockquote><hr><blockquote><p>Q3 : Web Defacement: What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?</p></blockquote><p>接下來他想要找的是 Po1s0n1vy 用來掃描 imreallynotbatman.com 的 IP 是什麼？</p><p>有一個線索是知道這個 IP 有進行網頁漏洞掃描，有一個方向是我們可以使用在 Day17 提到的 Suricata，它會產生網路連接的 Log，因此我們搜尋的範圍可以限制在 Suricata 的 log 下，搜尋指令如下：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="/assets/JxJw2skLZ9umeMi8nqi2Oawi__n6MDwXb8f9NJlSCYA=.png"></p><p>然後我們想要專注的是<strong>來源 IP</strong>，因此我們會需要用到 table 語法，它可以將我們想要的欄位單獨拉出來做一張表格，讓我們可以專注在分析這個欄位上。</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com | table src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><img src="/assets/OhDFwdXkJxXoIpb1xqzNuy-uyBeSzR4Ds3i5LoryWiw=.png"></p><p>這邊我們獲得了每個 Suricata log 的來源 IP，接下來進行統計，因為我想要得到的是這個 IP 出現幾次，數量很多會有很高的機率是進行掃描，所以接下來會使用到 stats 語法，它提供了一些基本的統計功能。</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com | table src_ip | stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><img src="/assets/XOGDycf1lecuXmMmaM985JoLpyxsQW9OIUYvABV4ZMA=.png"></p><p>這樣就看得出來答案就是 <code>40.80.148.42</code>，另外如果想要數量由大排到小，可以使用 sort 語法，預設是由小排到大，加上 <code>reverse</code> 可以讓它變成由大排到小。</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com | table src_ip | stats count by src_ip | sort -count reverse<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><img src="/assets/be5iJG9bbqLEDr3wZZV59naJ4B8Du_ciK_RTg4cMfdA=.png"></p><blockquote><p>ans : <code>40.80.148.42</code></p></blockquote><hr><blockquote><p>Q4 : Web Defacement: What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example, “Microsoft” or “Oracle”)</p></blockquote><p>這題想要搜尋到他們使用的 scanner 工具是什麼。</p><p>一樣我們可以使用 Suricata 工具，它除了可以產生網路連接 log 之外，還可以根據自訂規則產生警報，如抓到某個掃描工具的 Signature。</p><p>所以我們可以針對 Suricata 產生的 alert 去分析：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="/assets/PF6XbKoFeldNiTIGNzQa2S3TylhVgZqSQfC96KNtyHA=.png"></p><p>signature 欄位顯示偵測到的是什麼相關操作，因此我們用 table 專注去看 alert.signature 有沒有相關的線索：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert| table alert.signature<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><img src="/assets/FFuDTSF0_gvnDMjyPdFes-eoxr2Iy8NVLD0YUvxLKZs=.png"></p><p>接下來就可以找到這個 value：</p><pre class="line-numbers language-none"><code class="language-none">ET SCAN Acunetix Accept HTTP Header detected scan in progress<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>可以看出 Acunetix 就是我們需要的答案。</p><blockquote><p>ans : Acunetix</p></blockquote><hr><blockquote><p>Q5 : Web Defacement: What IP address is likely attempting a brute force password attack against imreallynotbatman.com?</p></blockquote><p>要找到哪個 IP 在對 imreallynotbatman.com 進行暴力破解。</p><p>需要對網站進行帳號密碼的暴力破解，會需要用到 POST 的 method，我們可以針對 POST 操作做查看，並且也會需要知道 POST 帶的資料，確認是不是在做暴力破解，查詢可以用以下指令：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http| table src_ip, form_data, uri<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><code>sourcetype=stream:http</code> 代表是拿 Splunk Stream app 所收集到並且屬於 HTTP 流量資料，而 <code>dest_ip=192.168.250.70</code> 是 imreallynotbatman.com 的 IP，在前幾題的操作可以得知。</p><p><img src="/assets/YlPiSsFhTTIy4alIrPTC0E81cW-xZcJU14fKd8qyayo=.png"></p><p>這邊可以看出來是 23.22.63.114 在進行暴力破解。</p><blockquote><p>ans : 23.22.63.114</p></blockquote><hr><blockquote><p>Q6 : Web Defacement: What was the first brute force password used</p></blockquote><p>這題要獲得第一個暴力破解嘗試的密碼。</p><p>這題可以使用 sort 將時間排序：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http src_ip&#x3D;23.22.63.114| table src_ip, form_data, uri _time| sort _time<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><img src="/assets/39-8d3Nvl4wzQTMjMF4pyt3Z9T5fbnjtIBP4MTLXBnQ=.png"></p><p>看到第一列的 password 參數是 12345678。</p><blockquote><p>ans : 12345678</p></blockquote><hr><blockquote><p>Q7 : Web Defacement: What is the name of the executable uploaded by Po1s0n1vy? Please include the file extension. (For example, “notepad.exe” or “favicon.ico”)</p></blockquote><p>這題要找的是 Po1s0n1vy 上傳的執行檔的檔名是什麼。</p><p>在 HTTP 中，如果上傳一個檔案會使用 <code>multipart/form-data</code>，代表會將不同 type 的資料透過一次請求傳送出去，因此我們可以用 <code>multipart/form-data</code> 縮小我們的搜尋範圍，另外語法也支援 regex，在搜尋執行檔上比較方便：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http multipart&#x2F;form-data *.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="/assets/YVwaJ7YoOM-RMWk-A5KU8bH-aYXv1Bg-BFKJo1a-ZSo=.png"></p><p>可以發現到上傳的執行檔檔名為 3791.exe。</p><blockquote><p>ans : 3791.exe</p></blockquote><hr><blockquote><p>Q8 : Web Defacement: What is the MD5 hash of the executable uploaded?</p></blockquote><p>這題問 3791.exe 的 MD5 值是多少。</p><p>要取得 MD5 的值，會需要看關於 winlog 的紀錄，這邊會提到一個工具 - <a href="https://learn.microsoft.com/zh-tw/sysinternals/downloads/sysmon">Sysmon</a>，它會記錄系統內發生的重要事件，包含 Process Create、Network Connect、檔案建立與變更、Registry Modification。 </p><p>以下是 Sysmon 的 Event ID：</p><h3 id="Sysmon"><a href="#Sysmon" class="headerlink" title="Sysmon"></a>Sysmon</h3><table><thead><tr><th>Event ID</th><th>說明</th></tr></thead><tbody><tr><td>1</td><td>Process Create（程式啟動）</td></tr><tr><td>2</td><td>File creation time changed（時間戳被修改）</td></tr><tr><td>3</td><td>Network connection（TCP 連線）</td></tr><tr><td>5</td><td>Process Terminate（程式終止）</td></tr><tr><td>6</td><td>Driver Loaded（驅動載入）</td></tr><tr><td>7</td><td>Image Loaded（DLL載入）</td></tr><tr><td>8</td><td>CreateRemoteThread（遠端執行緒注入）</td></tr><tr><td>9</td><td>RawAccessRead（磁碟原始存取）</td></tr><tr><td>10</td><td>ProcessAccess（程式存取他人記憶體）</td></tr><tr><td>11</td><td>File Create（檔案建立）</td></tr><tr><td>12</td><td>Registry Key Create（註冊表鍵建立）</td></tr><tr><td>13</td><td>Registry Value Set（註冊表值修改）</td></tr><tr><td>14</td><td>Registry Key Delete（註冊表鍵刪除）</td></tr><tr><td>15</td><td>FileCreateStreamHash（建立 ADS）</td></tr><tr><td>22</td><td>DNS Query（DNS 查詢事件）</td></tr><tr><td>23</td><td>File Delete（檔案刪除）</td></tr><tr><td>25</td><td>Process Tampering（程式記憶體被修改）</td></tr><tr><td>26</td><td>File Deleted and Overwritten（防止取證）</td></tr><tr><td>255</td><td>Sysmon 設定被修改（Config change）</td></tr></tbody></table><p>其中 Event ID &#x3D; 1 有 MD5 可以查看，那這樣我們就搜尋 3791.exe 的執行紀錄，獲得它的 MD5 值：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source &#x3D; WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational 3791.exe EventCode&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="/assets/juHx-R1ointkAU6o-_IgpSKURGIDc0xy64Q9Lcizq1g=.png"></p><p>而我們專心看這個紀錄：</p><p><img src="/assets/VtTVFx0LRq1LMC0GeOJe7sqZy9cI0_yULvm2phY2C7Q=.png"></p><p>它的 ParentCommandLine 是 <code>cmd.exe/c &quot;3791.exe2&amp;gt;&amp;amp;1</code>，以及這邊顯示的 <code>&lt;DataName=&#39;Image&#39;&gt;C:\inetpub\wwwroot\joomla\3791.exe&lt;/Data&gt;&lt;DataName=&#39;CommandLine&#39;&gt;3791.exe</code>，代表這個紀錄是關於 3791.exe 的資訊，所以往後面看它的 MD5 值是 AAE3F5A29935E6ABCC2C2754D12A9AF0。</p><blockquote><p>ans : AAE3F5A29935E6ABCC2C2754D12A9AF0</p></blockquote><hr><blockquote><p>Q9 : Web Defacement: What was the correct password for admin access to the content management system running “imreallynotbatman.com”?</p></blockquote><p>這題想要問是哪個密碼成功進入了 imreallynotbatman.com。</p><p>我們可以在解 Q5 的時候知道登入的頁面是在 <code>/joomla/administrator/index.php</code>，並且它是用暴力破解的方式嘗試登入系統，所以如果有一個密碼與其他登入次數比其他的還多就有可能會是正確的密碼，但是它的密碼是放在 form_data 欄位，這個欄位會包含其他的文字資訊，因此我們會需要用到 rex 語法：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;| stats count by pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>rex 的欄位說明如下：</p><ul><li>field&#x3D;form_data：表示只在事件的 form_data 欄位內容中執行正規表達式（而不是整個 _raw）。</li><li>“passwd&#x3D;(?<pass>\w+)”：正規表達式本體：<ul><li>passwd&#x3D;：字面匹配字串 passwd&#x3D;（例如 HTML 表單或 HTTP body 裡的參數名）。</li><li>(?<pass>\w+)：命名捕獲群組，會把匹配到的內容放到 Splunk 欄位 pass 中。<ul><li>\w+ 表示一或多個「字母、數字或底線（underscore）」。</li></ul></li></ul></li></ul><p>原本的 form_data 長這樣：</p><pre class="line-numbers language-none"><code class="language-none">username&#x3D;admin&amp;task&#x3D;login&amp;return&#x3D;aW5kZXgucGhw&amp;option&#x3D;com_login&amp;passwd&#x3D;topgun&amp;49e63c55a9730eee52c7ea0448de3a01&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>因此它會提取 <code>passwd=</code> 後面的字串，直到碰到不是字母、數字或底線為止，然後它會變成單獨的 pass 欄位。</p><p><img src="/assets/bDwPdvFgqR8HTS-_cHAqJUw8P4v7Kczqt2wjET1hwak=.png"></p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;| stats count by pass| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><img src="/assets/O7MkDnpyKaqjyMnhCJipRzitRuH_45-EXW9K7hO0R2I=.png"></p><blockquote><p>ans : batman</p></blockquote><hr><blockquote><p>Q10 Web Defacement: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with the extension (For example, “notepad.exe” or “favicon.ico”).</p></blockquote><p>題目想問是哪個檔案名稱污染了 imreallynotbatman.com 網頁。</p><p>這邊應該是想要問情境 1 當中進入網站出現一張圖片。</p><p>代表它之前可能會去下載過，因此可以用以下指令查詢它之前請求的頁面：</p><pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70 | table site src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><img src="/assets/Q4BQsOFmAx6I7jH9goDcf-MGpRlOr2Ocb1LG0GUrdu8=.png"></p><p>這邊可以看到它去一個網頁請求 <code>poisonivy-is-coming-for-you-batman.jpeg</code> 圖片，這個就是答案。</p><blockquote><p>ans : poisonivy-is-coming-for-you-batman.jpeg</p></blockquote><hr><h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Boss Of The SOC v1 的 Q1 ~ Q10 的解題過程，當中分享了一些 Splunk 的用法以及 Threat Hunting 的過程，明天會繼續分享 Boss Of The SOC v1 剩餘題目。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 2025 鐵人賽 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Boss Of The SOC </tag>
+            
+            <tag> Splunk </tag>
+            
+            <tag> Threat Hunting </tag>
+            
+            <tag> 威脅狩獵 </tag>
+            
+            <tag> 資安競賽 </tag>
+            
+            <tag> APT </tag>
+            
+            <tag> 勒索軟體 </tag>
+            
+            <tag> Web Defacement </tag>
+            
+            <tag> Suricata </tag>
+            
+            <tag> Sysmon </tag>
+            
+            <tag> 暴力破解 </tag>
+            
+            <tag> 漏洞掃描 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>尋找蟑螂是不是也算是一種威脅狩獵？</title>
       <link href="/2025/10/10/ThreatHunting_intro/"/>
       <url>/2025/10/10/ThreatHunting_intro/</url>
@@ -20,6 +67,10 @@
       
         <tags>
             
+            <tag> Boss Of The SOC </tag>
+            
+            <tag> Splunk </tag>
+            
             <tag> Threat Hunting </tag>
             
             <tag> 威脅狩獵 </tag>
@@ -29,10 +80,6 @@
             <tag> SIEM </tag>
             
             <tag> Elastic Stack </tag>
-            
-            <tag> Splunk </tag>
-            
-            <tag> Boss Of The SOC </tag>
             
             <tag> 資安防禦 </tag>
             
@@ -581,9 +628,9 @@
       
         <tags>
             
-            <tag> ILEAPP </tag>
-            
             <tag> forensic </tag>
+            
+            <tag> ILEAPP </tag>
             
             <tag> IOSforensic </tag>
             
@@ -643,9 +690,9 @@
             
             <tag> 記憶體鑑識 </tag>
             
-            <tag> forensic </tag>
-            
             <tag> Volatility </tag>
+            
+            <tag> forensic </tag>
             
             <tag> memoryforensic </tag>
             
@@ -676,9 +723,9 @@
             
             <tag> 記憶體鑑識 </tag>
             
-            <tag> forensic </tag>
-            
             <tag> Volatility </tag>
+            
+            <tag> forensic </tag>
             
             <tag> memoryforensic </tag>
             
@@ -705,13 +752,13 @@
       
         <tags>
             
-            <tag> ACSC </tag>
-            
-            <tag> Forensic </tag>
-            
             <tag> Writeup </tag>
             
             <tag> CTF </tag>
+            
+            <tag> Forensic </tag>
+            
+            <tag> ACSC </tag>
             
             <tag> Linux </tag>
             
@@ -740,9 +787,9 @@
       
         <tags>
             
-            <tag> forensic </tag>
-            
             <tag> Volatility </tag>
+            
+            <tag> forensic </tag>
             
             <tag> memoryforensic </tag>
             
@@ -769,9 +816,9 @@
       
         <tags>
             
-            <tag> forensic </tag>
-            
             <tag> Volatility </tag>
+            
+            <tag> forensic </tag>
             
             <tag> memoryforensic </tag>
             
@@ -800,9 +847,9 @@
             
             <tag> 記憶體鑑識 </tag>
             
-            <tag> forensic </tag>
-            
             <tag> Volatility </tag>
+            
+            <tag> forensic </tag>
             
             <tag> memoryforensic </tag>
             
@@ -910,13 +957,13 @@
       
         <tags>
             
-            <tag> Writeup </tag>
-            
-            <tag> CTF </tag>
-            
             <tag> AIS3 </tag>
             
             <tag> Reverse </tag>
+            
+            <tag> Writeup </tag>
+            
+            <tag> CTF </tag>
             
             <tag> 逆向工程 </tag>
             
@@ -1001,9 +1048,9 @@
       
         <tags>
             
-            <tag> Writeup </tag>
-            
             <tag> Reverse </tag>
+            
+            <tag> Writeup </tag>
             
             <tag> Ghidra </tag>
             
@@ -1030,9 +1077,9 @@
       
         <tags>
             
-            <tag> Forensic </tag>
-            
             <tag> BlueTeam </tag>
+            
+            <tag> Forensic </tag>
             
         </tags>
       

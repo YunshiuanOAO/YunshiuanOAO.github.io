@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Day27 Boss Of The SOC v1 上
+  </title>
+  <meta name="description" content="Boss Of The SOC v1 前10題解題過程分享，包含Splunk搜尋語法與威脅狩獵實作">
+  <meta name="keywords" content="">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/11/BossOfSOC_1/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      Day27 Boss Of The SO
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">Day27 Boss Of The SOC v1 上</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-11 23:47:32
+          </div>
+          <!-- 文章 -->
+          <h1 id="Day27-Boss-Of-The-SOC-v1-上"><a href="#Day27-Boss-Of-The-SOC-v1-上" class="headerlink" title="Day27 Boss Of The SOC v1 上"></a>Day27 Boss Of The SOC v1 上</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享 Boss Of The SOC v1 Q1 ~ Q10 的解題過程，解題平台會使用 CyberDefender，因為 Splunk 環境已經幫我們架設好了，也可以在平台上驗證答案的正確性。</p>
+<hr>
+<h1 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h1><p>本次實作實驗聚焦在 APT（高階持續性威脅）情境與勒索軟體情境。你將扮演 Alice Bluebird 的角色——剛被聘為 Wayne Enterprises 的 SOC 分析師，負責偵測與防禦各類網路攻擊。</p>
+<h2 id="場景-1（APT）："><a href="#場景-1（APT）：" class="headerlink" title="場景 1（APT）："></a>場景 1（APT）：</h2><p>今天是 Alice 在 Wayne Enterprises 安全部門（Security Operations Center，SOC）的第一天。Lucius 叫 Alice 坐下並給她第一個任務：一份來自高譚市警察局（Gotham City Police Department, GCPD）的備忘錄。GCPD 發現線上有證據（<a target="_blank" rel="noopener" href="http://pastebin.com/Gw6dWjS9%EF%BC%89%E9%A1%AF%E7%A4%BA%E7%B6%B2%E7%AB%99">http://pastebin.com/Gw6dWjS9）顯示網站</a> <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com/">www.imreallynotbatman.com</a> 在 Wayne Enterprises 的 IP 位址空間內被入侵。該駭客組織有多重目標……但他們的作案手法之一是篡改網站以羞辱被害者。Lucius 要求 Alice 判定 <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com(wayne/">www.imreallynotbatman.com（Wayne</a> 企業執行長的個人部落格）是否確實遭到入侵。</p>
+<p>在此情境中，使用者社群在瀏覽 Wayne Enterprises 網站時回報看到下列被篡改的圖片，且部分回報提到「P01s0n1vy」。若你不熟悉，P01s0n1vy 是一個曾針對 Wayne Enterprises 的 APT 組織。你作為 Alice 的目標是調查該網站篡改事件，並嘗試依照 Lockheed Martin Kill Chain 重建攻擊流程。</p>
+<p><img src="/assets/kNpb6q5LoVBZaQL696hxc5NUhEZYM2Y6amfiOkUtQXA=.png"></p>
+<h2 id="場景-2（勒索軟體）："><a href="#場景-2（勒索軟體）：" class="headerlink" title="場景 2（勒索軟體）："></a>場景 2（勒索軟體）：</h2><p>在第二個情境中，你的一位使用者在 Windows 桌面上看到一張圖片，表示系統上的檔案已被加密，必須付款才能取回檔案。看起來 Wayne Enterprises 有一台主機感染了 Cerber 勒索軟體，你的目標是調查這起勒索事件。</p>
+<p><img src="/assets/XMxnyYYAgsqi2e8fgkpYi93wDgWY461l01mIV_P_MgM=.png"></p>
+<hr>
+<blockquote>
+<p>Q1 : This is a simple question to get you familiar with submitting answers. What is the name of the company that makes the software that you are using for this competition? Just a six-letter word with no punctuation.</p>
+</blockquote>
+<p>因為題目給的環境是 Splunk，這邊回答 splunk 即可。</p>
+<p><img src="/assets/icMNAy1R14lhSyuRYQVk2lmq8FB6TmKnw5bcI1zeRa8=.png"></p>
+<blockquote>
+<p>Ans :  splunk</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q2 : Web Defacement: What content management system is imreallynotbatman.com likely using? (Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)</p>
+</blockquote>
+<p>題目想要找出 <code>imreallynotbatman.com</code> 網站使用了什麼 CMS 系統。</p>
+<p>因此我們會用到 Search 功能。</p>
+<p>來到 Search &amp; Report 頁面在 Search 欄位搜尋：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在 Splunk 收到日誌或事件後，會根據設定儲存在不同的 index<br>這段搜尋語法的意思是在資料索引為botsv1中，找出字串中包含 <code>imreallynotbatman.com</code>。<br>data indexes 可以在 Setting-&gt; DATA -&gt; Index 中得知<br><img src="/assets/s7Yn9AMSgsP7iMFp1_kteGCWUZgVydpg8wxoXVaY1Mw=.png"></p>
+<p>看第一個 Log 就可以發現使用的是 <code>joomla</code>。</p>
+<p><img src="/assets/6KmCQjyMKDS5-zRyLEXLBBfFIzOziopvdBwhCd6LJiM=.png"></p>
+<blockquote>
+<p>ans : <code>joomla</code></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q3 : Web Defacement: What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?</p>
+</blockquote>
+<p>接下來他想要找的是 Po1s0n1vy 用來掃描 imreallynotbatman.com 的 IP 是什麼？</p>
+<p>有一個線索是知道這個 IP 有進行網頁漏洞掃描，有一個方向是我們可以使用在 Day17 提到的 Suricata，它會產生網路連接的 Log，因此我們搜尋的範圍可以限制在 Suricata 的 log 下，搜尋指令如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/JxJw2skLZ9umeMi8nqi2Oawi__n6MDwXb8f9NJlSCYA=.png"></p>
+<p>然後我們想要專注的是<strong>來源 IP</strong>，因此我們會需要用到 table 語法，它可以將我們想要的欄位單獨拉出來做一張表格，讓我們可以專注在分析這個欄位上。</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
+| table src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/OhDFwdXkJxXoIpb1xqzNuy-uyBeSzR4Ds3i5LoryWiw=.png"></p>
+<p>這邊我們獲得了每個 Suricata log 的來源 IP，接下來進行統計，因為我想要得到的是這個 IP 出現幾次，數量很多會有很高的機率是進行掃描，所以接下來會使用到 stats 語法，它提供了一些基本的統計功能。</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
+| table src_ip 
+| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/XOGDycf1lecuXmMmaM985JoLpyxsQW9OIUYvABV4ZMA=.png"></p>
+<p>這樣就看得出來答案就是 <code>40.80.148.42</code>，另外如果想要數量由大排到小，可以使用 sort 語法，預設是由小排到大，加上 <code>reverse</code> 可以讓它變成由大排到小。</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
+| table src_ip 
+| stats count by src_ip 
+| sort -count reverse<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/be5iJG9bbqLEDr3wZZV59naJ4B8Du_ciK_RTg4cMfdA=.png"></p>
+<blockquote>
+<p>ans : <code>40.80.148.42</code></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q4 : Web Defacement: What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example, “Microsoft” or “Oracle”)</p>
+</blockquote>
+<p>這題想要搜尋到他們使用的 scanner 工具是什麼。</p>
+<p>一樣我們可以使用 Suricata 工具，它除了可以產生網路連接 log 之外，還可以根據自訂規則產生警報，如抓到某個掃描工具的 Signature。</p>
+<p>所以我們可以針對 Suricata 產生的 alert 去分析：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/PF6XbKoFeldNiTIGNzQa2S3TylhVgZqSQfC96KNtyHA=.png"></p>
+<p>signature 欄位顯示偵測到的是什麼相關操作，因此我們用 table 專注去看 alert.signature 有沒有相關的線索：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert
+| table alert.signature<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/FFuDTSF0_gvnDMjyPdFes-eoxr2Iy8NVLD0YUvxLKZs=.png"></p>
+<p>接下來就可以找到這個 value：</p>
+<pre class="line-numbers language-none"><code class="language-none">ET SCAN Acunetix Accept HTTP Header detected scan in progress<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以看出 Acunetix 就是我們需要的答案。</p>
+<blockquote>
+<p>ans : Acunetix</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q5 : Web Defacement: What IP address is likely attempting a brute force password attack against imreallynotbatman.com?</p>
+</blockquote>
+<p>要找到哪個 IP 在對 imreallynotbatman.com 進行暴力破解。</p>
+<p>需要對網站進行帳號密碼的暴力破解，會需要用到 POST 的 method，我們可以針對 POST 操作做查看，並且也會需要知道 POST 帶的資料，確認是不是在做暴力破解，查詢可以用以下指令：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http
+| table src_ip, form_data, uri<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><code>sourcetype=stream:http</code> 代表是拿 Splunk Stream app 所收集到並且屬於 HTTP 流量資料，而 <code>dest_ip=192.168.250.70</code> 是 imreallynotbatman.com 的 IP，在前幾題的操作可以得知。</p>
+<p><img src="/assets/YlPiSsFhTTIy4alIrPTC0E81cW-xZcJU14fKd8qyayo=.png"></p>
+<p>這邊可以看出來是 23.22.63.114 在進行暴力破解。</p>
+<blockquote>
+<p>ans : 23.22.63.114</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q6 : Web Defacement: What was the first brute force password used</p>
+</blockquote>
+<p>這題要獲得第一個暴力破解嘗試的密碼。</p>
+<p>這題可以使用 sort 將時間排序：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http src_ip&#x3D;23.22.63.114
+| table src_ip, form_data, uri _time
+| sort _time<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/39-8d3Nvl4wzQTMjMF4pyt3Z9T5fbnjtIBP4MTLXBnQ=.png"></p>
+<p>看到第一列的 password 參數是 12345678。</p>
+<blockquote>
+<p>ans : 12345678</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q7 : Web Defacement: What is the name of the executable uploaded by Po1s0n1vy? Please include the file extension. (For example, “notepad.exe” or “favicon.ico”)</p>
+</blockquote>
+<p>這題要找的是 Po1s0n1vy 上傳的執行檔的檔名是什麼。</p>
+<p>在 HTTP 中，如果上傳一個檔案會使用 <code>multipart/form-data</code>，代表會將不同 type 的資料透過一次請求傳送出去，因此我們可以用 <code>multipart/form-data</code> 縮小我們的搜尋範圍，另外語法也支援 regex，在搜尋執行檔上比較方便：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http multipart&#x2F;form-data *.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/YVwaJ7YoOM-RMWk-A5KU8bH-aYXv1Bg-BFKJo1a-ZSo=.png"></p>
+<p>可以發現到上傳的執行檔檔名為 3791.exe。</p>
+<blockquote>
+<p>ans : 3791.exe</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q8 : Web Defacement: What is the MD5 hash of the executable uploaded?</p>
+</blockquote>
+<p>這題問 3791.exe 的 MD5 值是多少。</p>
+<p>要取得 MD5 的值，會需要看關於 winlog 的紀錄，這邊會提到一個工具 - <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/sysinternals/downloads/sysmon">Sysmon</a>，它會記錄系統內發生的重要事件，包含 Process Create、Network Connect、檔案建立與變更、Registry Modification。 </p>
+<p>以下是 Sysmon 的 Event ID：</p>
+<h3 id="Sysmon"><a href="#Sysmon" class="headerlink" title="Sysmon"></a>Sysmon</h3><table>
+<thead>
+<tr>
+<th>Event ID</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Process Create（程式啟動）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>File creation time changed（時間戳被修改）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network connection（TCP 連線）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Process Terminate（程式終止）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Driver Loaded（驅動載入）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Image Loaded（DLL載入）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CreateRemoteThread（遠端執行緒注入）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>RawAccessRead（磁碟原始存取）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>ProcessAccess（程式存取他人記憶體）</td>
+</tr>
+<tr>
+<td>11</td>
+<td>File Create（檔案建立）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Registry Key Create（註冊表鍵建立）</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Registry Value Set（註冊表值修改）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Registry Key Delete（註冊表鍵刪除）</td>
+</tr>
+<tr>
+<td>15</td>
+<td>FileCreateStreamHash（建立 ADS）</td>
+</tr>
+<tr>
+<td>22</td>
+<td>DNS Query（DNS 查詢事件）</td>
+</tr>
+<tr>
+<td>23</td>
+<td>File Delete（檔案刪除）</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Process Tampering（程式記憶體被修改）</td>
+</tr>
+<tr>
+<td>26</td>
+<td>File Deleted and Overwritten（防止取證）</td>
+</tr>
+<tr>
+<td>255</td>
+<td>Sysmon 設定被修改（Config change）</td>
+</tr>
+</tbody></table>
+<p>其中 Event ID &#x3D; 1 有 MD5 可以查看，那這樣我們就搜尋 3791.exe 的執行紀錄，獲得它的 MD5 值：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source &#x3D; WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational 3791.exe EventCode&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/juHx-R1ointkAU6o-_IgpSKURGIDc0xy64Q9Lcizq1g=.png"></p>
+<p>而我們專心看這個紀錄：</p>
+<p><img src="/assets/VtTVFx0LRq1LMC0GeOJe7sqZy9cI0_yULvm2phY2C7Q=.png"></p>
+<p>它的 ParentCommandLine 是 <code>cmd.exe/c &quot;3791.exe2&amp;gt;&amp;amp;1</code>，以及這邊顯示的 <code>&lt;DataName=&#39;Image&#39;&gt;C:\inetpub\wwwroot\joomla\3791.exe&lt;/Data&gt;&lt;DataName=&#39;CommandLine&#39;&gt;3791.exe</code>，代表這個紀錄是關於 3791.exe 的資訊，所以往後面看它的 MD5 值是 AAE3F5A29935E6ABCC2C2754D12A9AF0。</p>
+<blockquote>
+<p>ans : AAE3F5A29935E6ABCC2C2754D12A9AF0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q9 : Web Defacement: What was the correct password for admin access to the content management system running “imreallynotbatman.com”?</p>
+</blockquote>
+<p>這題想要問是哪個密碼成功進入了 imreallynotbatman.com。</p>
+<p>我們可以在解 Q5 的時候知道登入的頁面是在 <code>/joomla/administrator/index.php</code>，並且它是用暴力破解的方式嘗試登入系統，所以如果有一個密碼與其他登入次數比其他的還多就有可能會是正確的密碼，但是它的密碼是放在 form_data 欄位，這個欄位會包含其他的文字資訊，因此我們會需要用到 rex 語法：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| stats count by pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>rex 的欄位說明如下：</p>
+<ul>
+<li>field&#x3D;form_data：表示只在事件的 form_data 欄位內容中執行正規表達式（而不是整個 _raw）。</li>
+<li>“passwd&#x3D;(?<pass>\w+)”：正規表達式本體：<ul>
+<li>passwd&#x3D;：字面匹配字串 passwd&#x3D;（例如 HTML 表單或 HTTP body 裡的參數名）。</li>
+<li>(?<pass>\w+)：命名捕獲群組，會把匹配到的內容放到 Splunk 欄位 pass 中。<ul>
+<li>\w+ 表示一或多個「字母、數字或底線（underscore）」。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>原本的 form_data 長這樣：</p>
+<pre class="line-numbers language-none"><code class="language-none">username&#x3D;admin&amp;task&#x3D;login&amp;return&#x3D;aW5kZXgucGhw&amp;option&#x3D;com_login&amp;passwd&#x3D;topgun&amp;49e63c55a9730eee52c7ea0448de3a01&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>因此它會提取 <code>passwd=</code> 後面的字串，直到碰到不是字母、數字或底線為止，然後它會變成單獨的 pass 欄位。</p>
+<p><img src="/assets/bDwPdvFgqR8HTS-_cHAqJUw8P4v7Kczqt2wjET1hwak=.png"></p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| stats count by pass
+| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/O7MkDnpyKaqjyMnhCJipRzitRuH_45-EXW9K7hO0R2I=.png"></p>
+<blockquote>
+<p>ans : batman</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q10 Web Defacement: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with the extension (For example, “notepad.exe” or “favicon.ico”).</p>
+</blockquote>
+<p>題目想問是哪個檔案名稱污染了 imreallynotbatman.com 網頁。</p>
+<p>這邊應該是想要問情境 1 當中進入網站出現一張圖片。</p>
+<p>代表它之前可能會去下載過，因此可以用以下指令查詢它之前請求的頁面：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70 
+| table site src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/Q4BQsOFmAx6I7jH9goDcf-MGpRlOr2Ocb1LG0GUrdu8=.png"></p>
+<p>這邊可以看到它去一個網頁請求 <code>poisonivy-is-coming-for-you-batman.jpeg</code> 圖片，這個就是答案。</p>
+<blockquote>
+<p>ans : poisonivy-is-coming-for-you-batman.jpeg</p>
+</blockquote>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Boss Of The SOC v1 的 Q1 ~ Q10 的解題過程，當中分享了一些 Splunk 的用法以及 Threat Hunting 的過程，明天會繼續分享 Boss Of The SOC v1 剩餘題目。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Boss-Of-The-SOC/" size="sm"># Boss Of The SOC</cosy-label>
+                  
+                  <cosy-label href="/tags/Splunk/" size="sm"># Splunk</cosy-label>
+                  
+                  <cosy-label href="/tags/Threat-Hunting/" size="sm"># Threat Hunting</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%A8%81%E8%84%85%E7%8B%A9%E7%8D%B5/" size="sm"># 威脅狩獵</cosy-label>
+                  
+                  <cosy-label href="/tags/%E8%B3%87%E5%AE%89%E7%AB%B6%E8%B3%BD/" size="sm"># 資安競賽</cosy-label>
+                  
+                  <cosy-label href="/tags/APT/" size="sm"># APT</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%8B%92%E7%B4%A2%E8%BB%9F%E9%AB%94/" size="sm"># 勒索軟體</cosy-label>
+                  
+                  <cosy-label href="/tags/Web-Defacement/" size="sm"># Web Defacement</cosy-label>
+                  
+                  <cosy-label href="/tags/Suricata/" size="sm"># Suricata</cosy-label>
+                  
+                  <cosy-label href="/tags/Sysmon/" size="sm"># Sysmon</cosy-label>
+                  
+                  <cosy-label href="/tags/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" size="sm"># 暴力破解</cosy-label>
+                  
+                  <cosy-label href="/tags/%E6%BC%8F%E6%B4%9E%E6%8E%83%E6%8F%8F/" size="sm"># 漏洞掃描</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day27-Boss-Of-The-SOC-v1-%E4%B8%8A"><span class="toc-number">1.</span> <span class="toc-text">Day27 Boss Of The SOC v1 上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%83%85%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">情境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%B4%E6%99%AF-1%EF%BC%88APT%EF%BC%89%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">場景 1（APT）：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%B4%E6%99%AF-2%EF%BC%88%E5%8B%92%E7%B4%A2%E8%BB%9F%E9%AB%94%EF%BC%89%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">場景 2（勒索軟體）：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sysmon"><span class="toc-number">3.2.1.</span> <span class="toc-text">Sysmon</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

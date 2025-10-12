@@ -229,7 +229,7 @@
           <!-- 文章标题 -->
           <h1 class="post-title">Boss Of The SOC v1 上</h1>
           <div class="last-updated">
-            Last updated: 2025-10-11 23:50:01
+            Last updated: 2025-10-11 23:54:58
           </div>
           <!-- 文章 -->
           <h1 id="Day27-Boss-Of-The-SOC-v1-上"><a href="#Day27-Boss-Of-The-SOC-v1-上" class="headerlink" title="Day27 Boss Of The SOC v1 上"></a>Day27 Boss Of The SOC v1 上</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享 Boss Of The SOC v1 Q1 ~ Q10 的解題過程，解題平台會使用 CyberDefender，因為 Splunk 環境已經幫我們架設好了，也可以在平台上驗證答案的正確性。</p>
@@ -283,7 +283,7 @@
 | stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="/assets/XOGDycf1lecuXmMmaM985JoLpyxsQW9OIUYvABV4ZMA=.png"></p>
-<p>這樣就看得出來答案就是 <code>40.80.148.42</code>，另外如果想要數量由大排到小，可以使用 sort 語法，預設是由小排到大，加上 <code>reverse</code> 可以讓它變成由大排到小。</p>
+<p>這樣就看得出來答案就是 <code>40.80.148.42</code>，另外如果想要數量由大排到小，可以使用 sort 語法，預設是由小排到大，加上 <code>-</code> 可以讓它變成由大排到小。</p>
 <pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
 | table src_ip 
 | stats count by src_ip 
@@ -533,13 +533,13 @@
                   
                   <cosy-label href="/tags/Web-Defacement/" size="sm"># Web Defacement</cosy-label>
                   
-                  <cosy-label href="/tags/Suricata/" size="sm"># Suricata</cosy-label>
-                  
-                  <cosy-label href="/tags/Sysmon/" size="sm"># Sysmon</cosy-label>
-                  
                   <cosy-label href="/tags/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" size="sm"># 暴力破解</cosy-label>
                   
                   <cosy-label href="/tags/%E6%BC%8F%E6%B4%9E%E6%8E%83%E6%8F%8F/" size="sm"># 漏洞掃描</cosy-label>
+                  
+                  <cosy-label href="/tags/Suricata/" size="sm"># Suricata</cosy-label>
+                  
+                  <cosy-label href="/tags/Sysmon/" size="sm"># Sysmon</cosy-label>
                   
                     
             </div>

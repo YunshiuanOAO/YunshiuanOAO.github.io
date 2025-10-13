@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Boss Of The SOC v1 下
+  </title>
+  <meta name="description" content="Boss Of The SOC v1 21~32解題過程分享，包含Splunk搜尋語法與威脅狩獵實作">
+  <meta name="keywords" content="">
+  <meta name="author" content="yunshiuan">
+  <link rel="canonical" href="https://yunshiuan.com/2025/10/13/BossOfSoc_3/">
+  
+  
+  <link rel="icon" href='/assets/favicon.png'>
+  
+  
+  
+<link rel="stylesheet" href="/css/b4c95347.css">
+
+  <script>window.i18n = {"tip-status-done":"Done","tip-status-default":"All","tip-status-todo":"Todo","tip-status-doing":"Doing","tip-status-other":"Other","text-select":"Select","text-move":"Move","text-esc":"Exit","January":"January","February":"February","March":"March","April":"April","May":"May","June":"June","July":"July","August":"August","September":"September","October":"October","November":"November","December":"December"}</script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body id="app">
+  <aside id="aside-box" class="left-aside">
+    <div class="header">
+      
+<link rel="stylesheet" href="/css/61875ce9.css">
+
+<div class="profile">
+  <a class="badge" href="/">
+    <span>Hi</span>
+    <span>yunshiuan</span>
+  </a>
+  <cosy-tooltip id="left-aside-button" placement="right">
+    <span slot="content">
+      <span>Show / Hide Left Navigation</span>
+      <cosy-short-key>[</cosy-short-key>
+    </span>
+    <cosy-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+        <g fill="none">
+          <path d="M16 4c1.104-.019 2 .896 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12zm1 2a1 1 0 0 0-1-1h-2.995v10H16a1 1 0 0 0 1-1V6zm-4.995 9V5H4.001a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8.004z" fill="currentColor"></path>
+        </g>
+      </svg>
+    </cosy-icon>
+  </cosy-tooltip>
+</div>
+
+<script src="/js/69622cae.js"></script>
+
+      
+
+
+<cosy-search id="post-search" placeholder="Search">
+  <div slot="short-key">
+    <cosy-short-key>⌘</cosy-short-key>
+    <cosy-short-key>K</cosy-short-key>
+  </div>
+</cosy-search>
+
+
+<script>
+  window.algolia = {
+    appId: "WGUHT44H35",
+    SearchOnlyAPIKey: "c9b92587c55d61224e59aee4a714fb0c"
+  }
+</script>
+
+
+<script src="/js/0a6f193b.js"></script>
+
+    </div>
+    <div class="aside-category">
+      
+<link rel="stylesheet" href="/css/db04a759.css">
+
+
+<nav class="category-nav cosy-scrollbar">
+  <ul><li data-path="archives">
+        <a href="/archives">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v4A1.5 1.5 0 0 0 3.5 10h9A1.5 1.5 0 0 0 14 8.5v-4A1.5 1.5 0 0 0 12.5 3h-9zM3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm.5 6.5A1.5 1.5 0 0 0 2 12.5v4A1.5 1.5 0 0 0 3.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-9zM3 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-4zm14-.063a2.003 2.003 0 0 1-2.5-1.937A2 2 0 0 1 16 8.563a2.005 2.005 0 0 1 1 0a2 2 0 0 1 0 3.874zM16.5 3a.5.5 0 0 1 .5.5v4.041a3.02 3.02 0 0 0-1 0V3.5a.5.5 0 0 1 .5-.5zm0 10.5c-.17 0-.337-.014-.5-.041V17.5a.5.5 0 0 0 1 0v-4.041c-.163.027-.33.041-.5.041z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Archives</div>
+        </a>
+      </li><li data-path="cosy-roadmap">
+        <a href="/cosy-roadmap">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9.384 2a1 1 0 0 0-.966.742L4.616 17H2.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-2.116L11.582 2.742A1 1 0 0 0 10.616 2H9.384zM5.651 17l.8-3H11.5a.5.5 0 0 0 0-1H6.717l.534-2H10.5a.5.5 0 0 0 0-1H7.517l1.867-7h1.232l3.733 14H5.651z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Roadmap</div>
+        </a>
+      </li><li data-path="cosy-resume">
+        <a href="/cosy-resume">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.761 1.761 0 0 0-2.317.88c-.4.882-.008 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.245 1.311l1.556-3.849a.073.073 0 0 1 .028-.038a.086.086 0 0 1 .046-.012c.02 0 .035.005.046.012a.074.074 0 0 1 .028.038l1.555 3.849a1.75 1.75 0 0 0 3.245-1.311L13 10.96V8.662l2.968-1.322a1.74 1.74 0 0 0 .877-2.31a1.761 1.761 0 0 0-2.317-.88l-2.097.934a2.5 2.5 0 0 0-2.43-3.086zM4.065 5.444a.761.761 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.761.761 0 0 1 1 .38a.739.739 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v2.298a1 1 0 0 0 .073.375l1.872 4.633a.75.75 0 0 1-1.39.562l-1.556-3.849c-.364-.9-1.639-.9-2.003 0l-1.555 3.85a.75.75 0 1 1-1.39-.562l1.876-4.646A1 1 0 0 0 8 10.95V8.662a1 1 0 0 0-.593-.914L4.438 6.427a.739.739 0 0 1-.373-.983z" fill="currentColor"></path></g></svg>
+          <div class="ellipsis">Resume</div>
+        </a>
+      </li></ul>
+  <ul><li class="active">
+        <a href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+          
+          <div class="ellipsis">
+            <span>2025 鐵人賽</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Blog/">
+          
+          <div class="ellipsis">
+            <span>Blog</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Certificate/">
+          
+          <div class="ellipsis">
+            <span>Certificate</span>
+          </div>
+        </a>
+      </li><li class="">
+        <a href="/categories/Writeup/">
+          
+          <div class="ellipsis">
+            <span>Writeup</span>
+          </div>
+        </a>
+      </li></ul>
+</nav>
+
+
+<script src="/js/066f8989.js"></script>
+
+    </div>
+    <div class="bottom">
+      <cosy-tooltip id="button-preference" placement="right">
+        <span slot="content">
+          <span>Preference</span>
+          <cosy-short-key>⌘</cosy-short-key>
+          <cosy-short-key>p</cosy-short-key>
+        </span>
+        <cosy-icon bordered id="button-about-cosy-theme">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+            <g fill="none">
+              <path d="M8 6a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM7 8a1 1 0 1 1 2 0a1 1 0 0 1-2 0zm3.618-3.602a.708.708 0 0 1-.824-.567l-.26-1.416a.354.354 0 0 0-.275-.282a6.072 6.072 0 0 0-2.519 0a.354.354 0 0 0-.275.282l-.259 1.416a.71.71 0 0 1-.936.538l-1.359-.484a.355.355 0 0 0-.382.095c-.569.627-1 1.367-1.262 2.173a.352.352 0 0 0 .108.378l1.102.931a.704.704 0 0 1 0 1.076l-1.102.931a.352.352 0 0 0-.108.378A5.986 5.986 0 0 0 3.53 12.02a.355.355 0 0 0 .382.095l1.36-.484a.708.708 0 0 1 .936.538l.258 1.416c.026.14.135.252.275.281a6.075 6.075 0 0 0 2.52 0a.353.353 0 0 0 .274-.281l.26-1.416a.71.71 0 0 1 .936-.538l1.359.484c.135.048.286.01.382-.095c.569-.627 1-1.367 1.262-2.173a.352.352 0 0 0-.108-.378l-1.102-.931a.703.703 0 0 1 0-1.076l1.102-.931a.352.352 0 0 0 .108-.378A5.985 5.985 0 0 0 12.47 3.98a.355.355 0 0 0-.382-.095l-1.36.484a.71.71 0 0 1-.111.03zm-6.62.58l.937.333a1.71 1.71 0 0 0 2.255-1.3l.177-.97a5.105 5.105 0 0 1 1.265 0l.178.97a1.708 1.708 0 0 0 2.255 1.3L12 4.977c.255.334.467.698.63 1.084l-.754.637a1.704 1.704 0 0 0 0 2.604l.755.637a4.99 4.99 0 0 1-.63 1.084l-.937-.334a1.71 1.71 0 0 0-2.255 1.3l-.178.97a5.099 5.099 0 0 1-1.265 0l-.177-.97a1.708 1.708 0 0 0-2.255-1.3L4 11.023a4.987 4.987 0 0 1-.63-1.084l.754-.638a1.704 1.704 0 0 0 0-2.603l-.755-.637c.164-.386.376-.75.63-1.084z" fill="currentColor"></path>
+            </g>
+          </svg>
+        </cosy-icon>
+      </cosy-tooltip>
+    </div>
+  </aside>
+  <main>
+    
+<link rel="stylesheet" href="/css/4dbc8f91.css">
+
+
+<div class="post-container">
+  <header>
+    <div class="left">
+      
+<link rel="stylesheet" href="/css/7d333f9e.css">
+
+<nav class="breadcrumb">
+  <section>
+    <cosy-tooltip placement="bottom-left">
+      <span slot="content"><span>Home</span>
+        <cosy-short-key>⌘</cosy-short-key>
+        <cosy-short-key>H</cosy-short-key>
+      </span>
+      <cosy-icon href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+          <g fill="none">
+            <path d="M8.998 2.388a1.5 1.5 0 0 1 2.005 0l5.5 4.942A1.5 1.5 0 0 1 17 8.445V15.5a1.5 1.5 0 0 1-1.5 1.5H13a1.5 1.5 0 0 1-1.5-1.5V12a.5.5 0 0 0-.5-.5H9a.5.5 0 0 0-.5.5v3.5A1.5 1.5 0 0 1 7 17H4.5A1.5 1.5 0 0 1 3 15.5V8.445c0-.425.18-.83.498-1.115l5.5-4.942zm1.336.744a.5.5 0 0 0-.668 0l-5.5 4.942A.5.5 0 0 0 4 8.445V15.5a.5.5 0 0 0 .5.5H7a.5.5 0 0 0 .5-.5V12A1.5 1.5 0 0 1 9 10.5h2a1.5 1.5 0 0 1 1.5 1.5v3.5a.5.5 0 0 0 .5.5h2.5a.5.5 0 0 0 .5-.5V8.445a.5.5 0 0 0-.166-.371l-5.5-4.942z" fill="currentColor"></path>
+          </g>
+        </svg>
+      </cosy-icon>
+    </cosy-tooltip>
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <a class="ellipsis" href="/categories/2025-%E9%90%B5%E4%BA%BA%E8%B3%BD/">
+      2025 鐵人賽
+    </a>
+    
+    
+    
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+      <g fill="none">
+        <path d="M7.733 4.207a.75.75 0 0 1 1.06.026l5.001 5.25a.75.75 0 0 1 0 1.035l-5 5.25a.75.75 0 1 1-1.087-1.034L12.216 10l-4.51-4.734a.75.75 0 0 1 .027-1.06z" fill="currentColor"></path>
+      </g>
+    </svg>
+    <span class="ellipsis">
+      Boss Of The SOC v1 下
+    </span>
+    
+  </section>
+</nav>
+
+
+<script src="/js/31d6cfe0.js"></script>
+
+    </div>
+    <div class="right">
+      
+        <cosy-tooltip id="toc-show-button" placement="left">
+          <span slot="content">
+            <span>Show / Hide Table of Contents</span>
+            <cosy-short-key>]</cosy-short-key>
+          </span>
+          <cosy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20">
+              <g fill="none">
+                <path
+                  d="M4 4c-1.104-.019-2 .896-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4zM3 6a1 1 0 0 1 1-1h2.995v10H4a1 1 0 0 1-1-1V6zm4.995 9V5h8.004a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7.995z"
+                  fill="currentColor"></path>
+              </g>
+            </svg>
+          </cosy-icon>
+        </cosy-tooltip>
+        
+    </div>
+  </header>
+  <div class="content">
+    <main class="cosy-scrollbar">
+      <div class="article-container">
+        <!-- 渲染文章内容 -->
+        <article>
+          <!-- 文章标题 -->
+          <h1 class="post-title">Boss Of The SOC v1 下</h1>
+          <div class="last-updated">
+            Last updated: 2025-10-13 23:22:25
+          </div>
+          <!-- 文章 -->
+          <h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>接續昨天的內容，今天會分享 Boss Of The SOC v1 剩下的  Q21~ Q32 的解題過程，學習 Threat Hunting 的流程，解題平台同樣會使用 CyberDefender</p>
+<hr>
+<h1 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h1><p>本次實作實驗聚焦在 APT（高階持續性威脅）情境與勒索軟體情境。你將扮演 Alice Bluebird 的角色——剛被聘為 Wayne Enterprises 的 SOC 分析師，負責偵測與防禦各類網路攻擊。</p>
+<h2 id="場景-1（APT）："><a href="#場景-1（APT）：" class="headerlink" title="場景 1（APT）："></a>場景 1（APT）：</h2><p>今天是 Alice 在 Wayne Enterprises 安全部門（Security Operations Center，SOC）的第一天。Lucius 叫 Alice 坐下並給她第一個任務：一份來自高譚市警察局（Gotham City Police Department, GCPD）的備忘錄。GCPD 發現線上有證據（<a target="_blank" rel="noopener" href="http://pastebin.com/Gw6dWjS9%EF%BC%89%E9%A1%AF%E7%A4%BA%E7%B6%B2%E7%AB%99">http://pastebin.com/Gw6dWjS9）顯示網站</a> <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com/">www.imreallynotbatman.com</a> 在 Wayne Enterprises 的 IP 位址空間內被入侵。該駭客組織有多重目標……但他們的作案手法之一是篡改網站以羞辱被害者。Lucius 要求 Alice 判定 <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com(wayne/">www.imreallynotbatman.com（Wayne</a> 企業執行長的個人部落格）是否確實遭到入侵。</p>
+<p>在此情境中，使用者社群在瀏覽 Wayne Enterprises 網站時回報看到下列被篡改的圖片，且部分回報提到「P01s0n1vy」。若你不熟悉，P01s0n1vy 是一個曾針對 Wayne Enterprises 的 APT 組織。你作為 Alice 的目標是調查該網站篡改事件，並嘗試依照 Lockheed Martin Kill Chain 重建攻擊流程。</p>
+<p><img src="/assets/kNpb6q5LoVBZaQL696hxc5NUhEZYM2Y6amfiOkUtQXA=.png"></p>
+<h2 id="場景-2（勒索軟體）："><a href="#場景-2（勒索軟體）：" class="headerlink" title="場景 2（勒索軟體）："></a>場景 2（勒索軟體）：</h2><p>在第二個情境中，你的一位使用者在 Windows 桌面上看到一張圖片，表示系統上的檔案已被加密，必須付款才能取回檔案。看起來 Wayne Enterprises 有一台主機感染了 Cerber 勒索軟體，你的目標是調查這起勒索事件。</p>
+<p><img src="/assets/XMxnyYYAgsqi2e8fgkpYi93wDgWY461l01mIV_P_MgM=.png"></p>
+<hr>
+<blockquote>
+<p>Q21 : Ransomware: What fully qualified domain name (FQDN) makes the Cerber ransomware attempt to direct the user to at the end of its encryption phase?</p>
+</blockquote>
+<p>題目敘述說惡意程式會讓使用者嘗試去請求 domain ，要找出FQDN</p>
+<p>我想要先知道內部有哪些 IP 有在進行 DNS 查詢</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot;
+| table src_ip
+| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/sYm2KnhgFYCkdM9sQJ_4SWm4Wfc7Cdngvk7lwpW0Jp8=.png"></p>
+<p>這邊知道192.168.2.50、192.168.250.100、192.168.250.20、192.168.250.40、192.168.250.70 這些內部 IP 有在進行 DNS 查詢，接下來我先看192.168.250.0&#x2F;24 內 IP 查詢了哪些 domain，</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24 
+| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/OMbF3JUJiANeRWwDsBVF2A-In4u5w0v0fjWPRff2WmE=.png"></p>
+<p>接下來會有很多其他的 DNS 記錄出來 我們可以點擊不可能是答案的 FQDN ，然後選擇 Exclude from result ，然後它就會在 Search 欄位中自動產出將此FQDN 排除查詢的語法。</p>
+<p><img src="/assets/IoBJChn4M4fthuMfAPQoc1e6b4G-eXwv6hstSV2nq_M=.png"></p>
+<p>經過層層篩選後最後查詢如下</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.in-addr.arpa&quot; &quot;query&#123;&#125;&quot;!&#x3D;&quot;demo-01&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.authdns.ripe.net&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.microsoft.com&quot; &quot;query&#123;&#125;&quot;&#x3D;*.*.* &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.waynecorpinc.local&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;dns.msftncsi.com&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.globalrootservers.net&quot; 
+| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/jzPkKSf2XPhZ_kdZBN_vHdWs9SodRqw0Hdol4W8JsjY=.png"></p>
+<p>這邊可以看到 cerberhhyed5frqa.xmfir0.win 這個 FQDN，而這個網址在情境的圖片上有出現，因此是這題的答案</p>
+<blockquote>
+<p>ans : cerberhhyed5frqa.xmfir0.win</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q22 : Ransomware: What was the most likely IP address of we8105desk in 24AUG2016?</p>
+</blockquote>
+<p>題目想要問 we8105desk 這個 host 它最有可能的 IP 位置是什麼，時間限制在2016&#x2F;08&#x2F;24 中</p>
+<p>首先先來調整時間，選擇時間並選擇 DataRange，調整為查詢08&#x2F;24&#x2F;2016 到 08&#x2F;25&#x2F;2016這段時間的資料</p>
+<p><img src="/assets/l1jatLA2J8_nIfT-W0ySlWGVeQuBHTsKq6ZrZNWqTms=.png"></p>
+<p>接下來查詢 host 為 we8105desk 的 source IP 記錄，因為是查詢 Sysmon 來源的關係所以是使用 SourceIp 當作查詢來源 IP</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 host&#x3D;we8105desk source&#x3D;WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational
+| stats count by SourceIp 
+| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/ZXDBGmZerwfzhgg20VYhTIab7F3el5JViBuBlzlz1qk=.png"></p>
+<p>這邊可以看到答案是 192.168.250.100</p>
+<blockquote>
+<p>ans : 192.168.250.100</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q23 : Ransomware: Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)</p>
+</blockquote>
+<p>這題想要問 Suricata 產生的警報，當中關於 Cerber malware 出現最少的 signature 是哪一個</p>
+<p>可以用以下的語法查詢，將 signature 與 signature_id 抓出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata Cerber 
+| table alert.signature alert.signature_id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/SUW4b8xNVYYgib6Y3L8SLD1NeyFdmlv0pC-9KT0GKzc=.png"></p>
+<p>可以很明顯的看到 <code>ETPRO TROJAN Ransomware/Cerber Checkin 2</code> 這個 signature 只出現一次，而它的 id 為2816763 ，則為答案</p>
+<blockquote>
+<p>ans : 2816763</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q24 : Ransomware: The VBScript found in question 25 launches 121214.tmp. What is the ParentProcessId of this initial launch?</p>
+</blockquote>
+<p>這題需要先Q25，可以先去看 Q25 的解題過程</p>
+<p>題目敘述說在Q25 找到 關於VBScript 是 121214.tmp被執行了，請問啟動這個VBScript 的父進程 ID 是什麼？</p>
+<p>可以先將ParentImage、ParentProcessId以及CommandLine 抓出來查看</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| table ParentImage ParentProcessId CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/cn-02vrj7Ro2hRDX_3l34zNpoDpJ3d--i0_5yj-7Lyo=.png"></p>
+<p>這邊可以很清楚的看到啟動121214.tmp 的父進程是 wscript.exe ，它的ID 為3968，這正是我們的答案</p>
+<blockquote>
+<p>ans : 3968</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q25 : Ransomware: During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length in characters of the value of this field?</p>
+</blockquote>
+<p>題目敘述說當 Cerber 惡意程式執行時，初始會先執行 VB script，而這個 VB script 的產生包含前面啟動它的 exe 檔 可以在 Splunk 的其中一個欄位找到，最後問這個欄位裡面的值總共有多少 characters</p>
+<p>看到題目敘述，可以直接聯想到的是 CommandLine 欄位，所以我們先把 EventLog 的 CommandLine 欄位抓出來，並且限制檔名為 .vbs</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| table CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/48ggord4P-7U5Euy77ESb7wgPZPyzklMo8loEzzXW_M=.png"></p>
+<p>可以看到下面一大串的 cmd.exe…….. 並且後面接 <code>GSI=%APPDATA%\%RANDOM%.vbs</code> 這邊就可以確定是題目所說。</p>
+<p>接下來要計算裡面有多少字元，使用的是 eval 的 len 函式</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| eval cmdlenght&#x3D;len(CommandLine)
+| table CommandLine cmdlenght<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/NsHJjeRVHk2NQIl9gw8oRwmXM2WSI3lcQOAvMZljaoU=.png"></p>
+<p>這邊它幫我們計算出答案為4490</p>
+<blockquote>
+<p>ans : 4490</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q26 : Ransomware: The malware downloads a file that contains the Cerber ransomware crypto code. What is the name of that file?</p>
+</blockquote>
+<p>題目敘述說惡意程式去下載一個包含 Cerber 勒索病毒加密程式碼的檔案，它的檔案名稱是什麼</p>
+<p>我先把 192.168.250.100 (we8105desk) HTTP 的 GET 請求全部先抓下來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;stream:http&quot; src_ip&#x3D;192.168.250.100 http_method&#x3D;GET
+| table  src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/tO3hZ1-M67gHdIfdlzVWlYr4RjE5w5rVxvEXMrR_Ns4=.png"></p>
+<p>當中最可疑的是它向 <code>solidaritedeproximite.org</code> 請求一個 mhtr.jpg 檔案</p>
+<p>我們單獨看一下關於有包含 mhtr.jpg 的記錄</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 mhtr.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/3qLVjpkrNx1j5OKEazxyKyRjn6aJd4IHKxs2-Th5SSQ=.png"></p>
+<p>發現到有 <code>fgt_utm</code> 的記錄跳出來，在 Splunk 中通常指的是來自 FortiGate 防火牆的 Unified Threat Management 安全日誌類型的 sourcetype，用來記錄防毒、入侵防禦、網頁過濾等安全事件。</p>
+<p>我們使用 fgt_utm 記錄，並把 filename,msg,analyticscksum 欄位抓出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;fgt_utm&quot; mhtr.jpg
+| table filename,msg,analyticscksum<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/wX3qtK3vMoJ_wBsisJ0D4TGBsSh3WWWES9-kVGMwxwM=.png"></p>
+<p>可以看到它偵測 mhtr.jpg 為惡意檔案，並且有 sha256 給我們，我們將它丟入 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9c1cabc16826273ad69f59af06f12fe6484e2eb0b5d3c87a690993934675e459">VirusTotal</a></p>
+<p><img src="/assets/KjYcIdDLUwD5_-oBYnxh2l1kwJn7bt6Nrmb71pDr14E=.png"></p>
+<p>可以看到它是惡意程式，那 mhtr.jpg 就是我們的答案</p>
+<blockquote>
+<p>ans : mhtr.jpg</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q27 : Ransomware: Now that you know the name of the ransomware’s encryptor file, what obfuscation technique does it likely use?</p>
+</blockquote>
+<p>題目問 mhtr.jpg 使用了何種混淆技術</p>
+<p>jpg 可以被辨識出惡意程式，有很大的可能使用了隱寫術 (Steganography)，將惡意程式隱藏在圖片中，因此答案就是 Steganography</p>
+<blockquote>
+<p>ans : Steganography</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q28 : Ransomware: What is the name of the USB key inserted by Bob Smith?</p>
+</blockquote>
+<p>題目問 Bob Smith 插入的 USB 名稱是什麼</p>
+<p>在 Splunk 中提供了一個 sourcetype，名稱為 winregistry，用來監控 Windows 註冊表 key／value 的建立、修改、刪除等操作。</p>
+<p>另外關於 USB 的其中一個註冊表路徑會在 <code>SYSTEM\ControlSet001\USBSTOR</code>，主要用途是記錄曾經連接過的 USB 裝置資訊，例如製造商、產品、序號、FriendlyName 等等</p>
+<p>因此我們將 <code>USBSTOR</code> 底下的 value 抓出來，並且用 dedup 將重複的 value 刪除，只保留第一筆出來的值</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;winregistry&quot; host&#x3D;we8105desk USBSTOR
+| table registry_value_data | dedup registry_value_data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/B7j-ZowtUGr4m3r3GkRhOsm_eHvyijuT3v9bNfFIRzM=.png"></p>
+<p>這邊就可以看到 USB 的名稱為 MIRANDA_PRI</p>
+<blockquote>
+<p>ans : MIRANDA_PRI</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q29 : Ransomware: Bob Smith’s workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?</p>
+</blockquote>
+<p>題目敘述 Bob Smith’s workstation 在 ransomware 執行期間去連線了 file server，請問 file server 的 IP 是什麼？</p>
+<p>連線 file server 的 protocol 可能會有 SMB 或者 FTP，FTP 是空的，那我們可以著重去看 SMB</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100
+| table dest_ip
+| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/yOqGwKrU-ZM7IjAYNdpFOfs2S1L4Z0hW5ixVwDSsEIU=.png"></p>
+<p>接下來要再更確認一點，file server 可能會進行登入，因此我們加上 login&#x3D;”bob.smith”</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 login&#x3D;&quot;bob.smith&quot;
+| table dest_ip
+| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/9yawfJ9r2QGw0qUBPTIYITVz6gXLxAQGGFcAJeFblNM=.png"></p>
+<p>這樣就確定了 192.168.250.20 是 file server </p>
+<blockquote>
+<p>ans : 192.168.250.20</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q30 : Ransomware: How many distinct PDFs did the ransomware encrypt on the remote file server?</p>
+</blockquote>
+<p>題目問有多少個遠端 pdf 被加密了</p>
+<p>我們在上一題知道 file server 的 IP 為 192.168.250.20，我們另外先拿一下它的 domain name</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 dest_ip&#x3D;192.168.250.20 path&#x3D;*
+| table path<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/qEWsjAJB7FUV9Mq7acGsjdBlmDRUI1hj8Kd1x4wE9uo=.png"></p>
+<p>這邊得知了 domain name 為 we9041srv.waynecorpinc.local</p>
+<p>首先我先搜尋 wineventlog 中有沒有關於 .pdf 的記錄</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/xJ0cOJW0DDg-M8pGh77C8_DVq-sVjUcXcwSXEbI-zOM=.png"></p>
+<p>發現到有，並且是從 192.168.250.100 請求 we9041srv.waynecorpinc.local 的一個 pdf<br>因此我們將所有關於這個的記錄抓下來，並用 stats 中的 dc 幫我們算總共有幾個檔案</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf  EventCode&#x3D;5145 Source_Address&#x3D;192.168.250.100
+| stats dc(Relative_Target_Name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/B-ZLsIdRUo5P-2poxSx5cJ8Qark7Byogq2TCf8i5JyU=.png"></p>
+<p>總共是 257 個，則 257 為答案</p>
+<blockquote>
+<p>ans : 257</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q31 : Ransomware: The Cerber ransomware encrypts files located in Bob Smith’s Windows profile. How many .txt files does it encrypt?</p>
+</blockquote>
+<p>這題問的是在 Bob Smith 的電腦上有多少的 .txt 檔被 ransomware 鎖起來了</p>
+<p>首先我們先使用 Sysmon 將針對 Bob Smith 內的 .txt 的操作抓下來，並且看是哪個檔案對 .txt 操作</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; TargetFilename&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;
+| table Image TargetFilename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/aslGsxq9wbcm5wT5VeqfAuUnScwW0MXR-gC6Kb-YIZs=.png"></p>
+<p>可以看到是有一個 osk.exe 對 .txt 檔做操作，</p>
+<p>那我們可以 EventID&#x3D;1 去看這個 osk.exe 的 hash </p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; EventCode&#x3D;1 Image&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\AppData\\Roaming\\&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;\\osk.exe&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/bGRAyITwgDbzGkIxST7PVBbBAzYcou8g5XtO2PGhEQs=.png"></p>
+<p>得到的 MD5 hash 為 <a target="_blank" rel="noopener" href="https://189ccf15-ac01-4578-b319-8cf69e039163.cyberdefenders.network/en-US/app/search/search?q=search%20index=botsv1%20source=%22wineventlog:microsoft-windows-sysmon/operational%22%20EventCode=1%20Image=%22C:%5C%5CUsers%5C%5Cbob.smith.WAYNECORPINC%5C%5CAppData%5C%5CRoaming%5C%5C%7B35ACA89F-933F-6A5D-2776-A3589FB99832%7D%5C%5Cosk.exe%22&display.page.search.mode=smart&dispatch.sample_ratio=1&workload_pool=&earliest=0&latest=now&display.page.search.tab=events&display.general.type=events&sid=1760368198.162#">EE0828A4E4C195D97313BFC7D4B531F1</a>，丟進給 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/37397f8d8e4b3731749094d7b7cd2cf56cacb12dd69e0131f07dd78dff6f262b">VirusTotal</a> 後</p>
+<p><img src="/assets/wqQ9cuHeud9mqmV_is1wvugWnlvXxOlf-VlSPy-RNGE=.png"></p>
+<p>可以確定它是惡意程式</p>
+<p>接下來針對這個 osk.exe 去計算所有 .txt 的數量</p>
+<p><img src="/assets/gRO7TyyW0T3ZEP7-XUY6yZMG1GJPKE-N3D7Njwya-34=.png"></p>
+<p>答案出來為 406，則 406 為這題的答案</p>
+<blockquote>
+<p>ans : 406</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q32 : Ransomware: What was the first suspicious domain visited by we8105desk in 24AUG2016?</p>
+</blockquote>
+<p>題目問 we8105desk 在 2016&#x2F;08&#x2F;24 時訪問了哪個可疑 domain？</p>
+<p>我們在 Q26 中發現它會去向 <code>solidaritedeproximite.org</code> 請求 jpg 檔，而 <code>solidaritedeproximite.org</code> 則為這題的解答。</p>
+<blockquote>
+<p>ans : solidaritedeproximite.org</p>
+</blockquote>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天把 Boss Of The SOC v1 最後幾題題目分享完了，今天也學到了更多 Threat Hunting 的技巧，這場 Boss Of The SOC v1 我覺得題目都出得很好，都可以學到非常多的東西，除了 v1 之外也有 v2、v3，歡迎大家可以挑戰。</p>
+
+            <div class="post-tags">
+              <!-- 文章tags -->
+              
+                
+                  <cosy-label href="/tags/Boss-Of-The-SOC/" size="sm"># Boss Of The SOC</cosy-label>
+                  
+                  <cosy-label href="/tags/Splunk/" size="sm"># Splunk</cosy-label>
+                  
+                  <cosy-label href="/tags/Threat-Hunting/" size="sm"># Threat Hunting</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%A8%81%E8%84%85%E7%8B%A9%E7%8D%B5/" size="sm"># 威脅狩獵</cosy-label>
+                  
+                  <cosy-label href="/tags/%E8%B3%87%E5%AE%89%E7%AB%B6%E8%B3%BD/" size="sm"># 資安競賽</cosy-label>
+                  
+                  <cosy-label href="/tags/APT/" size="sm"># APT</cosy-label>
+                  
+                  <cosy-label href="/tags/%E5%8B%92%E7%B4%A2%E8%BB%9F%E9%AB%94/" size="sm"># 勒索軟體</cosy-label>
+                  
+                  <cosy-label href="/tags/Web-Defacement/" size="sm"># Web Defacement</cosy-label>
+                  
+                  <cosy-label href="/tags/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" size="sm"># 暴力破解</cosy-label>
+                  
+                  <cosy-label href="/tags/%E6%BC%8F%E6%B4%9E%E6%8E%83%E6%8F%8F/" size="sm"># 漏洞掃描</cosy-label>
+                  
+                  <cosy-label href="/tags/OSINT/" size="sm"># OSINT</cosy-label>
+                  
+                  <cosy-label href="/tags/%E6%83%A1%E6%84%8F%E8%BB%9F%E9%AB%94%E5%88%86%E6%9E%90/" size="sm"># 惡意軟體分析</cosy-label>
+                  
+                    
+            </div>
+        </article>
+        <!-- 评论 -->
+        <div id="vcomments"></div>
+        <div id="tcomment"></div>
+      </div>
+    </main>
+    <!-- toc -->
+    
+      <cosy-drag-box id="toc-drag-box" trigger="left" min-width="220" uid="toc-box">
+        <div class="meta-container">
+          <div class="toc-wrapper cosy-scrollbar">
+            <cosy-tooltip placement="right">
+              <p class="catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h12"></path>
+                  </g>
+                </svg>
+                <span>Catalog</span>
+              </p>
+              <span slot="content">
+                <span>Hide Table of Contents</span>
+                <cosy-short-key>]</cosy-short-key>
+              </span>
+            </cosy-tooltip>
+            <!-- 文章toc -->
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%82-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">🧂 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%83%85%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">情境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%B4%E6%99%AF-1%EF%BC%88APT%EF%BC%89%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">場景 1（APT）：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%B4%E6%99%AF-2%EF%BC%88%E5%8B%92%E7%B4%A2%E8%BB%9F%E9%AB%94%EF%BC%89%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">場景 2（勒索軟體）：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li></ol>
+          </div>
+        </div>
+      </cosy-drag-box>
+      
+  </div>
+
+</div>
+
+<script>
+  window.page = {
+    use: ''
+  }
+  window.katex = {
+    enable: "",
+    jsCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js",
+    cssCdn: "//cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+  }
+  window.mermaid = {
+    enable: "",
+    theme: "",
+    cdn: "//cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js",
+  }
+  window.valine = {
+    enable: "",
+    appId: 'yourValineAppId',
+    appKey: 'yourValineAppKey',
+    avatar: 'monsterid',
+    cdn: '//unpkg.com/valine@latest/dist/Valine.min.js',
+    serverURLs: ''
+  };
+  window.twikoo = {
+    enable: "",
+    envId: "yourTwikooEnvId",
+    cdn: 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js',
+    lang: 'zh-CN',
+  }
+</script>
+
+
+<script src="/js/8f5fa89f.js"></script>
+
+  </main>
+</body>
+
+<script>
+  window.theme = {
+    color: 'hsl(238,50%,56%)'
+  }
+</script>
+
+
+<script src="/js/e5a59732.js"></script>
+
+
+</html>

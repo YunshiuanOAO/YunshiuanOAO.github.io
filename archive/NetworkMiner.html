@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 在網路上挖呀挖呀挖 · yunshiuan</title><meta name="description" content="在網路上挖呀挖呀挖 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">在網路上挖呀挖呀挖</h1><div class="post-info">Oct 2, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>有時候會想要看一下整個通訊過程傳了什麼東西或者是否有 Credentials 洩漏，今天介紹一個 network forensic 工具 - NetworkMiner，它可以用來從網路流量中萃取有用資訊</p>
+<hr>
+<h1 id="🪏-NetworkMiner"><a href="#🪏-NetworkMiner" class="headerlink" title="🪏 NetworkMiner"></a>🪏 NetworkMiner</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.netresec.com/?page=NetworkMiner">https://www.netresec.com/?page=NetworkMiner</a></p>
+<p>NetworkMiner 目前只支援 Windows 作業系統，但是也可以使用其他工具讓它在 Linux 或 Mac 上執行。它可以將 pcap 內的封包拆開、解析、重組，嘗試把裡面的檔案、圖片、郵件、憑證／SSL 證書、使用者帳號密碼等直接還原出來，另外它也可以即時監聽封包並分析</p>
+<p><img src="/assets/BJmkNL7Wg-jT87SnETdJ3A595Aq2fIzDb_OTbU6yD3A=.png"></p>
+<p>但是，NetworkMiner 免費版只能分析 pcap 檔案，如果是 pcapng 格式則需要付費才能分析，付費版本需要 1300 USD </p>
+<blockquote>
+<p>pcapng 也是一種用來儲存網路封包捕捉資料的檔案格式，是舊的 pcap 格式的進化版，它會比 pcap 儲存的資料還要多，可以分析的資訊也越多。目前 Wireshark 從 v1.8 開始，預設就把封包儲存格式改成 pcapng</p>
+</blockquote>
+<p>今天的 pcap 檔案會從 <a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/bluesky-ransomware/">Cyberdefender - BlueSky Ransomware Lab</a> 的題目下載，並用 NetworkMiner 分析。</p>
+<p>首先把 pcap 檔案丟進 NetworkMiner 當中分析</p>
+<p>分析完後會先顯示的頁面是封包出現的主機，當中包含了主機的 IP、host、以及它開放的 port 等等</p>
+<p><img src="/assets/ph7PtZ3V5BQdwb-Ydw4F3REbX7JTN7lnT8jb2t-AaFk=.png"></p>
+<p>接下來 Host 選項的右邊 Files 頁面，它會截取未加密的檔案，Files 右邊的 Image 頁面也是相同功能，專門截取未加密的圖片</p>
+<p><img src="/assets/r1pOmKePhCIduAI1NSobXhTklz4T0OAlhUZFv262TQ8=.png"></p>
+<p>接下來是 Credential 頁面，它會提取出封包當中明文傳送的帳號密碼</p>
+<p><img src="/assets/WNIxyDDfpQujh5Et_ftU49MYnps6LG0zx4DXDiAs6Ew=.png"></p>
+<p>Session 頁面會顯示所有封包的兩方通訊紀錄</p>
+<p><img src="/assets/A51jXoR59A2DBYx9JUsUsyrpeddE4RYjKBqYmY-CrDU=.png"></p>
+<p>Parameter 是將應用層的各種參數、字串、指令、欄位內容提取出來</p>
+<p><img src="/assets/0gxBBumg_tI0HRU2imVUeMb0Ie3WWeElILZltOaYY_A=.png"></p>
+<p>有了以上的功能，解 BlueSky Ransomware 這個 Lab 的一些題目就會很容易看出來了。</p>
+<blockquote>
+<p>Q1 : Knowing the source IP of the attack allows security teams to respond to potential threats quickly. Can you identify the source IP responsible for potential port scanning activity?</p>
+</blockquote>
+<p>開啟 Host 頁面，發現它的 Hostname、Web Server Banner 可以確定它是可疑的 IP</p>
+<p><img src="/assets/UGF8TahyMhF6uykmGTkeaHiyip-HzdKSWcenQRuliXg=.png"></p>
+<blockquote>
+<p>Q2 : During the investigation, it’s essential to determine the account targeted by the attacker. Can you identify the targeted account username?</p>
+<p>Q3 : We need to determine if the attacker succeeded in gaining access. Can you provide the correct password discovered by the attacker?</p>
+</blockquote>
+<p>直接去看 Credential 就會看到帳號以及他的密碼</p>
+<p><img src="/assets/3-f_D5PH0T3ruezDWmbBZP8Zg1_hOAOXNYLFfb-UwPQ=.png"></p>
+<blockquote>
+<p>Q4 : Attackers often change some settings to facilitate lateral movement within a network. What setting did the attacker enable to control the target host further and execute further commands?</p>
+</blockquote>
+<p>直接去看 Parameter 頁面，就會看到這串指令</p>
+<p><img src="/assets/GZowieiiZRU3vzTq1vh9b_WCm4HcayfzgnE6GaGQ448=.png"></p>
+<p>可以發現它就是執行了</p>
+<pre class="line-numbers language-none"><code class="language-none">EXEC sp_configure &#39;xp_cmdshell&#39;, 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>將 xp_cmdshell 啟用後去執行後面的惡意操作</p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了 NetworkMiner 工具與它的功能，快速提取封包當中的資訊，在配合解題時會很方便，但可惜的是最近出現的題目都會使用 pcapng 儲存，除非特地轉成 pcap 或者使用 tcpdump 提取 pcap，但是這個工具還是很好用。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

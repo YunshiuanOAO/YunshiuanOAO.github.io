@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 特別的圖片給特別的你 · yunshiuan</title><meta name="description" content="特別的圖片給特別的你 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">特別的圖片給特別的你</h1><div class="post-info">Sep 24, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>關於圖片類型的Forensic 如果出現在 CTF 上，<del>我都覺得是通靈題</del></p>
+<p>所以只要遇到圖片的 forensic 題，我都會盡可能找可以無腦砸下去就可以解出來的工具，因此今天要來介紹幾個我覺得好用的圖片鑑識工具。</p>
+<hr>
+<h1 id="Zsteg"><a href="#Zsteg" class="headerlink" title="Zsteg"></a>Zsteg</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/zed-0xff/zsteg">https://github.com/zed-0xff/zsteg</a></p>
+<p>專門針對 PNG 跟 BMP 做 steganography 探測。例如偵測 LSB 隱寫、ZLIB 壓縮後的隱藏資料、OpenStego、Camouflage 等格式。用於 CTF 隱藏資料快速找訊息</p>
+<pre class="line-numbers language-none"><code class="language-none">$ zsteg -h
+Usage: zsteg [options] filename.png [param_string]
+
+    -a, --all                        try all known methods
+    -E, --extract NAME               extract specified payload, NAME is like &#39;1b,rgb,lsb&#39;
+
+Iteration&#x2F;extraction params:
+    -o, --order X                    pixel iteration order (default: &#39;auto&#39;)
+                                     valid values: ALL,xy,yx,XY,YX,xY,Xy,bY,...
+    -c, --channels X                 channels (R&#x2F;G&#x2F;B&#x2F;A) or any combination, comma separated
+                                     valid values: r,g,b,a,rg,bgr,rgba,r3g2b3,...
+    -b, --bits N                     number of bits, single int value or &#39;1,3,5&#39; or range &#39;1-8&#39;
+                                     advanced: specify individual bits like &#39;00001110&#39; or &#39;0x88&#39;
+        --lsb                        least significant bit comes first
+        --msb                        most significant bit comes first
+    -P, --prime                      analyze&#x2F;extract only prime bytes&#x2F;pixels
+        --shift N                    prepend N zero bits
+        --invert                     invert bits (XOR 0xff)
+        --pixel-align                pixel-align hidden data
+
+Analysis params:
+    -l, --limit N                    limit bytes checked, 0 &#x3D; no limit (default: 256)
+
+        --[no-]file                  use &#39;file&#39; command to detect data type (default: YES)
+        --no-strings                 disable ASCII strings finding (default: enabled)
+    -s, --strings X                  ASCII strings find mode: first, all, longest, none
+                                     (default: first)
+    -n, --min-str-len X              minimum string length (default: 8)
+
+    -v, --verbose                    Run verbosely (can be used multiple times)
+    -q, --quiet                      Silent any warnings (can be used multiple times)
+    -C, --[no-]color                 Force (or disable) color output (default: auto)
+
+PARAMS SHORTCUT
+	zsteg fname.png 2b,b,lsb,xy  &#x3D;&#x3D;&gt;  --bits 2 --channel b --lsb --order xy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例子：<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/305?assigned=0&bookmarked=0&category=4&originalEvent=70&page=1&search=&solved=0">Picoctf 2022 St3g0</a></p>
+<p>直接把圖片用zsteg分析</p>
+<pre class="line-numbers language-none"><code class="language-none">$ zsteg pico.flag.png
+b1,r,lsb,xy         .. text: &quot;~__B&gt;wV_G@&quot;
+b1,rgb,lsb,xy       .. text: &quot;picoCTF&#123;7h3r3_15_n0_5p00n_96ae0ac1&#125;$t3g0&quot;
+b1,abgr,lsb,xy      .. text: &quot;E2A5q4E%uSA&quot;
+b2,b,lsb,xy         .. text: &quot;AAPAAQTAAA&quot;
+b2,b,msb,xy         .. text: &quot;HWUUUUUU&quot;
+b2,a,lsb,xy         .. file: Matlab v4 mat-file (little endian) &gt;&lt;�P, numeric, rows 0, columns 0
+b2,a,msb,xy         .. file: Matlab v4 mat-file (little endian) | &lt;�, numeric, rows 0, columns 0
+b3,r,lsb,xy         .. file: gfxboot compiled html help file
+b4,r,lsb,xy         .. file: Targa image data (16-273) 65536 x 4097 x 1 +4352 +4369 - 1-bit alpha - right &quot;&quot;
+b4,g,lsb,xy         .. file: 0420 Alliant virtual executable not stripped
+b4,b,lsb,xy         .. file: Targa image data - Map 272 x 17 x 16 +257 +272 - 1-bit alpha &quot;&quot;
+b4,bgr,lsb,xy       .. file: Targa image data - Map 273 x 272 x 16 +1 +4113 - 1-bit alpha &quot;&quot;
+b4,rgba,lsb,xy      .. file: Novell LANalyzer capture file
+b4,rgba,msb,xy      .. file: Applesoft BASIC program data, first line number 8
+b4,abgr,lsb,xy      .. file: Novell LANalyzer capture file<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>就直接得到了flag</p>
+<hr>
+<h1 id="Binwalk"><a href="#Binwalk" class="headerlink" title="Binwalk"></a>Binwalk</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/ReFirmLabs/binwalk">https://github.com/ReFirmLabs/binwalk</a></p>
+<p>他可以分析圖片是否有隱藏的檔案，並將隱藏檔案塊挖出來。對於圖片裡面被 embed 的檔案或壓縮段非常方便。</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/129">picoctf 2021 Matryoshka doll</a></p>
+<p>這題下載後可以用binwalk 看看</p>
+<pre class="line-numbers language-none"><code class="language-none">$ binwalk dolls.jpg
+                                                          &#x2F;Users&#x2F;yunshiuan&#x2F;lab&#x2F;dolls.jpg
+--------------------------------------------------------------------------------------------------------------------------------------------------
+DECIMAL                            HEXADECIMAL                        DESCRIPTION
+--------------------------------------------------------------------------------------------------------------------------------------------------
+0                                  0x0                                PNG image, total size: 272492 bytes
+272492                             0x4286C                            ZIP archive, file count: 1, total size: 379130 bytes
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Analyzed 1 file for 85 file signatures (187 magic patterns) in 6.0 milliseconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>發現他裡面有zip 檔 可以把它extra 出來</p>
+<pre class="line-numbers language-none"><code class="language-none">$ binwalk -e dolls.jpg
+
+                                                    &#x2F;Users&#x2F;yunshiuan&#x2F;lab&#x2F;extractions&#x2F;dolls.jpg
+--------------------------------------------------------------------------------------------------------------------------------------------------
+DECIMAL                            HEXADECIMAL                        DESCRIPTION
+--------------------------------------------------------------------------------------------------------------------------------------------------
+0                                  0x0                                PNG image, total size: 272492 bytes
+272492                             0x4286C                            ZIP archive, file count: 1, total size: 379130 bytes
+--------------------------------------------------------------------------------------------------------------------------------------------------
+[#] Extraction of png data at offset 0x0 declined
+[+] Extraction of zip data at offset 0x4286C completed successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>他會在現在的所在位置創建一個 extractions 資料夾，進入之後裡面後又有一個jpg，就跟他的圖片一樣一層一層的用 binwalk 解。最後就會拿到flag</p>
+<p><img src="/assets/dg1UrqvNNxMAE2Rzt1OeWnbQ54tbqmbOvntjCy7qxYs=.png"></p>
+<hr>
+<h1 id="foremost"><a href="#foremost" class="headerlink" title="foremost"></a>foremost</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.kali.org/tools/foremost/">https://www.kali.org/tools/foremost/</a></p>
+<p>foremost 跟 binwalk 類似，也是在分離隱寫的檔案，foremost 也可以拿來恢復資料。</p>
+<p>剛剛 binwalk 那題也可以用 foremost 解</p>
+<pre class="line-numbers language-none"><code class="language-none">$ foremost dolls.jpg -T
+foremost: &#x2F;opt&#x2F;homebrew&#x2F;etc&#x2F;foremost.conf: No such file or directory
+Processing: dolls.jpg
+|foundat&#x3D;base_images&#x2F;2_c.jpgUT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<hr>
+<h1 id="stegsolve"><a href="#stegsolve" class="headerlink" title="stegsolve"></a>stegsolve</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/Giotino/stegsolve">https://github.com/Giotino/stegsolve</a></p>
+<p>網頁版：<a target="_blank" rel="noopener" href="https://georgeom.net/StegOnline/upload">https://georgeom.net/StegOnline/upload</a></p>
+<p>GUI 工具，可視化地查看圖片像素 &#x2F; RGB &#x2F; alpha 通道 &#x2F;做 XOR &#x2F;顏色通道切割，適合人工探索圖片裡的變化／隱寫的痕跡，這個工具也可以解LSB。</p>
+<p>例子：<a target="_blank" rel="noopener" href="https://ctf.hackme.quest/scoreboard/">Hackme-corgi can fly</a></p>
+<p>這題下載後是一個png 檔，丟進 stegsolve 看一下</p>
+<p><img src="/assets/svxGPJ6n_RFSDrrRZy1LQQxpNMEHQ-EnOSysmDm9Ux0=.png"></p>
+<p>下面會有左右箭頭都按按看</p>
+<p><img src="/assets/x0IQlpA_Lr559rMRbo1xoRIMfUrPv5LRlNMz4AznJkE=.png"></p>
+<p>在 Red plane 0 的情況下出現 QRcode ，掃了就會是 flag </p>
+<p>除了看每個通道外還可以去Analyse 功能中可以看 File format 以及提出LSB 資料…等等</p>
+<hr>
+<h1 id="imhex"><a href="#imhex" class="headerlink" title="imhex"></a>imhex</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://imhex.werwolv.net/">https://imhex.werwolv.net/</a></p>
+<p>十六進位／二進位編輯器，可用來檢查圖片的 header、檔案結構、metadata 有沒有被動過或有異常，介面還不錯看。</p>
+<p><img src="/assets/Sr1iJHVi4_VHOdC2qiX2mwOQLsSufSikmb1fvuU-J5s=.png"></p>
+<hr>
+<h1 id="pngcheck"><a href="#pngcheck" class="headerlink" title="pngcheck"></a>pngcheck</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.libpng.org/pub/png/apps/pngcheck.html">https://www.libpng.org/pub/png/apps/pngcheck.html</a></p>
+<p>檢查 PNG 檔案的結構正確性，檢測 chunk 是否完整、CRC 是否正確。若隱寫工具改動了部分 chunk，檔案可能破壞或檢查出錯。</p>
+<hr>
+<h1 id="modsize"><a href="#modsize" class="headerlink" title="modsize"></a>modsize</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/flawwan/modsize">https://github.com/flawwan/modsize</a></p>
+<p>一款專門調整圖片尺寸 metadata 的工具，或檢查圖片尺寸／metadata 跟真實圖像的 mismatch（我自己找的這個 library 可以用來看 image metadata 裡頭尺寸標記會不會被偽造）。</p>
+<p>以他github 的X-MAS CTF 2018 的題目測試</p>
+<p><img src="/assets/6bYCs-GKcKN1f5mTfMyq2cbErO6KB3eIRMMv3bgFbg0=.png"></p>
+<p><img src="/assets/OiiTgm89fXAK35ThIDY4XFSMA8Bj_JxpkHG7Hz9Wpic=.png"></p>
+<p>可以成功修改 height </p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>有這些工具之後還蠻大程度幫助我在遇到圖片鑑識時可以很快就解決，<del>或很快直接放棄</del>，如果有什麼其他好用的圖鑑鑑識工具也歡迎跟我說。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

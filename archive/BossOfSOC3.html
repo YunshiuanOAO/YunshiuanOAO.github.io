@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Boss Of The SOC v1 下 · yunshiuan</title><meta name="description" content="Boss Of The SOC v1 下 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Boss Of The SOC v1 下</h1><div class="post-info">Oct 13, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>接續昨天的內容，今天會分享 Boss Of The SOC v1 剩下的  Q21~ Q32 的解題過程，學習 Threat Hunting 的流程，解題平台同樣會使用 CyberDefender</p>
+<hr>
+<h1 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h1><p>本次實作實驗聚焦在 APT（高階持續性威脅）情境與勒索軟體情境。你將扮演 Alice Bluebird 的角色——剛被聘為 Wayne Enterprises 的 SOC 分析師，負責偵測與防禦各類網路攻擊。</p>
+<h2 id="場景-1（APT）："><a href="#場景-1（APT）：" class="headerlink" title="場景 1（APT）："></a>場景 1（APT）：</h2><p>今天是 Alice 在 Wayne Enterprises 安全部門（Security Operations Center，SOC）的第一天。Lucius 叫 Alice 坐下並給她第一個任務：一份來自高譚市警察局（Gotham City Police Department, GCPD）的備忘錄。GCPD 發現線上有證據（<a target="_blank" rel="noopener" href="http://pastebin.com/Gw6dWjS9%EF%BC%89%E9%A1%AF%E7%A4%BA%E7%B6%B2%E7%AB%99">http://pastebin.com/Gw6dWjS9）顯示網站</a> <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com/">www.imreallynotbatman.com</a> 在 Wayne Enterprises 的 IP 位址空間內被入侵。該駭客組織有多重目標……但他們的作案手法之一是篡改網站以羞辱被害者。Lucius 要求 Alice 判定 <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com(wayne/">www.imreallynotbatman.com（Wayne</a> 企業執行長的個人部落格）是否確實遭到入侵。</p>
+<p>在此情境中，使用者社群在瀏覽 Wayne Enterprises 網站時回報看到下列被篡改的圖片，且部分回報提到「P01s0n1vy」。若你不熟悉，P01s0n1vy 是一個曾針對 Wayne Enterprises 的 APT 組織。你作為 Alice 的目標是調查該網站篡改事件，並嘗試依照 Lockheed Martin Kill Chain 重建攻擊流程。</p>
+<p><img src="/assets/kNpb6q5LoVBZaQL696hxc5NUhEZYM2Y6amfiOkUtQXA=.png"></p>
+<h2 id="場景-2（勒索軟體）："><a href="#場景-2（勒索軟體）：" class="headerlink" title="場景 2（勒索軟體）："></a>場景 2（勒索軟體）：</h2><p>在第二個情境中，你的一位使用者在 Windows 桌面上看到一張圖片，表示系統上的檔案已被加密，必須付款才能取回檔案。看起來 Wayne Enterprises 有一台主機感染了 Cerber 勒索軟體，你的目標是調查這起勒索事件。</p>
+<p><img src="/assets/XMxnyYYAgsqi2e8fgkpYi93wDgWY461l01mIV_P_MgM=.png"></p>
+<hr>
+<blockquote>
+<p>Q21 : Ransomware: What fully qualified domain name (FQDN) makes the Cerber ransomware attempt to direct the user to at the end of its encryption phase?</p>
+</blockquote>
+<p>題目敘述說惡意程式會讓使用者嘗試去請求 domain ，要找出FQDN</p>
+<p>我想要先知道內部有哪些 IP 有在進行 DNS 查詢</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot;
+| table src_ip
+| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/sYm2KnhgFYCkdM9sQJ_4SWm4Wfc7Cdngvk7lwpW0Jp8=.png"></p>
+<p>這邊知道192.168.2.50、192.168.250.100、192.168.250.20、192.168.250.40、192.168.250.70 這些內部 IP 有在進行 DNS 查詢，接下來我先看192.168.250.0&#x2F;24 內 IP 查詢了哪些 domain，</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24 
+| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/OMbF3JUJiANeRWwDsBVF2A-In4u5w0v0fjWPRff2WmE=.png"></p>
+<p>接下來會有很多其他的 DNS 記錄出來 我們可以點擊不可能是答案的 FQDN ，然後選擇 Exclude from result ，然後它就會在 Search 欄位中自動產出將此FQDN 排除查詢的語法。</p>
+<p><img src="/assets/IoBJChn4M4fthuMfAPQoc1e6b4G-eXwv6hstSV2nq_M=.png"></p>
+<p>經過層層篩選後最後查詢如下</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.in-addr.arpa&quot; &quot;query&#123;&#125;&quot;!&#x3D;&quot;demo-01&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.authdns.ripe.net&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.microsoft.com&quot; &quot;query&#123;&#125;&quot;&#x3D;*.*.* &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.waynecorpinc.local&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;dns.msftncsi.com&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.globalrootservers.net&quot; 
+| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/jzPkKSf2XPhZ_kdZBN_vHdWs9SodRqw0Hdol4W8JsjY=.png"></p>
+<p>這邊可以看到 cerberhhyed5frqa.xmfir0.win 這個 FQDN，而這個網址在情境的圖片上有出現，因此是這題的答案</p>
+<blockquote>
+<p>ans : cerberhhyed5frqa.xmfir0.win</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q22 : Ransomware: What was the most likely IP address of we8105desk in 24AUG2016?</p>
+</blockquote>
+<p>題目想要問 we8105desk 這個 host 它最有可能的 IP 位置是什麼，時間限制在2016&#x2F;08&#x2F;24 中</p>
+<p>首先先來調整時間，選擇時間並選擇 DataRange，調整為查詢08&#x2F;24&#x2F;2016 到 08&#x2F;25&#x2F;2016這段時間的資料</p>
+<p><img src="/assets/l1jatLA2J8_nIfT-W0ySlWGVeQuBHTsKq6ZrZNWqTms=.png"></p>
+<p>接下來查詢 host 為 we8105desk 的 source IP 記錄，因為是查詢 Sysmon 來源的關係所以是使用 SourceIp 當作查詢來源 IP</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 host&#x3D;we8105desk source&#x3D;WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational
+| stats count by SourceIp 
+| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/ZXDBGmZerwfzhgg20VYhTIab7F3el5JViBuBlzlz1qk=.png"></p>
+<p>這邊可以看到答案是 192.168.250.100</p>
+<blockquote>
+<p>ans : 192.168.250.100</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q23 : Ransomware: Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)</p>
+</blockquote>
+<p>這題想要問 Suricata 產生的警報，當中關於 Cerber malware 出現最少的 signature 是哪一個</p>
+<p>可以用以下的語法查詢，將 signature 與 signature_id 抓出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata Cerber 
+| table alert.signature alert.signature_id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/SUW4b8xNVYYgib6Y3L8SLD1NeyFdmlv0pC-9KT0GKzc=.png"></p>
+<p>可以很明顯的看到 <code>ETPRO TROJAN Ransomware/Cerber Checkin 2</code> 這個 signature 只出現一次，而它的 id 為2816763 ，則為答案</p>
+<blockquote>
+<p>ans : 2816763</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q24 : Ransomware: The VBScript found in question 25 launches 121214.tmp. What is the ParentProcessId of this initial launch?</p>
+</blockquote>
+<p>這題需要先Q25，可以先去看 Q25 的解題過程</p>
+<p>題目敘述說在Q25 找到 關於VBScript 是 121214.tmp被執行了，請問啟動這個VBScript 的父進程 ID 是什麼？</p>
+<p>可以先將ParentImage、ParentProcessId以及CommandLine 抓出來查看</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| table ParentImage ParentProcessId CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/cn-02vrj7Ro2hRDX_3l34zNpoDpJ3d--i0_5yj-7Lyo=.png"></p>
+<p>這邊可以很清楚的看到啟動121214.tmp 的父進程是 wscript.exe ，它的ID 為3968，這正是我們的答案</p>
+<blockquote>
+<p>ans : 3968</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q25 : Ransomware: During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length in characters of the value of this field?</p>
+</blockquote>
+<p>題目敘述說當 Cerber 惡意程式執行時，初始會先執行 VB script，而這個 VB script 的產生包含前面啟動它的 exe 檔 可以在 Splunk 的其中一個欄位找到，最後問這個欄位裡面的值總共有多少 characters</p>
+<p>看到題目敘述，可以直接聯想到的是 CommandLine 欄位，所以我們先把 EventLog 的 CommandLine 欄位抓出來，並且限制檔名為 .vbs</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| table CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/48ggord4P-7U5Euy77ESb7wgPZPyzklMo8loEzzXW_M=.png"></p>
+<p>可以看到下面一大串的 cmd.exe…….. 並且後面接 <code>GSI=%APPDATA%\%RANDOM%.vbs</code> 這邊就可以確定是題目所說。</p>
+<p>接下來要計算裡面有多少字元，使用的是 eval 的 len 函式</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| eval cmdlenght&#x3D;len(CommandLine)
+| table CommandLine cmdlenght<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/NsHJjeRVHk2NQIl9gw8oRwmXM2WSI3lcQOAvMZljaoU=.png"></p>
+<p>這邊它幫我們計算出答案為4490</p>
+<blockquote>
+<p>ans : 4490</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q26 : Ransomware: The malware downloads a file that contains the Cerber ransomware crypto code. What is the name of that file?</p>
+</blockquote>
+<p>題目敘述說惡意程式去下載一個包含 Cerber 勒索病毒加密程式碼的檔案，它的檔案名稱是什麼</p>
+<p>我先把 192.168.250.100 (we8105desk) HTTP 的 GET 請求全部先抓下來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;stream:http&quot; src_ip&#x3D;192.168.250.100 http_method&#x3D;GET
+| table  src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/tO3hZ1-M67gHdIfdlzVWlYr4RjE5w5rVxvEXMrR_Ns4=.png"></p>
+<p>當中最可疑的是它向 <code>solidaritedeproximite.org</code> 請求一個 mhtr.jpg 檔案</p>
+<p>我們單獨看一下關於有包含 mhtr.jpg 的記錄</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 mhtr.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/3qLVjpkrNx1j5OKEazxyKyRjn6aJd4IHKxs2-Th5SSQ=.png"></p>
+<p>發現到有 <code>fgt_utm</code> 的記錄跳出來，在 Splunk 中通常指的是來自 FortiGate 防火牆的 Unified Threat Management 安全日誌類型的 sourcetype，用來記錄防毒、入侵防禦、網頁過濾等安全事件。</p>
+<p>我們使用 fgt_utm 記錄，並把 filename,msg,analyticscksum 欄位抓出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;fgt_utm&quot; mhtr.jpg
+| table filename,msg,analyticscksum<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/wX3qtK3vMoJ_wBsisJ0D4TGBsSh3WWWES9-kVGMwxwM=.png"></p>
+<p>可以看到它偵測 mhtr.jpg 為惡意檔案，並且有 sha256 給我們，我們將它丟入 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9c1cabc16826273ad69f59af06f12fe6484e2eb0b5d3c87a690993934675e459">VirusTotal</a></p>
+<p><img src="/assets/KjYcIdDLUwD5_-oBYnxh2l1kwJn7bt6Nrmb71pDr14E=.png"></p>
+<p>可以看到它是惡意程式，那 mhtr.jpg 就是我們的答案</p>
+<blockquote>
+<p>ans : mhtr.jpg</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q27 : Ransomware: Now that you know the name of the ransomware’s encryptor file, what obfuscation technique does it likely use?</p>
+</blockquote>
+<p>題目問 mhtr.jpg 使用了何種混淆技術</p>
+<p>jpg 可以被辨識出惡意程式，有很大的可能使用了隱寫術 (Steganography)，將惡意程式隱藏在圖片中，因此答案就是 Steganography</p>
+<blockquote>
+<p>ans : Steganography</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q28 : Ransomware: What is the name of the USB key inserted by Bob Smith?</p>
+</blockquote>
+<p>題目問 Bob Smith 插入的 USB 名稱是什麼</p>
+<p>在 Splunk 中提供了一個 sourcetype，名稱為 winregistry，用來監控 Windows 註冊表 key／value 的建立、修改、刪除等操作。</p>
+<p>另外關於 USB 的其中一個註冊表路徑會在 <code>SYSTEM\ControlSet001\USBSTOR</code>，主要用途是記錄曾經連接過的 USB 裝置資訊，例如製造商、產品、序號、FriendlyName 等等</p>
+<p>因此我們將 <code>USBSTOR</code> 底下的 value 抓出來，並且用 dedup 將重複的 value 刪除，只保留第一筆出來的值</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;winregistry&quot; host&#x3D;we8105desk USBSTOR
+| table registry_value_data | dedup registry_value_data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/B7j-ZowtUGr4m3r3GkRhOsm_eHvyijuT3v9bNfFIRzM=.png"></p>
+<p>這邊就可以看到 USB 的名稱為 MIRANDA_PRI</p>
+<blockquote>
+<p>ans : MIRANDA_PRI</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q29 : Ransomware: Bob Smith’s workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?</p>
+</blockquote>
+<p>題目敘述 Bob Smith’s workstation 在 ransomware 執行期間去連線了 file server，請問 file server 的 IP 是什麼？</p>
+<p>連線 file server 的 protocol 可能會有 SMB 或者 FTP，FTP 是空的，那我們可以著重去看 SMB</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100
+| table dest_ip
+| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/yOqGwKrU-ZM7IjAYNdpFOfs2S1L4Z0hW5ixVwDSsEIU=.png"></p>
+<p>接下來要再更確認一點，file server 可能會進行登入，因此我們加上 login&#x3D;”bob.smith”</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 login&#x3D;&quot;bob.smith&quot;
+| table dest_ip
+| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/9yawfJ9r2QGw0qUBPTIYITVz6gXLxAQGGFcAJeFblNM=.png"></p>
+<p>這樣就確定了 192.168.250.20 是 file server </p>
+<blockquote>
+<p>ans : 192.168.250.20</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q30 : Ransomware: How many distinct PDFs did the ransomware encrypt on the remote file server?</p>
+</blockquote>
+<p>題目問有多少個遠端 pdf 被加密了</p>
+<p>我們在上一題知道 file server 的 IP 為 192.168.250.20，我們另外先拿一下它的 domain name</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 dest_ip&#x3D;192.168.250.20 path&#x3D;*
+| table path<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/qEWsjAJB7FUV9Mq7acGsjdBlmDRUI1hj8Kd1x4wE9uo=.png"></p>
+<p>這邊得知了 domain name 為 we9041srv.waynecorpinc.local</p>
+<p>首先我先搜尋 wineventlog 中有沒有關於 .pdf 的記錄</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/xJ0cOJW0DDg-M8pGh77C8_DVq-sVjUcXcwSXEbI-zOM=.png"></p>
+<p>發現到有，並且是從 192.168.250.100 請求 we9041srv.waynecorpinc.local 的一個 pdf<br>因此我們將所有關於這個的記錄抓下來，並用 stats 中的 dc 幫我們算總共有幾個檔案</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf  EventCode&#x3D;5145 Source_Address&#x3D;192.168.250.100
+| stats dc(Relative_Target_Name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/B-ZLsIdRUo5P-2poxSx5cJ8Qark7Byogq2TCf8i5JyU=.png"></p>
+<p>總共是 257 個，則 257 為答案</p>
+<blockquote>
+<p>ans : 257</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q31 : Ransomware: The Cerber ransomware encrypts files located in Bob Smith’s Windows profile. How many .txt files does it encrypt?</p>
+</blockquote>
+<p>這題問的是在 Bob Smith 的電腦上有多少的 .txt 檔被 ransomware 鎖起來了</p>
+<p>首先我們先使用 Sysmon 將針對 Bob Smith 內的 .txt 的操作抓下來，並且看是哪個檔案對 .txt 操作</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; TargetFilename&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;
+| table Image TargetFilename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/aslGsxq9wbcm5wT5VeqfAuUnScwW0MXR-gC6Kb-YIZs=.png"></p>
+<p>可以看到是有一個 osk.exe 對 .txt 檔做操作，</p>
+<p>那我們可以 EventID&#x3D;1 去看這個 osk.exe 的 hash </p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; EventCode&#x3D;1 Image&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\AppData\\Roaming\\&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;\\osk.exe&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/bGRAyITwgDbzGkIxST7PVBbBAzYcou8g5XtO2PGhEQs=.png"></p>
+<p>得到的 MD5 hash 為 <a target="_blank" rel="noopener" href="https://189ccf15-ac01-4578-b319-8cf69e039163.cyberdefenders.network/en-US/app/search/search?q=search%20index=botsv1%20source=%22wineventlog:microsoft-windows-sysmon/operational%22%20EventCode=1%20Image=%22C:%5C%5CUsers%5C%5Cbob.smith.WAYNECORPINC%5C%5CAppData%5C%5CRoaming%5C%5C%7B35ACA89F-933F-6A5D-2776-A3589FB99832%7D%5C%5Cosk.exe%22&display.page.search.mode=smart&dispatch.sample_ratio=1&workload_pool=&earliest=0&latest=now&display.page.search.tab=events&display.general.type=events&sid=1760368198.162#">EE0828A4E4C195D97313BFC7D4B531F1</a>，丟進給 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/37397f8d8e4b3731749094d7b7cd2cf56cacb12dd69e0131f07dd78dff6f262b">VirusTotal</a> 後</p>
+<p><img src="/assets/wqQ9cuHeud9mqmV_is1wvugWnlvXxOlf-VlSPy-RNGE=.png"></p>
+<p>可以確定它是惡意程式</p>
+<p>接下來針對這個 osk.exe 去計算所有 .txt 的數量</p>
+<p><img src="/assets/gRO7TyyW0T3ZEP7-XUY6yZMG1GJPKE-N3D7Njwya-34=.png"></p>
+<p>答案出來為 406，則 406 為這題的答案</p>
+<blockquote>
+<p>ans : 406</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q32 : Ransomware: What was the first suspicious domain visited by we8105desk in 24AUG2016?</p>
+</blockquote>
+<p>題目問 we8105desk 在 2016&#x2F;08&#x2F;24 時訪問了哪個可疑 domain？</p>
+<p>我們在 Q26 中發現它會去向 <code>solidaritedeproximite.org</code> 請求 jpg 檔，而 <code>solidaritedeproximite.org</code> 則為這題的解答。</p>
+<blockquote>
+<p>ans : solidaritedeproximite.org</p>
+</blockquote>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天把 Boss Of The SOC v1 最後幾題題目分享完了，今天也學到了更多 Threat Hunting 的技巧，這場 Boss Of The SOC v1 我覺得題目都出得很好，都可以學到非常多的東西，除了 v1 之外也有 v2、v3，歡迎大家可以挑戰。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

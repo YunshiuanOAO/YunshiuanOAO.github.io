@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 🦈 · yunshiuan</title><meta name="description" content="🦈 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">🦈</h1><div class="post-info">Sep 29, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享什麼是Network Forensic，以及經典分析工具Wireshark的使用</p>
+<hr>
+<h1 id="🛜-Network-Forensic"><a href="#🛜-Network-Forensic" class="headerlink" title="🛜 Network Forensic"></a>🛜 Network Forensic</h1><p>首先講一下什麼是封包，封包是網路通訊的基本單位，就像郵件一樣。當你在網路上傳送資料時，這些資料不會一次全部送出去，而是被切割成很多小塊，每一塊就是一個封包。比如說，當你下載一個1MB的檔案時，這個檔案會被切割成幾千個封包，每個封包大約1500位元組左右。每個封包都有固定的結構，就像信封一樣。</p>
+<p>封包的最外層是標頭（Header），裡面包含了這個封包要去哪裡、從哪裡來、用什麼方式傳送等資訊。標頭裡最重要的資訊包括：</p>
+<ul>
+<li><strong>來源IP位址</strong>：這個封包是從哪台電腦送出來的</li>
+<li><strong>目標IP位址</strong>：這個封包要送到哪台電腦</li>
+<li><strong>協定類型</strong>：這個封包使用什麼通訊協定（HTTP、HTTPS、FTP等）</li>
+<li><strong>時間戳記</strong>：這個封包是什麼時候產生的</li>
+<li><strong>封包大小</strong>：這個封包有多大</li>
+<li><strong>序號</strong>：這個封包在整個資料流中的位置</li>
+</ul>
+<p>封包的內容部分（Payload）則是實際要傳送的資料。比如說，如果你在瀏覽網頁，HTTP封包的內容就是網頁的HTML程式碼。如果你在登入網站，封包的內容可能包含你的帳號密碼。</p>
+<p><img src="/assets/b97gLrlgcv1usSzdq-JWxlG0a0ninhlWRadfFBadf8g=.png"></p>
+<p><code>source : https://webhostinggeeks.com/blog/what-is-data-packet/</code></p>
+<p>網路層面追蹤和分析資料傳輸的過程。當網路攻擊發生時，攻擊者會在網路中留下痕跡，這些痕跡就記錄在網路封包裡。Network Forensic 就是找出攻擊者是怎麼進來的、做了什麼、拿走了什麼資料</p>
+<p>常見的網路鑑識工具是Wireshark</p>
+<hr>
+<h1 id="🦈-Wireshark"><a href="#🦈-Wireshark" class="headerlink" title="🦈 Wireshark"></a>🦈 Wireshark</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">https://www.wireshark.org/download.html</a></p>
+<p>Wireshark是目前最受歡迎的開源網路協定分析器。這款功能強大的軟體不僅能夠即時監控網路流量，更能深入分析各種網路協定的詳細內容，為網路故障排除、協定開發和安全分析提供全方位的支援，另外也能夠識別和解析超過2000種不同的網路協定，從常見的TCP&#x2F;IP協定族到專用的工業控制協定，幾乎涵蓋了所有可能遇到的網路通訊場景。這種全面的協定支援不僅包括即時協定解析，還允許用戶根據需要添加自定義協定支援。</p>
+<p>下載後打開主頁會有兩個部分，第一個是 open，另一個是 Capture</p>
+<ul>
+<li>open 是開啟已經錄好的 pcap 檔</li>
+<li>Capture 是可以選擇你的網卡，點進去後可以開始抓封包</li>
+</ul>
+<p><img src="/assets/b6EW4dgBH6-Vezc9bkG5ui2GbZr68QxayKMvEpv53tE=.png"></p>
+<p>假設我們打開了一個錄好的 pcap 封包</p>
+<p><img src="/assets/1qX2ViLKOm5_QxrvpdRWjxU3u05hPTe7El2vWQFO6No=.png"></p>
+<h2 id="中間主視窗"><a href="#中間主視窗" class="headerlink" title="中間主視窗"></a>中間主視窗</h2><p>顯示抓到的所有封包</p>
+<p>•	No.：封包編號（依捕獲順序）</p>
+<p>•	Time：相對於第一個封包的時間戳記</p>
+<p>•	Source：封包來源 IP</p>
+<p>•	Destination：封包目的 IP</p>
+<p>•	Protocol：協定類型（如 TCP、HTTP、SSH）</p>
+<p>•	Length：封包大小（bytes）</p>
+<p>•	Info：協定的摘要資訊（像是 TCP 的 SYN&#x2F;ACK、HTTP 的 GET 請求等等</p>
+<p>中間封包的顏色也會根據不同的 protocol 或狀態更改顏色 </p>
+<p><img src="/assets/Sk5dWFvQR_SCOx_aoPZkaC4gpm9J67Yhotddqr1L-mM=.png"></p>
+<h2 id="左下方視窗"><a href="#左下方視窗" class="headerlink" title="左下方視窗"></a>左下方視窗</h2><p>顯示選中封包的協定分層解析</p>
+<p>•	Frame：物理層資訊（長度、介面等）</p>
+<p>•	Ethernet &#x2F; Data-link 層（此例省略，因為用 utun8 介面抓）</p>
+<p>•	Internet Protocol Version 4 (IPv4)：來源 IP 100.112.165.2 → 目的 IP 192.168.1.125</p>
+<p>•	TCP：來源埠 60665 → 目的埠 5000，Seq &#x2F; Ack &#x2F; WinSize 等控制資訊</p>
+<p>•	HTTP：協定層解析到 GET &#x2F; HTTP&#x2F;1.1</p>
+<h2 id="右下方視窗"><a href="#右下方視窗" class="headerlink" title="右下方視窗"></a>右下方視窗</h2><p>以十六進制（左半邊）+ ASCII（右半邊）顯示原始封包內容。</p>
+<hr>
+<p>另外也可以對選中的封包按右鍵，使用其他功能，除了 copy 之後還可以 follow。</p>
+<p><img src="/assets/QY-EQZJMkEyHF8FFoUi1N3LXDcd1ydgpLgXGICT8HjQ=.png"></p>
+<p>follow 的功能是將一個 TCP 連線裡的 HTTP 封包資料串起來，可以看到完整的瀏覽器請求或伺服器回應</p>
+<p><img src="/assets/HUMkwZM-FQaDF63u8o94ACLKpYvWuw5rwxU9XbcD5tI=.png"></p>
+<hr>
+<p>另外最上方有一個 Statistic 可以選，它會幫你整理一些資訊並統計</p>
+<p><img src="/assets/S56NHuYS5NMQrQU_pjvvQb1Y2kUALT9vC8yZL4ODYis=.png"></p>
+<p>這邊介紹幾個常用功能</p>
+<h2 id="Conversation"><a href="#Conversation" class="headerlink" title="Conversation"></a>Conversation</h2><p>這裡可以看到 Wireshark 統計的所有兩個 IP 地址之間的傳輸狀況</p>
+<p><img src="/assets/jSWnSFdc5hkpW1oaY6wC88ZqfXCXAhkA-aKTyF1MmuA=.png"></p>
+<h2 id="Path-length"><a href="#Path-length" class="headerlink" title="Path length"></a>Path length</h2><p>這邊可以看到封包長度的統計</p>
+<p><img src="/assets/i4NR_mBwxqb7XN0ldbpK3FH9kOhZX0TeNF9V8DwNaQQ=.png"></p>
+<h2 id="Protocol-Hierarchy"><a href="#Protocol-Hierarchy" class="headerlink" title="Protocol Hierarchy"></a>Protocol Hierarchy</h2><p>這邊會看到所有封包協定的統計結果</p>
+<p><img src="/assets/A-yURmMM36hnnwHZPVkuBjJnRXHIYXXWqbmzXKoJ_7I=.png"></p>
+<hr>
+<p>除此之外，Wireshark 提供了 filter 的功能，可以快速過濾出想要看的封包</p>
+<p><img src="/assets/Pa8-siGHwexyA9rXbQyPRcMA-_VJ_It7Sp41jbj-KvQ=.png"></p>
+<p>這邊整理了一些基本 filter 語法</p>
+<pre class="line-numbers language-none"><code class="language-none"># 特定IP位址
+ip.addr &#x3D;&#x3D; 192.168.1.1
+
+# 來源IP
+ip.src &#x3D;&#x3D; 192.168.1.1
+
+# 目標IP
+ip.dst &#x3D;&#x3D; 192.168.1.1
+
+# IP範圍
+ip.addr &gt;&#x3D; 192.168.1.1 and ip.addr &lt;&#x3D; 192.168.1.100
+
+# 網段
+ip.addr &#x3D;&#x3D; 192.168.1.0&#x2F;24
+
+# 特定埠號
+tcp.port &#x3D;&#x3D; 80
+udp.port &#x3D;&#x3D; 53
+
+# 來源埠
+tcp.srcport &#x3D;&#x3D; 22
+
+# 目標埠
+tcp.dstport &#x3D;&#x3D; 443
+
+# 埠範圍
+tcp.port &gt;&#x3D; 8000 and tcp.port &lt;&#x3D; 9000
+
+# 基本協定
+tcp
+udp
+icmp
+http
+https
+dns
+ssh
+ftp
+
+# 組合協定
+tcp and http
+udp and dns
+
+# HTTP請求方法
+http.request.method &#x3D;&#x3D; &quot;GET&quot;
+http.request.method &#x3D;&#x3D; &quot;POST&quot;
+http.request.method &#x3D;&#x3D; &quot;PUT&quot;
+
+# HTTP狀態碼
+http.response.code &#x3D;&#x3D; 200
+http.response.code &gt;&#x3D; 400
+
+# HTTP主機
+http.host &#x3D;&#x3D; &quot;example.com&quot;
+
+# HTTP URI
+http.request.uri contains &quot;login&quot;
+http.request.uri contains &quot;admin&quot;
+
+# 特定時間範圍
+frame.time &gt;&#x3D; &quot;2024-01-01 10:00:00&quot;
+frame.time &lt;&#x3D; &quot;2024-01-01 11:00:00&quot;
+
+# 相對時間
+frame.time &gt;&#x3D; &quot;2024-01-01 10:00:00&quot; and frame.time &lt;&#x3D; &quot;2024-01-01 10:30:00&quot;
+
+# 封包大小
+frame.len &gt; 1000
+frame.len &lt; 100
+
+# 資料長度
+tcp.len &gt; 500
+udp.length &gt; 100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是 Network Forensic，以及 Wireshark 的使用，Wireshark 的功能還有很多，接下來幾天也會介紹一些其他的工具或者 Wireshark 的其他功能。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

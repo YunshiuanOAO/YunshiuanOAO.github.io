@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> picoCTF 題解整理 · yunshiuan</title><meta name="description" content="picoCTF 題解整理 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">picoCTF 題解整理</h1><div class="post-info">Jan 23, 2026</div><div class="post-content"><p>EASY :</p>
+<ul>
+<li><a href="#transformation">Transformation</a></li>
+<li><a href="#vault-door-training">vault-door-training</a></li>
+</ul>
+<p>HARD : </p>
+<ul>
+<li><a href="#not-crypto">not crypto</a></li>
+<li><a href="#no_way_out">No-Way_Out</a></li>
+</ul>
+<span id="more"></span>
+<hr>
+<h2 id="Transformation"><a href="#Transformation" class="headerlink" title="Transformation"></a>Transformation</h2><p>Difficulty : Easy</p>
+<p><a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/104">picoCTF連結</a></p>
+<p>Description</p>
+<blockquote>
+<p>I wonder what this really is… enc ‘’.join([chr((ord(flag[i]) &lt;&lt; 8) + ord(flag[i + 1])) for i in range(0, len(flag), 2)])</p>
+</blockquote>
+<h3 id="觀察"><a href="#觀察" class="headerlink" title="觀察"></a>觀察</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">enc &#39;&#39;.join([chr((ord(flag[i]) &lt;&lt; 8) + ord(flag[i + 1])) for i in range(0, len(flag), 2)])<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>這段程式碼看起來將一段文字編成了其他編碼，丟進去CyberChef選擇magic自偵測的方式即可拿到flag</p>
+<p><a href="%22https://gchq.github.io/CyberChef/#recipe=Magic(3,true,false,'')&input=54Gp5o2v5I2U5Jm744S25b2i5qW0542f5qWu542044y05pGf5r2m5by45by345Wk45C446S45om9&oenc=65001%22">CyberChef</a></p>
+<p>flag:</p>
+<blockquote>
+<p>picoCTF{16_bits_inst34d_of_8_75d4898b}</p>
+</blockquote>
+<hr>
+<h2 id="vault-door-training"><a href="#vault-door-training" class="headerlink" title="vault-door-training"></a>vault-door-training</h2><p>Difficulty : Easy</p>
+<p><a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/7">picoCTF連結</a></p>
+<p>Description</p>
+<blockquote>
+<p>Your mission is to enter Dr. Evil’s laboratory and retrieve the blueprints for his Doomsday Project. The laboratory is protected by a series of locked vault doors. Each door is controlled by a computer and requires a password to open. Unfortunately, our undercover agents have not been able to obtain the secret passwords for the vault doors, but one of our junior agents obtained the source code for each vault’s computer! You will need to read the source code for each level to figure out what the password is for that vault door. As a warmup, we have created a replica vault in our training facility. The source code for the training vault is here: VaultDoorTraining.java</p>
+</blockquote>
+<h3 id="觀察-1"><a href="#觀察-1" class="headerlink" title="觀察"></a>觀察</h3><p>打開VaultDoorTraining.java後發現他在checkPassword函式中直接將玩家的輸入與w4rm1ng_Up_w1tH_jAv4_3808d338b46做比對，相同救回傳Access granted</p>
+<pre class="line-numbers language-none"><code class="language-none">public boolean checkPassword(String password) &#123;
+	return password.equals(&quot;w4rm1ng_Up_w1tH_jAv4_3808d338b46&quot;);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>因此可以直接組出flag</p>
+<p>flag:</p>
+<blockquote>
+<p>picoCTF{w4rm1ng_Up_w1tH_jAv4_3808d338b46}</p>
+</blockquote>
+<hr>
+<h2 id="not-crypto"><a href="#not-crypto" class="headerlink" title="not crypto"></a>not crypto</h2><p>Difficulty : hard</p>
+<p><a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/222">picoCTF連結</a></p>
+<p>Description</p>
+<blockquote>
+<p>there’s crypto in here but the challenge is not crypto… 🤔</p>
+</blockquote>
+<h3 id="觀察-2"><a href="#觀察-2" class="headerlink" title="觀察"></a>觀察</h3><p>執行過後會要使用者輸入東西，丟入ida發現到中間有一大串的操作，最後有一個memcmp去比較兩個字串，有可能是比較我們輸入的字串與程式操作過後的字串做比較，因此可以下斷點在memcpy上面並觀察傳入的參數</p>
+<h3 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h3><p><img src="/./assets/no-crypto.png" alt="no-crypto.png"></p>
+<p>flag:</p>
+<blockquote>
+<p>picoCTF{c0mp1l3r_0pt1m1z4t10n_15_pur3_w1z4rdry_but_n0_pr0bl3m?}</p>
+</blockquote>
+<hr>
+<h2 id="No-Way-Out"><a href="#No-Way-Out" class="headerlink" title="No_Way_Out"></a>No_Way_Out</h2><p>Difficulty : hard</p>
+<p><a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/361">picoCTF連結</a></p>
+<p>Description</p>
+<blockquote>
+<p>Put this flag in standard picoCTF format before submitting. If the flag was h1_1m_7h3_f14g submit picoCTF{h1_1m_7h3_f14g} to the platform.Windows game, Mac game Use password <code>picoctf</code> to unzip archives.</p>
+</blockquote>
+<h3 id="觀察-3"><a href="#觀察-3" class="headerlink" title="觀察"></a>觀察</h3><p>先用detect it easy 觀察一下<br><img src="/./assets/NoWayOut_DIE.png" alt="NoWayOut_die"><br>沒殼 使用C&#x2F;C++</p>
+<p>進入遊戲後在畫面的最上方有hint提示:Escape to find the flag<br><img src="/./assets/NoWayOut_Game.png" alt="NoWayOut_Game"><br>爬上梯子後被牆擋住，因此目標是要<strong>通過牆前往旗子的地方</strong><br>可能可以考慮以下解法</p>
+<ul>
+<li>更改玩家跳躍的功能</li>
+<li>更改觸發flag的條件</li>
+<li>瞬移到牆壁外面</li>
+</ul>
+<h3 id="Solve"><a href="#Solve" class="headerlink" title="Solve"></a>Solve</h3><h4 id="解法一-dnspy"><a href="#解法一-dnspy" class="headerlink" title="解法一: dnspy"></a>解法一: dnspy</h4><p>逛一下遊戲資料夾，發現有一個檔案名為</p>
+<blockquote>
+<p>&#x2F;pico_Data&#x2F;Managed&#x2F;Assembly-Csharp.dll</p>
+</blockquote>
+<p>看檔案名可以猜測主要的遊戲程式內容，我們需要改的內容會在這裡<br>打開dnspy 並將Assembly-Csharp.dll丟進去</p>
+<p>目標是要改變玩家的<strong>跳躍功能</strong> 因此要在裡面找到處理跳躍功能的程式碼<br>翻找一下會發現是在EvolveGames-&gt;PlayerController的update()函式中</p>
+<p><img src="/./assets/NoWayOut_dnspy.png" alt="NoWayOut_dnspy"></p>
+<p>其中有一個條件很明顯是處理跳躍功能</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (Input.GetButton(&quot;Jump&quot;) &amp;&amp; this.canMove &amp;&amp; this.characterController.isGrounded &amp;&amp; !this.isClimbing)
+&#123;
+    this.moveDirection.y &#x3D; this.jumpSpeed;
+&#125;
+else
+&#123;
+    this.moveDirection.y &#x3D; y;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>這裡有兩個解法</p>
+<ol>
+<li>增加跳躍數值</li>
+</ol>
+<p>code:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (Input.GetButton(&quot;Jump&quot;) &amp;&amp; this.canMove &amp;&amp; this.characterController.isGrounded &amp;&amp; !this.isClimbing)
+&#123;
+    this.moveDirection.y &#x3D; this.jumpSpeed + 20f;
+&#125;
+else
+&#123;
+    this.moveDirection.y &#x3D; y;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>讓玩家一跳就跳很高</p>
+<ol start="2">
+<li>刪除限制條件</li>
+</ol>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (Input.GetButton(&quot;Jump&quot;))
+&#123;
+    this.moveDirection.y &#x3D; this.jumpSpeed;
+&#125;
+else
+&#123;
+    this.moveDirection.y &#x3D; y;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>讓玩家可以在空中連續跳</p>
+<p>另外，也可以注意到在APTX的 class中有一個條件</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (collision.gameObject &#x3D;&#x3D; this.player)
+&#123;
+    this.Mysterious.SetActive(true);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>這個條件的感覺很像是如果一個東西碰到玩家後，會將一個Mysterious設成true<br>可以猜測是如果玩家碰到旗子之後的程式<br>因此可以編輯這個class 新增一個start函式，讓遊戲執行的時候就將Mysterious設成true</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">using System;
+using UnityEngine;
+
+&#x2F;&#x2F; Token: 0x02000002 RID: 2
+public class APTX : MonoBehaviour
+&#123;
+	&#x2F;&#x2F; Token: 0x06000001 RID: 1
+	private void OnTriggerEnter(Collider collision)
+	&#123;
+		if (collision.gameObject &#x3D;&#x3D; this.player)
+		&#123;
+			this.Mysterious.SetActive(true);
+		&#125;
+	&#125;
+
+	&#x2F;&#x2F; Token: 0x06000002 RID: 2
+	public APTX()
+	&#123;
+	&#125;
+
+	&#x2F;&#x2F; Token: 0x0600003A RID: 58
+	public void Start()
+	&#123;
+		this.Mysterious.SetActive(true);
+	&#125;
+
+	&#x2F;&#x2F; Token: 0x04000001 RID: 1
+	public GameObject player;
+
+	&#x2F;&#x2F; Token: 0x04000002 RID: 2
+	public GameObject Mysterious;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h4 id="解法二-CheatEngine"><a href="#解法二-CheatEngine" class="headerlink" title="解法二: CheatEngine"></a>解法二: CheatEngine</h4><p>使用cheatEngin獲得玩家位置的記憶體位置，修改掉數值達成穿牆<br><a target="_blank" rel="noopener" href="https://youtu.be/QgF4PQjeG-o?si=qvckIAU1Cr03s50d&t=604">參考影片</a></p>
+<p>flag:</p>
+<blockquote>
+<p>picoCTF{WELCOME_TO_UNITY!!}</p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

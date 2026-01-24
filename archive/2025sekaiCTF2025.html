@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 2025 SEKAICTF Web 題解 · yunshiuan</title><meta name="description" content="2025 SEKAICTF Web 題解 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">2025 SEKAICTF Web 題解</h1><div class="post-info">Jan 23, 2026</div><div class="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這場比賽的題解會以學習Web為主，Writeup會參考<a target="_blank" rel="noopener" href="https://github.com/project-sekai-ctf/sekaictf-2025/tree/main/web">官方github連結</a>以及其他參賽者在網路上討論的內容</p>
+<h1 id="My-flask-app"><a href="#My-flask-app" class="headerlink" title="My flask app"></a>My flask app</h1><p>這是一個flask製作的網頁</p>
+<p>原始碼可以看到</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    app.run(host&#x3D;&#39;0.0.0.0&#39;, port&#x3D;5001, debug&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>發現到他有開啟debug mod，根據<a target="_blank" rel="noopener" href="https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html#werkzeug--flask-debug">這篇blog</a>可以試試看<code>/console</code>路徑但是這個console會需要用到pin碼，這個密碼是可以爆破的，需要兩個<code>probably_public_bits</code>、<code>private_bits</code></p>
+<ul>
+<li><p>probably_public_bits</p>
+<ul>
+<li><code>username</code></li>
+</ul>
+</li>
+<li><p>private_bits</p>
+</li>
+</ul>
+<p>另外從源碼可以發現到</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">@app.route(&#39;&#x2F;view&#39;)
+def view():
+    filename &#x3D; request.args.get(&#39;filename&#39;)
+    if not filename:
+        return &quot;Filename is required&quot;, 400
+    try:
+        with open(filename, &#39;r&#39;) as file:
+            content &#x3D; file.read()
+        return content, 200
+    except FileNotFoundError:
+        return &quot;File not found&quot;, 404
+    except Exception as e:
+        return f&quot;Error: &#123;str(e)&#125;&quot;, 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>訪問到view後他會訪問filename的參數，因此可以任意讀檔，透過這個</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

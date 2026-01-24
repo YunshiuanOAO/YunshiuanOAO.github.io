@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Boss Of The SOC v1 中 · yunshiuan</title><meta name="description" content="Boss Of The SOC v1 中 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Boss Of The SOC v1 中</h1><div class="post-info">Oct 12, 2025</div><div class="post-content"><h1 id="Day28-Boss-Of-The-SOC-v1-中"><a href="#Day28-Boss-Of-The-SOC-v1-中" class="headerlink" title="Day28 Boss Of The SOC v1 中"></a>Day28 Boss Of The SOC v1 中</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>接續昨天的內容，今天會分享 Boss Of The SOC v1 Q11~ Q20 的解題過程，學習 Threat Hunting 的流程，解題平台同樣會使用 CyberDefender</p>
+<hr>
+<h1 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h1><p>本次實作實驗聚焦在 APT（高階持續性威脅）情境與勒索軟體情境。你將扮演 Alice Bluebird 的角色——剛被聘為 Wayne Enterprises 的 SOC 分析師，負責偵測與防禦各類網路攻擊。</p>
+<h2 id="場景-1（APT）："><a href="#場景-1（APT）：" class="headerlink" title="場景 1（APT）："></a>場景 1（APT）：</h2><p>今天是 Alice 在 Wayne Enterprises 安全部門（Security Operations Center，SOC）的第一天。Lucius 叫 Alice 坐下並給她第一個任務：一份來自高譚市警察局（Gotham City Police Department, GCPD）的備忘錄。GCPD 發現線上有證據（<a target="_blank" rel="noopener" href="http://pastebin.com/Gw6dWjS9%EF%BC%89%E9%A1%AF%E7%A4%BA%E7%B6%B2%E7%AB%99">http://pastebin.com/Gw6dWjS9）顯示網站</a> <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com/">www.imreallynotbatman.com</a> 在 Wayne Enterprises 的 IP 位址空間內被入侵。該駭客組織有多重目標……但他們的作案手法之一是篡改網站以羞辱被害者。Lucius 要求 Alice 判定 <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com(wayne/">www.imreallynotbatman.com（Wayne</a> 企業執行長的個人部落格）是否確實遭到入侵。</p>
+<p>在此情境中，使用者社群在瀏覽 Wayne Enterprises 網站時回報看到下列被篡改的圖片，且部分回報提到「P01s0n1vy」。若你不熟悉，P01s0n1vy 是一個曾針對 Wayne Enterprises 的 APT 組織。你作為 Alice 的目標是調查該網站篡改事件，並嘗試依照 Lockheed Martin Kill Chain 重建攻擊流程。</p>
+<p><img src="/assets/kNpb6q5LoVBZaQL696hxc5NUhEZYM2Y6amfiOkUtQXA=.png"></p>
+<h2 id="場景-2（勒索軟體）："><a href="#場景-2（勒索軟體）：" class="headerlink" title="場景 2（勒索軟體）："></a>場景 2（勒索軟體）：</h2><p>在第二個情境中，你的一位使用者在 Windows 桌面上看到一張圖片，表示系統上的檔案已被加密，必須付款才能取回檔案。看起來 Wayne Enterprises 有一台主機感染了 Cerber 勒索軟體，你的目標是調查這起勒索事件。</p>
+<p><img src="/assets/XMxnyYYAgsqi2e8fgkpYi93wDgWY461l01mIV_P_MgM=.png"></p>
+<hr>
+<blockquote>
+<p>Q11 : Web Defacement: This attack used dynamic DNS to resolve to the malicious IP. What is the fully qualified domain name (FQDN) associated with this attack?</p>
+</blockquote>
+<p>這題想要問是哪個FQDN 在進行攻擊</p>
+<p>在Q10 可以看到 192.168.250.70 對prankglassinebracket.jumpingcrab.com 請求圖片，而prankglassinebracket.jumpingcrab.com 就是我們想要的答案</p>
+<p><img src="/assets/Q4BQsOFmAx6I7jH9goDcf-MGpRlOr2Ocb1LG0GUrdu8=.png"></p>
+<blockquote>
+<p>ans : prankglassinebracket.jumpingcrab.com</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q12: Web Defacement: What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?</p>
+</blockquote>
+<p>從Q11 我們可以得到他去請求的 FQDN 叫做 <code>prankglassinebracket.jumpingcrab.com</code> ，我們可以再確認一下這個 FQDN 的 IP 是什麼</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70
+| table src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/2ChrVHaw6WBVh-DZf7m-0KgknWSklENqTx-sjMpnjb4=.png"></p>
+<p>最下方可以看到 23.22.63.114 對應的 FQDN 就是 prankglassinebracket.jumpingcrab.com ，23.22.63.114 在Q5 我們確定它是在進行暴力破解登入後台，因此23.22.63.114 就是我們這題的答案</p>
+<blockquote>
+<p>ans : 23.22.63.114</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q13 : Web Defacement: Based on the data gathered from this attack and common open-source intelligence sources for domain names, what is the email address most likely associated with the Po1s0n1vy APT group?</p>
+</blockquote>
+<p>這題需要利用前面蒐集到的資料獲得 Po1s0n1vy APT 組織相關的電子郵件地址</p>
+<p>總結一下我們目前得到的</p>
+<ul>
+<li>23.22.63.114 (prankglassinebracket.jumpingcrab.com) : 暴破密碼，送圖片</li>
+<li>40.80.148.42 : 掃描網頁漏洞</li>
+</ul>
+<p>接下來我將23.22.63.114丟進 VirusTotal ，可以看到它之前解析為Po1s0n1vy.com</p>
+<p><img src="/assets/xd27jCJYccOCx5qdHj2Zq1apiGGRst3gNdmbViatinA=.png"></p>
+<p>而在情境敘述中的備忘錄也有提到Po1s0n1vy.com這個網站</p>
+<p>接下來可以使用 <a target="_blank" rel="noopener" href="https://www.whoxy.com/">whoxy</a> 這個網站，它可以幫我們查關於這個網域的資訊，另外也可以查詢誰之前擁有了這個網域。</p>
+<p>查詢結果如下</p>
+<p><a target="_blank" rel="noopener" href="https://www.whoxy.com/po1s0n1vy.com#history">https://www.whoxy.com/po1s0n1vy.com#history</a></p>
+<p><img src="/assets/cffA2Y3jHDGoOTdqfSE7l0V6BpAyBkAYzVdGcD_75-4=.png"></p>
+<p>這邊可以看到 Email 是<a href="mailto:&#x6c;&#105;&#108;&#x6c;&#105;&#97;&#x6e;&#46;&#114;&#111;&#115;&#x65;&#64;&#112;&#111;&#x31;&#x73;&#x30;&#110;&#49;&#x76;&#121;&#x2e;&#x63;&#x6f;&#x6d;">lillian.rose@po1s0n1vy.com</a> </p>
+<p>這邊不是其他的email 是因為題目給的格式是<code>*******.****@**********.***</code></p>
+<blockquote>
+<p>ans : <a href="mailto:&#x6c;&#x69;&#108;&#108;&#105;&#97;&#x6e;&#46;&#x72;&#111;&#115;&#x65;&#x40;&#x70;&#x6f;&#49;&#x73;&#x30;&#x6e;&#x31;&#x76;&#x79;&#46;&#x63;&#111;&#x6d;">lillian.rose@po1s0n1vy.com</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q14 : Web Defacement: GCPD reported that common TTP (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear-phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vy’s initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.</p>
+</blockquote>
+<p>題目說GCPD 報告指出Po1s0n1vy 如果初始的攻擊失敗，接下來會寄釣魚信件並戴上惡意附件，而這個惡意附件的程式會常常與Po1s0n1vy 的基礎攻擊設施做溝通，想問這個惡意程式的 SHA256</p>
+<p>在 VirusTotal 中，關於 IP 會顯示之前出現惡意軟體與這個 IP 連線的功能，因此我們將23.22.63.114 丟進 VirusTotal 中，並選擇 Relation 頁面。</p>
+<p><img src="/assets/U2Zb0bpFQ_0lNJMMVHXv1gq10LH72ViVl1NiWeKGRKM=.png"></p>
+<p>那經過嘗試答案會是 MirandaTateScreensaver.scr.exe ，點進去後就會拿到這個惡意程式的 sha256</p>
+<p><img src="/assets/kAguqxryYp9DeA6kjwiYTuLJwRJMoJx0vsAx-KtPlVM=.png"></p>
+<blockquote>
+<p>ans : 9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q15 : Web Defacement: What is the special hex code associated with the customized malware discussed in the previous question? (Hint: It’s not in Splunk)</p>
+</blockquote>
+<p>這題想要得知前一題的惡意程式的special hex code</p>
+<p>這題會需要看VirusTotal 的<a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8/community">Community</a> 頁面，因為有些人會在這邊貼出報告以及special hex code</p>
+<p><img src="/assets/XitpF8FFxr2ZS_0sxAJxeZAZUpoxNasnAMTKP2ZW8A4=.png"></p>
+<blockquote>
+<p>ans : 53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q16 : Web Defacement: One of Po1s0n1vy’s staged domains has some disjointed “unique” whois information. Concatenate the two codes together and submit them as a single answer.</p>
+</blockquote>
+<p>題目說Po1s0n1vy 暫時架設的 domain 當中包含兩段分開出現的「唯一代碼／字串」，把那兩段代碼 串接成一個單一答案 提交</p>
+<p>我們在 Q13 時用 VirusTotal 掃描這個 IP 它之前關聯的 domain，總共有以下 domain</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/waynecorpnc.com">waynecorpnc.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/ec2-23-22-63-114.compute-1.amazonaws.com">ec2-23-22-63-114.compute-1.amazonaws.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/po1s0n1vy.com">po1s0n1vy.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/prankglassinebracket.jumpingcrab.com">prankglassinebracket.jumpingcrab.com</a></li>
+</ul>
+<p>我們每個都可以用 <a target="_blank" rel="noopener" href="https://www.whoxy.com/">whoxy</a> 查看</p>
+<p>答案會在 waynecorpnc.com 中，但是現在已經找不到該domain 的詳細資訊了，所以我參考了其他人的 <a target="_blank" rel="noopener" href="https://jk105.gitlab.io/infosec/post/cyberdefenders_bossofthesoc1/">writeup</a> ，答案會在 company_name 與 mailing_address 中</p>
+<p><img src="/assets/WtVuDsZjlmCcFeKZBQgGG1m9D1Q4AxkQUE14DMKXGyQ=.png"></p>
+<p>source : <a target="_blank" rel="noopener" href="https://jk105.gitlab.io/infosec/post/cyberdefenders/_bossofthesoc1/">https://jk105.gitlab.io/infosec/post/cyberdefenders\_bossofthesoc1/</a></p>
+<blockquote>
+<p>ans : 31 73 74 32 66 69 6E 64 67 65 74 73 66 72 65 65 62 65 65 72 66 72 6F 6D 72 79 61 6E 66 69 6E 64 68 69 6D 74 6F 67 65 74</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q17 : Web Defacement: One of the passwords in the brute force attack is James Brodsky’s favorite Coldplay song. Hint: we are looking for a six-character word on this one. Which is it?</p>
+</blockquote>
+<p>這題問的是爆破的密碼中有一個是James Brodsky’s favorite Coldplay song ，要找出那個密碼</p>
+<p>這題我們可以嘗試使用 splunk 的 lookup 功能，Splunk 的 lookup 是一種 查表功能，可以把外部資源（例如 CSV、KV Store 或自定義資料表）中的欄位值與事件資料中的欄位做匹配，然後把匹配到的欄位值加入到事件資料中以豐富資料內容</p>
+<p>首先我們需要先獲得 Coldplay 的所有歌，<a target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/faizalkarim/coldplay-albums-and-live-shows?resource=download">Kaggle</a> 網站中有人有整理出來，可以免費下載</p>
+<p>接下來我們要匯入到 splunk 中，選擇Settings-&gt;Lookups</p>
+<p><img src="/assets/f64hU00irMb4r15CevzuVfxGo5GDplea9MF5hR1EW_k=.png"></p>
+<p>進入 Lookups頁面後我們要先新增 Lookup table ，點擊第一個的Add new ，將剛剛的下載的 csv 檔丟入</p>
+<p><img src="/assets/GO9IRY2LEw4QVueocZcCQ4VzvW_07CVq43nxzCHRE9E=.png"></p>
+<p>按下Save 之後要記得改權限，預設應該是Private ，要記得改成 Global 。</p>
+<p><img src="/assets/hdByWKZlYlj9uE6aR6GQoe0yw7eLo6UMe5vtUKEzvNI=.png"></p>
+<p>接下來要定義這個表的路徑以及欄位輸出方式</p>
+<p>點選 Lookups 的首頁的第二行Add new ，接下來去指定剛剛丟進去的 csv 表，要記得開啟進階選項把 Case sensitive match 取消勾選</p>
+<p><img src="/assets/3bznzUqDU1ujXoEwOpSRUXmT3yqzy7peIVtO-D2qjuI=.png"></p>
+<p>接下來就可以回到search 頁面使用 lookup 語法，匹配欄位資料</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| lookup Coldplay name as pass output duration
+| search duration&#x3D;*
+| table pass duration<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>lookup 的語法解說如下</p>
+<ul>
+<li>lookup Coldplay：呼叫名為 Coldplay 的 lookup 表格</li>
+<li>name as pass：將當前搜尋結果中的pass欄位對應到對應表的name欄位</li>
+<li>output duration：從 lookup 表格輸出 duration 欄位至事件資料</li>
+</ul>
+<p>而加上search duration&#x3D;* 是因為只有被對應到的 pass 會出現duration，因此加上這個保證出來的會是匹配到的</p>
+<p><img src="/assets/mW7xHnpiq_iqPlDT21PsoZceDyLPkD1CwssxulNkPlk=.png"></p>
+<p>題目提示是六個字，因此是答案是yellow </p>
+<blockquote>
+<p>ans : yellow</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q18 : Web Defacement: What was the average password length used in the password brute-forcing attempt? (Round to a closest whole integer. For example “5” not “5.23213”)</p>
+</blockquote>
+<p>題目想要我們計算出所有嘗試的密碼長度</p>
+<p>要計算 password 的平均長度，我們會需要使用到 eval 與 stats 幫助我們計算，eval 提供了基本的運算操作以及豐富的函式，<a target="_blank" rel="noopener" href="https://help.splunk.com/en/splunk-cloud-platform/search/search-reference/10.0.2503/search-commands/eval">官方doc</a></p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| eval length &#x3D; len(pass) 
+| stats avg(length) as avglength 
+| eval rounded &#x3D; round(avglength, 0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我們將pass提取出來後，使用len計算每一個pass 的長度，接下來用stats 提供的avg 計算所有欄位的平均長度，最後在使用 eval 的 round 幫我們做四捨五入操作</p>
+<p><img src="/assets/2c1yATfALElIHxDzSUF1GHSVnCVk0OjI8U-DAjAv5Ic=.png"></p>
+<p>答案計算出來為 6</p>
+<blockquote>
+<p>ans : 6</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q19 : Web Defacement: How many seconds elapsed between the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.</p>
+</blockquote>
+<p>題目想要問識別出正確密碼到被成功登入之間經過了多少秒</p>
+<p>我們在 Q9 得知了被爆破出來的密碼是 batman，因此我們先用 search 語法將 batman 密碼的請求先篩出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| search pass&#x3D;&quot;batman&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/5_9NUx3oXQErFGjdK89pTRrJncTrI3r-dr5iQhHBAsw=.png"></p>
+<p>Time 欄位相減的秒數為 92.17</p>
+<blockquote>
+<p>ans : 92.17</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q20 : Web Defacement: How many unique passwords were attempted in the brute force attempt?</p>
+</blockquote>
+<p>題目想要問攻擊者嘗試了多少種密碼</p>
+<p>這邊我們可以使用 stats 當中 dc 這個函式，dc 是 Splunk 中的去重計數函式 ，全稱為 “distinct count”</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| stats dc(pass) as &quot;attempt&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/9iSpRiZZHUassgH2fFCF0IJr92jRFOeNS3pBWP3zcyA=.png"></p>
+<p>答案出來為412</p>
+<blockquote>
+<p>ans : 412</p>
+</blockquote>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Boss Of The SOC v1 的Q11~Q20 解題過程，今天體驗到 Threat Hunting 的過程並不只是單純看SIEM 找攻擊證據，也需要配合 OSINT 找出 APT 組織訊息，並且今天也學到了更多的 Splunk 搜尋的用法，語法越來越多，感覺做筆記真的挺重要的，像是我在做今天的內容時會忘記一些語法怎麼用然後就會往回看昨天寫的內容，明天會把剩下的題目分享完</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

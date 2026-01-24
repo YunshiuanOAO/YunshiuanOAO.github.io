@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 在GEOGUESSER 當個 Cheater · yunshiuan</title><meta name="description" content="在GEOGUESSER 當個 Cheater - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">在GEOGUESSER 當個 Cheater</h1><div class="post-info">Sep 27, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要分享的是 OSINT 當中非常常出現的看圖片猜地方的，身為對地理一竅不通的我，非常需要很多的工具幫助我去分析各種資訊，而這類問題有一個還蠻廣為人知的遊戲，叫做 <a target="_blank" rel="noopener" href="https://www.geoguessr.com/">GEOGUESSER</a>，它會隨機把你放在一個地點，你要靠自己發現說這裡是哪裡，有興趣可以去玩玩看，裡面有很多不同模式。</p>
+<p><img src="/assets/aRw5hJ4AYt6oTv4PJFBjtflN0dsH4NhjE5pF0rqShN4=.png"></p>
+<p><code>source : GeoGuessr Steam Edition</code></p>
+<p>而在 CTF 版的 GeoGuessr 因為不用在短時間內就需要知道地點，並且可能會需要非常精確的位置才會拿到 flag，另外 GeoGuessr 會限制玩家不能查任何資料。</p>
+<p>而遇到關於這樣的 OSINT 題目，如果只用 Google Map 硬查會沒有效率，因此如果有工具幫助的話會輕鬆很多，所以今天的內容是分享關於這類的工具</p>
+<hr>
+<h2 id="Google-Map-Google-Earth"><a href="#Google-Map-Google-Earth" class="headerlink" title="Google Map &#x2F; Google Earth"></a>Google Map &#x2F; Google Earth</h2><p>Google 地圖是 Google 提供的網路地圖服務，這個服務提供了多種視圖模式，包括衛星圖、街道圖和地形圖，讓用戶可以根據需求選擇最適合的視角來查看地圖</p>
+<p><img src="/assets/AM7XkPseqHtJ64J0lHNKzlYK_NjHdww-qvZ-EDJlbQY=.png"></p>
+<p>Google Earth 是一個更進階的 3D 地球瀏覽器，讓用戶能夠以立體的方式探索世界。歷史影像功能讓用戶可以查看不同時期的衛星影像，觀察城市的發展變化，而街景整合功能則在 3D 環境中嵌入了街景視圖，並且可以匯入 KML 檔</p>
+<p><img src="/assets/Nqm0R92EVsQ60NoKlkI9vqtx9kdYYYIJFoBYZhEUTA0=.png"></p>
+<hr>
+<h2 id="Google-智慧鏡頭"><a href="#Google-智慧鏡頭" class="headerlink" title="Google 智慧鏡頭"></a>Google 智慧鏡頭</h2><p>Google 智慧鏡頭是一個基於 AI 的視覺搜尋工具，你可以把你想要辨識的圖片丟進去，它會把網路上類似的圖片丟給你</p>
+<p>在搜尋列就可以找到智慧鏡頭的 icon</p>
+<p><img src="/assets/jZWhq_f9A2B3eBaFBL80Oolkc6_952uiK4kCQq7InJ0=.png"></p>
+<p>點擊後把圖片丟進去它就會幫你查有沒有類似的圖片</p>
+<p><img src="/assets/kKnQobr1ng3IbFvcC_9I5sWMSVUr-T2nkvQ_24bhC3M=.png"></p>
+<hr>
+<h1 id="Geohints"><a href="#Geohints" class="headerlink" title="Geohints"></a>Geohints</h1><p>網站連結：<a target="_blank" rel="noopener" href="https://geohints.com/">https://geohints.com/</a></p>
+<p>這個網站整理了很多每個國家的 Google 街景具有特色的部分，像是車牌、道路、電線竿、標誌等照片，如果遇到沒看過的都可以來這邊查</p>
+<p><img src="/assets/hvedPNXTINc-yVUpWuTxXMSQBGihsp3dkifiHQYigmk=.png"></p>
+<hr>
+<h1 id="Overpass-turbo"><a href="#Overpass-turbo" class="headerlink" title="Overpass turbo"></a>Overpass turbo</h1><p>網址：<a target="_blank" rel="noopener" href="https://overpass-turbo.eu/">https://overpass-turbo.eu/</a></p>
+<p>Overpass Turbo 是一個基於網頁的查詢工具，專門用於查詢 OpenStreetMap 資料庫。它提供了一個直觀的介面，讓用戶能夠使用 Overpass QL 查詢語言來搜尋和提取 OSM 中的地理資料。</p>
+<p>而 <a target="_blank" rel="noopener" href="https://www.openstreetmap.org/#map=12/56.4984/16.6010">OpenStreetMap</a> 是世界上最大的開放地理資料庫，包含了全球各地的道路、建築物、興趣點等詳細資訊。</p>
+<p><img src="/assets/OCrdN1c5cGeTKK0BCCkvA-6cWK104_wpnCDz_fT2D5s=.png"></p>
+<p>接下來介紹一下要怎麼使用Overpass QL 查詢我們想要的東西。</p>
+<p>首先是 OSM 的資料結構，它使用節點 (nodes)、路徑 (ways) 和關係 (relations) 三種基本元素來描述地理物件：</p>
+<ul>
+<li><strong>節點 (Nodes)</strong>：代表點狀物件，如商店或地標</li>
+<li><strong>路徑 (Ways)</strong>：代表線狀或面狀物件，如道路或建築物</li>
+<li><strong>關係 (Relations)</strong>：用於描述複雜的物件，如多個部分組成的建築物群</li>
+</ul>
+<p>最基本的查詢以 <code>[out:json];</code> 開始，這指定了輸出格式。接著使用 <code>node</code>、<code>way</code> 或 <code>relation</code> 來指定要查詢的物件類型，而<code>nwr</code>則可以將三者都包含，然後在方括號中指定搜尋條件，關於搜尋條件的所有的key 跟value 都可以在這邊查到 <a target="_blank" rel="noopener" href="https://wiki.openstreetmap.org/wiki/Map/_features">https://wiki.openstreetmap.org/wiki/Map\_features</a> 。</p>
+<p>像圖示中是L3akCTF 2025的其中一題<a target="_blank" rel="noopener" href="https://medium.com/@shibaosint/l3akctf-2025-fidget-spinner-writeup-cd94eafc2828">Fidget Spinner</a>我們想要找在厄蘭島上所有的風車地點，可以這樣寫</p>
+<pre class="line-numbers language-none"><code class="language-none">[out:json][timeout:25];
+&#x2F;&#x2F;restrict our search to the island
+area[name&#x3D;&quot;Öland&quot;];
+(
+  &#x2F;&#x2F; search for windmills
+  nwr[&quot;man_made&quot;&#x3D;&quot;windmill&quot;](area); &#x2F;&#x2F;(area)的功能是限制在Öland地點上查詢
+);
+&#x2F;&#x2F; print results
+out geom;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>之後出來的結果就會是這樣</p>
+<p><img src="/assets/hLt5ujf8M4p8aGhdbo4CVsi7_xOwj5CBfN3zKMmBMMo=.png"></p>
+<p>接下來它也可以匯出成 KML 檔，然後放到 Google Map &#x2F; Google Earth 上</p>
+<p><img src="/assets/BoYcPTrtyYVX4YFzs6DzQ9bPESm3RDAuLS-dqbSBsUk=.png"></p>
+<p>接下來就可以去一一驗證是否是題目想要的位置</p>
+<p>另外也可以像這樣把想要的區域先匡起來然後查詢</p>
+<p><img src="/assets/TEiO_tKmOGHWcEVH1ynu8k2Lze8ViVkW0SaFlpMOXQI=.png"></p>
+<p><code>source : ``https://medium.com/@PretendNotToBe/ea6e8f3fb763</code></p>
+<hr>
+<h1 id="Exiftool"><a href="#Exiftool" class="headerlink" title="Exiftool"></a>Exiftool</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://exiftool.org/">https://exiftool.org/</a></p>
+<p>它可以去看圖片的基本資料，例如圖片大小、修改時間等等，但它可以去看這張照片的拍攝地點在哪裡，並且會給你 GPS 定位。</p>
+<p>舉個例子：<a target="_blank" rel="noopener" href="https://drive.google.com/file/d/17rE9LAp7TNk8u09EwguZB3RQ4H3WNIMB/view">DownUnderCTF 2023 Excellent Vista!</a></p>
+<p>下載之後用 exiftool 看一下</p>
+<pre class="line-numbers language-none"><code class="language-none">$ exiftool ExcellentVista.jpg
+
+ExifTool Version Number         : 13.10
+File Name                       : ExcellentVista.jpg
+Directory                       : .
+File Size                       : 2.7 MB
+File Modification Date&#x2F;Time     : 2025:09:23 15:41:41+08:00
+File Access Date&#x2F;Time           : 2025:09:23 15:41:45+08:00
+File Inode Change Date&#x2F;Time     : 2025:09:23 15:41:44+08:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image&#x2F;jpeg
+Exif Byte Order                 : Big-endian (Motorola, MM)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Y Cb Cr Positioning             : Centered
+Date&#x2F;Time Original              : 2023:08:31 22:58:56
+Create Date                     : 2023:08:31 22:58:56
+Sub Sec Time Original           : 00
+Sub Sec Time Digitized          : 00
+GPS Version ID                  : 2.3.0.0
+GPS Latitude Ref                : South
+GPS Longitude Ref               : East
+GPS Altitude Ref                : Above Sea Level
+GPS Speed Ref                   : km&#x2F;h
+GPS Speed                       : 0
+GPS Img Direction Ref           : True North
+GPS Img Direction               : 122.5013812
+GPS Dest Bearing Ref            : True North
+GPS Dest Bearing                : 122.5013812
+GPS Horizontal Positioning Error: 6.055886243 m
+Padding                         : (Binary data 2060 bytes, use -b option to extract)
+About                           : uuid:faf5bdd5-ba3d-11da-ad31-d33d75182f1b
+Image Width                     : 4032
+Image Height                    : 3024
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Image Size                      : 4032x3024
+Megapixels                      : 12.2
+Create Date                     : 2023:08:31 22:58:56.00
+Date&#x2F;Time Original              : 2023:08:31 22:58:56.00
+GPS Altitude                    : 70.5 m Above Sea Level
+GPS Latitude                    : 29 deg 30&#39; 34.33&quot; S
+GPS Longitude                   : 153 deg 21&#39; 34.46&quot; E
+GPS Position                    : 29 deg 30&#39; 34.33&quot; S, 153 deg 21&#39; 34.46&quot; E<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最後它提供了拍照的地點。</p>
+<hr>
+<h1 id="What3words"><a href="#What3words" class="headerlink" title="What3words"></a>What3words</h1><p>網站連結：<a target="_blank" rel="noopener" href="https://what3words.com/">https://what3words.com/</a></p>
+<p>這個網站可以只利用三個相關的詞彙去定位到想要的地點，因為有些地方會沒有地址，所以會需要靠這個方式定位</p>
+<p>像是成功大學資訊系館是 <code>imported.dull.buns</code>，之後去這個網站查就一樣會定位到這邊</p>
+<p><img src="/assets/tVfxyDKTRPL6hxH59oD19ORtuhNS5r4Y-V8fsrTCtn8=.png"></p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了一些輔助我們辨識圖片地點的工具，直接變成 GEOGUESSER 大師，但其實有些題目還會需要結合航班或者看太陽判斷南北向等等，可以出的線索都太廣了，因此這類題目可能會需要多多去練習才會熟練。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

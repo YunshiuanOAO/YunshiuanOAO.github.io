@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Certified CyberDefender Certification 考試心得分享 · yunshiuan</title><meta name="description" content="Certified CyberDefender Certification 考試心得分享 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Certified CyberDefender Certification 考試心得分享</h1><div class="post-info">Oct 14, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>鐵人賽的最後一天，我想要分享我在第一天提到的 Certified CyberDefender Certification，也是我考的第一張藍隊的證照，內容會包括考試內容、準備心得、考試過程……等等，並且似乎在中文圈還沒有人詳細介紹這張證照，<del>我就當第一個首殺的了</del></p>
+<p><img src="/assets/6ZSbD_caO3dOOdMtbxnER8q_J6OlrnJWRgQkFs1jFUA=.png"></p>
+<hr>
+<h1 id="關於-CCD"><a href="#關於-CCD" class="headerlink" title="關於 CCD"></a>關於 CCD</h1><p>這邊先分享一下關於CCD 難度的問題</p>
+<p>首先可以先看一下 <a target="_blank" rel="noopener" href="https://pauljerimy.com/security-certification-roadmap/">Paul Jerimy 整理的證照地圖</a>，整體可以看到 CCD 是排在挺高的地方，代表它是偏難並且不適合新手去考的，另外一個參照是 HTB 的 CDSA，它的難度是被認為是比 CCD 還要簡單的。</p>
+<p><img src="/assets/mzparHC0o6TCP7i_VbxgJpi5X41AvnooYpnYzWzf4u4=.jpeg"></p>
+<p>但是它在 <a target="_blank" rel="noopener" href="https://cyberdefenders.org/community/cybersecurity-roadmap/">CyberDefender 的 RoadMap</a> 中 CCD 是被評為比 CDSA 還要簡單的</p>
+<p><img src="/assets/LyNGc2i8JPfrazqwiSmjHYdf8Rc2S0opUFjLr8NByrI=.png"></p>
+<p>我個人覺得 CCD 難度會取決於 Lab 以及課程的完成程度，如果全部 Lab 以及課程全部完成了那考試難度是中等，如果直接考那考試難度是偏高，Lab 以及課程接下來會介紹。</p>
+<p>另一方面是價格的部分，CCD 的價格是 800 美金，而比較知名的 BTL2 它需要 2190 美金，所以考 CCD 也算一種<del>省錢路線</del></p>
+<p>我選擇這張證照的契機是我看到了這篇 <a target="_blank" rel="noopener" href="https://www.reddit.com/r/cybersecurity/comments/1b6jnf5/ccdcertified_cyberdefender_certification_give_soc/?tl=zh-hant">Reddit 論壇</a>，有一則留言說 CCD 雖然比 BTL1 較貴也較難，但在課程或考試上會收穫比較好，我選擇想要學比較多東西，因此選擇了挑戰 CCD</p>
+<h2 id="CCD考試介紹"><a href="#CCD考試介紹" class="headerlink" title="CCD考試介紹"></a>CCD考試介紹</h2><p>CCD 是一個實作導向的 SOC 分析師認證，提供的課程包含以下內容</p>
+<ul>
+<li>威脅狩獵</li>
+<li>硬碟鑑識</li>
+<li>邊界防禦-Email 安全</li>
+<li>記憶體鑑識</li>
+<li>網路鑑識</li>
+<li>數位取證</li>
+<li>Incident Response</li>
+<li>鑑識證據蒐集</li>
+<li>惡意程式分析</li>
+</ul>
+<p>課程幾乎包含了 SOC 分析師需要的所有相關知識，但是在考試時只會考以下內容，這裡也提一下主要使用的工具以及大致的內容</p>
+<ul>
+<li>威脅狩獵<ul>
+<li>ELK</li>
+<li>給一個 APT 攻擊的情境，在 ELK 中找出攻擊過程</li>
+</ul>
+</li>
+<li>硬碟鑑識<ul>
+<li>Event Log Explorer</li>
+<li>Eric Zimmerman’s tools</li>
+<li>分析 Windows disk file</li>
+</ul>
+</li>
+<li>記憶體鑑識<ul>
+<li>Volatility2</li>
+<li>分析 Windows 記憶體</li>
+</ul>
+</li>
+<li>網路鑑識<ul>
+<li>Wireshark</li>
+<li>Zui</li>
+<li>NetworkMiner</li>
+<li>分析 pcap 封包</li>
+</ul>
+</li>
+</ul>
+<p>考試時間為 48 小時，考試過程沒有監考，可以查閱所有資料，包括它提供的教材，並且可以隨時開始進行考試，這 48 小時每個主題分別會給一個情境，並有數題題目，威脅狩獵的題目是最多的，有 20 題左右，另外三題皆為 10 題以內，總共會是 40 題左右。通過的分數為 70%，另外如果你考試分數到了 85% 會額外得到一個金色 Coin，<strong>非常帥</strong>，如果是 70%~85% 是一個銀色的 Coin。</p>
+<p><img src="/assets/zxCcH7QXDfKQcQ-kguFd0DhLvWKrF7FdYGWWoHrlZaA=.png"></p>
+<p>source : <a target="_blank" rel="noopener" href="https://x.com/CyberDefenders/status/1645759783192915969">https://x.com/CyberDefenders/status/1645759783192915969</a></p>
+<p>這個考試是不用寫報告的，但是你在回答問題時，它不會立即驗證你的答案是否正確，並且會需要在每一題的底下敘述解題過程，如果答案錯誤或者沒寫會根據你寫的內容判定是否部分給分。</p>
+<p>在報名 CCD 證照考試後它會提供教材以及 Lab 可以練習，Lab 全部做完的話會有 5% 的 bonus，但是這個 bonus 只會在如果你是 65%~69% 時才會有加分。教材的部分是在一年內都可以存取，但是 Lab 只有 4 個月的存取時間，這些時間都是可以延長的，但就是要多花錢。</p>
+<p>報名一次 CCD 可以有兩次的考試資格，第一次考試必須在報名的 4 個月內考，第二次考試必須在報名的一年內考，意思是必須要在 4 個月內考至少一次，不然的話考試次數會被浪費掉。</p>
+<p>考試結束後會在 14 個工作天內收到結果，並且會有每個主題的評分。</p>
+<hr>
+<h1 id="CCD-準備＋考試心得"><a href="#CCD-準備＋考試心得" class="headerlink" title="CCD 準備＋考試心得"></a>CCD 準備＋考試心得</h1><p>在報 CCD 之前，關於 SOC 分析師的相關技能我接觸過的有：玩過 Volatility、用過 Wireshark 會看封包，然後沒接觸過硬碟鑑識以及威脅狩獵，大概就是這樣，所以是偏新手的狀態，目標是希望拿到那酷酷的金色 coin。</p>
+<h2 id="考前準備"><a href="#考前準備" class="headerlink" title="考前準備"></a>考前準備</h2><p>我是在 2025&#x2F;05&#x2F;04 時開始進行 CCD 的教材與 Lab 練習，是在 2025&#x2F;07&#x2F;14~2025&#x2F;07&#x2F;16 進行 CCD 考試</p>
+<p>中間經過了 2 個多月的時間，排除期末以及其他事情，大約是 1 個月左右的時間，這一個月時間我主要就是把教材全部翻過一遍，Lab 都做一遍，在做 Lab 之前是沒有官方解答的，做完閱讀詳解的權限才會開起來，我每個 Lab 平均花 3~4 小時完成，在考試前 Lab 我原本已經快做完了，但是 CyberDefender 官方突然改版，每個主題多新增了 1~2 個 Lab，然後原本的 Lab 變成不會計算在 bonus 的判定內，然後之前的題目詳解全部開放，變成要完成新增的那幾個 Lab 才會拿到 bonus，看到這改版直接傻眼，所以又花了億點時間做新增的題目，在考試前終於將全部的 Lab 完成了。</p>
+<p><img src="/assets/rw65oq9JanNLeq9L-PtWlEPBl9hITN-vGaCqE5snxFc=.png"></p>
+<p>這邊大力推薦一下它的教材，它的教材做的非常豐富，每個主題都會有大量的工具以及概念，除了文字與圖片的講解之外，都還會有另外錄一次影片教學，有時候用文字看有點看不懂，但看影片操作一次就看懂了，並且教材內容都會從 0 開始教，所以如果是新手也可以聽得懂，另外它們會幫忙整理 Cheatsheet，讓我們在考試時可以看那張 Cheatsheet 找線索，因此學習這個教材讓我收穫很大。</p>
+<p>在考前我也另外練習了 CyberDefender 裡面的免費 Lab，一開始碰到不會的就會直接開提示或官解，到後面練到一看到題目想問的就大概會有一個方向要去下什麼指令或者取哪個地方找線索，我覺得練習 Lab 還蠻重要的，提早適應一下考試的感覺，然後爬文時發現威脅狩獵的部分還蠻重要的，所以有多練習威脅狩獵的題目，結果來說真的是挺重要的。</p>
+<h2 id="考試過程"><a href="#考試過程" class="headerlink" title="考試過程"></a>考試過程</h2><p>在 2025&#x2F;07&#x2F;14 第一天中午 11:00 左右按下開始後就進行了考試，總共有四大主題，威脅狩獵提供了 ELK 環境，硬碟鑑識、記憶體鑑識與網路鑑識提供了同一個 Windows 環境。我的順序是網路鑑識 -&gt; 記憶體鑑識 -&gt; 硬碟鑑識 -&gt; 威脅狩獵</p>
+<p>我一開始看網路鑑識，網路鑑識的題目比較簡單，主要用 Wireshark 就可以全解了，網路鑑識全部解完後，再進行記憶體鑑識以及硬碟鑑識，記憶體鑑識我有些題卡住之後就會轉去做硬碟鑑識，並且它們的每題的解題敘述都寫好寫滿，因為我覺得我有些題不太確定，但可惜的是只能寫 300 字，所以只能寫個大概而已，然後建議要在網路比較好的地方，不然寫一寫會當機，當時解到了 15 號的凌晨 3、4 點，進度在記憶體鑑識以及硬碟鑑識各解差不多 3&#x2F;4 的進度以及威脅狩獵還沒有碰的情況下先跑去睡覺了。</p>
+<p>第二天起來大約也快中午了，起床直接繼續解，將記憶體鑑識以及硬碟鑑識解完後開始碰威脅狩獵，記憶體鑑識以及硬碟鑑識我覺得整體難度中偏高，主要是 Volatility 的 Plugin 使用真的要很熟悉，以及 Event ID、註冊表位置會需要熟一點，建議一定要配一個 CheatSheet，忘記了可以直接看，不然會查到死。在威脅狩獵到一半，我突然接收到我隊友一個訊息，7&#x2F;16 要去全國技能競賽報到，地點在北部，我現在在南部，然後我看了一下行事曆</p>
+<p><img src="/assets/e7wScU-feMFwwBfjAcijBVUOYMxqqZstCK1n8cFtNgc=.png"></p>
+<p>我再重新看了一次全國技能競賽簡章</p>
+<p><img src="/assets/Y2V9QiGHPUQiDAHUMWmLivpwpu-9uMgIkoMxLL6N0F8=.png"></p>
+<p>ok，完全記錯時間了，現在時間下午 5:45，腦袋風暴之後我計算出我只要在隔天凌晨 5:00 前解完然後搭客運衝上去就安全上壘了，因此開始刺激的瘋狂解題，結局是有完整的將威脅狩獵解完，並且每題都檢查一遍，威脅狩獵的題目整體中偏高，主要威脅狩獵都會需要使用到網路鑑識以及硬碟鑑識的概念，並且 ELK 的語法要很熟，所以難度會比硬碟鑑識與記憶體鑑識還要高一點。</p>
+<p>整體考試給我的感覺時間其實給的挺充裕的，根據官方說法設 48 小時是希望你有足夠時間，不要太過壓力。另外考的內容有些會出現在課程的 Lab 中，所以考前會建議要把 Lab 全部都要完成，並且熟練每個操作。</p>
+<h2 id="考試結果"><a href="#考試結果" class="headerlink" title="考試結果"></a>考試結果</h2><p>到了 7&#x2F;24 號我收到了我通過的結果</p>
+<p><img src="/assets/9l2zJ2YCRBtzMSL1tJdli03OFgzmsM7cPEIt-VllvVk=.png"></p>
+<p>除了開心以外，我期待我有沒有拿到金色的 coin，考過之後它會提供考試的結果以及每個主題的評分</p>
+<p><img src="/assets/0d0LDQTEzgP8mcX3hGin244nmg9fD3IVe4MbvGVyv6o=.png"></p>
+<p>可惜離拿到金色 coin 還有一點距離，然後我看到我的記憶體鑑識的評分讓我直接回去重讀記憶體鑑識，另外因為我不是當下截圖，我記得之前會詳細說每個主題評審給的建議以及回饋，但現在不見了，不確定之後會不會回來。</p>
+<p>最後放上通過後的證書</p>
+<p><img src="/assets/NSe443TQsFKvGzYRsXYbah0-1uKthWsZ6NijtIjMuWs=.png"></p>
+<p>另外到了現在 2025&#x2F;10&#x2F;14，我還沒收到我的銀色 coin QQ，如果來了會再補上</p>
+<h2 id="給目前考慮-CCD-的人"><a href="#給目前考慮-CCD-的人" class="headerlink" title="給目前考慮 CCD 的人"></a>給目前考慮 CCD 的人</h2><p>建議在付錢前要先評估 4 個月內有沒有空將時間投在 CCD 當中，因為會需要花大量時間練習以及閱讀教材，但是可以學到非常扎實且豐富的內容，對於沒有接觸過藍隊的玩家，可以先嘗試玩玩看 CyberDefender 裡面的免費 Lab，看是否有興趣再付錢也不遲。</p>
+<h2 id="給正在準備-CCD-證照的人"><a href="#給正在準備-CCD-證照的人" class="headerlink" title="給正在準備 CCD 證照的人"></a>給正在準備 CCD 證照的人</h2><p>建議威脅狩獵的題目會需要多做一點，像是判斷誰在攻擊，如何攻擊，以及判斷的 MITRE ATT&amp;CK 的 TTP 會需要多練習，而且威脅狩獵題目很多，會需要比其他題目還要再熟練一點，不然會花太多時間在上面，另外會需要自己做筆記，因為過程中可能會出現這個事件是什麼 Event ID 或者這個設定的註冊表路徑在哪裡，做筆記會省非常多時間</p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Certified CyberDefender Certification 的準備過程以及考試心得分享，今天也是鐵人賽的最後一天，這 30 天內分享了藍隊相關的技術與工具，包括了記憶體鑑識、OSINT、網路鑑識、硬碟鑑識以及威脅狩獵，最後以 Certified CyberDefender 這張證照作為結尾，<del>然後我考完這張證照我的綽號突然多一個賽博守護者了</del>，如果有任何問題都歡迎來跟我說～可以到我的 <a href="https://yunshiuan.com/cosy-resume/">Blog</a> 找到我的聯絡方式或者瀏覽其他我寫的內容，明年希望有空可再花 30 天跟大家分享。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2025/10/11/BossOfSOC/" class="next">NEXT</a></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 只知道執行過什麼是滿足不了我的，我整顆 NTFS 硬碟都要檢查 · yunshiuan</title><meta name="description" content="只知道執行過什麼是滿足不了我的，我整顆 NTFS 硬碟都要檢查 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">只知道執行過什麼是滿足不了我的，我整顆 NTFS 硬碟都要檢查</h1><div class="post-info">Oct 7, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>前幾天介紹了 Prefetch，它能幫我們找出哪些可執行檔曾在系統上啟動過、啟動次數與所用路徑等線索。但 Prefetch 的適用範圍有限，對於尚未被執行或已改名&#x2F;偽裝的惡意程式，Prefetch 記錄可能不存在或不可靠。</p>
+<p>因此今天會分享什麼是 NTFS ，並利用 NTFS 的特性追蹤檔案與資料夾的建立、移動、改名與刪除等活動。</p>
+<hr>
+<h1 id="NTFS-是什麼？"><a href="#NTFS-是什麼？" class="headerlink" title="NTFS 是什麼？"></a>NTFS 是什麼？</h1><p>NTFS 是 Microsoft 為 Windows NT 系列作業系統開發的檔案日誌型檔案系統，會維護交易記錄來確保資料一致性，如果有格式化過硬碟的經驗，應該對 NTFS 有點印象</p>
+<p><img src="/assets/Xu4Z2bpyPFqpt7fuTTJbL51n_b8WIrg3_RZsCiEkkvI=.png"></p>
+<p>NTFS 會在每個 Volume 上以系統檔案記錄檔案與目錄的活動，包含建立、修改、刪除等。這個機制能讓 NTFS 在發生停電或系統崩潰時進行復原並保持系統一致性。</p>
+<p>因此 NTFS 的 Volume 中會建立許多隱藏的系統檔案，這些檔名都以<code>$</code> 開頭，以下介紹幾個主要的檔案</p>
+<p><img src="/assets/NcuJtL00WGNGFrbG6t_I0HD1PrG4QcBJ3l3nQyjoH20=.png"></p>
+<hr>
+<h2 id="MFT"><a href="#MFT" class="headerlink" title="$MFT"></a>$MFT</h2><p>路徑：<code>&lt;Volume_Root&gt;\$MFT</code></p>
+<p>$MFT 是 NTFS 檔案系統的核心元件，儲存所有檔案和目錄的metadata（如名稱、大小、時間戳、權限等）。<br>由一系列固定大小的檔案記錄組成，每個記錄包含一個檔案或目錄的所有屬性。</p>
+<p>下方圖片是使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">MFT Explorer</a> 把 MFT 內的資料視覺化顯示出來</p>
+<p><img src="/assets/LKoPSOtJbxLBBf-25Wy6a6Pdf2PagV_pacqey3WPJBw=.png"></p>
+<h2 id="UsnJrnl"><a href="#UsnJrnl" class="headerlink" title="$UsnJrnl"></a>$UsnJrnl</h2><p>路徑：<code>&lt;Volume_Root&gt;\$Extend\$UsnJrnl:$J</code></p>
+<p>$UsnJrnl 的主要功能是追蹤 NTFS 上所有文件與目錄的變更。每當文件被創建、修改、刪除、重命名、移動，或其屬性／安全描述符發生變化時，$UsnJrnl 都會記錄一條對應條目。這些條目包括變更類型、發生時間、關聯的 USN（更新序列號）、文件 ID、父目錄 ID、文件名稱、屬性與大小等資訊。</p>
+<p><img src="/assets/cQfi8Udc0DTBsNYPvThawCXqM082PrXrodQAtZ_VH8Q=.png"></p>
+<h2 id="LogFile"><a href="#LogFile" class="headerlink" title="$LogFile"></a>$LogFile</h2><p>路徑：<code>&lt;Volume_Root&gt;\$LogFile</code></p>
+<p>$LogFile 與 $UsnJrnl 紀錄的內容差不多，但是紀錄的是更底層的操作，其功能是作為 NTFS 的 transaction log，記錄對 metadata 所做的各種操作（如 MFT 新增／修改／刪除、目錄索引更新、Bitmap Allocation、$UsnJrnl 本身的更新等）。在進行 metadata 變更前，系統會先將這些交易寫入 $LogFile，以確保即便系統意外中斷，也可利用日誌進行回滾或重做操作，以保持文件系統的一致性與完整性。</p>
+<p><img src="/assets/0rdT1ORbwNlebwEt7OXnRopij-tFJVEr5PXan4DQRoA=.png"></p>
+<h2 id="I30"><a href="#I30" class="headerlink" title="$I30"></a>$I30</h2><p>在 NTFS 檔案系統中，每一個 Directory 都維護一個 Index，用來快速查找該目錄下的檔案與子目錄，當目錄內容改變 (如新增、刪除、重命名) 時，對應的 index entry 也會被修改或標記為已刪除 (Flags 欄位)，因為是標記的關係，所以可以在<code>$I30</code> 中找到被刪除的檔案。</p>
+<p><img src="/assets/CGFDolSOV19jk_scmOtNOnpFMABkF3YeLx_g2mG76Lw=.png"></p>
+<p>整體來說這些檔案記錄了<strong>從檔案／目錄的建立、修改、刪除、重命名、移動、屬性變更，底層交易操作（如 MFT 重組、索引更新）等所有可供恢復、驗證與時間線重建的線索</strong>。</p>
+<p>因此這些檔案都是在進行 Disk Forensic 時很重要的檔案，</p>
+<p>接下來可以開始使用工具進行分析，首先有一個很方便的工具-NTFS Log Tracker</p>
+<hr>
+<h1 id="NTFS-Log-Tracker"><a href="#NTFS-Log-Tracker" class="headerlink" title="NTFS Log Tracker"></a>NTFS Log Tracker</h1><p>下載連結： <a target="_blank" rel="noopener" href="https://sites.google.com/site/forensicnote/ntfs-log-tracker">https://sites.google.com/site/forensicnote/ntfs-log-tracker</a></p>
+<p>NTFS Log Tracker 是一款專門用來解析 NTFS 上 $LogFile 和 UsnJrnl:$J 的工具。 它可以從交易日誌與變更日誌中挑出檔案／目錄操作的記錄。</p>
+<p><img src="/assets/icAM7IWI3LvNSrDBmhOmy5cGEzp09GpK-dinwOSbtyU=.png"></p>
+<p>填上對應檔案的路徑</p>
+<p><img src="/assets/hFcjva1sejXuwvwZjLaD60MFdZe6FS2HDJgTsNGphjE=.png"></p>
+<p>按下右上角的 Parse 之後會先把資料都儲存成一個 DB，這邊幫它取名以及輸出的路徑</p>
+<p><img src="/assets/EOWJWa9jI9Oo_YlfKFZjHfHSsssQj7qrHWYUPRjkGao=.png"></p>
+<p>選擇好後就會開始進行分析</p>
+<p><img src="/assets/DG2D3gmzJq6Xs7ar_F0kw4LThRBfLuUG7aIE9lyk8oE=.png"></p>
+<p>結束後就會出現 $LogFile 以及 UsnJrnl:$J 的內容</p>
+<p><img src="/assets/0m_erXlMLOZR4CnCdmW7tevpuuIOkLZCdUxp95dTunY=.png"></p>
+<p>另外也可以把它們匯出成 CSV 檔案</p>
+<p><img src="/assets/-QjIqTFArdJExEa85qymNdtSPPa_HZOrYVz2fmOQOWc=.png"></p>
+<p>同樣可以使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">Timeline Explorer</a> 或者其他查看 CSV 檔案的軟體查看</p>
+<p><img src="/assets/g1tx-sJ6dvFR19b2NJ-SlCuIZDWt8F5_Ajg0pKzuXH4=.png"></p>
+<hr>
+<p>而 <code>$I30</code> 檔案可以使用 MFTECmd 分析</p>
+<h2 id="MFTECmd"><a href="#MFTECmd" class="headerlink" title="MFTECmd"></a>MFTECmd</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">https://ericzimmerman.github.io/#!index.md</a></p>
+<p>MFTECmd 是由數位鑑識專家 Eric Zimmerman 開發的 Windows command-line 工具，</p>
+<p>用來解析 NTFS 檔案系統中由 $MFT 與其衍生紀錄，例如：</p>
+<ul>
+<li>$MFT</li>
+<li>$LogFile</li>
+<li>$UsnJrnl</li>
+<li>$Boot</li>
+<li>$Secure</li>
+<li>$Extend\$UsnJrnl</li>
+<li>$I30</li>
+</ul>
+<p>並將其轉成 CSV 檔案</p>
+<p>首先找到要鑑識的目錄，並提取其 <code>$I30</code> 內容</p>
+<p><img src="/assets/pWkdQsp10SNyj8hJ5rJ2V_jEM1SYnI-z8-Hak-LF6N0=.png"></p>
+<p>接下來下指令將它轉換成 CSV 檔案</p>
+<p><img src="/assets/FPsRisIYrXMyG_LyDIXtF63__b0J8jlG8LpqAm0sPQ0=.png"></p>
+<p>轉換後可以使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">Timeline Explorer</a> 或者其他查看 CSV 檔案的軟體查看</p>
+<p><img src="/assets/XM56jj6p4EatiIDTljlbRIsJ-SHMJj8bBHFqZ69r9RI=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了 NTFS 檔案系統的核心元件，包括 <code>$MFT</code>、<code>$UsnJrnl</code>、<code>$LogFile</code> 和 <code>$I30</code> 等系統檔案，這些檔案記錄了檔案系統的各種操作活動。</p>
+<p>透過 NTFS Log Tracker 和 MFTECmd 工具，我們可以分析這些系統檔案，重建檔案操作的時間線，獲得更多線索</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

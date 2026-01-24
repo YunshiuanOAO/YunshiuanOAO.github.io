@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 撥開電腦的記憶找出最黑暗的部分 · yunshiuan</title><meta name="description" content="撥開電腦的記憶找出最黑暗的部分 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">撥開電腦的記憶找出最黑暗的部分</h1><div class="post-info">Sep 16, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>記憶體分析我認為是如果在一個 CTF 的 Forensic 分類上是比較有趣的題目，因為它不像硬碟鑑識隨隨便便就需要很大的空間，但是可以體驗到在一台被攻擊的電腦上尋找線索的感覺，因此今天要分享的是什麼是記憶體分析，以及最常使用的記憶體分析工具 Volatility。</p>
+<hr>
+<h1 id="🧠-什麼是記憶體鑑識？"><a href="#🧠-什麼是記憶體鑑識？" class="headerlink" title="🧠 什麼是記憶體鑑識？"></a>🧠 什麼是記憶體鑑識？</h1><p>記憶體鑑識是從電腦的隨機存取記憶體（RAM）中提取、分析和解釋數位證據的過程。其中會需要得知的是正在執行的程式、process、載入的 library、網路連線狀態、使用者輸入、甚至密碼或加密金鑰，有些是根本沒寫到硬碟的那種。</p>
+<p>那為什麼需要記憶體鑑識？</p>
+<ol>
+<li>易失性資料保存<ol>
+<li>RAM 中的資料在斷電後會消失</li>
+<li>許多重要證據只存在於記憶體中</li>
+<li>需要及時捕獲這些易失性資訊</li>
+</ol>
+</li>
+<li>惡意軟體分析<ol>
+<li>現代惡意軟體常駐記憶體，不留檔案痕跡</li>
+<li>Rootkit、無檔案攻擊</li>
+<li>記憶體注入技術</li>
+</ol>
+</li>
+<li>攻擊行為追蹤<ol>
+<li>網路連線狀態</li>
+<li>執行中的程序</li>
+<li>系統呼叫和API使用</li>
+</ol>
+</li>
+</ol>
+<p>所以如果拿到一台受攻擊的電腦，第一步會先對記憶體進行 dump，因為有可能攻擊者會對 disk 做清除或者湮滅證據，但記憶體通常還是會記錄這些攻擊證據，這就是為什麼記憶體分析這麼重要。</p>
+<p>而記憶體鑑識工具大家最常用的就是 <strong>Volatility</strong> </p>
+<hr>
+<h1 id="📈-Volatility"><a href="#📈-Volatility" class="headerlink" title="📈 Volatility"></a>📈 Volatility</h1><p>Volatility 是一個 memory forensics 框架，用來從 memory dump 中提取系統運作時的各種資訊，包含正在跑的 process、網路連線、註冊表資料、開啟的 file handles 等等</p>
+<p><img src="/assets/4x0S5xFsoEzzfSCA27Jem2vPeA6639E9lqBBWVLKuk0=.png"></p>
+<p>最初的版本是 Volatility 2 ，因為寫在 Python 2 上，之後推出了 Volatility 3，並使用 Python3 編寫</p>
+<p>下載連結：</p>
+<ul>
+<li>Volatility 2 : <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></li>
+<li>Volatility 3 : <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></li>
+</ul>
+<p>Github 中安裝步驟都有寫在 README.md 上，而 Volatility 2 的安裝方式會比 3 的安裝會多一步是需要先安裝 Python2 </p>
+<p>以下介紹一些 Volatility 2 跟 3 的基本操作</p>
+<h2 id="Volatility-2-基本操作"><a href="#Volatility-2-基本操作" class="headerlink" title="Volatility 2 基本操作"></a>Volatility 2 基本操作</h2><p>當你有一個記憶體 dump 的檔案，例如 memdump.img</p>
+<ol>
+<li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pslist
+python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pstree<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>查看網路連線<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 netscan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>列出檔案<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 filescan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>dump files<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 dumpfiles dumpfiles -Q 0x000000003fc61be0 -D c:\files -u<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<p>其他對應指令可以下 <code>-h</code> 查看或者看官方的 doc </p>
+<hr>
+<h2 id="Volatility-3-基本操作"><a href="#Volatility-3-基本操作" class="headerlink" title="Volatility 3 基本操作"></a>Volatility 3 基本操作</h2><p>Volatility 3 就不用再下 profile，先假設 memdump.img 是 Windows </p>
+<ol>
+<li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.pslist
+python3 vol.py -f memdump.img windows.pstree<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>查看網路連線<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.netscan
+python3 vol.py -f memdump.img windows.netstat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>列出檔案<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.filescan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>dump files<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img -o .&#x2F;files_out windows.dumpfiles --pid 1234<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<p>其他指令可以下 <code>-h</code> 查看或者看官方的 doc </p>
+<hr>
+<h1 id="要選-Volatility2-還是-Volatility3？"><a href="#要選-Volatility2-還是-Volatility3？" class="headerlink" title="要選 Volatility2 還是 Volatility3？"></a>要選 Volatility2 還是 Volatility3？</h1><p>我個人會建議兩個都裝，因為有時候會出現 Volatility2 跑不出來的，Volatility3 就可以，不然就是 Volatility2 有的插件 Volatility3 沒有等等，另外現在 Volatility2 已經沒有再維護了，現在主要都是 Volatility3 還在持續的更新，但是 Volatility2 以目前來說 Plugin 的完整度還是大於 Volatility3，因此常常會看到有些人到現在還是會使用 Volatility2 進行記憶體分析</p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是記憶體鑑識以及 Volatility 工具使用，接下來幾天會分享我在學習記憶體分析時學到的有趣技術或者</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

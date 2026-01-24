@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 🦈 ✌️ · yunshiuan</title><meta name="description" content="🦈 ✌️ - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">🦈 ✌️</h1><div class="post-info">Sep 30, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹 Wireshark 的兩個特別的功能，一個是可以匯入key 去解密封包內容，另一個是可以將http的傳輸物件下載下來。</p>
+<hr>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">https://www.wireshark.org/download.html</a></p>
+<p>Wireshark是目前最受歡迎的開源網路協定分析器。</p>
+<p>這款功能強大的軟體不僅能夠即時監控網路流量，更能深入分析各種網路協定的詳細內容，為網路故障排除、協定開發和安全分析提供全方位的支援，</p>
+<p>另外也能夠識別和解析超過2000種不同的網路協定，從常見的TCP&#x2F;IP協定族到專用的工業控制協定，幾乎涵蓋了所有可能遇到的網路通訊場景。這種全面的協定支援不僅包括即時協定解析，還允許用戶根據需要添加自定義協定支援。</p>
+<hr>
+<h1 id="🔐-解密封包"><a href="#🔐-解密封包" class="headerlink" title="🔐 解密封包"></a>🔐 解密封包</h1><p>Wireshark 支援可以匯入key ，將加密過後的HTTPS 流量還原成明文</p>
+<p>因為HTTPS 多了一層SSL&#x2F;TLS，他會將封包進行加密保護傳輸內容不被竊聽</p>
+<p>解密流程如下：</p>
+<p>假設我們要分析一個HTTPS網站的登入過程，將加解密的key 先存在一個檔案中</p>
+<pre class="line-numbers language-shellscript" data-language="shellscript"><code class="language-shellscript">export SSLKEYLOGFILE&#x3D;&quot;&#x2F;home&#x2F;user&#x2F;ssl-keys.log&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然後再Preferences-&gt; Prorocols 裡面找到TLS ，接下來把剛剛儲存的key 路徑丟進去最底下<code>(Pre)-Master-Screct log filename</code>裡面</p>
+<p><img src="/assets/CeYJy0OyLQdOSSNNFOSwGR4xwqu41W5ftRSrnPAi5Lg=.png"></p>
+<p>例子：<a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/wiredive/">CyberDefender - WireDive Lab</a></p>
+<p>在 https.pcap 題目組底下的問題會需要先匯入加解密key 才能回答</p>
+<p>首先先看一下原本加密過後的樣子</p>
+<p><img src="/assets/3rXSAIopoocNAvtVDzzctTj5X9hm0JhZHcO5-i4gu-U=.png"></p>
+<p>題目有提供解密的key </p>
+<p><img src="/assets/EY4dTiYlp5mig0M30KBOHHoUCHfGxAa7Bzx-ppyk3kc=.png"></p>
+<p>接下來將這個檔案匯入到wireshark 當中</p>
+<p><img src="/assets/D4ilH3Dc85XfxfCIv41WPnC3Y9CcxtoPs7qrVjOifos=.png"></p>
+<p>OK 之後就可以看到解密過後的封包內容並且也跑出了HTTP2</p>
+<p><img src="/assets/3AYASExUaD5r4And5rGCmhGYg2eO2SqDrTuWxIXNtyY=.png"></p>
+<p>另外wireshark 支援的解密為</p>
+<ol>
+<li><strong>SSL&#x2F;TLS解密</strong>：最常見的HTTPS流量解密</li>
+<li><strong>WEP&#x2F;WPA&#x2F;WPA2解密</strong>：WiFi加密流量</li>
+<li><strong>IPsec解密</strong>：VPN流量</li>
+<li><strong>Kerberos解密</strong>：Windows認證流量</li>
+<li><strong>自定義加密</strong>：透過Lua腳本支援</li>
+</ol>
+<hr>
+<h1 id="📦-匯出物件"><a href="#📦-匯出物件" class="headerlink" title="📦 匯出物件"></a>📦 匯出物件</h1><p>wireshark 提供了可以將封包傳輸的物件(如：圖片、檔案、網頁……) dump 下來的功能</p>
+<p><img src="/assets/3ddxe9oKXt86KtV1SU35U9aQ4UFkfBXaD7uXQ3UaAbA=.png"></p>
+<p>例子：<a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/solardisruption/">CyberDefender-</a><strong><a target="_blank" rel="noopener" href="https://cyberdefenders.org/blueteam-ctf-challenges/solardisruption/">SolarDisruption Lab</a></strong></p>
+<p>這個題目其中有一題問：</p>
+<blockquote>
+<p>Q10 The PLC’s configuration webserver enables engineers to configure and monitor various parameters of the PLC device. This access can also allow an attacker to identify the I&#x2F;O points or the registers&#x2F;coils numbers and their mappings. How many I&#x2F;O points were in use on the PLC?</p>
+</blockquote>
+<p>而這題的解法會需要把整個網站檔案都載下來查看才會得知</p>
+<p><img src="/assets/ss49Kd80lpo7W22MLHwdRQf3jPcnbcmACWlBz01R1Nc=.png"></p>
+<p>接下來按Save all 後選擇其中一個資料夾放所有Object </p>
+<p><img src="/assets/1j_cxT6Bqc47dU8b26jm1am1Qw4nZcqCwNLTLpSUQeU=.png"></p>
+<p>去到那個資料夾後會看到所有的東西都存在裡面了</p>
+<p><img src="/assets/G7vhR5BVsvLM6slvFAU79KvycpYMD767Mk4KclH-thI=.png"></p>
+<p>點開dashboard.html後發現會正常顯示當時網頁的dashboard 頁面</p>
+<p><img src="/assets/3opa4X8R6u1a5dbtiTWgHkni3DeYiQMYIVUBrkJGGrc=.png"></p>
+<p>點開Monitoring 後即可回答答案</p>
+<p><img src="/assets/hsdRZ8vGbIApQpcWw_b3szwFn4xe8oEzoUq6ox9PWQM=.png"></p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了兩個特別的功能，當初接觸到的時候有被驚艷到，Wireshark 的功能真的挺強大的，接下來會介紹其他Network fornesic 工具</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 現在請讓我看看你的瀏覽器紀錄 · yunshiuan</title><meta name="description" content="現在請讓我看看你的瀏覽器紀錄 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">現在請讓我看看你的瀏覽器紀錄</h1><div class="post-info">Oct 6, 2025</div><div class="post-content"><h1 id="Day22-現在請讓我看看你的瀏覽器紀錄"><a href="#Day22-現在請讓我看看你的瀏覽器紀錄" class="headerlink" title="Day22 現在請讓我看看你的瀏覽器紀錄"></a>Day22 現在請讓我看看你的瀏覽器紀錄</h1><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享在 Disk Forensic 下，如何分析瀏覽器中的各種記錄，包括下載記錄、瀏覽歷史、Cookie、密碼、書籤等，以及如何讀取和分析這些資料。</p>
+<hr>
+<h2 id="瀏覽器-Web-Browser"><a href="#瀏覽器-Web-Browser" class="headerlink" title="瀏覽器 Web Browser"></a>瀏覽器 Web Browser</h2><p>Web Browser 是應用程式，用於存取和顯示網頁內容。瀏覽器不僅能顯示網頁，還能儲存使用者偏好設定、記錄瀏覽歷史、管理書籤和密碼、快取網頁內容、儲存 Cookie 和會話資料、記錄下載檔案資訊。</p>
+<p><img src="/assets/PME2ctLgsmW5gOdGRY1b9s3H5NB99taFKugq3i_bB0o=.png"></p>
+<p><code>source: https://3c.ltn.com.tw/news/39285</code></p>
+<p>以下是目前的瀏覽器系列</p>
+<ul>
+<li>Chromium 系列<ul>
+<li>Google Chrome </li>
+<li>Microsoft Edge</li>
+<li>Opera</li>
+<li>Brave</li>
+</ul>
+</li>
+<li>Firefox 系列<ul>
+<li>Mozilla Firefox</li>
+<li>Waterfox</li>
+</ul>
+</li>
+<li>其他瀏覽器<ul>
+<li>Safari </li>
+<li>Internet Explorer</li>
+</ul>
+</li>
+</ul>
+<p>通常資料會存在 <code>C:\Users\&lt;username&gt;\AppData</code></p>
+<hr>
+<h1 id="AppData-目錄結構"><a href="#AppData-目錄結構" class="headerlink" title="AppData 目錄結構"></a>AppData 目錄結構</h1><p>Windows 系統中，應用程式的使用者資料通常儲存在 <code>AppData</code> 目錄下：</p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;username&gt;\AppData\
+├── Local\
+├── Roaming\        
+└── LocalLow\       <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>Local : 儲存大容量，臨時或易刪除的資料</li>
+<li>Roaming : 跨裝置同步資料，會跟著使用者帳戶移動到其他電腦</li>
+<li>LocalLow：與 Local 類似，但是應用程式被授予的權限較低</li>
+</ul>
+<p>以下介紹一些常用的瀏覽器的資料儲存位置以及可以分析的檔案</p>
+<hr>
+<h1 id="🌐-瀏覽器資料鑑識"><a href="#🌐-瀏覽器資料鑑識" class="headerlink" title="🌐  瀏覽器資料鑑識"></a>🌐  瀏覽器資料鑑識</h1><h2 id="Google-Chrome"><a href="#Google-Chrome" class="headerlink" title="Google Chrome"></a>Google Chrome</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default</code></p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default\
+├── History               # 瀏覽歷史和下載記錄
+├── Network\Cookies       # Cookie 資料
+├── Login Data            # 儲存的密碼
+├── Web Data              # 自動填入資料
+├── Bookmarks             # 書籤
+├── Preferences           # 使用者偏好設定
+├── Cache\                # 快取資料
+├── Local Storage\        # 本地儲存
+├── Session Storage\      # 會話儲存
+└── IndexedDB\            # 索引資料庫<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/t3wC0oXhNjW5IAY58wESdbEguCnaBPvkbUMzF7wKS0w=.png"></p>
+<h2 id="Microsoft-Edge"><a href="#Microsoft-Edge" class="headerlink" title="Microsoft Edge"></a>Microsoft Edge</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User Data\Default</code></p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User Data\Default\
+├── History               # 瀏覽歷史和下載記錄
+├── Cookies               # Cookie 資料
+├── Login Data            # 儲存的密碼
+├── Web Data              # 自動填入資料
+├── Preferences           # 使用者偏好設定
+├── Cache\                # 快取資料
+├── Local Storage\        # 本地儲存
+├── Session Storage\      # 會話儲存
+└── IndexedDB\            # 索引資料庫<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/c8YUdhLtLG-xs03GspLLfxg5lXWwJaANvvFQ00ftp9E=.png"></p>
+<h2 id="Mozilla-Firefox"><a href="#Mozilla-Firefox" class="headerlink" title="Mozilla Firefox"></a>Mozilla Firefox</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;</code></p>
+<p><code>&lt;profile&gt;</code> 常常會以xxxx.default-release 表示</p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;\
+├── places.sqlite        # 瀏覽歷史、書籤、下載記錄
+├── cookies.sqlite       # Cookie 資料
+├── logins.json          # 儲存的密碼
+├── formhistory.sqlite   # 表單歷史
+├── permissions.sqlite   # 網站權限
+├── prefs.js            # 使用者偏好設定
+├── user.js             # 使用者自訂設定
+└── storage\            # 本地儲存<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/MH-kVAb81up_baCG59UVWSc7VpFwFHxrAKgKZVGoG5c=.png"></p>
+<p>有些檔案會是 SQLite 儲存的，這邊推薦一個 GUI 應用程式可以查看 SQLite 資料庫內的內容：<strong>DB Browser for SQLite</strong></p>
+<hr>
+<h1 id="DB-Browser-for-SQLite"><a href="#DB-Browser-for-SQLite" class="headerlink" title="DB Browser for SQLite"></a>DB Browser for SQLite</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://sqlitebrowser.org/">https://sqlitebrowser.org/</a></p>
+<p>DB Browser for SQLite 是一款開源的、跨平台的視覺化 SQLite 資料庫管理工具。它讓使用者不用深入指令列就能開啟、瀏覽、查詢、修改 SQLite 資料庫檔案。它支援標準的 SQLite 檔案（.sqlite, .db, .sqlite3 等），也支援匯入／匯出 CSV、SQL dump 等格式</p>
+<p>假設我要查看使用者在 Google Chrome 的瀏覽與下載紀錄</p>
+<p>首先先把 <code>C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default\History</code> dump 下來</p>
+<p><img src="/assets/9FgyVU4gE0qZHD_cPbKAPnJZwqx-YWgxBiESlAA1ZAI=.png"></p>
+<p>然後開啟 DB Browser for SQLite，將剛剛 dump 下來的 history 資料丟進 DB Browser for SQLite 內</p>
+<p><img src="/assets/jev_UQgFrTH7os7vKMbXlqQFHHDiJf7N7AUvGTDCoto=.png"></p>
+<p>下面可以看到資料庫內的 Table，如果想要看裡面的資料就點選瀏覽資料的頁面</p>
+<p><img src="/assets/E_xTSK3RQjQUtRC4oW8-bFfy_f8KdXiWu4GJ3viGkWs=.png"></p>
+<p>如果是要看瀏覽記錄就選擇 <code>urls</code>，如果要看下載紀錄的話就看 <code>downloads</code> Table</p>
+<p><img src="/assets/Wy19Ca-3LR-VWh2fqEcZKglEGOWIsqVcTY9cYyQt-8I=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了在 Disk Forensic 時如何獲取瀏覽器相關的資訊，但其實還有很多瀏覽器留下的檔案可以去分析，常常會遇到題目詢問相關內容時不知道要怎麼去尋找，會需要上網查很多資料，還會遇到各式各樣的問題，但是可以獲得到的資訊是挺龐大的。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

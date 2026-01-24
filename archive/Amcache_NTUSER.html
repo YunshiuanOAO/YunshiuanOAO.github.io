@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶 · yunshiuan</title><meta name="description" content="Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Config 不養它們，Amcache 跟 NTUSER.DAT 自己開小灶</h1><div class="post-info">Oct 4, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會分享沒有放在 <code>%WinDir%\System32\Config</code>，但是很值得去查看的其他兩個 hive，分別是 Amcache.hve、NTUSER.DAT。</p>
+<hr>
+<h1 id="Amcache-hve"><a href="#Amcache-hve" class="headerlink" title="Amcache.hve"></a>Amcache.hve</h1><p>路徑位置：<code>%WinDir%\AppCompat\Programs\Amcache.hve</code></p>
+<p><img src="/assets/Ybc_QgFK9UsOKi7pW8blJhLBDXDmoh5zkDgOjPsqhkw=.png"></p>
+<p>自 Windows 8 起引入，記錄了已執行應用程式的詳細資訊，包括檔案路徑、SHA-1 雜湊值、時間戳記等。</p>
+<p><strong>若惡意程式本體被刪除或遭清除，無法從映像直接看到該檔案本身時</strong>，可以透過 Amcache 的記錄去驗證該程式曾經被執行過</p>
+<p>可以先使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer </a> 合併 Transport logs 後直接查看或者使用 Eric Zimmerman’s tools 中的 AmcacheParser 轉成 CSV 檔</p>
+<p><img src="/assets/OZlv8y4NKybwgKVheToBnYUFk2xmh7wPekUkky8pRuQ=.png"></p>
+<h2 id="AmcacheParser"><a href="#AmcacheParser" class="headerlink" title="AmcacheParser"></a>AmcacheParser</h2><p>AmcacheParser 是由數位鑑識專家 Eric Zimmerman 所開發的一款命令列工具，專門用於解析 Windows 系統中的 Amcache.hve 註冊檔，支援將解析結果輸出為 CSV 格式，方便後續分析與處理</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">PS C:\Users\yunshiuan\Desktop\net9 &gt; .\AmcacheParser.exe -f C:\Users\yunshiuan\Desktop\Amcache.hve_clean --csv C:\Users\yunshiuan\Desktop
+AmcacheParser version 1.5.2.0
+
+Author: Eric Zimmerman (saericzimmerman@gmail.com)
+https:&#x2F;&#x2F;github.com&#x2F;EricZimmerman&#x2F;AmcacheParser
+
+Command line: -f C:\Users\yunshiuan\Desktop\Amcache.hve_clean --csv C:\Users\yunshiuan\Desktop
+
+Warning: Administrator privileges not found!
+
+Unknown value name when processing DevicePnp at path &#123;11517B7C-E79D-4e20-961B-75A811715ADD&#125;\Root\InventoryDevicePnp\display&#x2F;default_monitor&#x2F;1&amp;1f0c3c2f&amp;0&amp;uid256: ManifestPath
+
+C:\Users\yunshiuan\Desktop\Amcache.hve_clean is in new format!
+
+Total file entries found: 240
+Total shortcuts found: 51
+Total device containers found: 13
+Total device PnPs found: 94
+Total drive binaries found: 373
+Total driver packages found: 4
+
+Found 123 unassociated file entry
+
+Results saved to: C:\Users\yunshiuan\Desktop
+
+Total parsing time: 0.909 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>它的輸出會有很多 CSV 檔，可能會出現下面檔案</p>
+<table>
+<thead>
+<tr>
+<th><strong>Amcache_ProgramEntries.csv</strong></th>
+<th>程式條目（Programs Entry）</th>
+<th>描述註冊在 Amcache “Programs” 分支下的應用程式資訊，如安裝資訊或註冊的程式條目。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Amcache_AssociatedFileEntries.csv</strong></td>
+<td>關聯的檔案條目</td>
+<td>指那些能夠被對應（或關聯）到程式條目的檔案條目（File entries）。即那些被安裝程式所擁有或管理的檔案。</td>
+</tr>
+<tr>
+<td><strong>Amcache_UnassociatedFileEntries.csv</strong></td>
+<td>無關聯的檔案條目</td>
+<td>指那些沒有被關聯到任何程式條目的檔案條目，也就是那些孤立的可執行檔 &#x2F; 檔案。這是很多調查中重點查看的部分，因為可能是惡意工具或獨立執行檔。</td>
+</tr>
+<tr>
+<td><strong>Amcache_Shortcuts.csv</strong></td>
+<td>快捷方式 &#x2F; 連結資訊</td>
+<td>描述系統或應用程式捷徑（.lnk 或類似連結）相關的資訊，例如快捷目標、路徑等。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DeviceContainers.csv</strong></td>
+<td>裝置容器 (Device Container)</td>
+<td>與裝置（例如 USB 裝置、硬體裝置）或其容器有關的條目。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DevicePnps.csv</strong></td>
+<td>裝置 PnP 條目 (Plug-and-Play 裝置)</td>
+<td>描述插拔裝置 (PnP 裝置) 的資訊，例如硬體 ID、裝置名稱、相關時間等。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DriveBinaries.csv</strong></td>
+<td>驅動程式二進位檔</td>
+<td>涉及驅動程式（driver binaries）或在磁碟上可執行但屬驅動程式範疇的條目。</td>
+</tr>
+<tr>
+<td><strong>Amcache_DriverPackages.csv</strong></td>
+<td>驅動套件 (Driver Packages)</td>
+<td>關於驅動程式套件安裝、驅動套件版本、封裝資訊等。</td>
+</tr>
+</tbody></table>
+<p>接下來就可以用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">Timeline Explorer</a> 或者其他可以查看 CSV 檔的程式查看內容</p>
+<p><img src="/assets/mPcDCME75qRv_jdBbz7s7O_MXQtHhoV6h36PvLThoFc=.png"></p>
+<p>假設想要知道 notepad.exe 的實際路徑以及它的 SHA-1 值，按照上面的步驟並在 <code>&lt;XXX_UnassociatedFileEntries.csv&gt;</code> 搜尋 notepad.exe</p>
+<p><img src="/assets/x-tZ0wFWbbmTkDMDwjC0KcLnXum2pc_9t6A4oT2z3Bg=.png"></p>
+<p>可以馬上就看到相關資訊</p>
+<hr>
+<h1 id="NTUSER-DAT"><a href="#NTUSER-DAT" class="headerlink" title="NTUSER.DAT"></a>NTUSER.DAT</h1><p>路徑位置：<code>C:\Users\&lt;username&gt;\NTUSER.DAT</code></p>
+<p><img src="/assets/HbBDSu1lraXx3pIgsNxHGOqZHdhNnyuWDrcCEMR8-1A=.png"></p>
+<p>NTUSER.DAT 是 Windows 每個使用者帳戶在其使用者設定檔底下的一個檔案，用來儲存與該帳戶相關的 Registry 設定與使用者偏好，在使用者登入時，系統會將這個檔案對應到註冊表的 HKEY_CURRENT_USER（HKCU） 分支，讓該使用者的作業與應用程式可以讀寫其個人設定；在登出或關機時，這些變更會回寫到 NTUSER.DAT。</p>
+<p>可以直接用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer</a> 查看。</p>
+<p><img src="/assets/RIvMLfCdh5rrb81bTPyBEaPuSO1d-zFoxpUOjAMwYo8=.png"></p>
+<p>這邊重點提兩個比較特別的 key</p>
+<h2 id="UserAssist"><a href="#UserAssist" class="headerlink" title="UserAssist"></a>UserAssist</h2><p>key 路徑：<code>Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\&#123;GUID&#125;\Count</code></p>
+<p>UserAssist 是 Windows 用來追蹤使用者透過圖形介面啟動應用程式或捷徑的統計記錄機制，裡面會包含程式的執行次數、最後執行時間、<strong>Focus Count、Focus Time</strong></p>
+<p><img src="/assets/EX1XBHpXaNJ2rj-3d0M_GUZyaVjDpWQwmaKNE1NvYuY=.png"></p>
+<hr>
+<h2 id="ShellBags"><a href="#ShellBags" class="headerlink" title="ShellBags"></a>ShellBags</h2><p>ShellBags 是 Windows 用於記錄使用者在檔案總管中瀏覽<strong>資料夾</strong>時的設定偏好與檔案夾訪問紀錄，包括資料夾的視窗配置 &#x2F; 檢視樣式 &#x2F; 排列方式 &#x2F; 大小 &#x2F; 位置等，代表如有刪除或存取資料夾的操作會被記錄在 ShellBags 當中。</p>
+<p>它會依照作業系統存在不同地方</p>
+<ul>
+<li><code>&lt;NTUSER.DAT&gt;\Software\Microsoft\Windows\Shell\BagMRU </code></li>
+<li><code>&lt;NTUSER.DAT&gt;\Software\Microsoft\Windows\Shell\Bags</code></li>
+<li>在較新 Windows 版本（如 Windows 7 之後），部分 ShellBags 資料會存於 <code>C:\Users\&lt;username&gt;\AppData\Local\Microsoft\Windows\UsrClass.dat</code></li>
+<li>在某些 Windows 版本或使用者設定中，部分 ShellBags 條目只存在於 UsrClass.dat 而非 NTUSER.DAT</li>
+</ul>
+<p><img src="/assets/pnKEJ4vqw21ZBolGw34xhCg7XGai0iP7POjOr8NtI2I=.png"></p>
+<p>如果直接使用 RegistryExplorer 會很難閱讀，建議使用 Eric Zimmerman’s tools 中的 ShellBags Explorer 查看</p>
+<h3 id="ShellBags-Explorer"><a href="#ShellBags-Explorer" class="headerlink" title="ShellBags Explorer"></a>ShellBags Explorer</h3><p>下載連結：<a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">https://ericzimmerman.github.io/#!index.md</a></p>
+<p>ShellBags Explorer 是由 Eric Zimmerman 所開發的一款專門用來瀏覽與解析 Windows ShellBags 資料的工具，將 BagMRU &#x2F; Bags 的註冊表資料解析為資料夾層級樹狀視圖，可以看到使用者曾瀏覽過哪些資料夾</p>
+<p>它的介面跟 RegistryExplorer 差不多，一樣需要匯入 hive，看作業系統版本匯入 <code>NTUSER.DAT</code> 或者 <code>UsrClass.dat</code></p>
+<p><img src="/assets/MvUItWpVpa5jnJsYBxUDs0mF7EWLYanjudpkwnoJOs8=.png"></p>
+<p>匯入後就可以看到 ShellBags 資訊</p>
+<p><img src="/assets/wVsOpk-GTmT9mXzGHEOn72qufR43sE350d2ofw13oh4=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Amcache.hve、NTUSER.DAT 兩個 Hive，多了一點線索可以分析，這兩個 Hive 對於 Disk Forensic 來說挺重要也挺常用到的，在打藍隊 Lab 或 CTF 時如果沒什麼線索也會跑來看這兩個 Hive，明天也會持續分享其他可分析的部分。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

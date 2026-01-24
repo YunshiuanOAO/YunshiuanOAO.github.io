@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 襲來！大硬碟邪神 · yunshiuan</title><meta name="description" content="襲來！大硬碟邪神 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">襲來！大硬碟邪神</h1><div class="post-info">Oct 3, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹我覺得在 Forensic 當中最難的一個類別 - Disk Forensic，因為它單單一題的檔案就容量超大，裡面的內容超級無敵多，所以工具的使用與觀察就會很重要，所以今天的內容會包含基本的流程與會用到的工具</p>
+<hr>
+<h1 id="💾-Disk-Forensic"><a href="#💾-Disk-Forensic" class="headerlink" title="💾 Disk Forensic"></a>💾 Disk Forensic</h1><p>Disk Forensic 是專注於從磁碟或存儲媒體，如：硬碟、固態硬碟、USB 隨身碟、記憶卡……等等中取得、分析與復原資料，以作為法律或調查用途的證據，目標是在不改變原始資料的前提下，盡可能還原被刪除的資料、隱藏資料、檔案相關 metadata、檔案修改紀錄、時間戳記等，以協助重建案情、時間軸或找出惡意行為</p>
+<p>目前藍隊 CTF 的 Disk Forensic 題目會給兩種檔案，一種是 Image 檔案</p>
+<p><img src="/assets/oDFmynDID1wASC74E8JhHkOGRBWp6HlPgGIxwDDrxyk=.png"></p>
+<p>另一種會是類似完整的硬碟內的檔案，但是又不是完整的</p>
+<p><img src="/assets/Ozqkhi6MZzMBqEVpU-N7YsdubEKdT7GFkzUiDSApOTc=.png"></p>
+<p>這兩個差別是什麼呢？</p>
+<p>上面的是由 FTK Imager 或是其他取證工具將完整的 disk 資料把它轉成 image，因此原本留在 disk 裡面有什麼資料，在 Image 裡就會留著這些資料，所以檔案有可能會超級大。如果要查看也可以使用 FTK Imager 查看或者掛載到電腦上</p>
+<h2 id="FTK-Imager"><a href="#FTK-Imager" class="headerlink" title="FTK Imager"></a>FTK Imager</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.exterro.com/digital-forensics-software/ftk-imager">https://www.exterro.com/digital-forensics-software/ftk-imager</a></p>
+<p>FTK Imager 是由 AccessData 開發的一款磁碟／資料映像與預覽工具，它可用於在不改變原始資料的情況下，取得一個與原始儲存裝置（硬碟、USB、記憶卡等），以供日後分析、法律調查等用途</p>
+<p><img src="/assets/S2YDDW_pvvqkgTX-VY-mzsjJHhXOaZWC7VuDo6AALNY=.png"></p>
+<p>如果要掛載 Image，點選左上角的 File -&gt; Add Evidence Item </p>
+<p><img src="/assets/3G-zS_FR8MBfROUm_4KJZA9u1dnXaISTERQDc41Ehug=.png"></p>
+<p>選擇 Image File </p>
+<p><img src="/assets/5g5pMNHdEt-j-KirrHJ_8pilhzUFSZG_0-qk1cxUw9s=.png"></p>
+<p>選擇 disk image 路徑</p>
+<p><img src="/assets/oxH-L__SfkLyUcn3Xb4mr0btii2BukbcZhAbaOoDFXI=.png"></p>
+<p>之後就可以查看 image 內容了</p>
+<p><img src="/assets/aHLeONLXQFx5rQkTMEL6kQ2gHFvUF9BKwhs_Cc2a-W8=.png"></p>
+<hr>
+<p>另一個則是另外使用一個 KAPE 工具將 disk 中關鍵的一些檔案（如：evtx、NTUSER.DAT、tmp 等）提取出來再整理成一包壓縮檔，解壓後就會出現整理過後的硬碟內容，因此檔案大小會比使用 FTK Imager 轉換的 Image 小很多，並且可以直接查看，又稱為 <strong>triage image</strong></p>
+<p><img src="/assets/wMDJiZ9OQ_f2fWU2px0YDtSZa61O7WhUkSWQP1iUlAo=.png"></p>
+<h2 id="KAPE"><a href="#KAPE" class="headerlink" title="KAPE"></a>KAPE</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://www.kroll.com/en/services/cyber/incident-response-recovery/kroll-artifact-parser-and-extractor-kape">https://www.kroll.com/en/services/cyber/incident-response-recovery/kroll-artifact-parser-and-extractor-kape</a></p>
+<p>KAPE 是由 Eric Zimmerman 為 Kroll 所開發的 DFIR 工具，它是一個快速收集 artifacts 並初步處理的工具，用於從現場系統或儲存媒體中迅速抓取對鑑識有用的檔案或資訊，再利用 modules 來解析／整理這些資料。目的在於在完整映像完成前就能有可用線索。</p>
+<p><img src="/assets/YKbSdl2jMO9MqNDpsrp_TVlLOYv6Ux8ptGfCK7pTTrA=.png"></p>
+<p><code>source : ``https://isc.sans.edu/diary/25258</code></p>
+<hr>
+<p>接下來得到了 image 檔之後，就可以開始看我們想要得知的一些內容</p>
+<h2 id="Windows-Event-Logs"><a href="#Windows-Event-Logs" class="headerlink" title="Windows Event Logs"></a>Windows Event Logs</h2><p>路徑：<code>%WinDir%\System32\winevt\logs</code></p>
+<p>此資料夾底下會有很多 evtx 檔案，其中記錄了很多事件，主要會看的有這三個</p>
+<ul>
+<li>Security.evtx : 用於記錄系統的安全性事件（稽核、登入／登出、帳戶變更、安全性相關操作）</li>
+<li>Application.evtx : 用來記錄各個應用程式或程式元件本身所產生的事件</li>
+<li>System.evtx : 記錄 Windows 系統組件、驅動程式、核心服務等所產生的事件</li>
+</ul>
+<p>可以用內建的 Windows Event Viewer 查看，或者使用第三方程式，如：<a target="_blank" rel="noopener" href="https://eventlogxp.com/">Event Log Explorer</a> 介面比較好看一點</p>
+<p><img src="/assets/QqTatollrpV9sGe0aa8lvmntm1cXjWShrTfLos8__ww=.png"></p>
+<p>查詢時會需要搭配一下 Event ID，這邊列出一些很常會使用到的</p>
+<table>
+<thead>
+<tr>
+<th><strong>Event ID</strong></th>
+<th><strong>Log 來源</strong></th>
+<th><strong>說明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4624</td>
+<td>Security</td>
+<td>成功登入事件</td>
+</tr>
+<tr>
+<td>4625</td>
+<td>Security</td>
+<td>登入失敗事件</td>
+</tr>
+<tr>
+<td>4634</td>
+<td>Security</td>
+<td>使用者登出</td>
+</tr>
+<tr>
+<td>4672</td>
+<td>Security</td>
+<td>特殊權限帳號登入 (例如系統管理員)</td>
+</tr>
+<tr>
+<td>4688</td>
+<td>Security</td>
+<td>建立新行程 (process creation)</td>
+</tr>
+<tr>
+<td>4689</td>
+<td>Security</td>
+<td>行程結束 (process termination)</td>
+</tr>
+<tr>
+<td>4697</td>
+<td>Security</td>
+<td>安裝新的服務</td>
+</tr>
+<tr>
+<td>4720</td>
+<td>Security</td>
+<td>建立新的使用者帳號</td>
+</tr>
+<tr>
+<td>4722</td>
+<td>Security</td>
+<td>啟用使用者帳號</td>
+</tr>
+<tr>
+<td>4723</td>
+<td>Security</td>
+<td>使用者嘗試變更自己的密碼</td>
+</tr>
+<tr>
+<td>4724</td>
+<td>Security</td>
+<td>嘗試重設其他帳號密碼</td>
+</tr>
+<tr>
+<td>4725</td>
+<td>Security</td>
+<td>停用使用者帳號</td>
+</tr>
+<tr>
+<td>4726</td>
+<td>Security</td>
+<td>刪除使用者帳號</td>
+</tr>
+<tr>
+<td>4732</td>
+<td>Security</td>
+<td>使用者被新增至本機群組</td>
+</tr>
+<tr>
+<td>4733</td>
+<td>Security</td>
+<td>使用者被移出本機群組</td>
+</tr>
+<tr>
+<td>4740</td>
+<td>Security</td>
+<td>使用者帳號被鎖定</td>
+</tr>
+<tr>
+<td>1102</td>
+<td>Security</td>
+<td>清除稽核日誌 (Event Log 被清除)</td>
+</tr>
+<tr>
+<td>6005</td>
+<td>System</td>
+<td>Event Log 服務啟動 (通常代表開機)</td>
+</tr>
+<tr>
+<td>6006</td>
+<td>System</td>
+<td>Event Log 服務關閉 (通常代表關機)</td>
+</tr>
+<tr>
+<td>6008</td>
+<td>System</td>
+<td>非正常關機事件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Windows-Registry"><a href="#Windows-Registry" class="headerlink" title="Windows Registry"></a>Windows Registry</h2><p>路徑：<code>%WinDir%\System32\Config</code></p>
+<p>Windows Registry 是 Windows 的中央設定資料庫，系統與應用程式把大量設定、狀態與活動資訊寫入其中。它不是單一文字檔，而是以樹狀結構儲存的二進位資料庫，供作業系統、驅動程式與應用程式查詢與修改</p>
+<p>它是由這三個基本結構儲存</p>
+<ul>
+<li><strong>Hive</strong>：Windows 註冊表的最高層級結構單位，每個 Hive 都是一個獨立的檔案，儲存在硬碟上。可以把 Hive 想像成一個大型的資料庫檔案。</li>
+<li><strong>Key</strong>：類似資料夾，可包含 subkeys 與 values。每個 key 在 metadata 裡有屬性，形成樹狀結構。</li>
+<li><strong>Value</strong>：key 下面的項目，真正在存資料的地方。每個 value 有三個部分：name、type、data。</li>
+</ul>
+<p>而 HKEY_LOCAL_MACHINE (HKLM) 是存放針對整個電腦的設定，如驅動程式、已安裝軟體、系統服務、硬體資訊等</p>
+<p><img src="/assets/Pb6ezxh7M5yBNelER6EFjpzDTr3VEMjRHQYPJAl2xzI=.png"></p>
+<p><code>source :  ``https://www.lifewire.com/what-is-a-registry-value-2626042</code></p>
+<p>以下四個是很常會去查看的 Hive </p>
+<ul>
+<li>SAM：儲存本地使用者帳號與群組的資訊，例如使用者名稱、建立時間、最後登入時間。</li>
+<li>SECURITY：包含使用者帳號的安全相關資訊，例如密碼政策。</li>
+<li>SOFTWARE：紀錄所有已安裝軟體（包含 Windows 內建與第三方軟體）。</li>
+<li>SYSTEM：儲存系統層級的組態資訊，例如事件日誌設定、硬體（像是 USB 裝置）相關的設定。</li>
+</ul>
+<p>可以使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer</a> 幫助查看</p>
+<p><img src="/assets/U_Af3Nuy6jkoJVOBYMEK0JxMY0oldryrcEpKqJiiFYg=.png"></p>
+<p>另外有時候匯入 Hive 時會出現這樣的警告</p>
+<p><img src="/assets/1R6SsxPjf6RH4H9TTieYwGk_l_SPDaEw3IEEwytPx7U=.png"></p>
+<p>此警告表示主 hive 檔案與其 transaction logs (.LOG) 的序號不一致，代表 transaction log 中存在尚未同步到主檔案的變更。</p>
+<p>Windows Registry 採用 write-ahead logging 機制：修改時先寫入記憶體快取，再記錄到 transaction log，最後才定期 flush 到主 hive 檔案。而當 log 檔案的序號大於主檔案時，這個 hive 就會被稱為 <strong>Dirty Hive</strong> </p>
+<p>按下 Yes 之後就會開始進行與 transaction logs 的合併</p>
+<p><img src="/assets/aMqvxrwhRPljyqQ9q7YZGnDq-qwqUj9tamap8pHlCCI=.png"></p>
+<p>選擇 transaction logs</p>
+<p><img src="/assets/vV7W6Z8NLSy3_PqzONNNI-lZkXLVGK3gjQLIHimlGyA=.png"></p>
+<p>選擇後它就會幫你合併，合併完後先儲存到一個地方</p>
+<p><img src="/assets/zWmyczb4k7Jxotypg0j4NvhrhaU-1uXbQ3tgONIuTxo=.png"></p>
+<p>存完後就可以看這個合併過後的 Hive </p>
+<p><img src="/assets/-Nlg6ItibiOChztpvL-_Bj38i8jwo1N9KOo1v6D0c30=.png"></p>
+<p>Registry Explorer 工具除了可以查看之外它還有預設書籤可以使用，快速定位到想要看的 key </p>
+<p><img src="/assets/ias4TQfhKvlTF0pKOS0CDMBbNHwjRZQ8-186lYojnGA=.png"></p>
+<p>以下列出常見的 key 路徑</p>
+<table>
+<thead>
+<tr>
+<th><strong>Registry 路徑</strong></th>
+<th><strong>說明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HKLM\SYSTEM\CurrentControlSet\Services</td>
+<td>系統服務與驅動程式資訊</td>
+</tr>
+<tr>
+<td>HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName</td>
+<td>電腦名稱</td>
+</tr>
+<tr>
+<td>HKLM\SYSTEM\MountedDevices</td>
+<td>磁碟&#x2F;USB 裝置掛載資訊</td>
+</tr>
+<tr>
+<td>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</td>
+<td>系統啟動時自動執行程式</td>
+</tr>
+<tr>
+<td>HKLM\SAM\SAM\Domains\Account\Users</td>
+<td>本機帳號資訊</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了什麼是 disk forensic 以及一些會想要先查看的線索，接下來幾天會繼續介紹其他在 Disk 中值得分析的檔案</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

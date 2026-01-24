@@ -1,0 +1,674 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Boss Of The SOC v1 Writeup · yunshiuan</title><meta name="description" content="Boss Of The SOC v1 Writeup - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Boss Of The SOC v1 Writeup</h1><div class="post-info">Oct 11, 2025</div><div class="post-content"><h1 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h1><p>本次實作實驗聚焦在 APT（高階持續性威脅）情境與勒索軟體情境。你將扮演 Alice Bluebird 的角色——剛被聘為 Wayne Enterprises 的 SOC 分析師，負責偵測與防禦各類網路攻擊。</p>
+<h2 id="場景-1（APT）："><a href="#場景-1（APT）：" class="headerlink" title="場景 1（APT）："></a>場景 1（APT）：</h2><p>今天是 Alice 在 Wayne Enterprises 安全部門（Security Operations Center，SOC）的第一天。Lucius 叫 Alice 坐下並給她第一個任務：一份來自高譚市警察局（Gotham City Police Department, GCPD）的備忘錄。GCPD 發現線上有證據（<a target="_blank" rel="noopener" href="http://pastebin.com/Gw6dWjS9%EF%BC%89%E9%A1%AF%E7%A4%BA%E7%B6%B2%E7%AB%99">http://pastebin.com/Gw6dWjS9）顯示網站</a> <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com/">www.imreallynotbatman.com</a> 在 Wayne Enterprises 的 IP 位址空間內被入侵。該駭客組織有多重目標……但他們的作案手法之一是篡改網站以羞辱被害者。Lucius 要求 Alice 判定 <a target="_blank" rel="noopener" href="http://www.imreallynotbatman.com(wayne/">www.imreallynotbatman.com（Wayne</a> 企業執行長的個人部落格）是否確實遭到入侵。</p>
+<p>在此情境中，使用者社群在瀏覽 Wayne Enterprises 網站時回報看到下列被篡改的圖片，且部分回報提到「P01s0n1vy」。若你不熟悉，P01s0n1vy 是一個曾針對 Wayne Enterprises 的 APT 組織。你作為 Alice 的目標是調查該網站篡改事件，並嘗試依照 Lockheed Martin Kill Chain 重建攻擊流程。</p>
+<p><img src="/assets/kNpb6q5LoVBZaQL696hxc5NUhEZYM2Y6amfiOkUtQXA=.png"></p>
+<h2 id="場景-2（勒索軟體）："><a href="#場景-2（勒索軟體）：" class="headerlink" title="場景 2（勒索軟體）："></a>場景 2（勒索軟體）：</h2><p>在第二個情境中，你的一位使用者在 Windows 桌面上看到一張圖片，表示系統上的檔案已被加密，必須付款才能取回檔案。看起來 Wayne Enterprises 有一台主機感染了 Cerber 勒索軟體，你的目標是調查這起勒索事件。</p>
+<p><img src="/assets/XMxnyYYAgsqi2e8fgkpYi93wDgWY461l01mIV_P_MgM=.png"></p>
+<hr>
+<blockquote>
+<p>Q1 : This is a simple question to get you familiar with submitting answers. What is the name of the company that makes the software that you are using for this competition? Just a six-letter word with no punctuation.</p>
+</blockquote>
+<p>因為題目給的環境是 Splunk，這邊回答 splunk 即可。</p>
+<p><img src="/assets/icMNAy1R14lhSyuRYQVk2lmq8FB6TmKnw5bcI1zeRa8=.png"></p>
+<blockquote>
+<p>Ans :  splunk</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q2 : Web Defacement: What content management system is imreallynotbatman.com likely using? (Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)</p>
+</blockquote>
+<p>題目想要找出 <code>imreallynotbatman.com</code> 網站使用了什麼 CMS 系統。</p>
+<p>因此我們會用到 Search 功能。</p>
+<p>來到 Search &amp; Report 頁面在 Search 欄位搜尋：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在 Splunk 收到日誌或事件後，會根據設定儲存在不同的 index<br>這段搜尋語法的意思是在資料索引為botsv1中，找出字串中包含 <code>imreallynotbatman.com</code>。<br>data indexes 可以在 Setting-&gt; DATA -&gt; Index 中得知<br><img src="/assets/s7Yn9AMSgsP7iMFp1_kteGCWUZgVydpg8wxoXVaY1Mw=.png"></p>
+<p>看第一個 Log 就可以發現使用的是 <code>joomla</code>。</p>
+<p><img src="/assets/6KmCQjyMKDS5-zRyLEXLBBfFIzOziopvdBwhCd6LJiM=.png"></p>
+<blockquote>
+<p>ans : <code>joomla</code></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q3 : Web Defacement: What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?</p>
+</blockquote>
+<p>接下來他想要找的是 Po1s0n1vy 用來掃描 imreallynotbatman.com 的 IP 是什麼？</p>
+<p>有一個線索是知道這個 IP 有進行網頁漏洞掃描，有一個方向是我們可以使用在 Day17 提到的 Suricata，它會產生網路連接的 Log，因此我們搜尋的範圍可以限制在 Suricata 的 log 下，搜尋指令如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/JxJw2skLZ9umeMi8nqi2Oawi__n6MDwXb8f9NJlSCYA=.png"></p>
+<p>然後我們想要專注的是<strong>來源 IP</strong>，因此我們會需要用到 table 語法，它可以將我們想要的欄位單獨拉出來做一張表格，讓我們可以專注在分析這個欄位上。</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
+| table src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/OhDFwdXkJxXoIpb1xqzNuy-uyBeSzR4Ds3i5LoryWiw=.png"></p>
+<p>這邊我們獲得了每個 Suricata log 的來源 IP，接下來進行統計，因為我想要得到的是這個 IP 出現幾次，數量很多會有很高的機率是進行掃描，所以接下來會使用到 stats 語法，它提供了一些基本的統計功能。</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
+| table src_ip 
+| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/XOGDycf1lecuXmMmaM985JoLpyxsQW9OIUYvABV4ZMA=.png"></p>
+<p>這樣就看得出來答案就是 <code>40.80.148.42</code>，另外如果想要數量由大排到小，可以使用 sort 語法，預設是由小排到大，加上 <code>-</code> 可以讓它變成由大排到小。</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
+| table src_ip 
+| stats count by src_ip 
+| sort -count reverse<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/be5iJG9bbqLEDr3wZZV59naJ4B8Du_ciK_RTg4cMfdA=.png"></p>
+<blockquote>
+<p>ans : <code>40.80.148.42</code></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q4 : Web Defacement: What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example, “Microsoft” or “Oracle”)</p>
+</blockquote>
+<p>這題想要搜尋到他們使用的 scanner 工具是什麼。</p>
+<p>一樣我們可以使用 Suricata 工具，它除了可以產生網路連接 log 之外，還可以根據自訂規則產生警報，如抓到某個掃描工具的 Signature。</p>
+<p>所以我們可以針對 Suricata 產生的 alert 去分析：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/PF6XbKoFeldNiTIGNzQa2S3TylhVgZqSQfC96KNtyHA=.png"></p>
+<p>signature 欄位顯示偵測到的是什麼相關操作，因此我們用 table 專注去看 alert.signature 有沒有相關的線索：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert
+| table alert.signature<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/FFuDTSF0_gvnDMjyPdFes-eoxr2Iy8NVLD0YUvxLKZs=.png"></p>
+<p>接下來就可以找到這個 value：</p>
+<pre class="line-numbers language-none"><code class="language-none">ET SCAN Acunetix Accept HTTP Header detected scan in progress<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以看出 Acunetix 就是我們需要的答案。</p>
+<blockquote>
+<p>ans : Acunetix</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q5 : Web Defacement: What IP address is likely attempting a brute force password attack against imreallynotbatman.com?</p>
+</blockquote>
+<p>要找到哪個 IP 在對 imreallynotbatman.com 進行暴力破解。</p>
+<p>需要對網站進行帳號密碼的暴力破解，會需要用到 POST 的 method，我們可以針對 POST 操作做查看，並且也會需要知道 POST 帶的資料，確認是不是在做暴力破解，查詢可以用以下指令：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http
+| table src_ip, form_data, uri<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><code>sourcetype=stream:http</code> 代表是拿 Splunk Stream app 所收集到並且屬於 HTTP 流量資料，而 <code>dest_ip=192.168.250.70</code> 是 imreallynotbatman.com 的 IP，在前幾題的操作可以得知。</p>
+<p><img src="/assets/YlPiSsFhTTIy4alIrPTC0E81cW-xZcJU14fKd8qyayo=.png"></p>
+<p>這邊可以看出來是 23.22.63.114 在進行暴力破解。</p>
+<blockquote>
+<p>ans : 23.22.63.114</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q6 : Web Defacement: What was the first brute force password used</p>
+</blockquote>
+<p>這題要獲得第一個暴力破解嘗試的密碼。</p>
+<p>這題可以使用 sort 將時間排序：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http src_ip&#x3D;23.22.63.114
+| table src_ip, form_data, uri _time
+| sort _time<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/39-8d3Nvl4wzQTMjMF4pyt3Z9T5fbnjtIBP4MTLXBnQ=.png"></p>
+<p>看到第一列的 password 參數是 12345678。</p>
+<blockquote>
+<p>ans : 12345678</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q7 : Web Defacement: What is the name of the executable uploaded by Po1s0n1vy? Please include the file extension. (For example, “notepad.exe” or “favicon.ico”)</p>
+</blockquote>
+<p>這題要找的是 Po1s0n1vy 上傳的執行檔的檔名是什麼。</p>
+<p>在 HTTP 中，如果上傳一個檔案會使用 <code>multipart/form-data</code>，代表會將不同 type 的資料透過一次請求傳送出去，因此我們可以用 <code>multipart/form-data</code> 縮小我們的搜尋範圍，另外語法也支援 regex，在搜尋執行檔上比較方便：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http multipart&#x2F;form-data *.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/YVwaJ7YoOM-RMWk-A5KU8bH-aYXv1Bg-BFKJo1a-ZSo=.png"></p>
+<p>可以發現到上傳的執行檔檔名為 3791.exe。</p>
+<blockquote>
+<p>ans : 3791.exe</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q8 : Web Defacement: What is the MD5 hash of the executable uploaded?</p>
+</blockquote>
+<p>這題問 3791.exe 的 MD5 值是多少。</p>
+<p>要取得 MD5 的值，會需要看關於 winlog 的紀錄，這邊會提到一個工具 - <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/sysinternals/downloads/sysmon">Sysmon</a>，它會記錄系統內發生的重要事件，包含 Process Create、Network Connect、檔案建立與變更、Registry Modification。 </p>
+<p>以下是 Sysmon 的 Event ID：</p>
+<h3 id="Sysmon"><a href="#Sysmon" class="headerlink" title="Sysmon"></a>Sysmon</h3><table>
+<thead>
+<tr>
+<th>Event ID</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Process Create（程式啟動）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>File creation time changed（時間戳被修改）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network connection（TCP 連線）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Process Terminate（程式終止）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Driver Loaded（驅動載入）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Image Loaded（DLL載入）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CreateRemoteThread（遠端執行緒注入）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>RawAccessRead（磁碟原始存取）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>ProcessAccess（程式存取他人記憶體）</td>
+</tr>
+<tr>
+<td>11</td>
+<td>File Create（檔案建立）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Registry Key Create（註冊表鍵建立）</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Registry Value Set（註冊表值修改）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Registry Key Delete（註冊表鍵刪除）</td>
+</tr>
+<tr>
+<td>15</td>
+<td>FileCreateStreamHash（建立 ADS）</td>
+</tr>
+<tr>
+<td>22</td>
+<td>DNS Query（DNS 查詢事件）</td>
+</tr>
+<tr>
+<td>23</td>
+<td>File Delete（檔案刪除）</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Process Tampering（程式記憶體被修改）</td>
+</tr>
+<tr>
+<td>26</td>
+<td>File Deleted and Overwritten（防止取證）</td>
+</tr>
+<tr>
+<td>255</td>
+<td>Sysmon 設定被修改（Config change）</td>
+</tr>
+</tbody></table>
+<p>其中 Event ID &#x3D; 1 有 MD5 可以查看，那這樣我們就搜尋 3791.exe 的執行紀錄，獲得它的 MD5 值：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source &#x3D; WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational 3791.exe EventCode&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/juHx-R1ointkAU6o-_IgpSKURGIDc0xy64Q9Lcizq1g=.png"></p>
+<p>而我們專心看這個紀錄：</p>
+<p><img src="/assets/VtTVFx0LRq1LMC0GeOJe7sqZy9cI0_yULvm2phY2C7Q=.png"></p>
+<p>它的 ParentCommandLine 是 <code>cmd.exe/c &quot;3791.exe2&amp;gt;&amp;amp;1</code>，以及這邊顯示的 <code>&lt;DataName=&#39;Image&#39;&gt;C:\inetpub\wwwroot\joomla\3791.exe&lt;/Data&gt;&lt;DataName=&#39;CommandLine&#39;&gt;3791.exe</code>，代表這個紀錄是關於 3791.exe 的資訊，所以往後面看它的 MD5 值是 AAE3F5A29935E6ABCC2C2754D12A9AF0。</p>
+<blockquote>
+<p>ans : AAE3F5A29935E6ABCC2C2754D12A9AF0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q9 : Web Defacement: What was the correct password for admin access to the content management system running “imreallynotbatman.com”?</p>
+</blockquote>
+<p>這題想要問是哪個密碼成功進入了 imreallynotbatman.com。</p>
+<p>我們可以在解 Q5 的時候知道登入的頁面是在 <code>/joomla/administrator/index.php</code>，並且它是用暴力破解的方式嘗試登入系統，所以如果有一個密碼與其他登入次數比其他的還多就有可能會是正確的密碼，但是它的密碼是放在 form_data 欄位，這個欄位會包含其他的文字資訊，因此我們會需要用到 rex 語法：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| stats count by pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>rex 的欄位說明如下：</p>
+<ul>
+<li>field&#x3D;form_data：表示只在事件的 form_data 欄位內容中執行正規表達式（而不是整個 _raw）。</li>
+<li>“passwd&#x3D;(?<pass>\w+)”：正規表達式本體：<ul>
+<li>passwd&#x3D;：字面匹配字串 passwd&#x3D;（例如 HTML 表單或 HTTP body 裡的參數名）。</li>
+<li>(?<pass>\w+)：命名捕獲群組，會把匹配到的內容放到 Splunk 欄位 pass 中。<ul>
+<li>\w+ 表示一或多個「字母、數字或底線（underscore）」。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>原本的 form_data 長這樣：</p>
+<pre class="line-numbers language-none"><code class="language-none">username&#x3D;admin&amp;task&#x3D;login&amp;return&#x3D;aW5kZXgucGhw&amp;option&#x3D;com_login&amp;passwd&#x3D;topgun&amp;49e63c55a9730eee52c7ea0448de3a01&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>因此它會提取 <code>passwd=</code> 後面的字串，直到碰到不是字母、數字或底線為止，然後它會變成單獨的 pass 欄位。</p>
+<p><img src="/assets/bDwPdvFgqR8HTS-_cHAqJUw8P4v7Kczqt2wjET1hwak=.png"></p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| stats count by pass
+| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/O7MkDnpyKaqjyMnhCJipRzitRuH_45-EXW9K7hO0R2I=.png"></p>
+<blockquote>
+<p>ans : batman</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q10 Web Defacement: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with the extension (For example, “notepad.exe” or “favicon.ico”).</p>
+</blockquote>
+<p>題目想問是哪個檔案名稱污染了 imreallynotbatman.com 網頁。</p>
+<p>這邊應該是想要問情境 1 當中進入網站出現一張圖片。</p>
+<p>代表它之前可能會去下載過，因此可以用以下指令查詢它之前請求的頁面：</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70 
+| table site src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/Q4BQsOFmAx6I7jH9goDcf-MGpRlOr2Ocb1LG0GUrdu8=.png"></p>
+<p>這邊可以看到它去一個網頁請求 <code>poisonivy-is-coming-for-you-batman.jpeg</code> 圖片，這個就是答案。</p>
+<blockquote>
+<p>ans : poisonivy-is-coming-for-you-batman.jpeg</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q11 : Web Defacement: This attack used dynamic DNS to resolve to the malicious IP. What is the fully qualified domain name (FQDN) associated with this attack?</p>
+</blockquote>
+<p>這題想要問是哪個FQDN 在進行攻擊</p>
+<p>在Q10 可以看到 192.168.250.70 對prankglassinebracket.jumpingcrab.com 請求圖片，而prankglassinebracket.jumpingcrab.com 就是我們想要的答案</p>
+<p><img src="/assets/Q4BQsOFmAx6I7jH9goDcf-MGpRlOr2Ocb1LG0GUrdu8=.png"></p>
+<blockquote>
+<p>ans : prankglassinebracket.jumpingcrab.com</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q12: Web Defacement: What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?</p>
+</blockquote>
+<p>從Q11 我們可以得到他去請求的 FQDN 叫做 <code>prankglassinebracket.jumpingcrab.com</code> ，我們可以再確認一下這個 FQDN 的 IP 是什麼</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70
+| table src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/2ChrVHaw6WBVh-DZf7m-0KgknWSklENqTx-sjMpnjb4=.png"></p>
+<p>最下方可以看到 23.22.63.114 對應的 FQDN 就是 prankglassinebracket.jumpingcrab.com ，23.22.63.114 在Q5 我們確定它是在進行暴力破解登入後台，因此23.22.63.114 就是我們這題的答案</p>
+<blockquote>
+<p>ans : 23.22.63.114</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q13 : Web Defacement: Based on the data gathered from this attack and common open-source intelligence sources for domain names, what is the email address most likely associated with the Po1s0n1vy APT group?</p>
+</blockquote>
+<p>這題需要利用前面蒐集到的資料獲得 Po1s0n1vy APT 組織相關的電子郵件地址</p>
+<p>總結一下我們目前得到的</p>
+<ul>
+<li>23.22.63.114 (prankglassinebracket.jumpingcrab.com) : 暴破密碼，送圖片</li>
+<li>40.80.148.42 : 掃描網頁漏洞</li>
+</ul>
+<p>接下來我將23.22.63.114丟進 VirusTotal ，可以看到它之前解析為Po1s0n1vy.com</p>
+<p><img src="/assets/xd27jCJYccOCx5qdHj2Zq1apiGGRst3gNdmbViatinA=.png"></p>
+<p>而在情境敘述中的備忘錄也有提到Po1s0n1vy.com這個網站</p>
+<p>接下來可以使用 <a target="_blank" rel="noopener" href="https://www.whoxy.com/">whoxy</a> 這個網站，它可以幫我們查關於這個網域的資訊，另外也可以查詢誰之前擁有了這個網域。</p>
+<p>查詢結果如下</p>
+<p><a target="_blank" rel="noopener" href="https://www.whoxy.com/po1s0n1vy.com#history">https://www.whoxy.com/po1s0n1vy.com#history</a></p>
+<p><img src="/assets/cffA2Y3jHDGoOTdqfSE7l0V6BpAyBkAYzVdGcD_75-4=.png"></p>
+<p>這邊可以看到 Email 是<a href="mailto:&#x6c;&#105;&#108;&#108;&#x69;&#97;&#x6e;&#46;&#114;&#x6f;&#x73;&#x65;&#x40;&#112;&#111;&#x31;&#x73;&#x30;&#110;&#49;&#118;&#121;&#46;&#99;&#x6f;&#109;">lillian.rose@po1s0n1vy.com</a> </p>
+<p>這邊不是其他的email 是因為題目給的格式是<code>------*.---*@---------*.---</code></p>
+<blockquote>
+<p>ans : <a href="mailto:&#108;&#x69;&#x6c;&#x6c;&#105;&#97;&#x6e;&#x2e;&#114;&#111;&#115;&#x65;&#x40;&#x70;&#x6f;&#x31;&#x73;&#x30;&#x6e;&#x31;&#118;&#121;&#46;&#x63;&#x6f;&#109;">lillian.rose@po1s0n1vy.com</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q14 : Web Defacement: GCPD reported that common TTP (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear-phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vy’s initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.</p>
+</blockquote>
+<p>題目說GCPD 報告指出Po1s0n1vy 如果初始的攻擊失敗，接下來會寄釣魚信件並戴上惡意附件，而這個惡意附件的程式會常常與Po1s0n1vy 的基礎攻擊設施做溝通，想問這個惡意程式的 SHA256</p>
+<p>在 VirusTotal 中，關於 IP 會顯示之前出現惡意軟體與這個 IP 連線的功能，因此我們將23.22.63.114 丟進 VirusTotal 中，並選擇 Relation 頁面。</p>
+<p><img src="/assets/U2Zb0bpFQ_0lNJMMVHXv1gq10LH72ViVl1NiWeKGRKM=.png"></p>
+<p>那經過嘗試答案會是 MirandaTateScreensaver.scr.exe ，點進去後就會拿到這個惡意程式的 sha256</p>
+<p><img src="/assets/kAguqxryYp9DeA6kjwiYTuLJwRJMoJx0vsAx-KtPlVM=.png"></p>
+<blockquote>
+<p>ans : 9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q15 : Web Defacement: What is the special hex code associated with the customized malware discussed in the previous question? (Hint: It’s not in Splunk)</p>
+</blockquote>
+<p>這題想要得知前一題的惡意程式的special hex code</p>
+<p>這題會需要看VirusTotal 的<a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8/community">Community</a> 頁面，因為有些人會在這邊貼出報告以及special hex code</p>
+<p><img src="/assets/XitpF8FFxr2ZS_0sxAJxeZAZUpoxNasnAMTKP2ZW8A4=.png"></p>
+<blockquote>
+<p>ans : 53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q16 : Web Defacement: One of Po1s0n1vy’s staged domains has some disjointed “unique” whois information. Concatenate the two codes together and submit them as a single answer.</p>
+</blockquote>
+<p>題目說Po1s0n1vy 暫時架設的 domain 當中包含兩段分開出現的「唯一代碼／字串」，把那兩段代碼 串接成一個單一答案 提交</p>
+<p>我們在 Q13 時用 VirusTotal 掃描這個 IP 它之前關聯的 domain，總共有以下 domain</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/waynecorpnc.com">waynecorpnc.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/ec2-23-22-63-114.compute-1.amazonaws.com">ec2-23-22-63-114.compute-1.amazonaws.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/po1s0n1vy.com">po1s0n1vy.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/domain/prankglassinebracket.jumpingcrab.com">prankglassinebracket.jumpingcrab.com</a></li>
+</ul>
+<p>我們每個都可以用 <a target="_blank" rel="noopener" href="https://www.whoxy.com/">whoxy</a> 查看</p>
+<p>答案會在 waynecorpnc.com 中，但是現在已經找不到該domain 的詳細資訊了，所以我參考了其他人的 <a target="_blank" rel="noopener" href="https://jk105.gitlab.io/infosec/post/cyberdefenders_bossofthesoc1/">writeup</a> ，答案會在 company_name 與 mailing_address 中</p>
+<p><img src="/assets/WtVuDsZjlmCcFeKZBQgGG1m9D1Q4AxkQUE14DMKXGyQ=.png"></p>
+<p>source : <a target="_blank" rel="noopener" href="https://jk105.gitlab.io/infosec/post/cyberdefenders/_bossofthesoc1/">https://jk105.gitlab.io/infosec/post/cyberdefenders\_bossofthesoc1/</a></p>
+<blockquote>
+<p>ans : 31 73 74 32 66 69 6E 64 67 65 74 73 66 72 65 65 62 65 65 72 66 72 6F 6D 72 79 61 6E 66 69 6E 64 68 69 6D 74 6F 67 65 74</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q17 : Web Defacement: One of the passwords in the brute force attack is James Brodsky’s favorite Coldplay song. Hint: we are looking for a six-character word on this one. Which is it?</p>
+</blockquote>
+<p>這題問的是爆破的密碼中有一個是James Brodsky’s favorite Coldplay song ，要找出那個密碼</p>
+<p>這題我們可以嘗試使用 splunk 的 lookup 功能，Splunk 的 lookup 是一種 查表功能，可以把外部資源（例如 CSV、KV Store 或自定義資料表）中的欄位值與事件資料中的欄位做匹配，然後把匹配到的欄位值加入到事件資料中以豐富資料內容</p>
+<p>首先我們需要先獲得 Coldplay 的所有歌，<a target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/faizalkarim/coldplay-albums-and-live-shows?resource=download">Kaggle</a> 網站中有人有整理出來，可以免費下載</p>
+<p>接下來我們要匯入到 splunk 中，選擇Settings-&gt;Lookups</p>
+<p><img src="/assets/f64hU00irMb4r15CevzuVfxGo5GDplea9MF5hR1EW_k=.png"></p>
+<p>進入 Lookups頁面後我們要先新增 Lookup table ，點擊第一個的Add new ，將剛剛的下載的 csv 檔丟入</p>
+<p><img src="/assets/GO9IRY2LEw4QVueocZcCQ4VzvW_07CVq43nxzCHRE9E=.png"></p>
+<p>按下Save 之後要記得改權限，預設應該是Private ，要記得改成 Global 。</p>
+<p><img src="/assets/hdByWKZlYlj9uE6aR6GQoe0yw7eLo6UMe5vtUKEzvNI=.png"></p>
+<p>接下來要定義這個表的路徑以及欄位輸出方式</p>
+<p>點選 Lookups 的首頁的第二行Add new ，接下來去指定剛剛丟進去的 csv 表，要記得開啟進階選項把 Case sensitive match 取消勾選</p>
+<p><img src="/assets/3bznzUqDU1ujXoEwOpSRUXmT3yqzy7peIVtO-D2qjuI=.png"></p>
+<p>接下來就可以回到search 頁面使用 lookup 語法，匹配欄位資料</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| lookup Coldplay name as pass output duration
+| search duration&#x3D;*
+| table pass duration<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>lookup 的語法解說如下</p>
+<ul>
+<li>lookup Coldplay：呼叫名為 Coldplay 的 lookup 表格</li>
+<li>name as pass：將當前搜尋結果中的pass欄位對應到對應表的name欄位</li>
+<li>output duration：從 lookup 表格輸出 duration 欄位至事件資料</li>
+</ul>
+<p>而加上search duration&#x3D;* 是因為只有被對應到的 pass 會出現duration，因此加上這個保證出來的會是匹配到的</p>
+<p><img src="/assets/mW7xHnpiq_iqPlDT21PsoZceDyLPkD1CwssxulNkPlk=.png"></p>
+<p>題目提示是六個字，因此是答案是yellow </p>
+<blockquote>
+<p>ans : yellow</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q18 : Web Defacement: What was the average password length used in the password brute-forcing attempt? (Round to a closest whole integer. For example “5” not “5.23213”)</p>
+</blockquote>
+<p>題目想要我們計算出所有嘗試的密碼長度</p>
+<p>要計算 password 的平均長度，我們會需要使用到 eval 與 stats 幫助我們計算，eval 提供了基本的運算操作以及豐富的函式，<a target="_blank" rel="noopener" href="https://help.splunk.com/en/splunk-cloud-platform/search/search-reference/10.0.2503/search-commands/eval">官方doc</a></p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| eval length &#x3D; len(pass) 
+| stats avg(length) as avglength 
+| eval rounded &#x3D; round(avglength, 0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我們將pass提取出來後，使用len計算每一個pass 的長度，接下來用stats 提供的avg 計算所有欄位的平均長度，最後在使用 eval 的 round 幫我們做四捨五入操作</p>
+<p><img src="/assets/2c1yATfALElIHxDzSUF1GHSVnCVk0OjI8U-DAjAv5Ic=.png"></p>
+<p>答案計算出來為 6</p>
+<blockquote>
+<p>ans : 6</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q19 : Web Defacement: How many seconds elapsed between the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.</p>
+</blockquote>
+<p>題目想要問識別出正確密碼到被成功登入之間經過了多少秒</p>
+<p>我們在 Q9 得知了被爆破出來的密碼是 batman，因此我們先用 search 語法將 batman 密碼的請求先篩出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| search pass&#x3D;&quot;batman&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/5_9NUx3oXQErFGjdK89pTRrJncTrI3r-dr5iQhHBAsw=.png"></p>
+<p>Time 欄位相減的秒數為 92.17</p>
+<blockquote>
+<p>ans : 92.17</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q20 : Web Defacement: How many unique passwords were attempted in the brute force attempt?</p>
+</blockquote>
+<p>題目想要問攻擊者嘗試了多少種密碼</p>
+<p>這邊我們可以使用 stats 當中 dc 這個函式，dc 是 Splunk 中的去重計數函式 ，全稱為 “distinct count”</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
+| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
+| stats dc(pass) as &quot;attempt&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/9iSpRiZZHUassgH2fFCF0IJr92jRFOeNS3pBWP3zcyA=.png"></p>
+<p>答案出來為412</p>
+<blockquote>
+<p>ans : 412</p>
+</blockquote>
+<blockquote>
+<p>Q21 : Ransomware: What fully qualified domain name (FQDN) makes the Cerber ransomware attempt to direct the user to at the end of its encryption phase?</p>
+</blockquote>
+<p>題目敘述說惡意程式會讓使用者嘗試去請求 domain ，要找出FQDN</p>
+<p>我想要先知道內部有哪些 IP 有在進行 DNS 查詢</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot;
+| table src_ip
+| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/sYm2KnhgFYCkdM9sQJ_4SWm4Wfc7Cdngvk7lwpW0Jp8=.png"></p>
+<p>這邊知道192.168.2.50、192.168.250.100、192.168.250.20、192.168.250.40、192.168.250.70 這些內部 IP 有在進行 DNS 查詢，接下來我先看192.168.250.0&#x2F;24 內 IP 查詢了哪些 domain，</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24 
+| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/OMbF3JUJiANeRWwDsBVF2A-In4u5w0v0fjWPRff2WmE=.png"></p>
+<p>接下來會有很多其他的 DNS 記錄出來 我們可以點擊不可能是答案的 FQDN ，然後選擇 Exclude from result ，然後它就會在 Search 欄位中自動產出將此FQDN 排除查詢的語法。</p>
+<p><img src="/assets/IoBJChn4M4fthuMfAPQoc1e6b4G-eXwv6hstSV2nq_M=.png"></p>
+<p>經過層層篩選後最後查詢如下</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.in-addr.arpa&quot; &quot;query&#123;&#125;&quot;!&#x3D;&quot;demo-01&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.authdns.ripe.net&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.microsoft.com&quot; &quot;query&#123;&#125;&quot;&#x3D;*.*.* &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.waynecorpinc.local&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;dns.msftncsi.com&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.globalrootservers.net&quot; 
+| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/jzPkKSf2XPhZ_kdZBN_vHdWs9SodRqw0Hdol4W8JsjY=.png"></p>
+<p>這邊可以看到 cerberhhyed5frqa.xmfir0.win 這個 FQDN，而這個網址在情境的圖片上有出現，因此是這題的答案</p>
+<blockquote>
+<p>ans : cerberhhyed5frqa.xmfir0.win</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q22 : Ransomware: What was the most likely IP address of we8105desk in 24AUG2016?</p>
+</blockquote>
+<p>題目想要問 we8105desk 這個 host 它最有可能的 IP 位置是什麼，時間限制在2016&#x2F;08&#x2F;24 中</p>
+<p>首先先來調整時間，選擇時間並選擇 DataRange，調整為查詢08&#x2F;24&#x2F;2016 到 08&#x2F;25&#x2F;2016這段時間的資料</p>
+<p><img src="/assets/l1jatLA2J8_nIfT-W0ySlWGVeQuBHTsKq6ZrZNWqTms=.png"></p>
+<p>接下來查詢 host 為 we8105desk 的 source IP 記錄，因為是查詢 Sysmon 來源的關係所以是使用 SourceIp 當作查詢來源 IP</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 host&#x3D;we8105desk source&#x3D;WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational
+| stats count by SourceIp 
+| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/ZXDBGmZerwfzhgg20VYhTIab7F3el5JViBuBlzlz1qk=.png"></p>
+<p>這邊可以看到答案是 192.168.250.100</p>
+<blockquote>
+<p>ans : 192.168.250.100</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q23 : Ransomware: Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)</p>
+</blockquote>
+<p>這題想要問 Suricata 產生的警報，當中關於 Cerber malware 出現最少的 signature 是哪一個</p>
+<p>可以用以下的語法查詢，將 signature 與 signature_id 抓出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata Cerber 
+| table alert.signature alert.signature_id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/SUW4b8xNVYYgib6Y3L8SLD1NeyFdmlv0pC-9KT0GKzc=.png"></p>
+<p>可以很明顯的看到 <code>ETPRO TROJAN Ransomware/Cerber Checkin 2</code> 這個 signature 只出現一次，而它的 id 為2816763 ，則為答案</p>
+<blockquote>
+<p>ans : 2816763</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q24 : Ransomware: The VBScript found in question 25 launches 121214.tmp. What is the ParentProcessId of this initial launch?</p>
+</blockquote>
+<p>這題需要先Q25，可以先去看 Q25 的解題過程</p>
+<p>題目敘述說在Q25 找到 關於VBScript 是 121214.tmp被執行了，請問啟動這個VBScript 的父進程 ID 是什麼？</p>
+<p>可以先將ParentImage、ParentProcessId以及CommandLine 抓出來查看</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| table ParentImage ParentProcessId CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/cn-02vrj7Ro2hRDX_3l34zNpoDpJ3d--i0_5yj-7Lyo=.png"></p>
+<p>這邊可以很清楚的看到啟動121214.tmp 的父進程是 wscript.exe ，它的ID 為3968，這正是我們的答案</p>
+<blockquote>
+<p>ans : 3968</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q25 : Ransomware: During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length in characters of the value of this field?</p>
+</blockquote>
+<p>題目敘述說當 Cerber 惡意程式執行時，初始會先執行 VB script，而這個 VB script 的產生包含前面啟動它的 exe 檔 可以在 Splunk 的其中一個欄位找到，最後問這個欄位裡面的值總共有多少 characters</p>
+<p>看到題目敘述，可以直接聯想到的是 CommandLine 欄位，所以我們先把 EventLog 的 CommandLine 欄位抓出來，並且限制檔名為 .vbs</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| table CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/48ggord4P-7U5Euy77ESb7wgPZPyzklMo8loEzzXW_M=.png"></p>
+<p>可以看到下面一大串的 cmd.exe…….. 並且後面接 <code>GSI=%APPDATA%\%RANDOM%.vbs</code> 這邊就可以確定是題目所說。</p>
+<p>接下來要計算裡面有多少字元，使用的是 eval 的 len 函式</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
+| eval cmdlenght&#x3D;len(CommandLine)
+| table CommandLine cmdlenght<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/NsHJjeRVHk2NQIl9gw8oRwmXM2WSI3lcQOAvMZljaoU=.png"></p>
+<p>這邊它幫我們計算出答案為4490</p>
+<blockquote>
+<p>ans : 4490</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q26 : Ransomware: The malware downloads a file that contains the Cerber ransomware crypto code. What is the name of that file?</p>
+</blockquote>
+<p>題目敘述說惡意程式去下載一個包含 Cerber 勒索病毒加密程式碼的檔案，它的檔案名稱是什麼</p>
+<p>我先把 192.168.250.100 (we8105desk) HTTP 的 GET 請求全部先抓下來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;stream:http&quot; src_ip&#x3D;192.168.250.100 http_method&#x3D;GET
+| table  src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/tO3hZ1-M67gHdIfdlzVWlYr4RjE5w5rVxvEXMrR_Ns4=.png"></p>
+<p>當中最可疑的是它向 <code>solidaritedeproximite.org</code> 請求一個 mhtr.jpg 檔案</p>
+<p>我們單獨看一下關於有包含 mhtr.jpg 的記錄</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 mhtr.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/3qLVjpkrNx1j5OKEazxyKyRjn6aJd4IHKxs2-Th5SSQ=.png"></p>
+<p>發現到有 <code>fgt_utm</code> 的記錄跳出來，在 Splunk 中通常指的是來自 FortiGate 防火牆的 Unified Threat Management 安全日誌類型的 sourcetype，用來記錄防毒、入侵防禦、網頁過濾等安全事件。</p>
+<p>我們使用 fgt_utm 記錄，並把 filename,msg,analyticscksum 欄位抓出來</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;fgt_utm&quot; mhtr.jpg
+| table filename,msg,analyticscksum<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/wX3qtK3vMoJ_wBsisJ0D4TGBsSh3WWWES9-kVGMwxwM=.png"></p>
+<p>可以看到它偵測 mhtr.jpg 為惡意檔案，並且有 sha256 給我們，我們將它丟入 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9c1cabc16826273ad69f59af06f12fe6484e2eb0b5d3c87a690993934675e459">VirusTotal</a></p>
+<p><img src="/assets/KjYcIdDLUwD5_-oBYnxh2l1kwJn7bt6Nrmb71pDr14E=.png"></p>
+<p>可以看到它是惡意程式，那 mhtr.jpg 就是我們的答案</p>
+<blockquote>
+<p>ans : mhtr.jpg</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q27 : Ransomware: Now that you know the name of the ransomware’s encryptor file, what obfuscation technique does it likely use?</p>
+</blockquote>
+<p>題目問 mhtr.jpg 使用了何種混淆技術</p>
+<p>jpg 可以被辨識出惡意程式，有很大的可能使用了隱寫術 (Steganography)，將惡意程式隱藏在圖片中，因此答案就是 Steganography</p>
+<blockquote>
+<p>ans : Steganography</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q28 : Ransomware: What is the name of the USB key inserted by Bob Smith?</p>
+</blockquote>
+<p>題目問 Bob Smith 插入的 USB 名稱是什麼</p>
+<p>在 Splunk 中提供了一個 sourcetype，名稱為 winregistry，用來監控 Windows 註冊表 key／value 的建立、修改、刪除等操作。</p>
+<p>另外關於 USB 的其中一個註冊表路徑會在 <code>SYSTEM\ControlSet001\USBSTOR</code>，主要用途是記錄曾經連接過的 USB 裝置資訊，例如製造商、產品、序號、FriendlyName 等等</p>
+<p>因此我們將 <code>USBSTOR</code> 底下的 value 抓出來，並且用 dedup 將重複的 value 刪除，只保留第一筆出來的值</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;winregistry&quot; host&#x3D;we8105desk USBSTOR
+| table registry_value_data | dedup registry_value_data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/B7j-ZowtUGr4m3r3GkRhOsm_eHvyijuT3v9bNfFIRzM=.png"></p>
+<p>這邊就可以看到 USB 的名稱為 MIRANDA_PRI</p>
+<blockquote>
+<p>ans : MIRANDA_PRI</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q29 : Ransomware: Bob Smith’s workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?</p>
+</blockquote>
+<p>題目敘述 Bob Smith’s workstation 在 ransomware 執行期間去連線了 file server，請問 file server 的 IP 是什麼？</p>
+<p>連線 file server 的 protocol 可能會有 SMB 或者 FTP，FTP 是空的，那我們可以著重去看 SMB</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100
+| table dest_ip
+| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/yOqGwKrU-ZM7IjAYNdpFOfs2S1L4Z0hW5ixVwDSsEIU=.png"></p>
+<p>接下來要再更確認一點，file server 可能會進行登入，因此我們加上 login&#x3D;”bob.smith”</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 login&#x3D;&quot;bob.smith&quot;
+| table dest_ip
+| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/9yawfJ9r2QGw0qUBPTIYITVz6gXLxAQGGFcAJeFblNM=.png"></p>
+<p>這樣就確定了 192.168.250.20 是 file server </p>
+<blockquote>
+<p>ans : 192.168.250.20</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q30 : Ransomware: How many distinct PDFs did the ransomware encrypt on the remote file server?</p>
+</blockquote>
+<p>題目問有多少個遠端 pdf 被加密了</p>
+<p>我們在上一題知道 file server 的 IP 為 192.168.250.20，我們另外先拿一下它的 domain name</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 dest_ip&#x3D;192.168.250.20 path&#x3D;*
+| table path<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/qEWsjAJB7FUV9Mq7acGsjdBlmDRUI1hj8Kd1x4wE9uo=.png"></p>
+<p>這邊得知了 domain name 為 we9041srv.waynecorpinc.local</p>
+<p>首先我先搜尋 wineventlog 中有沒有關於 .pdf 的記錄</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/xJ0cOJW0DDg-M8pGh77C8_DVq-sVjUcXcwSXEbI-zOM=.png"></p>
+<p>發現到有，並且是從 192.168.250.100 請求 we9041srv.waynecorpinc.local 的一個 pdf<br>因此我們將所有關於這個的記錄抓下來，並用 stats 中的 dc 幫我們算總共有幾個檔案</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf  EventCode&#x3D;5145 Source_Address&#x3D;192.168.250.100
+| stats dc(Relative_Target_Name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/B-ZLsIdRUo5P-2poxSx5cJ8Qark7Byogq2TCf8i5JyU=.png"></p>
+<p>總共是 257 個，則 257 為答案</p>
+<blockquote>
+<p>ans : 257</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q31 : Ransomware: The Cerber ransomware encrypts files located in Bob Smith’s Windows profile. How many .txt files does it encrypt?</p>
+</blockquote>
+<p>這題問的是在 Bob Smith 的電腦上有多少的 .txt 檔被 ransomware 鎖起來了</p>
+<p>首先我們先使用 Sysmon 將針對 Bob Smith 內的 .txt 的操作抓下來，並且看是哪個檔案對 .txt 操作</p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; TargetFilename&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;
+| table Image TargetFilename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/assets/aslGsxq9wbcm5wT5VeqfAuUnScwW0MXR-gC6Kb-YIZs=.png"></p>
+<p>可以看到是有一個 osk.exe 對 .txt 檔做操作，</p>
+<p>那我們可以 EventID&#x3D;1 去看這個 osk.exe 的 hash </p>
+<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; EventCode&#x3D;1 Image&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\AppData\\Roaming\\&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;\\osk.exe&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/bGRAyITwgDbzGkIxST7PVBbBAzYcou8g5XtO2PGhEQs=.png"></p>
+<p>得到的 MD5 hash 為 <a target="_blank" rel="noopener" href="https://189ccf15-ac01-4578-b319-8cf69e039163.cyberdefenders.network/en-US/app/search/search?q=search%20index=botsv1%20source=%22wineventlog:microsoft-windows-sysmon/operational%22%20EventCode=1%20Image=%22C:%5C%5CUsers%5C%5Cbob.smith.WAYNECORPINC%5C%5CAppData%5C%5CRoaming%5C%5C%7B35ACA89F-933F-6A5D-2776-A3589FB99832%7D%5C%5Cosk.exe%22&display.page.search.mode=smart&dispatch.sample_ratio=1&workload_pool=&earliest=0&latest=now&display.page.search.tab=events&display.general.type=events&sid=1760368198.162#">EE0828A4E4C195D97313BFC7D4B531F1</a>，丟進給 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/37397f8d8e4b3731749094d7b7cd2cf56cacb12dd69e0131f07dd78dff6f262b">VirusTotal</a> 後</p>
+<p><img src="/assets/wqQ9cuHeud9mqmV_is1wvugWnlvXxOlf-VlSPy-RNGE=.png"></p>
+<p>可以確定它是惡意程式</p>
+<p>接下來針對這個 osk.exe 去計算所有 .txt 的數量</p>
+<p><img src="/assets/gRO7TyyW0T3ZEP7-XUY6yZMG1GJPKE-N3D7Njwya-34=.png"></p>
+<p>答案出來為 406，則 406 為這題的答案</p>
+<blockquote>
+<p>ans : 406</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q32 : Ransomware: What was the first suspicious domain visited by we8105desk in 24AUG2016?</p>
+</blockquote>
+<p>題目問 we8105desk 在 2016&#x2F;08&#x2F;24 時訪問了哪個可疑 domain？</p>
+<p>我們在 Q26 中發現它會去向 <code>solidaritedeproximite.org</code> 請求 jpg 檔，而 <code>solidaritedeproximite.org</code> 則為這題的解答。</p>
+<blockquote>
+<p>ans : solidaritedeproximite.org</p>
+</blockquote>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天分享了 Boss Of The SOC v1 的 Q1 ~ Q10 的解題過程，當中分享了一些 Splunk 的用法以及 Threat Hunting 的過程，明天會繼續分享 Boss Of The SOC v1 剩餘題目。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2025/10/14/CCD/" class="prev">PREV</a><a href="/2025/09/19/2025ACSCCTF/" class="next">NEXT</a></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

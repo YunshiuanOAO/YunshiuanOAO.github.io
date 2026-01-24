@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 如果我用 Email 釣魚，這樣可以釣到真正的美人魚嗎 · yunshiuan</title><meta name="description" content="如果我用 Email 釣魚，這樣可以釣到真正的美人魚嗎 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">如果我用 Email 釣魚，這樣可以釣到真正的美人魚嗎</h1><div class="post-info">Oct 9, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>Email - 我們常常在生活中會使用到，透過 Email 我們可以不受距離限制的跟其他人溝通，十分方便，但這方便也會帶來資安風險，最常遇到的就是釣魚信件了，釣魚信件常常會偽裝成正常的組織或公司，引誘使用者點擊，如果使用者點擊了釣魚信件的網址或者下載了附件，有可能洩漏電腦的機密資料或者讓電腦中毒，並且釣魚信件使用門檻較低但殺傷力很大，是 APT 組織攻擊時最常用的初始攻擊向量，因此今天想要分享的是 Email Security</p>
+<hr>
+<h1 id="Email-Security"><a href="#Email-Security" class="headerlink" title="Email Security"></a>Email Security</h1><p>一個 Email 帳號的組成，會由一個小老鼠<code>@</code> 將左右隔開</p>
+<ul>
+<li>左半部分是依照使用者設定的字串，因此可以取名為<code>aaaabbbccc123</code> 、 <code>admin</code> 、<code>me</code> 皆可</li>
+<li>右半部分是組織的 Domain Name，像是常見的 <code>gmail.com</code>；如果自己有架設 Email Server，就會是自己的 domain，如：<code>yunshiuan.com</code></li>
+</ul>
+<p><img src="/assets/RrromGCNVsSXy7dWVTw1aLyjocOQzZtGr4ggahqd7Fs=.png"></p>
+<p><code>source: https://flickr.com/photos/jameschen1/24160994516/</code></p>
+<p>到這邊就會有一個偽造正常信件的方式：如果攻擊者註冊了一個與正常組織幾乎相同、只差一個字的 domain，甚至直接冒用正常組織的 Domain Name 來欺騙使用者，只要使用者一個不注意就可能把它當成正常信件而被釣到，這個攻擊被稱為 <strong>Email Spoofing</strong></p>
+<h1 id="Email-Spoofing"><a href="#Email-Spoofing" class="headerlink" title="Email Spoofing"></a>Email Spoofing</h1><p>攻擊者會試圖使用與常見組織相似或相同的 email 欺騙使用者認為是正常郵件。</p>
+<p>ex : 可以透過 <a target="_blank" rel="noopener" href="https://emkei.cz/">這個網頁</a>  偽造 Email 傳給使用者，這邊將 Email 偽造成<code>support@paypal.com</code> 並傳一封帳號異常的信給使用者</p>
+<p><img src="/assets/PiPU_SyMgnQoKCb7bRDCvsyttMnbLm9Dt8RXKp7TKBk=.png"></p>
+<p>那這樣只單看 Email 是很難分辨是否為釣魚信件，所以會透過郵件驗證協定 <strong>DMARC</strong> 來偵測郵件偽造攻擊。</p>
+<h2 id="DMARC"><a href="#DMARC" class="headerlink" title="DMARC"></a>DMARC</h2><p>DMARC 是一種郵件驗證協定，它讓郵件網域擁有者能聲明當收到未通過驗證的郵件時該如何處理。</p>
+<p>我在 demo 時寄到我個人的信箱，使用 Cloudflare 的 Email Routing 功能轉發郵件；因此當我把釣魚信寄到自己的信箱時，因未通過 DMARC 驗證而被拒收。</p>
+<p><img src="/assets/aeeOF3FAMAlT_FXaTinD9zx6HRYzvPoellic9cvMBvM=.png"></p>
+<p>如果DMARC 驗證通過的話會像下方圖示的一樣。</p>
+<p><img src="/assets/cOeVnUSdeBGztRM6cfg0XEqzFCD75DgvYr24PX0TF7g=.png"></p>
+<p>可以看到主要的驗證方式會使用到 SPF 以及 DKIM。</p>
+<h2 id="SPF"><a href="#SPF" class="headerlink" title="SPF"></a>SPF</h2><p>SPF 是一種電子郵件驗證協定，它讓網域擁有者能夠指定哪些郵件伺服器有權代表該網域寄送郵件。這份「授權清單」會以 DNS TXT 記錄 的形式公開發布，接收方的郵件伺服器則可在收信時檢查寄件伺服器是否被授權，以判斷郵件是否可信。</p>
+<p>可以使用 <code>dig</code> 指令查看 SPF</p>
+<pre class="line-numbers language-none"><code class="language-none">$ dig yunshiuan.com  TXT | grep spf
+yunshiuan.com.		377	IN	TXT	&quot;v&#x3D;spf1 include:_spf.mx.cloudflare.net ~all&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>v&#x3D;spf1：指定 SPF 協定版本</li>
+<li>include:_spf.mx.cloudflare.net：授權清單由 Cloudflare 維護</li>
+<li>~all：非授權來源標記為 SoftFail（可疑）<br>（若設定 -all 則代表 Fail，非授權來源應被拒絕）</li>
+</ul>
+<h2 id="DKIM"><a href="#DKIM" class="headerlink" title="DKIM"></a>DKIM</h2><p>DKIM 是電子郵件驗證機制之一，讓收件方可以驗證一封郵件是否真正由該網域授權寄出，並確認郵件在傳送過程中是否被篡改；它透過數位簽章機制實現。寄件方使用私鑰對郵件內容進行簽名，收件方則從 DNS 查出對應的公鑰來驗證。</p>
+<p>DKIM 的公鑰會被發布在 DNS TXT 紀錄中，格式如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;selector&gt;._domainkey.&lt;domain&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>以 Cloudflare 舉例，它的 selector 是 <code>cf2024-1</code>，查詢 DKIM 也可使用 <code>dig</code> 指令</p>
+<pre class="line-numbers language-none"><code class="language-none">$ dig cf2024-1._domainkey.yunshiuan.com TXT | grep DKIM
+cf2024-1._domainkey.yunshiuan.com. 377 IN TXT	&quot;v&#x3D;DKIM1; h&#x3D;sha256; k&#x3D;rsa; p&#x3D;MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiweykoi+o48IOGuP7GR3X0MOExCUDY&#x2F;BCRHoWBnh3rChl7WhdyCxW3jgq1daEjPPqoi7sJvdg5hEQVsgVRQP4DcnQDVjGMbASQtrY4WmB1VebF+RPJB2ECPsEDTpeiI5ZyUAwJaVX7r6bznU67g7LvFq35yIo4sdlmtZGV+i0H4cpYH9+3JJ78k&quot; &quot;m4KXwaf9xUJCWF6nxeD+qG6Fyruw1Qlbds2r85U9dkNDVAS3gioCvELryh1TxKGiVTkg4wqHTyHfWsp7KD3WQHYJn0RyfJJu6YEmL77zonn7p2SRMvTMP3ZEXibnC9gz3nnhR6wcYL8Q7zXypKTMD58bTixDSJwIDAQAB&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>總結來說 DMARC 驗證流程會是：接收方收到郵件後，先檢查 SPF 和 DKIM 認證，再根據 DMARC 政策決定郵件的處理方式（放行、隔離或拒絕）。</p>
+<p>DMARC 記錄可以在 <code>_dmarc.&lt;domain&gt;</code> 找到</p>
+<pre class="line-numbers language-none"><code class="language-none">$ dig _dmarc.any.run TXT                                                                             
+
+
+; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; _dmarc.any.run TXT
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 31385
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4095
+;; QUESTION SECTION:
+;_dmarc.any.run.			IN	TXT
+
+;; ANSWER SECTION:
+_dmarc.any.run.		377	IN	TXT	&quot;v&#x3D;DMARC1; p&#x3D;quarantine; sp&#x3D;quarantine;&quot;
+
+;; Query time: 226 msec
+;; SERVER: 100.100.100.100#53(100.100.100.100)
+;; WHEN: Thu Oct 09 20:09:24 CST 2025
+;; MSG SIZE  rcvd: 94<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>v&#x3D;DMARC1 : DMARC 版本</li>
+<li>p&#x3D;quarantine : 主要政策，對主域名認證失敗的郵件進行隔離</li>
+<li>sp&#x3D;quarantine : 子域名政策，對子域名認證失敗的郵件也進行隔離</li>
+</ul>
+<hr>
+<p>但是DMARC 也不一定是萬能的，還是有可能會被 Bypass ，對於大公司來說如果員工點了釣魚信件，並且執行了信件內附件或者網址，會對公司造成巨大的危害，因此社交工程演練是非常重要的</p>
+<blockquote>
+<p>社交工程演練是<strong>模擬真實攻擊情境，測試員工對釣魚郵件、電話詐騙等社交工程攻擊的識別和應對能力，並透過教育訓練提升整體資安意識的安全演練活動</strong>。</p>
+</blockquote>
+<p>關於釣魚信件的社交工程演練，有一個開源的平台可以使用 - <a target="_blank" rel="noopener" href="https://github.com/gophish/gophish/releases">Gophish</a> </p>
+<h1 id="Gophish"><a href="#Gophish" class="headerlink" title="Gophish"></a>Gophish</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://github.com/gophish/gophish/releases">https://github.com/gophish/gophish/releases</a></p>
+<p>Gophish 是一個開源的釣魚模擬平台，用於進行社交工程演練，可以快速建立和發送釣魚郵件，追蹤點擊率和提交率，幫助組織測試員工的資安意識並提供教育訓練。</p>
+<p><code>source : https://ui-code.com/archives/779</code></p>
+<p>安裝很簡單，將 ZIP 下載之後執行裡面的執行檔就能架起</p>
+<p><img src="/assets/9yIIcEGIjBtwp2TUs8hEn1hT_Il_Buo1FbIYSVM9nP0=.png"></p>
+<p>如果要遠端也可以登入admin 介面，要去config.json 將admin 網址改成<code>0.0.0.0:3333</code></p>
+<p>若要遠端也能登入 Admin 介面，請在 config.json 將 Admin 位址改成 <code>0.0.0.0:3333</code></p>
+<p>架起來後會給你帳號密碼，網頁進入<code>0.0.0.0:3333</code>後登入就可以開始使用了</p>
+<p><img src="/assets/gI4Up0C79FNgdPy_IY4j4hZSu3scYdFss05qVW5NJb8=.png"></p>
+<p>裡面的功能非常豐富，包括</p>
+<ul>
+<li><strong>活動管理</strong>: 建立&#x2F;排程釣魚活動，指定目標群組、郵件模板、登入頁與寄件設定，並即時監控結果。</li>
+<li><strong>目標群組</strong>: 管理收件人清單，支援手動新增與 CSV 匯入。</li>
+<li><strong>郵件模板</strong>: 視覺化編輯與變數插入（如 &#123;&#123;.FirstName&#125;&#125;），可預覽與測試寄送。</li>
+<li><strong>登入頁</strong>: 匯入&#x2F;客製 HTML，選擇是否擷取提交資料，支援點擊後&#x2F;提交後導向。</li>
+<li><strong>寄件設定</strong>: 設定 SMTP（主機、帳密、TLS&#x2F;SSL、自訂寄件者&#x2F;標頭），支援測試連線。</li>
+<li><strong>即時追蹤</strong>: 記錄寄送、開啟、點擊、提交資料（含 IP、User-Agent）；可選「回報」事件。</li>
+<li><strong>儀表板與報表</strong>: 活動概況、成效趨勢，結果支援 CSV 匯出。</li>
+<li><strong>REST API</strong>: 提供完整 API 以自動化建立活動、上傳模板&#x2F;名單、擷取結果。</li>
+<li><strong>網域與證書</strong>: 自訂追蹤&#x2F;寄送網域與 TLS 憑證配置，提升可信度與達投遞率。</li>
+</ul>
+<p><img src="/assets/2xWCIDOeOd16WAYIllSS5iysk0uLCS1ibgVpO_vFsy4=.png"></p>
+<p><code>source : https://ui-code.com/archives/779</code></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>對於藍隊來說，預防釣魚信件是資安防護的重要一環。今天介紹的 Email 驗證機制（DMARC、SPF、DKIM）以及 Gophish 釣魚信件社交工程演練平台，都是預防釣魚信件攻擊的關鍵技術與工具。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

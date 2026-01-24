@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> ZED USER INTERFACE · yunshiuan</title><meta name="description" content="ZED USER INTERFACE - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">ZED USER INTERFACE</h1><div class="post-info">Oct 1, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天會介紹另一個network forensic 工具-Zui ，另外也會介紹一下 Zui 當中使用到的 Zeek 與以及Suricata pcap 分析工具 </p>
+<hr>
+<h1 id="Zui"><a href="#Zui" class="headerlink" title="Zui"></a>Zui</h1><p>下載連結：<a target="_blank" rel="noopener" href="https://zui.brimdata.io/docs">https://zui.brimdata.io/docs</a></p>
+<p>Zui 它的前身是Brim ， 是一款用於網路流量分析的工具，它提供了使用者友善的圖形化介面，可以讓使用者能夠快速分析與視覺化大量網路流量</p>
+<p><img src="/assets/aEB_E59Bb6Ghcjk57wLkzd5kCFR_ATktueWQUMrKugE=.png"></p>
+<p>這個工具裡面整合了兩個網路封包分析工具，分別是Zeek、Suricata</p>
+<hr>
+<h2 id="Zeek"><a href="#Zeek" class="headerlink" title="Zeek"></a>Zeek</h2><p>連結：<a target="_blank" rel="noopener" href="https://github.com/zeek/zeek">https://github.com/zeek/zeek</a></p>
+<p>Zeek 是一個開源的網路安全監控工具，以強大的資料記錄功能聞名。它能將原始的 pcap 封包檔轉換成結構化的日誌，方便在 Zeek 內查詢與分析，快速提供網路行為的概覽。</p>
+<p>指令如下</p>
+<pre class="line-numbers language-none"><code class="language-none">zeek -C -r B33F50up_blog.pcapng<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>他會產生以下檔案</p>
+<ul>
+<li>conn.log  : 記錄了所有的網路連接</li>
+<li>dns.log：記錄了所有的 DNS查詢活動</li>
+<li>files.log：記錄了通過 HTTP 傳輸的檔案</li>
+<li>http.log：這是一個 HTTP 協議的流量日誌，記錄了網頁瀏覽和API 請求</li>
+<li>packet_filter.log：記錄了封包過濾器的配置</li>
+</ul>
+<p><img src="/assets/wEXC7MUEGLZqmjPBWvXxb9gL4cWzTN2L6JHdh9dc1cA=.png"></p>
+<p>以下是http.log 的形式</p>
+<pre class="line-numbers language-none"><code class="language-none">#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	http
+#open	2025-09-27-22-26-52
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	trans_depth	method	host	uri	referrer	version	user_agent	origin	request_body_len	response_body_len	status_code	status_msg	info_code	info_msg	tags	username	password	proxied	orig_fuids	orig_filenames	orig_mime_types	resp_fuids	resp_filenames	resp_mime_types
+#types	time	string	addr	port	addr	port	count	string	string	string	string	string	string	string	count	count	count	string	count	string	set[enum]	string	string	set[string]	vector[string]	vector[string]	vector[string]	vector[string]	vector[string]	vector[string]
+1754678828.272075	CAuRo91flufxXutAke	100.112.165.2	60665	192.168.1.125	5000	1	GET	192.168.1.125:5000	&#x2F;	-	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	-	0	24859	200	OK	-	-	(empty)	-	-	-	-	-	-	FA9Bk7Ikrr1LVrys	-	text&#x2F;html
+1754678857.820963	CIRhMK1X97Z1MzFRD1	100.112.165.2	60676	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	15	727	200	OK	-	-	(empty)	-	-	-	FIUrzJ3sbt6deYBXf3	-	text&#x2F;plain	FyILV9CHbcmUMGtc6	-	text&#x2F;json
+1754678865.293310	CZnidTF5LIgaMzbRe	100.112.165.2	60677	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;system	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	141	185	200	OK	-	-	(empty)	-	-	-	Fvs6lg41SIyuYsReh2	-	-	FqFYD91bNrEWRNR501	-	text&#x2F;json
+1754679070.738945	CWlCIn4qK2ntw6CuJl	100.112.165.2	60757	192.168.1.125	5000	1	GET	192.168.1.125:5000	&#x2F;	-	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	-	0	24859	200	OK	-	-	(empty)	-	-	-	-	-	-	FG2QH72aF2jeG9CYC9	-	text&#x2F;html
+1754679165.228123	C5V1Fn3nYAvFuSQeE	100.112.165.2	60778	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;system	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	141	287	200	OK	-	-	(empty)	-	-	-	FnwtMr2TZ1qIS6LLmj	-	-	Fq827u4xABcX563I21	-	text&#x2F;json
+1754679173.669096	CWXpsv3zrBE7Lx66Sg	100.112.165.2	60779	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;system	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	144	13177	200	OK	-	-	(empty)	-	-	-	FxvTqN3Pid7VWQP7y3	-	-	Fi4rGH32Y4P77kznf3	-	text&#x2F;json
+1754679180.268390	Co6odn3WTbf9HKGcO6	100.112.165.2	60780	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	15	728	200	OK	-	-	(empty)	-	-	-	FYW00SjDihqYC30xe	-	text&#x2F;plain	FQGbYm3SH1rsO8o9ng	-	text&#x2F;json
+1754679196.383809	CGjLWoznypKV0Pgt	100.112.165.2	60809	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	16	738	200	OK	-	-	(empty)	-	-	-	FVCJDglco6ai9lzi4	-	text&#x2F;plain	FB2a4L3x3ZELSSdCQ1	-	text&#x2F;json
+1754679223.696243	C0s1KA7ZrfQvnIpj	100.112.165.2	60865	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	30	851	200	OK	-	-	(empty)	-	-	-	FA2p79sD6MkhyaCEb	-	text&#x2F;plain	FwUGICEULGQRyBs78	-	text&#x2F;json
+1754679257.891805	CtwrhY2Kw9bscBOsX7	100.112.165.2	60874	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	34	755	200	OK	-	-	(empty)	-	-	-	FybSTDKXBk5dCiaYl	-	text&#x2F;plain	F55jsD1S1vWW8IVBY4	-	text&#x2F;json
+1754679265.650887	CFgfqH2IasZxXsovkd	100.112.165.2	60875	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	30	869	200	OK	-	-	(empty)	-	-	-	FtvRcZ3D5kRIP1ijy5	-	text&#x2F;plain	FTYdr5iKtJX11Efma	-	text&#x2F;json
+1754679315.090163	CEAuN63ly0lHS2zRrj	100.112.165.2	60895	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	30	869	200	OK	-	-	(empty)	-	-	-	Fyt7jP30AEKPs4C0Uj	-	text&#x2F;plain	F0zHt852ycC25Gpkf	-	text&#x2F;json
+1754679319.217264	CRWcyt2bda4K3g6Xub	100.112.165.2	60912	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	36	900	200	OK	-	-	(empty)	-	-	-	FUAgus1sr4pPeGnidg	-	text&#x2F;plain	FqnOWw20dfXD0koyIi	-	text&#x2F;json
+1754679354.845803	CulPOq3A9IP8ab4Zqd	100.112.165.2	60981	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	48	769	200	OK	-	-	(empty)	-	-	-	FZw17aZHAnZltVkJ	-	text&#x2F;plain	FQvAYSOVPIbUCfRm7	-	text&#x2F;json
+1754679406.575000	C9iy0scrJKJuDpi07	100.112.165.2	61207	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	49	2621	200	OK	-	-	(empty)	-	-	-	FiejrYnJjwTaJ5db7	-	text&#x2F;plain	FKZoSb4yddnL4uzkZf	-	text&#x2F;json
+1754679827.575533	CV2dqm3aNuGOi4EC0h	100.112.165.2	63113	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	36	912	200	OK	-	-	(empty)	-	-	-	FDaXYp2bh8hJpHMYCi	-	text&#x2F;plain	FdsBU41nDrcCQ9mTV9	-	text&#x2F;json
+1754679851.757452	CWSzgl4AsTyJVyRpJf	100.112.165.2	63213	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	44	800	200	OK	-	-	(empty)	-	-	-	FAGwfWDdjCLhcrZX2	-	text&#x2F;plain	F89dhl1uFy7r4oRtf	-	text&#x2F;json
+1754679859.655497	C0LErP2jTxCqKmUESd	100.112.165.2	63216	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	47	781	200	OK	-	-	(empty)	-	-	-	FoNYJj2QlLyZkd9tEe	-	text&#x2F;plain	FUaGCH2RbcOlDQcaOi	-	text&#x2F;json
+1754679875.655339	CqC0qj2SMoQnSfaju6	100.112.165.2	63217	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	31	762	200	OK	-	-	(empty)	-	-	-	FRGjia4iHeyPzIDRC3	-	text&#x2F;plain	FwGgDTGi2gHDik2P5	-	text&#x2F;json
+1754679999.499748	CtN1Vk4RrwIRGOgwHc	100.112.165.2	63280	192.168.1.125	5000	1	POST	192.168.1.125:5000	&#x2F;ping	http:&#x2F;&#x2F;192.168.1.125:5000&#x2F;	1.1	Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;139.0.0.0 Safari&#x2F;537.36	http:&#x2F;&#x2F;192.168.1.125:5000	142	836	200	OK	-	-	(empty)	-	-	-	FFJx4j4PnbpIi0mfD6	-	text&#x2F;plain	FYpDmc37JMpCuz4Zac	-	text&#x2F;json
+#close	2025-09-27-22-26-52
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>另外他也會根據 pcap 檔產生其他log ，參考網址：<a target="_blank" rel="noopener" href="https://docs.zeek.org/en/master/logs/index.html">https://docs.zeek.org/en/master/logs/index.html</a> </p>
+<hr>
+<h2 id="Suricata"><a href="#Suricata" class="headerlink" title="Suricata"></a>Suricata</h2><p>連結：<a target="_blank" rel="noopener" href="https://suricata.io/">https://suricata.io/</a></p>
+<p>Suricata 是一個開源的入侵偵測系統（IDS）與入侵防禦系統（IPS），以深度封包檢測、流量分析與威脅偵測聞名。能使用 Suricata 的龐大規則集快速評估網路資料並辨識異常。</p>
+<p>指令如下</p>
+<pre class="line-numbers language-none"><code class="language-none">suricata -r B33F50up_blog.pcapng <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>他會產生四個檔案</p>
+<ul>
+<li>eve.json : Suricata的結構化日誌檔案，包含多種事件類型的詳細記錄</li>
+<li>fast.log : Suricata 快速警報日誌，包含檢測到的安全威脅警報</li>
+<li>stats.log : Suricata 運行統計資料，包含詳細的系統運行統計</li>
+<li>suricata.log : Suricata 主要運行日誌，包含系統啟動和運行資訊</li>
+</ul>
+<p><img src="/assets/5LROwbAnig-tGtRpsi7V6Ig8OL3X9F9e3CxpqHcjWvs=.png"></p>
+<p>以下是 fast.log 資訊</p>
+<pre class="line-numbers language-none"><code class="language-none">08&#x2F;09&#x2F;2025-02:53:47.165861  [**] [1:2019284:3] ET ATTACK_RESPONSE Output of id command from HTTP server [**] [Classification: Potentially Bad Traffic] [Priority: 2] &#123;TCP&#125; 192.168.1.125:5000 -&gt; 100.112.165.2:60865
+08&#x2F;09&#x2F;2025-02:56:49.767871  [**] [1:2002034:13] ET ATTACK_RESPONSE Possible &#x2F;etc&#x2F;passwd via HTTP (linux style) [**] [Classification: Information Leak] [Priority: 2] &#123;TCP&#125; 192.168.1.125:5000 -&gt; 100.112.165.2:61207<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<hr>
+<p>總結來說 Zui 的做法是先用 <a target="_blank" rel="noopener" href="https://github.com/brimdata/brimcap">brimcap</a> 將 pcap 送到 Zeek&#x2F;Suricata 做 summary&#x2F;log，再在 Zui 內用 correlation view、alert 視窗、或 detail pane 分析事件與原始封包。</p>
+<p>所以只要將pcap 封包丟進去 zeek ，他就會開始進行分析</p>
+<p><img src="/assets/gyCnmYGl_VfYEuqKAOa8TyKLnNYYC6tohyAziYN13Ck=.png"></p>
+<p>分析完後按下<code>Query Pool</code> 就可以看到視覺化的頁面</p>
+<p><img src="/assets/aEB_E59Bb6Ghcjk57wLkzd5kCFR_ATktueWQUMrKugE=.png"></p>
+<p>另外 Zui 使用 Zed（或稱 Zed query &#x2F; SuperSQL）來做過濾與轉換查詢可以更快處理大量資料</p>
+<p>以下分享幾個操作</p>
+<p>首先可以篩選出Suricata 警報</p>
+<pre class="line-numbers language-none"><code class="language-none">event_type&#x3D;&#x3D;&quot;alert&quot; #可篩選出 Suricata 警報<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/s_W7IAAYyK-10fAyW9KpXLDpZhCSm8jgPMVAQABdehY=.png"></p>
+<p>也有像wireshark 一樣可以篩選 ip scr or ip dst </p>
+<pre class="line-numbers language-none"><code class="language-none">id.orig_h&#x3D;&#x3D;100.112.165.2 and id.resp_p&#x3D;&#x3D;53 #來源ip &#x3D; 100.112.165.2 目標port &#x3D; 53<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/tWu_XB4kP452AJbgpcIQ0vOiRSROoPhmTNH13gBxRPg=.png"></p>
+<p>另外他也可以進行統計與排序</p>
+<pre class="line-numbers language-none"><code class="language-none">count() by id.resp_p | sort -r  # 對目標port 進行統計，並降冪排序<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/mq6sPm0cAJqgKEiREZUwTYXNAvnegIR2DAfkVtRs4GQ=.png"></p>
+<p>對你想要篩選的資料按右鍵可以自動生成查詢指令</p>
+<p><img src="/assets/T2wzAhndl8-IWt4PObDgOI8JbPrlO9uiPokk5yl27do=.png"></p>
+<p>最後也可以下載官方提供預先寫好的查詢</p>
+<p>連結：[<a target="_blank" rel="noopener" href="https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries">https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries</a></p>
+<p>](<a target="_blank" rel="noopener" href="https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries)%E4%B8%8B%E8%BC%89%E5%BE%8Cqueries.json">https://github.com/brimdata/brimcap?tab=readme-ov-file#brimcap-queries)下載後queries.json</a> 後按下+的藍色按鈕，點選Import Queries</p>
+<p><img src="/assets/777onBmZHXrrhqyTl2BNjPp328hH_BsS0lh761qK6Aw=.png"></p>
+<p>把剛剛下載的json 檔丟進去，就會匯入預先寫好的query </p>
+<p><img src="/assets/kndUjYMJJCjbP4n4KenQWusY9yA4lv4sKzYL_6Ke0lA=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了Zui 以及其中Zeek 與Suricata功能，也有分享zui 的基本操作，zui 在解一些CTF 題時也會有奇效，雖然沒辦法查看詳細封包內容，但在快速查詢可疑行為或可疑流量時會很好用。</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

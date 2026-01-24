@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 你知道 Volatility 也可以帶 cookie 傳入嗎？ · yunshiuan</title><meta name="description" content="你知道 Volatility 也可以帶 cookie 傳入嗎？ - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">你知道 Volatility 也可以帶 cookie 傳入嗎？</h1><div class="post-info">Sep 20, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>在使用 Volatility 2 分析 Win10 記憶體時，會出現 Cannot find nt!ObGetObjectType 問題，需要傳入cookie 才能解決，今天會分享為什麼會出現這個問題，並且如何解決</p>
+<hr>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Volatility"><a href="#Volatility" class="headerlink" title="Volatility"></a>Volatility</h2><p>下載連結：</p>
+<p>Volatility 2 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></p>
+<p>Volatility 3 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></p>
+<p>經典的記憶體分析工具，利用指令可以分析 memory dump 中的關鍵訊息，像是進程、網路連線、檔案……等等。</p>
+<p>基本的操作這邊推薦可以直接上網查有人整理好的指令doc</p>
+<p>而Volatility分為2與3版，差別就是一個是要使用 python2 執行，另一個是用 python3 執行，並且現在Volatility 2 已經沒有在維護了，但是一些 Plugin 的完整度在目前為止還是比 Volatility 3 還要高並且豐富，所以有些人還是會比較會偏向使用 Volatility 2 ，今天分享會主要使用 Volatility 2</p>
+<hr>
+<p>如果你在 Win10 的記憶體 dump 使用 Volatility 2 的 psscan 時，有可能會出現以下的錯誤</p>
+<pre class="line-numbers language-none"><code class="language-none">$ vol.py -f MemoryDump.mem --profile&#x3D;Win10x64_19041 psscan
+
+Volatility Foundation Volatility Framework 2.6.1
+Offset(P)          Name                PID   PPID PDB                Time created                   Time exited
+------------------ ---------------- ------ ------ ------------------ ------------------------------ ------------------------------
+WARNING : volatility.debug    : Cannot find nt!ObGetObjectType
+WARNING : volatility.debug    : Cannot find nt!ObGetObjectType
+Traceback (most recent call last):
+  File &quot;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;vol.py&quot;, line 192, in &lt;module&gt;
+    main()
+  File &quot;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;vol.py&quot;, line 183, in main
+    command.execute()
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;commands.py&quot;, line 147, in execute
+    func(outfd, data)
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;plugins&#x2F;filescan.py&quot;, line 428, in render_text
+    for eprocess in data:
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;poolscan.py&quot;, line 252, in scan
+    skip_type_check &#x3D; skip_type_check)
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;plugins&#x2F;overlays&#x2F;windows&#x2F;windows.py&quot;, line 1258, in get_object
+    return self.get_object_top_down(struct_name, object_type, skip_type_check)
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;plugins&#x2F;overlays&#x2F;windows&#x2F;windows.py&quot;, line 1231, in get_object_top_down
+    header.get_object_type() &#x3D;&#x3D; object_type):
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;plugins&#x2F;overlays&#x2F;windows&#x2F;win7.py&quot;, line 155, in get_object_type
+    return self.type_map.get(int(self.TypeIndex), &#39;&#39;)
+  File &quot;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;volatility&#x2F;plugins&#x2F;overlays&#x2F;windows&#x2F;win10.py&quot;, line 334, in TypeIndex
+    return ((addr &gt;&gt; 8) ^ cook ^ indx) &amp; 0xFF
+TypeError: unsupported operand type(s) for ^: &#39;int&#39; and &#39;NoneType&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>這個錯誤是因為win10.py 中在執行時在<code>return ((addr &gt;&gt; 8) ^ cook ^ indx) &amp; 0xFF</code>這段程式出現了 NoneType 的變數。</p>
+<h2 id="nt-ObGetObjectType-是什麼？"><a href="#nt-ObGetObjectType-是什麼？" class="headerlink" title="nt!ObGetObjectType 是什麼？"></a>nt!ObGetObjectType 是什麼？</h2><p>根據<a target="_blank" rel="noopener" href="https://medium.com/%40ashabdalhalim/a-light-on-windows-10s-object-header-typeindex-value-e8f907e7073a">這篇文章</a>的分析，可以知道說 Win 10 的 TypeInde&#x78;<strong>&#x20;</strong>&#x88AB;混淆過，並且是根據</p>
+<pre class="line-numbers language-none"><code class="language-none">Index &#x3D; TypeIndex ^ 2nd least significate byte of OBJECT_HEADER address ^ nt!ObHeaderCookie<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>這樣的公式進行混淆，nt!ObGetObjectType 的功用就是將TypeIndex 進行解混淆並回傳解混淆的TypeIndex。</p>
+<p>因為 Volatility 2 是開源的，可以去看一下 win10.py 的<a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility/blob/master/volatility/plugins/overlays/windows/win10.py">sourcecode</a></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">class _OBJECT_HEADER_10(win8._OBJECT_HEADER):
+        
+    @property
+    def TypeIndex(self):
+        &quot;&quot;&quot;Wrap the TypeIndex member with a property that decodes it 
+        with the nt!ObHeaderCookie value.&quot;&quot;&quot;
+
+        cook &#x3D; obj.VolMagic(self.obj_vm).ObHeaderCookie.v()
+        addr &#x3D; self.obj_offset 
+        indx &#x3D; int(self.m(&quot;TypeIndex&quot;))
+
+        return ((addr &gt;&gt; 8) ^ cook ^ indx) &amp; 0xFF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>這邊就可以明顯的看到這三個變數分別代表什麼，並且利用這三個變數解混淆</p>
+<ul>
+<li>addr : OBJECT_HEADER_address</li>
+<li>cook : nt!ObHeaderCookie 讀出的cookie 值，Windows 10 是每次開機隨機生成的</li>
+<li>indx : 混淆過後的TypeIndex</li>
+</ul>
+<p>那這邊就是因為 Volatlity2 讀不到 nt!ObHeaderCookie，因此 cook 會是NoneType ， 而如果你有在Volatility 2下過 <code>-h</code> 有可能會看過可以下<code>--cookie</code>。</p>
+<pre class="line-numbers language-none"><code class="language-none">$ vol.py -h
+
+Volatility Foundation Volatility Framework 2.6.1
+Usage: Volatility - A memory forensics analysis platform.
+
+Options:
+  -h, --help            list all available options and their default values.
+                        Default values may be set in the configuration file
+                        (&#x2F;etc&#x2F;volatilityrc)
+  --conf-file&#x3D;&#x2F;home&#x2F;yunshiuan&#x2F;.volatilityrc
+                        User based configuration file
+  -d, --debug           Debug volatility
+  --plugins&#x3D;PLUGINS     Additional plugin directories to use (colon separated)
+  --info                Print information about all registered objects
+  --cache-directory&#x3D;&#x2F;home&#x2F;yunshiuan&#x2F;.cache&#x2F;volatility
+                        Directory where cache files are stored
+  --cache               Use caching
+  --tz&#x3D;TZ               Sets the (Olson) timezone for displaying timestamps
+                        using pytz (if installed) or tzset
+  -f FILENAME, --filename&#x3D;FILENAME
+                        Filename to use when opening an image
+  --profile&#x3D;WinXPSP2x86
+                        Name of the profile to load (use --info to see a list
+                        of supported profiles)
+  -l LOCATION, --location&#x3D;LOCATION
+                        A URN location from which to load an address space
+  -w, --write           Enable write support
+  --dtb&#x3D;DTB             DTB Address
+  --shift&#x3D;SHIFT         Mac KASLR shift address
+  --output&#x3D;text         Output in this format (support is module specific, see
+                        the Module Output Options below)
+  --output-file&#x3D;OUTPUT_FILE
+                        Write output in this file
+  -v, --verbose         Verbose information
+  --physical_shift&#x3D;PHYSICAL_SHIFT
+                        Linux kernel physical shift address
+  --virtual_shift&#x3D;VIRTUAL_SHIFT
+                        Linux kernel virtual shift address
+  -g KDBG, --kdbg&#x3D;KDBG  Specify a KDBG virtual address (Note: for 64-bit
+                        Windows 8 and above this is the address of
+                        KdCopyDataBlock)
+  --force               Force utilization of suspect profile
+  -k KPCR, --kpcr&#x3D;KPCR  Specify a specific KPCR address
+  --cookie&#x3D;COOKIE       Specify the address of nt!ObHeaderCookie (valid for
+                        Windows 10 only)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>那這個就是讓我們放 nt!ObHeaderCookie 的 address 給 Volatility 2 ， 因此接下來只要獲取到nt!ObHeaderCookie 位置的 cookie 應該就可以解決這個問題了。而 nt!ObHeaderCookie 在 ntoskrnl.exe 中可以找到。</p>
+<p>因此我們現在要把memory 中的ntoskrnl.exe dump出來，volatility 2 有一個很猛的 <code>moddump</code> Plugin ，他可以將 Kernel Driver 全部 dump 出來</p>
+<pre class="line-numbers language-none"><code class="language-none">$ vol.py -f MemoryDump.mem --profile&#x3D;Win10x64_19041 moddump --dump-dir .&#x2F;
+
+Volatility Foundation Volatility Framework 2.6.1
+Module Base        Module Name          Result
+------------------ -------------------- ------
+0xfffff8076221a000 ntoskrnl.exe         OK: driver.fffff8076221a000.sys
+0xfffff80762070000 hal.dll              OK: driver.fffff80762070000.sys
+0xfffff80767340000 ucx01000.sys         OK: driver.fffff80767340000.sys
+0xfffff80764530000 NETIO.SYS            OK: driver.fffff80764530000.sys
+0xfffff80767570000 UsbHub3.sys          OK: driver.fffff80767570000.sys
+0xfffff80767020000 USBPORT.SYS          OK: driver.fffff80767020000.sys
+0xfffff80767db0000 vm3dmp.sys           OK: driver.fffff80767db0000.sys
+0xfffff807643c0000 ndis.sys             OK: driver.fffff807643c0000.sys
+0xfffff807679d0000 cldflt.sys           OK: driver.fffff807679d0000.sys
+0xfffff80767a80000 bindflt.sys          OK: driver.fffff80767a80000.sys
+0xfffff80763fe0000 EhStorClass.sys      OK: driver.fffff80763fe0000.sys
+0xfffff807635f0000 CI.dll               OK: driver.fffff807635f0000.sys
+0xfffff80763c00000 pdc.sys              OK: driver.fffff80763c00000.sys
+0xfffff80767af0000 rspndr.sys           OK: driver.fffff80767af0000.sys
+0xfffff80767210000 e1i65x64.sys         OK: driver.fffff80767210000.sys
+0xfffff80763e00000 vsock.sys            OK: driver.fffff80763e00000.sys
+0xfffff80767440000 rdpbus.sys           OK: driver.fffff80767440000.sys
+0xfffff80774a50000 tcpipreg.sys         OK: driver.fffff80774a50000.sys
+0xfffff8077a5f0000 ad_driver.10.sys     OK: driver.fffff8077a5f0000.sys
+0xfffff80765670000 cdrom.sys            OK: driver.fffff80765670000.sys
+0xfffff80774c80000 mpsdrv.sys           OK: driver.fffff80774c80000.sys
+0xfffff80763eb0000 storahci.sys         OK: driver.fffff80763eb0000.sys
+0xfffff8077a4c0000 condrv.sys           OK: driver.fffff8077a4c0000.sys
+0xfffff80765ad0000 watchdog.sys         OK: driver.fffff80765ad0000.sys
+0xfffff807656f0000 Beep.SYS             OK: driver.fffff807656f0000.sys
+0xfffff80764b70000 mup.sys              OK: driver.fffff80764b70000.sys
+0xfffff80767d90000 serenum.sys          OK: driver.fffff80767d90000.sys
+0xfffff80763b50000 msisadrv.sys         OK: driver.fffff80763b50000.sys
+0xfffff80762160000 FLTMGR.SYS           OK: driver.fffff80762160000.sys
+0xfffff80767390000 vmgencounter.sys     OK: driver.fffff80767390000.sys
+0xfffff80763fb0000 stornvme.sys         OK: driver.fffff80763fb0000.sys
+0xfffff807635c0000 werkernel.sys        OK: driver.fffff807635c0000.sys
+0xfffff80765720000 dxgkrnl.sys          OK: driver.fffff80765720000.sys
+0xfffff807637f0000 WMILIB.SYS           OK: driver.fffff807637f0000.sys
+0xfffff80763d90000 volmgrx.sys          Error: Cannot acquire AS
+0xfffff80774a20000 Ndu.sys              OK: driver.fffff80774a20000.sys
+0xfffff80763ef0000 storport.sys         OK: driver.fffff80763ef0000.sys
+0xfffff80767990000 wcifs.sys            OK: driver.fffff80767990000.sys
+0xfffff80763c50000 partmgr.sys          OK: driver.fffff80763c50000.sys
+0xfffff80767870000 dxgmms2.sys          OK: driver.fffff80767870000.sys
+0xfffff80766e80000 kdnic.sys            OK: driver.fffff80766e80000.sys
+0xfffff80767b70000 peauth.sys           OK: driver.fffff80767b70000.sys
+0xfffff80764aa0000 volsnap.sys          OK: driver.fffff80764aa0000.sys
+0xfffff80763b10000 IntelTA.sys          OK: driver.fffff80763b10000.sys
+0xfffff807676c0000 HIDPARSE.SYS         OK: driver.fffff807676c0000.sys
+0xfffff80767cd0000 umbus.sys            OK: driver.fffff80767cd0000.sys
+0xfffff80767720000 dump_storport.sys    OK: driver.fffff80767720000.sys
+0xfffff807673b0000 BATTC.SYS            OK: driver.fffff807673b0000.sys
+0xfffff80766da0000 dfsc.sys             OK: driver.fffff80766da0000.sys
+0xfffff80763b20000 WindowsTr...roxy.sys OK: driver.fffff80763b20000.sys
+0xfffff80764b10000 rdyboost.sys         OK: driver.fffff80764b10000.sys
+0xfffff80763d50000 PCIIDEX.SYS          OK: driver.fffff80763d50000.sys
+0xfffff80766f80000 afunix.sys           OK: driver.fffff80766f80000.sys
+0xfffff80767da0000 vm3dmp_loader.sys    OK: driver.fffff80767da0000.sys
+0xfffff80764ba0000 iorate.sys           OK: driver.fffff80764ba0000.sys
+0xfffff80767420000 NdisVirtualBus.sys   OK: driver.fffff80767420000.sys
+0xfffff80766dd0000 CompositeBus.sys     OK: driver.fffff80766dd0000.sys
+0xfffff80774a00000 mmcss.sys            OK: driver.fffff80774a00000.sys
+0xfffff80764000000 fileinfo.sys         OK: driver.fffff80764000000.sys
+0xfffff80764610000 tcpip.sys            OK: driver.fffff80764610000.sys
+0xfffff807637a0000 WDFLDR.SYS           OK: driver.fffff807637a0000.sys
+0xfffff80766c20000 rdbss.sys            OK: driver.fffff80766c20000.sys
+0xfffff80762080000 kdcom.dll            OK: driver.fffff80762080000.sys
+0xfffff80766ca0000 csc.sys              OK: driver.fffff80766ca0000.sys
+0xfffffb54a32b0000 win32k.sys           Error: Cannot acquire AS
+0xfffff807674e0000 USBD.SYS             OK: driver.fffff807674e0000.sys
+0xfffffb54a2c00000 win32kbase.sys       OK: driver.fffffb54a2c00000.sys
+0xfffff80763af0000 WindowsTrustedRT.sys OK: driver.fffff80763af0000.sys
+0xfffff80774ca0000 mrxsmb.sys           OK: driver.fffff80774ca0000.sys
+0xfffff80767d20000 kbdclass.sys         OK: driver.fffff80767d20000.sys
+0xfffff80766d40000 nsiproxy.sys         OK: driver.fffff80766d40000.sys
+0xfffff80767560000 ksthunk.sys          OK: driver.fffff80767560000.sys
+0xfffff80765b70000 crashdmp.sys         OK: driver.fffff80765b70000.sys
+0xfffff80763b30000 pcw.sys              OK: driver.fffff80763b30000.sys
+0xfffff807643b0000 Fs_Rec.sys           Error: Cannot acquire AS
+0xfffff807649c0000 fvevol.sys           OK: driver.fffff807649c0000.sys
+0xfffff807635e0000 ntosext.sys          OK: driver.fffff807635e0000.sys
+0xfffff80764c00000 CLASSPNP.SYS         OK: driver.fffff80764c00000.sys
+0xfffff80766bf0000 winhvr.sys           OK: driver.fffff80766bf0000.sys
+0xfffff80762130000 PSHED.dll            OK: driver.fffff80762130000.sys
+0xfffff80763e20000 vmci.sys             OK: driver.fffff80763e20000.sys
+0xfffff80767430000 swenum.sys           OK: driver.fffff80767430000.sys
+0xfffff80767660000 hidusb.sys           OK: driver.fffff80767660000.sys
+0xfffff80766b20000 netbios.sys          OK: driver.fffff80766b20000.sys
+0xfffff80766ea0000 CimFS.SYS            OK: driver.fffff80766ea0000.sys
+0xfffff80774ac0000 HTTP.sys             OK: driver.fffff80774ac0000.sys
+0xfffff80767ab0000 lltdio.sys           OK: driver.fffff80767ab0000.sys
+0xfffff807670d0000 portcls.sys          OK: driver.fffff807670d0000.sys
+0xfffff807656e0000 Null.SYS             Error: Cannot acquire AS
+0xfffff80767cf0000 i8042prt.sys         OK: driver.fffff80767cf0000.sys
+0xfffff80763910000 mssecflt.sys         OK: driver.fffff80763910000.sys
+0xfffff80766f20000 netbt.sys            OK: driver.fffff80766f20000.sys
+0xfffff80766b40000 Vid.sys              OK: driver.fffff80766b40000.sys
+0xfffff80762150000 BOOTVID.dll          OK: driver.fffff80762150000.sys
+0xfffff80767760000 dump_stornvme.sys    OK: driver.fffff80767760000.sys
+0xfffff80763d70000 volmgr.sys           OK: driver.fffff80763d70000.sys
+0xfffff80763990000 ACPI.sys             OK: driver.fffff80763990000.sys
+0xfffff807636e0000 cng.sys              OK: driver.fffff807636e0000.sys
+0xfffff80766fa0000 ahcache.sys          OK: driver.fffff80766fa0000.sys
+0xfffff80774d90000 vmmemctl.sys         OK: driver.fffff80774d90000.sys
+0xfffff80767b10000 msquic.sys           OK: driver.fffff80767b10000.sys
+0xfffff807621d0000 cmimcext.sys         OK: driver.fffff807621d0000.sys
+0xfffff80766df0000 fastfat.SYS          OK: driver.fffff80766df0000.sys
+0xfffff80763400000 clipsp.sys           OK: driver.fffff80763400000.sys
+0xfffff807637c0000 SleepStudyHelper.sys OK: driver.fffff807637c0000.sys
+0xfffff80764020000 Wof.sys              OK: driver.fffff80764020000.sys
+0xfffff80763e70000 ataport.SYS          OK: driver.fffff80763e70000.sys
+0xfffff80764a90000 volume.sys           OK: driver.fffff80764a90000.sys
+0xfffff807670a0000 HDAudBus.sys         OK: driver.fffff807670a0000.sys
+0xfffff807656b0000 filecrypt.sys        OK: driver.fffff807656b0000.sys
+0xfffff807638e0000 acpiex.sys           OK: driver.fffff807638e0000.sys
+0xfffff80766ef0000 TDI.SYS              OK: driver.fffff80766ef0000.sys
+0xfffff8077a4e0000 vmhgfs.sys           OK: driver.fffff8077a4e0000.sys
+0xfffff80765b10000 BasicRender.sys      OK: driver.fffff80765b10000.sys
+0xfffff80767d50000 mouclass.sys         OK: driver.fffff80767d50000.sys
+0xfffff80763d40000 intelide.sys         OK: driver.fffff80763d40000.sys
+0xfffffb54a3350000 cdd.dll              Error: Cannot acquire AS
+0xfffff80767960000 luafv.sys            OK: driver.fffff80767960000.sys
+0xfffff80774c50000 bowser.sys           OK: driver.fffff80774c50000.sys
+0xfffff807676e0000 mouhid.sys           OK: driver.fffff807676e0000.sys
+0xfffff807677b0000 dump_dumpfve.sys     OK: driver.fffff807677b0000.sys
+0xfffff807673d0000 intelppm.sys         OK: driver.fffff807673d0000.sys
+0xfffff80765be0000 Msfs.SYS             OK: driver.fffff80765be0000.sys
+0xfffff8077a550000 WdFilter.sys         OK: driver.fffff8077a550000.sys
+0xfffff80766ff0000 tap0901.sys          OK: driver.fffff80766ff0000.sys
+0xfffff80774da0000 srvnet.sys           OK: driver.fffff80774da0000.sys
+0xfffff807640d0000 Ntfs.sys             OK: driver.fffff807640d0000.sys
+0xfffff80763e40000 mountmgr.sys         OK: driver.fffff80763e40000.sys
+0xfffff80767450000 usbhub.sys           OK: driver.fffff80767450000.sys
+0xfffff80767a60000 storqosflt.sys       OK: driver.fffff80767a60000.sys
+0xfffff80767680000 HIDCLASS.SYS         OK: driver.fffff80767680000.sys
+0xfffff80763c90000 spaceport.sys        OK: driver.fffff80763c90000.sys
+0xfffff807672a0000 USBXHCI.SYS          OK: driver.fffff807672a0000.sys
+0xfffff80766ec0000 tdx.sys              OK: driver.fffff80766ec0000.sys
+0xfffff80766ad0000 pacer.sys            OK: driver.fffff80766ad0000.sys
+0xfffff80765700000 vmrawdsk.sys         OK: driver.fffff80765700000.sys
+0xfffff80767000000 usbuhci.sys          OK: driver.fffff80767000000.sys
+0xfffff80763550000 msrpc.sys            Error: Cannot acquire AS
+0xfffff80763b60000 pci.sys              OK: driver.fffff80763b60000.sys
+0xfffff80767ad0000 mslldp.sys           OK: driver.fffff80767ad0000.sys
+0xfffff80767170000 ks.sys               OK: driver.fffff80767170000.sys
+0xfffff80766d90000 gpuenergydrv.sys     OK: driver.fffff80766d90000.sys
+0xfffff807673a0000 CmBatt.sys           OK: driver.fffff807673a0000.sys
+0xfffff807645d0000 ksecpkg.sys          OK: driver.fffff807645d0000.sys
+0xfffff80763be0000 vdrvroot.sys         OK: driver.fffff80763be0000.sys
+0xfffff807671f0000 usbehci.sys          OK: driver.fffff807671f0000.sys
+0xfffff80763800000 Wdf01000.sys         OK: driver.fffff80763800000.sys
+0xfffff80764be0000 disk.sys             OK: driver.fffff80764be0000.sys
+0xfffff80766d70000 mssmbios.sys         OK: driver.fffff80766d70000.sys
+0xfffff80774d40000 mrxsmb20.sys         OK: driver.fffff80774d40000.sys
+0xfffff807677d0000 dxgmms1.sys          OK: driver.fffff807677d0000.sys
+0xfffff80767d70000 serial.sys           OK: driver.fffff80767d70000.sys
+0xfffff80766ab0000 vwififlt.sys         OK: driver.fffff80766ab0000.sys
+0xfffff807620c0000 CLFS.SYS             OK: driver.fffff807620c0000.sys
+0xfffff807656d0000 tbs.sys              OK: driver.fffff807656d0000.sys
+0xfffff80764900000 fwpkclnt.sys         OK: driver.fffff80764900000.sys
+0xfffff80766f10000 ws2ifsl.sys          OK: driver.fffff80766f10000.sys
+0xfffff80763520000 ksecdd.sys           OK: driver.fffff80763520000.sys
+0xfffff80765b30000 Npfs.SYS             OK: driver.fffff80765b30000.sys
+0xfffff80767140000 drmk.sys             OK: driver.fffff80767140000.sys
+0xfffff80766d60000 npsvctrig.sys        OK: driver.fffff80766d60000.sys
+0xfffff80764980000 wfplwfs.sys          OK: driver.fffff80764980000.sys
+0xfffff80767d40000 vmmouse.sys          OK: driver.fffff80767d40000.sys
+0xfffff807637d0000 WppRecorder.sys      OK: driver.fffff807637d0000.sys
+0xfffff80761de0000 mcupdate.dll         OK: driver.fffff80761de0000.sys
+0xfffff8077a3f0000 srv2.sys             OK: driver.fffff8077a3f0000.sys
+0xfffff80766a00000 afd.sys              OK: driver.fffff80766a00000.sys
+0xfffff80763970000 SgrmAgent.sys        OK: driver.fffff80763970000.sys
+0xfffff80767620000 usbccgp.sys          OK: driver.fffff80767620000.sys
+0xfffff80763c30000 CEA.sys              OK: driver.fffff80763c30000.sys
+0xfffff80767700000 vmusbmouse.sys       OK: driver.fffff80767700000.sys
+0xfffff80767850000 monitor.sys          OK: driver.fffff80767850000.sys
+0xfffff80763e60000 atapi.sys            OK: driver.fffff80763e60000.sys
+0xfffff80763a80000 intelpep.sys         OK: driver.fffff80763a80000.sys
+0xfffff80762090000 tm.sys               OK: driver.fffff80762090000.sys
+0xfffff80766e60000 bam.sys              OK: driver.fffff80766e60000.sys
+0xfffffb54a2ee0000 win32kfull.sys       Error: Cannot acquire AS
+0xfffff807674f0000 HdAudio.sys          OK: driver.fffff807674f0000.sys
+0xfffff80766b00000 ndiscap.sys          OK: driver.fffff80766b00000.sys
+0xfffff80765af0000 BasicDisplay.sys     OK: driver.fffff80765af0000.sys<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>&#x20;第一個就是ntoskrnl.exe ，把它拿去反編譯之後找到 ObGetObjectType 接下來把前面的8 bytes 的 opcode 記住</p>
+<p><img src="/assets/TvYuVt1MEA0AH8i7s_0FELoY5njlVr0iMo2in0PMfRc=.png"></p>
+<p>接下來用yarascan 把他從記憶體中的位置抓出來 </p>
+<pre class="line-numbers language-none"><code class="language-none">$ sudo python2.7 vol.py -f ..&#x2F;temp_extract_dir&#x2F;MemoryDump.mem --profile&#x3D;Win10x64_19041 yarascan -K -Y &quot;&#123;48 8D 41 D0 0F B6 49 E8&#125;&quot;
+
+Volatility Foundation Volatility Framework 2.6.1
+Rule: r1
+Owner: ntoskrnl.exe
+0xf8076291d470  48 8d 41 d0 0f b6 49 e8 48 c1 e8 08 0f b6 c0 48   H.A...I.H......H
+0xf8076291d480  33 c1 0f b6 0d a3 92 5f 00 48 33 c1 48 8d 0d ed   3......_.H3.H...
+0xf8076291d490  99 5f 00 48 8b 04 c1 c3 cc cc cc cc cc cc cc cc   ._.H............
+0xf8076291d4a0  48 83 ec 58 8a 84 24 a0 00 00 00 c7 44 24 48 01   H..X..$.....D$H.
+0xf8076291d4b0  00 00 00 88 44 24 40 8b 84 24 98 00 00 00 89 44   ....D$@..$.....D
+0xf8076291d4c0  24 38 8b 84 24 90 00 00 00 89 44 24 30 48 8b 84   $8..$.....D$0H..
+0xf8076291d4d0  24 88 00 00 00 48 89 44 24 28 48 8b 84 24 80 00   $....H.D$(H..$..
+0xf8076291d4e0  00 00 48 89 44 24 20 e8 14 00 00 00 48 83 c4 58   ..H.D$......H..X
+0xf8076291d4f0  c3 cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc   ................
+0xf8076291d500  4c 8b dc 49 89 5b 08 49 89 73 10 4d 89 4b 20 4d   L..I.[.I.s.M.K.M
+0xf8076291d510  89 43 18 57 41 54 41 55 41 56 41 57 48 83 ec 70   .C.WATAUAVAWH..p
+0xf8076291d520  48 8b da 48 8b f9 45 33 ed 4d 89 6b b0 4d 89 6b   H..H..E3.M.k.M.k
+0xf8076291d530  b8 65 48 8b 04 25 88 01 00 00 48 89 44 24 60 44   .eH..%....H.D$&#96;D
+0xf8076291d540  8a b8 32 02 00 00 45 84 ff 0f 84 07 94 12 00 49   ..2...E........I
+0xf8076291d550  8b 4b 28 48 b8 00 00 ff ff ff 7f 00 00 48 3b c8   .K(H.........H;.
+0xf8076291d560  48 0f 43 c8 8b 01 89 01 44 8b a4 24 d0 00 00 00   H.C.....D..$....<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接下來知道 ntoskrnl.exe 的位置在<code>0xf8076291d470</code>後我們就可以寫 script 幫我我們提取ObHeaderCookie</p>
+<p>回去看反編譯出來的ObGetObjectType，我們的目標是<code>movzx   ecx, byte [rel ObHeaderCookie]</code> 這段</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">$ sudo python2.7 vol.py -f ..&#x2F;temp_extract_dir&#x2F;MemoryDump.mem --profile&#x3D;Win10x64_19041 volshell
+Volatility Foundation Volatility Framework 2.6.1
+Current context: System @ 0xffffad8185883180, pid&#x3D;4, ppid&#x3D;0 DTB&#x3D;0x1ad002
+Welcome to volshell! Current memory image is:
+file:&#x2F;&#x2F;&#x2F;home&#x2F;yunshiuan&#x2F;temp_extract_dir&#x2F;MemoryDump.mem
+To get help, type &#39;hh()&#39;
+&gt;&gt;&gt; addr &#x3D; 0xf8076291d470
+&gt;&gt;&gt; for m in getmods():
+...     nt_mod &#x3D; m
+...     break
+...
+&gt;&gt;&gt; mode &#x3D; distorm3.Decode64Bits
+&gt;&gt;&gt; data &#x3D; nt_mod.obj_vm.read(addr, 100)
+&gt;&gt;&gt; ops &#x3D; distorm3.Decompose(addr, data, mode)
+&gt;&gt;&gt; for op in reversed(ops):
+...     if (op.size &#x3D;&#x3D; 7 and &#39;FLAG_RIP_RELATIVE&#39; in op.flags and len(op.operands) &#x3D;&#x3D; 2 and op.operands[0].type &#x3D;&#x3D; &#39;Register&#39; and op.operands[1].type &#x3D;&#x3D; &#39;AbsoluteMemory&#39; and op.operands[1].size &#x3D;&#x3D; 8):
+...         addr2 &#x3D; op.address + op.size + op.operands[1].disp
+...
+&gt;&gt;&gt; cookie &#x3D; obj.Object(&quot;unsigned int&quot;, offset &#x3D; addr2, vm &#x3D; nt_mod.obj_vm)
+&gt;&gt;&gt; hex(cookie)
+&#39;0x9be88324L&#39;
+&gt;&gt;&gt; exit()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>這個script 簡單來說</p>
+<ul>
+<li>首先先獲取到addr 的第一個函數，那因為我們直接定位的關係，所以這邊nt_mod &#x3D; ObGetObjectType</li>
+<li>接下來分別是設定64 位元反組譯模式、讀取100 位元組的機器碼、進行反組譯得到指令列表</li>
+<li>下一部分是尋找<code>movzx ecx, byte [rel ObHeaderCookie]</code>指令<ul>
+<li><code>op.size == 7</code>：指令長度為 7 位元組</li>
+<li><code>&#39;FLAG_RIP_RELATIVE&#39; in op.flags</code>：使用 RIP相對定址</li>
+<li><code>len(op.operands) == 2</code>：有 2 個運算元</li>
+<li><code>op.operands[0].type== &#39;Register&#39;</code>：第一個運算元是暫存器</li>
+<li><code>op.operands[1].type == &#39;AbsoluteMemory&#39;</code>：第二個運算元是記憶體位址</li>
+<li><code>op.operands[1].size== 8</code>：記憶體運算元大小為 8 位元組</li>
+</ul>
+</li>
+<li>找到後計算ObHeaderCookie的實際記憶體位置<ul>
+<li><code>addr2 = op.address + op.size + op.operands[1].disp</code><ul>
+<li>op.address：指令地址</li>
+<li>op.size：指令大小（7 位元組）</li>
+<li>op.operands[1].disp：RIP 相對位移</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>最後提取cookie 的值</li>
+</ul>
+<p>提取後我們知道cookie 的值為<code>0x9be88324</code>，最後再下一次 psscan 帶上剛剛抓的cookie</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo python2.7 vol.py -f ..&#x2F;temp_extract_dir&#x2F;MemoryDump.mem --profile&#x3D;Win10x64_19041 --cookie&#x3D;0x9be88324 psscan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>發現成功執行</p>
+<p><img src="/assets/itW3xFS6UvPW_Na9YNcMa0hzXSp3BMdpHgJ7ig0oANU=.png"></p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>其實今天分享了的這個問題，但是其實只要改用Volatility 3 就都不會有問題了，而且在研究這個問題的過程中因為 Volatility 2 支援的函式庫都太舊了導致踩了不少坑，所以今天的分享如果你是 Volatility 2 的忠實信徒，這個方式應該可以幫助你在分析 Win 10 的記憶體時遇到這個問題可以直接解決</p>
+<hr>
+<h1 id="📚參考資料"><a href="#📚參考資料" class="headerlink" title="📚參考資料"></a>📚參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.osdfcon.org/presentations/2020/Jamie-Levy/_Troubleshooting-Memory.pdf">https://www.osdfcon.org/presentations/2020/Jamie-Levy\_Troubleshooting-Memory.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility/issues/436">https://github.com/volatilityfoundation/volatility/issues/436</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/%40ashabdalhalim/a-light-on-windows-10s-object-header-typeindex-value-e8f907e7073a">https://medium.com/%40ashabdalhalim/a-light-on-windows-10s-object-header-typeindex-value-e8f907e7073a</a></p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

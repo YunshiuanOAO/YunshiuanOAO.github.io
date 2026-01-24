@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 對蘋果進行一波大調查 · yunshiuan</title><meta name="description" content="對蘋果進行一波大調查 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">對蘋果進行一波大調查</h1><div class="post-info">Sep 23, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>接續前一天的內容，今天來學習使用開源的分析工具如何對 IOS 裝置的資料進行分析。</p>
+<hr>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="ILEAPP"><a href="#ILEAPP" class="headerlink" title="ILEAPP"></a>ILEAPP</h2><p>下載連結： <a target="_blank" rel="noopener" href="https://github.com/abrignoni/iLEAPP">https://github.com/abrignoni/iLEAPP</a></p>
+<p>iLEAPP 是 Alexis Brignoni 開發的開源工具，用來解析 iOS 裝置（與備份）中的日誌、事件與 plist 等常見鑑識 artefacts，協助快速整理出可供鑑識與調查的資訊。此工具可以快速 triage iOS 欄位：例如系統與應用 logs、通知（notifications）、build &#x2F; 設備資訊、行動網路資料、應用狀態資料庫（ApplicationState.db）等，將原始檔案轉成可讀的表格&#x2F;HTML 報告或 timeline，便於調查人員閱讀與分析</p>
+<hr>
+<p>今天的IOS 的 dumpfiles 檔會以今年初剛結束的 MVS CTF 2025 檔中的 IOS 分類來分享</p>
+<h1 id="IOS"><a href="#IOS" class="headerlink" title="IOS"></a>IOS</h1><p>檔案下載網址：<a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1yaMc--Va2u2IJzQKci4yBaeftjDGRDya">https://drive.google.com/drive/folders/1yaMc--Va2u2IJzQKci4yBaeftjDGRDya</a></p>
+<p>網址下載下來後應該會是iOS 系統的Applications、private、System 資料夾的壓縮檔</p>
+<p>將下載的檔案丟給iLEAPP，上面是填題目給的檔案，下面是選他產生的分析結果要輸出到哪裡的資料夾</p>
+<p>下面的Module可以全選</p>
+<p><img src="/assets/pN_MLRInXD93sGXMtwoxxnvG6LiVZAyfxuDtWOxSxF4=.png"></p>
+<p>接下來按左下角的 Process 程式就會開始分析</p>
+<p>結束之後會產生分析的結果並產生html，</p>
+<p><img src="/assets/OzFeLiwH1qYq5CZbvm7R8tR14Pxz_wcfw2JjuQ82SY0=.png"></p>
+<p>報告的主頁會產生在_HTML 底下的 <code>index.html</code> 打開之後會出現這樣的頁面</p>
+<p><img src="/assets/9oHLDoZAR8rpHPWI5a65Wj2LDRsWts9dnS1ABtfelbM=.png"></p>
+<p>之後就可以在左側的功能列翻想要尋找的東西。</p>
+<p>這邊介紹幾個我覺得比較特別的分析結果</p>
+<h2 id="Home-Page"><a href="#Home-Page" class="headerlink" title="Home Page"></a>Home Page</h2><p>在首頁的Device details 中有顯示裝置基本資訊（型號、序號、iOS 版本）</p>
+<p><img src="/assets/fXGB2uwjc5BZY9TvJLQPPKzqzsdhCceqbkQM1yNVhBw=.png"></p>
+<h3 id="Keyboard-Usage-Stats"><a href="#Keyboard-Usage-Stats" class="headerlink" title="Keyboard Usage Stats"></a>Keyboard Usage Stats</h3><p>這邊會顯示</p>
+<ul>
+<li><code>tium.totalWordsTyped</code> → 使用者總共輸入的字數</li>
+<li><code>tium.totalWordsFromCandidateBar</code> → 從鍵盤候選列選字的次數</li>
+<li><code>tium.totalWordsAutocorrected</code> → 自動更正的字數</li>
+</ul>
+<p><img src="/assets/nMTSMholF589UNss0wwNX1RI3f9GH22jovCeBZGWRZ0=.png"></p>
+<h2 id="Itunes-Metadata"><a href="#Itunes-Metadata" class="headerlink" title="Itunes Metadata"></a>Itunes Metadata</h2><p>&#x20;Itunes Metadata 這邊會列出一些裝置上安裝的APP </p>
+<p><img src="/assets/mT5LK33BqV_BBiDqV8WyiXbqmUKXcCQe4lEyVllEug4=.png"></p>
+<hr>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天學習到 IOS 的裝置的鑑識，希望未來嘗試看看在真實環境下鑑識人員是怎麼對手機進行破解與分析的</p>
+<hr>
+<h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=eG55F8glV0o">https://www.youtube.com/watch?v=eG55F8glV0o</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=H214nt2Q32Y">https://www.youtube.com/watch?v=H214nt2Q32Y</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-ios.html">https://www.stark4n6.com/2025/03/magnet-virtual-summit-2025-ctf-ios.html</a></p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

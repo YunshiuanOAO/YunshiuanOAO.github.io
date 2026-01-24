@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 蛤？為什麼我做記憶體鑑識還要看evtx，我不知道我還要記Event ID啊，不鑑了，爛鑑識！ · yunshiuan</title><meta name="description" content="蛤？為什麼我做記憶體鑑識還要看evtx，我不知道我還要記Event ID啊，不鑑了，爛鑑識！ - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">蛤？為什麼我做記憶體鑑識還要看evtx，我不知道我還要記Event ID啊，不鑑了，爛鑑識！</h1><div class="post-info">Sep 17, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p><del>標題是我在剛接觸到這個技巧時的心聲</del></p>
+<p>今天要分享的是在做記憶體分析時其實是有機會可以把 Evtx 抓出來看的，獲得更多的線索，因為 Windows 常常會記錄事件到Evtx中</p>
+<hr>
+<h1 id="🍘-仙貝工具"><a href="#🍘-仙貝工具" class="headerlink" title="🍘 仙貝工具"></a>🍘 仙貝工具</h1><h2 id="Volatility"><a href="#Volatility" class="headerlink" title="Volatility"></a>Volatility</h2><p>下載連結：</p>
+<p>Volatility 2 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></p>
+<p>Volatility 3 :  <a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility3">https://github.com/volatilityfoundation/volatility3</a></p>
+<p>經典的記憶體分析工具，利用指令可以分析 memory dump 中的關鍵訊息，像是進程、網路連線、檔案……等等。</p>
+<p>基本的操作這邊推薦可以直接上網查有人整理好的指令doc</p>
+<p>而Volatility分為2與3版，差別就是一個是要使用 python2 執行，另一個是用 python3 執行，並且現在Volatility 2 已經沒有在維護了，但是一些 Plugin 的完整度在目前為止還是比 Volatility 3 還要高並且更豐富，所以有些人還是會比較會偏向使用 Volatility 2 ，這次會給兩個版本的Volatility工具指令給大家參考</p>
+<h2 id="Eric-Zimmerman’s-Tools"><a href="#Eric-Zimmerman’s-Tools" class="headerlink" title="Eric Zimmerman’s Tools"></a>Eric Zimmerman’s Tools</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">https://ericzimmerman.github.io/#!index.md</a></p>
+<p>這是由Eric Zimmerman鑑識專家開發出的其中一個工具，他在網站中也有多出很多其他非常好用的數位鑑識工具可以使用，而這次會使用 Evtxcmd 的功能是他可以將evtx 換成CSV檔案以及Timeline Explorer 工具，可以查看CSV檔，</p>
+<hr>
+<h1 id="Dump-出-Evtx-檔案"><a href="#Dump-出-Evtx-檔案" class="headerlink" title="Dump 出 Evtx 檔案"></a>Dump 出 Evtx 檔案</h1><p>我們可以先檢查我們的memory 檔中有沒有確定有evtx檔</p>
+<h2 id="Volatility-2"><a href="#Volatility-2" class="headerlink" title="Volatility 2"></a>Volatility 2</h2><pre class="line-numbers language-none"><code class="language-none">vol.py -f .&#x2F;memory.dmp --profile&#x3D;Win10x64_14393 -g 0xf8004a000b20 filescan | grep &#39;.evtx&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="Volatility-3"><a href="#Volatility-3" class="headerlink" title="Volatility 3"></a>Volatility 3</h2><pre class="line-numbers language-none"><code class="language-none">vol -f memory.dmp windows.filescan | grep &#39;.evtx&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/2lVDyAjMs3yOlsZxMikXlj2nIgpeJqE_tenYg-RGAog=.png"></p>
+<p>我們可以利用 FileScan 的 pugin 幫助我們檢查是否有我們想要的檔案，圖片中可以得知到說確實有，接下來就可以將他們dump下來，Volatility 2 以及Volatility 3 的 Dumpfile 支援 regex ，可以使用它幫助我們找到所有我們需要的 evtx</p>
+<h2 id="Volatility-2-1"><a href="#Volatility-2-1" class="headerlink" title="Volatility 2"></a>Volatility 2</h2><pre class="line-numbers language-none"><code class="language-none">vol.py -f .&#x2F;memory.dmp --profile&#x3D;Win10x64_14393 -g 0xf8004a000b20  dumpfiles --regex .evtx$ --ignore-case --dump-dir output<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="Volatility-3-1"><a href="#Volatility-3-1" class="headerlink" title="Volatility 3"></a>Volatility 3</h2><pre class="line-numbers language-none"><code class="language-none">vol -f memory.dmp windows.dumpfiles.DumpFiles --filter .evtx$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>這個指令簡單來說就是從memory.dump 中 將結尾為.evtx的檔案全部抓出來，也可以指定看你想要看什麼evtx，再去更改regex即可。</p>
+<p>假設我想要dump Security.evtx下來看</p>
+<h2 id="Volatility-2-2"><a href="#Volatility-2-2" class="headerlink" title="Volatility 2"></a>Volatility 2</h2><pre class="line-numbers language-none"><code class="language-none">vol.py -f .&#x2F;memory.dmp --profile&#x3D;Win10x64_14393 -g 0xf8004a000b20 --regex Security.evtx$ --ignore-case --dump-dir output<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="Volatility-3-2"><a href="#Volatility-3-2" class="headerlink" title="Volatility 3"></a>Volatility 3</h2><pre class="line-numbers language-none"><code class="language-none">vol -f memory.dmp windows.dumpfiles.DumpFiles --filter Security.evtx$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/assets/n11TvjQIvmkx_EM-nMo45tSov2D461awpBgTU_khL3o=.png"></p>
+<p>圖片中發現成功Dump出來東西了，但是怎麼會有兩個檔案，而且這兩個檔案一個是 vacb ，一個是 dat，跟 evtx 的關係不是說沒有感覺是一點關係都沒有，那什麼是 vacb，什麼是 dat ?</p>
+<ul>
+<li>vacb : Caching Data</li>
+<li>dat : Less Fragile File</li>
+</ul>
+<p>簡單來說這兩個都儲存了 evtx 的資料，只是 dat 的儲存方式比較穩定可靠</p>
+<p>因此其實也可以直接把 vacb 或 dat 副檔名直接改成 evtx ，就可以直接用內建的 Event viewer 查看</p>
+<p><img src="/assets/Chv6PtoCP5Pxr6ytsdD9dJ-t5cpcGlqVz_joyxsW87c=.png"></p>
+<p>但另外其實也可以用Evtxcmd 將它變成 CSV 檔查看</p>
+<hr>
+<h2 id="Evtxcmd-Evtx-to-CSV"><a href="#Evtxcmd-Evtx-to-CSV" class="headerlink" title="Evtxcmd- Evtx to CSV"></a>Evtxcmd- Evtx to CSV</h2><p>根據 <a target="_blank" rel="noopener" href="https://github.com/EricZimmerman/evtx?tab=readme-ov-file">https://github.com/EricZimmerman/evtx?tab=readme-ov-file</a> 官方給的使用說明，可以使用以下指令將我們的 evtx 轉換成 csv </p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">.\EvtxECmd.exe -f &quot;..\..\file.0xca82b31c5990.0xca82b3848c70.SharedCacheMap.Security.evtx.vacb&quot; --csv .&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>接下來就可以獲得一個csv檔，並且裡面的內容是evtx的內容</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">PS C:\Users\yunshiuan\Desktop\net9\EvtxeCmd &gt; .\EvtxECmd.exe -f &quot;..\..\file.0xca82b31c5990.0xca82b3848c70.SharedCacheMap.Security.evtx.vacb&quot; --csv .&#x2F;
+EvtxECmd version 1.5.2.0
+
+Author: Eric Zimmerman (saericzimmerman@gmail.com)
+https:&#x2F;&#x2F;github.com&#x2F;EricZimmerman&#x2F;evtx
+
+Command line: -f ..\..\file.0xca82b31c5990.0xca82b3848c70.SharedCacheMap.Security.evtx.vacb --csv .&#x2F;
+
+Warning: Administrator privileges not found!
+
+CSV output will be saved to .&#x2F;20250904074916_EvtxECmd_Output.csv
+
+Maps loaded: 453
+
+Processing C:\Users\yunshiuan\Desktop\file.0xca82b31c5990.0xca82b3848c70.SharedCacheMap.Security.evtx.vacb...
+Chunk count: 30, Iterating records...
+Record # 68 (Event Record Id: 68): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 68 (Event Record Id: 68): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 69 (Event Record Id: 69): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 69 (Event Record Id: 69): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 70 (Event Record Id: 70): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 70 (Event Record Id: 70): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 71 (Event Record Id: 71): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 71 (Event Record Id: 71): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 72 (Event Record Id: 72): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 72 (Event Record Id: 72): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 73 (Event Record Id: 73): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 73 (Event Record Id: 73): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 78 (Event Record Id: 78): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 78 (Event Record Id: 78): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 79 (Event Record Id: 79): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 79 (Event Record Id: 79): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 83 (Event Record Id: 83): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessName&quot;] not found! Replacing with empty string
+Record # 83 (Event Record Id: 83): In map for event 4718, Property &#x2F;Event&#x2F;EventData&#x2F;Data[@Name&#x3D;&quot;ProcessId&quot;] not found! Replacing with empty string
+Record # 2529 (Event Record Id: 2529): In map for event 1100, Property &#x2F;Event&#x2F;UserData[@Name&#x3D;&quot;ServiceShutdown&quot;] not found! Replacing with empty string
+
+Event log details
+Flags: IsDirty
+Chunk count: 30
+Stored&#x2F;Calculated CRC: B5FC0719&#x2F;B5FC0719
+Earliest timestamp: 2024-01-31 23:47:41.1765022
+Latest timestamp:   2024-02-01 19:48:31.0253493
+Total event log records found: 246
+
+Records included: 246 Errors: 0 Events dropped: 0
+
+Metrics (including dropped events)
+Event ID        Count
+1100            1
+4608            2
+4624            58
+4625            1
+4647            1
+4648            7
+4672            51
+4688            23
+4696            2
+4717            10
+4718            9
+4720            1
+4725            2
+4728            1
+4731            11
+4732            3
+4735            11
+4738            6
+4739            1
+4797            5
+4798            7
+4799            3
+4826            2
+4902            2
+4907            1
+5024            1
+5033            1
+5379            23
+
+Processed 1 file in 1.8517 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>之後就可以用Timeline Explorer 或其他可以開 csv 的軟體去做想要的Event ID查詢或者字串的搜尋。</p>
+<p><img src="/assets/M9NLjmdw8XqYgsflY7NZPbn3tEQ6x0CqxY7Zf7XbbPU=.png"></p>
+<hr>
+<h1 id="🤔-有更方便的做法？"><a href="#🤔-有更方便的做法？" class="headerlink" title="🤔 有更方便的做法？"></a>🤔 有更方便的做法？</h1><p>有！有一個工具叫做 [Rstudio](<a target="_blank" rel="noopener" href="https://www.r-studio.com/Forensic-and-DataRecovery-Business.html)%EF%BC%8C%E4%BB%96%E6%9C%89GUI%E7%9A%84%E9%A0%81%E9%9D%A2%E5%8F%AF%E4%BB%A5%E5%88%86%E6%9E%90">https://www.r-studio.com/Forensic-and-DataRecovery-Business.html)，他有GUI的頁面可以分析</a> Memory 檔並且可以非常方便地將檔案 dump  出來</p>
+<p><img src="/assets/a9lH4T4x_xAnbX7HPQeh_7Q804NXx0Vwwy9CWo14Q98=.png"></p>
+<p>但是，如果你想要將他 dump 出來，免費版大小只能1024KB，基本的 Evtx 的大小都沒辦法復原</p>
+<p><img src="/assets/nl8flZbSu3WTqUCt4faVzeO_zFpM2ubRZAQEQy9tuBg=.png"></p>
+<p>付費有許多方案，有一次付清的跟年繳的，這邊就就給大家參考</p>
+<p><img src="/assets/ZrRN-kC5LD44hzYYPkMk10gbq-hQ0KscOklFM_hST2o=.png"></p>
+<hr>
+<h1 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h1><p><a target="_blank" rel="noopener" href="https://wongkenny240.gitbook.io/computerforensics/memory-analysis/volatility#windows-vista-2008-and-7-event-logs">https://wongkenny240.gitbook.io/computerforensics/memory-analysis/volatility#windows-vista-2008-and-7-event-logs</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/EricZimmerman/evtx?tab=readme-ov-file">https://github.com/EricZimmerman/evtx?tab=readme-ov-file</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/ouspg/digging-into-the-vortex-of-unknown-memory-dump-part-1-x-aaa6e0ee81d3">https://medium.com/ouspg/digging-into-the-vortex-of-unknown-memory-dump-part-1-x-aaa6e0ee81d3</a></p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> O熊學院準備開課了 · yunshiuan</title><meta name="description" content="O熊學院準備開課了 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">O熊學院準備開課了</h1><div class="post-info">Sep 25, 2025</div><div class="post-content"><h1 id="🧂-前言"><a href="#🧂-前言" class="headerlink" title="🧂 前言"></a>🧂 前言</h1><p>今天要介紹一下什麼是 OSINT，我覺得 OSINT 並沒有想像中這麼簡單，除了需要對任何訊息都擁有很高的敏感度，也要了解很多工具的使用，因此趁這個機會跟大家分享，也是對我自己做一個筆記，<del>下次遇到 OSINT 題目就不會選擇直接放棄</del></p>
+<hr>
+<h1 id="😯-什麼是-OSINT？"><a href="#😯-什麼是-OSINT？" class="headerlink" title="😯 什麼是 OSINT？"></a>😯 什麼是 OSINT？</h1><p>OSINT 是指從公開可取得的資料來源收集、過濾、分析並應用於情報／調查／安全防禦的過程。這些資料來源可能是新聞媒體、政府資料、公眾報告、社交媒體貼文、論壇、學術研究、公開資料庫、專利／商標資訊、網域註冊資料、照片與影音 metadata 等</p>
+<p>這邊簡單舉個例子：</p>
+<p>Bob 一直覺得女友 Alice 有點怪，因為她說自己 3 月中跑去東京玩，還傳了幾張「在日本拍的」櫻花、神社跟街景照片給他看。</p>
+<p>但是 Bob 心裡總覺得哪裡不對勁，所以就決定要尋找證據</p>
+<p><strong>第一步：看照片的資訊</strong></p>
+<p>Bob 把照片丟進工具一看，GPS 座標全部都在台北，像是大安森林公園、龍山寺、西門町。</p>
+<p>另外時間顯示的是台灣時區 UTC+8，但如果真在東京，應該會是 UTC+9。</p>
+<p><strong>第二步：看環境</strong></p>
+<p>照片裡的櫻花一查公開的植物科普網站，竟然是台灣常見的「山櫻花」，而不是日本三月盛開的染井吉野。</p>
+<p>背景還有榕樹跟鳳凰木，這些植物日本三月很少見。</p>
+<p><strong>第三步：看建築</strong></p>
+<p>Alice 說的「神社」照片，Bob 一看就覺得不對，上網查建築的資訊發現是台北龍山寺。屋頂是中式歇山頂，還有龍雕跟獅子，完全不是日式神社的鳥居跟簡潔風格。</p>
+<p><strong>第四步：看社群紀錄</strong></p>
+<p>Bob 又去翻 Alice 的 IG 定位跟 FB 打卡，全部都顯示她 3 月 15 號人在台北，沒有任何日本的蹤跡。</p>
+<p><strong>最後結論：</strong></p>
+<p>Alice 根本沒去日本，而是用台北拍的照片假裝在日本旅遊。Bob 靠公開資訊（GPS、植物、建築、社群紀錄）就把謊拆穿了，這就是常見的 OSINT。</p>
+<p>因此在做 OSINT 時常常會需要涉及到其他領域的東西，例如：</p>
+<ul>
+<li><strong>航空領域</strong>：飛機航班資訊、機場代碼、飛行軌跡</li>
+<li><strong>地理領域</strong>：地圖資訊、地標識別、天氣資料</li>
+<li><strong>生物領域</strong>：植物識別、動物行為、生態環境</li>
+</ul>
+<p>每個人都有各自擅長的領域的話是 OK，但是通常都會是自己一個人需要去獲得各式各樣的資訊，所以需要工具去輔助 OSINT 的整個過程。</p>
+<p>這邊有一個網站，名稱叫做 <a target="_blank" rel="noopener" href="https://osintframework.com/">OSINT Framework</a>，它把所有 OSINT 的工具做了一個分類，遇到了不同類型的就可以到這邊查有什麼</p>
+<p><img src="/assets/zYQ_R3gzcg-X3IVmzl4suvZ_54mlzbnb79u5JkXoW3c=.png"></p>
+<p>目前以 CTF 來說，很常遇到以下三個題目</p>
+<ol>
+<li>給一個情境以及一個 username，要回答有關於這個 username 的線索，例如：USERNAME 的帳號密碼被洩漏了，請找出它是在哪裡洩漏的</li>
+<li>給一張圖片，問這個地點在哪或者有關於圖片內相關的資訊</li>
+<li>給一個組織或者某個企業的 domain，問一些相關的問題</li>
+</ol>
+<p>OSINT 也會伴隨一些通靈的成分，需要在腦中思考各種關聯，也會需要用到一些技巧，因此接下來幾天我想要研究的是 OSINT 的工具以及尋找線索的技巧。</p>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天介紹了 OSINT 的概念，接下來幾天會分別以人的資訊、地點以及網站這三大分類分享一些工具的使用</p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

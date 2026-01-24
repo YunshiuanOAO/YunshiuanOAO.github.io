@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Reversing.kr Writes up · yunshiuan</title><meta name="description" content="Reversing.kr Writes up - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Reversing.kr Writes up</h1><div class="post-info">Jan 23, 2026</div><div class="post-content"><h1 id="題目總覽"><a href="#題目總覽" class="headerlink" title="題目總覽"></a>題目總覽</h1><ul>
+<li>Easy Crack</li>
+<li>Easy Keygen</li>
+<li>Easy Unpack</li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h1 id="Easy-Crack-100"><a href="#Easy-Crack-100" class="headerlink" title="Easy Crack: 100"></a>Easy Crack: 100</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>打開之後會彈出一個視窗，要使用者輸入文字</p>
+<h2 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h2><p>開啟ghidra分析，使用search-&gt;strings</p>
+<p><img src="/./assets/reversing_easy_crackme.png"></p>
+<p>可以看到在00406044位置有一個Congratulation!!字串 跟進去看使用他的函示</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">
+void FUN_00401080(HWND param_1)
+
+&#123;
+  byte bVar1;
+  byte *pbVar2;
+  int iVar3;
+  char *pcVar4;
+  undefined4 *puVar5;
+  bool bVar6;
+  char local_64;
+  char local_63;
+  char cStack_62;
+  byte abStack_61 [97];
+  
+  local_64 &#x3D; &#39;\0&#39;;
+  puVar5 &#x3D; (undefined4 *)&local_63;
+  for (iVar3 &#x3D; 0x18; iVar3 !&#x3D; 0; iVar3 &#x3D; iVar3 + -1) &#123;
+    *puVar5 &#x3D; 0;
+    puVar5 &#x3D; puVar5 + 1;
+  &#125;
+  *(undefined2 *)puVar5 &#x3D; 0;
+  *(undefined *)((int)puVar5 + 2) &#x3D; 0;
+  GetDlgItemTextA(param_1,1000,&amp;local_64,100);
+  if (local_63 &#x3D;&#x3D; &#39;a&#39;) &#123;
+    iVar3 &#x3D; _strncmp(&amp;local_63 + 1,&amp;DAT_00406078,2);
+    if (iVar3 &#x3D;&#x3D; 0) &#123;
+      pcVar4 &#x3D; s_AGR3versing_0040606a;
+      pbVar2 &#x3D; (byte *)(&amp;local_63 + 3);
+      do &#123;
+        pcVar4 &#x3D; (char *)((byte *)pcVar4 + 2);
+        bVar1 &#x3D; *pbVar2;
+        bVar6 &#x3D; bVar1 &lt; (byte)*pcVar4;
+        if (bVar1 !&#x3D; *pcVar4) &#123;
+LAB_00401102:
+          iVar3 &#x3D; (1 - (uint)bVar6) - (uint)(bVar6 !&#x3D; 0);
+          goto LAB_00401107;
+        &#125;
+        if (bVar1 &#x3D;&#x3D; 0) break;
+        bVar1 &#x3D; pbVar2[1];
+        bVar6 &#x3D; bVar1 &lt; ((byte *)pcVar4)[1];
+        if (bVar1 !&#x3D; ((byte *)pcVar4)[1]) goto LAB_00401102;
+        pbVar2 &#x3D; pbVar2 + 2;
+      &#125; while (bVar1 !&#x3D; 0);
+      iVar3 &#x3D; 0;
+LAB_00401107:
+      if ((iVar3 &#x3D;&#x3D; 0) &amp;&amp; (local_64 &#x3D;&#x3D; &#39;E&#39;)) &#123;
+        MessageBoxA(param_1,s_Congratulation_!!_00406044,s_EasyCrackMe_00406058,0x40);
+        EndDialog(param_1,0);
+        return;
+      &#125;
+    &#125;
+  &#125;
+  MessageBoxA(param_1,s_Incorrect_Password_00406030,s_EasyCrackMe_00406058,0x10);
+  return;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>發現他是在拿我們使用著的輸入去比對，輸入正確會使用MessageBoxA出現Congratulation!!<br>將函示整理一下<br>可以先將</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">char local_64;
+  char local_63;
+  char cStack_62;
+  byte abStack_61 [97];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>合併成</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">char user_input [100];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>另外原反編譯s_AGR3versing_0040606a跟反組譯過後是不同的，因此需要將0040606a位置的資料手動更新</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/windows/win32/api/winuser/nf-winuser-getdlgitemtexta">GetDlgItemTextA</a> : 擷取對話方塊中控制項相關聯的標題或文字。</p>
+<pre class="line-numbers language-none"><code class="language-none">UINT GetDlgItemTextA(
+  [in]  HWND  hDlg,
+  [in]  int   nIDDlgItem,
+  [out] LPSTR lpString,
+  [in]  int   cchMax
+);  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">
+void FUN_00401080(HWND param_1)
+
+&#123;
+  byte bVar1;
+  byte *pbVar2;
+  int i;
+  char *pcVar3;
+  undefined4 *puVar4;
+  bool bVar5;
+  char user_input [100];
+  
+  user_input[0] &#x3D; &#39;\0&#39;;
+  puVar4 &#x3D; (undefined4 *)(user_input + 1);
+  for (i &#x3D; 0x18; i !&#x3D; 0; i &#x3D; i + -1) &#123;
+    *puVar4 &#x3D; 0;
+    puVar4 &#x3D; puVar4 + 1;
+  &#125;
+  *(undefined2 *)puVar4 &#x3D; 0;
+  *(undefined *)((int)puVar4 + 2) &#x3D; 0;
+  GetDlgItemTextA(param_1,1000,user_input,100);
+  if (user_input[1] &#x3D;&#x3D; &#39;a&#39;) &#123;
+    i &#x3D; _strncmp(user_input + 2,5y_DAT_00406078,2);
+    if (i &#x3D;&#x3D; 0) &#123;
+      pcVar3 &#x3D; s_R3versing_0040606c;
+      pbVar2 &#x3D; (byte *)(user_input + 4);
+      do &#123;
+        bVar1 &#x3D; *pbVar2;
+        bVar5 &#x3D; bVar1 &lt; (byte)*pcVar3;
+        if (bVar1 !&#x3D; *pcVar3) &#123;
+LAB_00401102:
+          i &#x3D; (1 - (uint)bVar5) - (uint)(bVar5 !&#x3D; 0);
+          goto LAB_00401107;
+        &#125;
+        if (bVar1 &#x3D;&#x3D; 0) break;
+        bVar1 &#x3D; pbVar2[1];
+        bVar5 &#x3D; bVar1 &lt; ((byte *)pcVar3)[1];
+        if (bVar1 !&#x3D; ((byte *)pcVar3)[1]) goto LAB_00401102;
+        pbVar2 &#x3D; pbVar2 + 2;
+        pcVar3 &#x3D; (char *)((byte *)pcVar3 + 2);
+      &#125; while (bVar1 !&#x3D; 0);
+      i &#x3D; 0;
+LAB_00401107:
+      if ((i &#x3D;&#x3D; 0) &amp;&amp; (user_input[0] &#x3D;&#x3D; &#39;E&#39;)) &#123;
+        MessageBoxA(param_1,s_Congratulation_!!_00406044,s_EasyCrackMe_00406058,0x40);
+        EndDialog(param_1,0);
+        return;
+      &#125;
+    &#125;
+  &#125;
+  MessageBoxA(param_1,s_Incorrect_Password_00406030,s_EasyCrackMe_00406058,0x10);
+  return;
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>因此可以推斷user input內容會是<br>user_input[0] &#x3D; ‘E’<br>user_input[1] &#x3D; ‘a’<br>user_input[2-3] &#x3D; “5y”<br>user_input[4-12] &#x3D; “R3versing”<br>驗證之後即為答案</p>
+<blockquote>
+<p>flag : Ea5yR3versing</p>
+</blockquote>
+<hr>
+<h1 id="Easy-Keygen-100"><a href="#Easy-Keygen-100" class="headerlink" title="Easy Keygen: 100"></a>Easy Keygen: 100</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>有一個Readme.txt，內容為</p>
+<pre class="line-numbers language-none"><code class="language-none">ReversingKr KeygenMe
+Find the Name when the Serial is 5B134977135E7D13<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>Easy Keygen.exe執行後需要輸入一個input 與serial</p>
+<h2 id="逆向-1"><a href="#逆向-1" class="headerlink" title="逆向"></a>逆向</h2><p>使用ida 分析exe</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int __cdecl main(int argc, const char **argv, const char **envp)
+&#123;
+  signed int v3; &#x2F;&#x2F; ebp
+  int i; &#x2F;&#x2F; esi
+  char v6; &#x2F;&#x2F; [esp+Ch] [ebp-130h]
+  char v7[2]; &#x2F;&#x2F; [esp+Dh] [ebp-12Fh] BYREF
+  char v8[100]; &#x2F;&#x2F; [esp+10h] [ebp-12Ch] BYREF
+  char Buffer[197]; &#x2F;&#x2F; [esp+74h] [ebp-C8h] BYREF
+  __int16 v10; &#x2F;&#x2F; [esp+139h] [ebp-3h]
+  char v11; &#x2F;&#x2F; [esp+13Bh] [ebp-1h]
+
+  memset(v8, 0, sizeof(v8));
+  memset(Buffer, 0, sizeof(Buffer));
+  v10 &#x3D; 0;
+  v11 &#x3D; 0;
+  v6 &#x3D; 16;
+  qmemcpy(v7, &quot; 0&quot;, sizeof(v7));
+  sub_4011B9((int)aInputName);
+  scanf(&quot;%s&quot;, v8);
+  v3 &#x3D; 0;
+  for ( i &#x3D; 0; v3 &lt; (int)strlen(v8); ++i )
+  &#123;
+    if ( i &gt;&#x3D; 3 )
+      i &#x3D; 0;
+    sprintf(Buffer, &quot;%s%02X&quot;, Buffer, v8[v3++] ^ v7[i - 1]);  &#x2F;&#x2F; v7[i - 1]有解錯應為v7[i]
+  &#125;
+  memset(v8, 0, sizeof(v8));
+  sub_4011B9((int)aInputSerial);
+  scanf(&quot;%s&quot;, v8);
+  if ( !strcmp(v8, Buffer) )
+    sub_4011B9((int)aCorrect);
+  else
+    sub_4011B9((int)aWrong);
+  return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以觀察到他先將使用者輸入的文字一個一個取出來對一個keys[0x10,0x20,0x30]做xor，最後再取得用者輸入的serial比對是否相同，因為題目有提供正確答案xor後的serial，因此可以使用xor性質a^b&#x3D;c,b^c&#x3D;a反寫回去得到答案</p>
+<p>chal.py</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def generate_correct_serial(input_name):
+    v7 &#x3D; [0x10,0x20,0x30]
+    Buffer &#x3D; &quot;&quot; 
+    i &#x3D; 0
+    v3 &#x3D; 0
+    result &#x3D; [input_name[i:i+2] for i in range(0, len(input_name), 2)]
+
+    for h in result:
+        Buffer +&#x3D; chr(int(h,16) ^ v7[i])
+        i+&#x3D;1
+        if(i &gt;&#x3D;3):
+            i &#x3D; 0
+    print(Buffer)
+input_name &#x3D; &quot;5B134977135E7D13&quot;  # 假設這是我們的輸入名稱
+generate_correct_serial(input_name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>flag:K3yg3nm3</p>
+</blockquote>
+<hr>
+<h1 id="Easy-Unpack-100"><a href="#Easy-Unpack-100" class="headerlink" title="Easy Unpack: 100"></a>Easy Unpack: 100</h1><p>根據題目名稱應該是一個需要脫殼的題目，先丟入PEiD看看</p>
+<p><img src="/./assets/Easy_unpack_PEiD.png" alt="Easy_unpack_PEiD.png"></p>
+<p>發現到有加殼，但不知道是什麼殼，另外在Readme.txt中有說要找到OEP(Orginal Entry Point)，因此可以用ida 或 gdb 分析。</p>
+<p><img src="/./assets/Easy_unpack_ida.png" alt="Easy_unpack_ida.png"></p>
+<p>可以看到loc_40A1FB，有一個大跳越，跳到loc_401150，這很像脫殼後的樣子，可以猜測0x00401150就是Original Entry Point。可以用x32dbg驗證，在0040A1FB下斷點</p>
+<p><img src="/./assets/Easy_unpack_breakpoint.png" alt="Easy_unpack_breakpoint.png"></p>
+<p>F7追進去之後發現在0x00401150的地方有55(push ebp)，因此0x00401150就是OEP</p>
+<p><img src="/./assets/Easy_unpack_entrypoint.png" alt="Easy_unpack_entrypoint.png"></p>
+<blockquote>
+<p>flag : 00401150</p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+</script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

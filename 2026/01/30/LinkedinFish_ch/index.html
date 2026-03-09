@@ -1,19 +1,19 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> (中文版)2026 Linkedin Malicious Coding Assignment / Test 分析 · yunshiuan</title><meta name="description" content="(中文版)2026 Linkedin Malicious Coding Assignment / Test 分析 - yunshiuan"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="/css/prism.css"><link rel="stylesheet" href="/css/prism-line-numbers.css"><link rel="search" type="application/opensearchdescription+xml" href="https://yunshiuan.com/atom.xml" title="yunshiuan"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">(中文版)2026 Linkedin Malicious Coding Assignment / Test 分析</h1><div class="post-info">Jan 30, 2026</div><div class="post-content"><blockquote>
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/assets/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/YunshiuanOAO" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/assets/CV.pdf" target="_self" class="nav-list-link">CV</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">(中文版)2026 Linkedin Malicious Coding Assignment / Test 分析</h1><div class="post-info">Jan 30, 2026</div><div class="post-content"><h1 id="2026-Linkedin-Malicious-Coding-Assignment-Test-分析"><a href="#2026-Linkedin-Malicious-Coding-Assignment-Test-分析" class="headerlink" title="2026 Linkedin Malicious Coding Assignment &#x2F; Test 分析"></a>2026 Linkedin Malicious Coding Assignment &#x2F; Test 分析</h1><blockquote>
 <p>author : yunshiuan , 這次的分析報告是在 2026&#x2F;01&#x2F;13~2026&#x2F;01&#x2F;22 TeamT5 Camp 威脅情資組的專題報告，與 @yjk 、 @rui 共同研究</p>
 </blockquote>
 <p>在 2026&#x2F;01&#x2F;08 在 <a target="_blank" rel="noopener" href="https://www.threads.com/@haocherhong/post/DTPM7njkY-T">Thread</a> 上有一篇貼文造成不小的影響，簡單來說是關於說他在 Linkedin 上收到了一個人的面試邀請，並給予 GitHub 的 Repo 連結當成面試的題目，當他把 GitHub Repo Clone 下來並用 vscode 相關的程式查看時，發現了惡意行為，但最終還是發現他的虛擬錢包被偷了 60 萬台幣。</p>
-<img src="/assets/image-20260125101548610.png" alt="image-20260125101548610" style="zoom:50%;" />
+<img src="../assets/image-20260125101548610.png" alt="image-20260125101548610" style="zoom:50%;" />
 
-<img src="/assets/image-20260125102029716.png" alt="image-20260125102029716" style="zoom:50%;" />
+<img src="../assets/image-20260125102029716.png" alt="image-20260125102029716" style="zoom:50%;" />
 
 <p>他原文底下還有附上他與假面試官的整個流程，幸運的是他有把原 Repo 的資訊一起展示出來，名稱是 <code>megaorg996/tokentradingdapp</code> ，但可惜的是這個 Repo 已經消失了，不過如果使用 GitHub Search 的功能將一模一樣的 Repo Name 丟上去後，發現還有四個一模一樣的 Repo， <code>https://github[.]com/leecarney94/tokentradingdapp</code> 其中這個 Repo 的服務都還是正常運行的。另外如果將類似的 Repo 名稱拿去搜尋，會得到更多的惡意 Repo，此篇分析報告將展示此類攻擊但不同 sample 的惡意行為。</p>
 <blockquote>
 <p>Ps : 2026&#x2F;01&#x2F;29在寫此報告的時候，leecarney94&#x2F;tokentradingdapp 也不見了，但之後搜尋發現只是改成了 leecarney93&#x2F;TokenTradingDapp</p>
 </blockquote>
 <p>通常來說用 vscode 時開啟某個專案會出現</p>
-<img src="/assets/vscodeTrust.png" alt="image-20260125102029716" style="zoom:50%;" />
+<img src="../assets/vscodeTrust.png" alt="image-20260125102029716" style="zoom:50%;" />
 
 <p>接下來的分析報告也會提到當點下去 Turst 時會發生什麼事</p>
 <h2 id="tl-dr"><a href="#tl-dr" class="headerlink" title="tl;dr"></a>tl;dr</h2><p>此份分析報告展示了兩種雖然攻擊面相同但攻擊行為不一樣的 Sample。</p>
@@ -1226,7 +1226,7 @@ Content-Type: application&#x2F;json
 <li><code>https://github[.]com/whoisasx/Elo-assignment/tree/main</code></li>
 </ul>
 <p>這類的 Sample 在 task.json 時在 github 上看第一眼看會不知道執行了什麼，但是如果將頁面往右滑，就會發現…</p>
-<img src="/assets/LinkedinTask.gif" style="zoom:50%;" />
+<img src="../assets/LinkedinTask.gif" style="zoom:50%;" />
 
 <p>訪問後特別的是會進行 JWT token 的驗證，並且JWT token 的有效時間非常短，因此會需要寫腳本快速抓取惡意程式</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#!&#x2F;bin&#x2F;bash
@@ -2415,7 +2415,7 @@ https:&#x2F;&#x2F;pastebin.com&#x2F;u&#x2F;CementTeddy9347_SalesRacks7262
 ...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>HolesGarmin3166_OnsitePoet2677</code> 這樣的串接字串代表前面是 username ，後面是檔案名稱，接下來寫腳本去測試每一個 url ，最後只有唯一一個還可以訪問的是 <code>https://pastebin[.]com/u/NotingRobe2871</code></p>
- <img src="/assets/LinkedinPastebin.png" alt="image-20260125101548610" style="zoom:50%;" />
+ <img src="../assets/LinkedinPastebin.png" alt="image-20260125101548610" style="zoom:50%;" />
 
 <p>內容如下</p>
 <pre class="line-numbers language-none"><code class="language-none">7b226d657373616765223a202234333133373732333030323832393064333230383537313731313265323030303633373230393538343536363134353136643332333834313364326136343535323030643330316332303735366334633763346236633538366435383139376530323338323234393331323435333561222c20227369676e6174757265223a20226a3363696947733356564e63535465634d3465315a4c41307471643264566a3955673175364f33787267396e66616e6669384a724961546651786a52697a50735058345a4458422b494b686944355a7171635744514c4770354f555143384d39557678556877712f596d743533473261647969636547394265486248716e487a6275707568707572432b6968427666356e34334d6d387937712b4169627a4e626d597056556662766f42524d693372514b554b4b48313548654d476a4e784a57586d6f645a746f2b4e65392f3430434f3374417931736d5534333950746c535159536b70703067797477484c357a6c4d417a44684c4c46396565634f6d734c694363625645694b766a557941704a32416d55773268364a595a466967632f457361455a533959576f476675695665434f736c7651336a6977674557766f7270655051316f5331713043774d5a4834525049776b6d43513d3d227d<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -4522,6 +4522,5 @@ except:
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><blockquote>
 <p>別相信任何來不不明的專案 by yunshiuan</p>
 </blockquote>
-<p>如果有任何問題，歡迎私訊給我</p>
 </div></article></div></main><footer><div class="paginator"><a href="/2026/01/30/LinkedinFish_en/" class="next">NEXT</a></div><div class="copyright"><p>© 2025 - 2026 <a href="https://yunshiuan.com">yunshiuan</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
 </script><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

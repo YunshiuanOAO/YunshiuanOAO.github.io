@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -166,8 +166,7 @@
 <p>可以看到主要的驗證方式會使用到 SPF 以及 DKIM。</p>
 <h2 id="SPF"><a href="#SPF" class="headerlink" title="SPF"></a>SPF</h2><p>SPF 是一種電子郵件驗證協定，它讓網域擁有者能夠指定哪些郵件伺服器有權代表該網域寄送郵件。這份「授權清單」會以 DNS TXT 記錄 的形式公開發布，接收方的郵件伺服器則可在收信時檢查寄件伺服器是否被授權，以判斷郵件是否可信。</p>
 <p>可以使用 <code>dig</code> 指令查看 SPF</p>
-<pre class="line-numbers language-none"><code class="language-none">$ dig yunshiuan.com  TXT | grep spf
-yunshiuan.com.		377	IN	TXT	&quot;v&#x3D;spf1 include:_spf.mx.cloudflare.net ~all&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">dig</span> yunshiuan.<span class="keyword">com</span>  TXT | <span class="keyword">grep</span> spf</span><br><span class="line">yunshiuan.<span class="keyword">com</span>.		<span class="number">377</span>	IN	TXT	<span class="string">&quot;v=spf1 include:_spf.mx.cloudflare.net ~all&quot;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>v&#x3D;spf1：指定 SPF 協定版本</li>
@@ -176,35 +175,14 @@ yunshiuan.com.		377	IN	TXT	&quot;v&#x3D;spf1 include:_spf.mx.cloudflare.net ~all
 </ul>
 <h2 id="DKIM"><a href="#DKIM" class="headerlink" title="DKIM"></a>DKIM</h2><p>DKIM 是電子郵件驗證機制之一，讓收件方可以驗證一封郵件是否真正由該網域授權寄出，並確認郵件在傳送過程中是否被篡改；它透過數位簽章機制實現。寄件方使用私鑰對郵件內容進行簽名，收件方則從 DNS 查出對應的公鑰來驗證。</p>
 <p>DKIM 的公鑰會被發布在 DNS TXT 紀錄中，格式如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">&lt;selector&gt;._domainkey.&lt;domain&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">selector</span>&gt;</span>._domainkey.<span class="tag">&lt;<span class="name">domain</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>以 Cloudflare 舉例，它的 selector 是 <code>cf2024-1</code>，查詢 DKIM 也可使用 <code>dig</code> 指令</p>
-<pre class="line-numbers language-none"><code class="language-none">$ dig cf2024-1._domainkey.yunshiuan.com TXT | grep DKIM
-cf2024-1._domainkey.yunshiuan.com. 377 IN TXT	&quot;v&#x3D;DKIM1; h&#x3D;sha256; k&#x3D;rsa; p&#x3D;MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiweykoi+o48IOGuP7GR3X0MOExCUDY&#x2F;BCRHoWBnh3rChl7WhdyCxW3jgq1daEjPPqoi7sJvdg5hEQVsgVRQP4DcnQDVjGMbASQtrY4WmB1VebF+RPJB2ECPsEDTpeiI5ZyUAwJaVX7r6bznU67g7LvFq35yIo4sdlmtZGV+i0H4cpYH9+3JJ78k&quot; &quot;m4KXwaf9xUJCWF6nxeD+qG6Fyruw1Qlbds2r85U9dkNDVAS3gioCvELryh1TxKGiVTkg4wqHTyHfWsp7KD3WQHYJn0RyfJJu6YEmL77zonn7p2SRMvTMP3ZEXibnC9gz3nnhR6wcYL8Q7zXypKTMD58bTixDSJwIDAQAB&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">dig</span> cf2024-<span class="number">1</span>._domainkey.yunshiuan.<span class="keyword">com</span> TXT | <span class="keyword">grep</span> DKIM</span><br><span class="line">cf2024-<span class="number">1</span>._domainkey.yunshiuan.<span class="keyword">com</span>. <span class="number">377</span> IN TXT	<span class="string">&quot;v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiweykoi+o48IOGuP7GR3X0MOExCUDY/BCRHoWBnh3rChl7WhdyCxW3jgq1daEjPPqoi7sJvdg5hEQVsgVRQP4DcnQDVjGMbASQtrY4WmB1VebF+RPJB2ECPsEDTpeiI5ZyUAwJaVX7r6bznU67g7LvFq35yIo4sdlmtZGV+i0H4cpYH9+3JJ78k&quot;</span> <span class="string">&quot;m4KXwaf9xUJCWF6nxeD+qG6Fyruw1Qlbds2r85U9dkNDVAS3gioCvELryh1TxKGiVTkg4wqHTyHfWsp7KD3WQHYJn0RyfJJu6YEmL77zonn7p2SRMvTMP3ZEXibnC9gz3nnhR6wcYL8Q7zXypKTMD58bTixDSJwIDAQAB&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>總結來說 DMARC 驗證流程會是：接收方收到郵件後，先檢查 SPF 和 DKIM 認證，再根據 DMARC 政策決定郵件的處理方式（放行、隔離或拒絕）。</p>
 <p>DMARC 記錄可以在 <code>_dmarc.&lt;domain&gt;</code> 找到</p>
-<pre class="line-numbers language-none"><code class="language-none">$ dig _dmarc.any.run TXT                                                                             
-
-
-; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; _dmarc.any.run TXT
-;; global options: +cmd
-;; Got answer:
-;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 31385
-;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4095
-;; QUESTION SECTION:
-;_dmarc.any.run.			IN	TXT
-
-;; ANSWER SECTION:
-_dmarc.any.run.		377	IN	TXT	&quot;v&#x3D;DMARC1; p&#x3D;quarantine; sp&#x3D;quarantine;&quot;
-
-;; Query time: 226 msec
-;; SERVER: 100.100.100.100#53(100.100.100.100)
-;; WHEN: Thu Oct 09 20:09:24 CST 2025
-;; MSG SIZE  rcvd: 94<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ dig _dmarc.any.run TXT                                                                             </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">; <span class="operator">&lt;</span><span class="operator">&lt;</span><span class="operator">&gt;</span><span class="operator">&gt;</span> DiG <span class="number">9.10</span>.<span class="number">6</span> <span class="operator">&lt;</span><span class="operator">&lt;</span><span class="operator">&gt;</span><span class="operator">&gt;</span> _dmarc.any.run TXT</span><br><span class="line">;; global <span class="params">options:</span> <span class="operator">+</span>cmd</span><br><span class="line">;; Got <span class="params">answer:</span></span><br><span class="line">;; <span class="operator">-&gt;</span><span class="operator">&gt;</span>HEADER<span class="operator">&lt;</span><span class="operator">&lt;</span><span class="operator">-</span> <span class="params">opcode:</span> QUERY, <span class="params">status:</span> NOERROR, <span class="params">id:</span> <span class="number">31385</span></span><br><span class="line">;; <span class="params">flags:</span> qr rd ra; <span class="params">QUERY:</span> <span class="number">1</span>, <span class="params">ANSWER:</span> <span class="number">1</span>, <span class="params">AUTHORITY:</span> <span class="number">0</span>, <span class="params">ADDITIONAL:</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">;; OPT <span class="params">PSEUDOSECTION:</span></span><br><span class="line">; <span class="params">EDNS:</span> <span class="params">version:</span> <span class="number">0</span>, flags:; <span class="params">udp:</span> <span class="number">4095</span></span><br><span class="line">;; QUESTION <span class="params">SECTION:</span></span><br><span class="line">;_dmarc.any.run.			IN	TXT</span><br><span class="line"></span><br><span class="line">;; ANSWER <span class="params">SECTION:</span></span><br><span class="line">_dmarc.any.run.		<span class="number">377</span>	IN	TXT	<span class="string">&quot;v=DMARC1; p=quarantine; sp=quarantine;&quot;</span></span><br><span class="line"></span><br><span class="line">;; Query <span class="params">time:</span> <span class="number">226</span> msec</span><br><span class="line">;; <span class="params">SERVER:</span> <span class="number">100.100</span>.<span class="number">100.100</span><span class="comment">#53(100.100.100.100)</span></span><br><span class="line">;; <span class="params">WHEN:</span> Thu Oct <span class="number">09</span> <span class="number">20</span>:<span class="number">09</span>:<span class="number">24</span> CST <span class="number">2025</span></span><br><span class="line">;; MSG SIZE  <span class="params">rcvd:</span> <span class="number">94</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>v&#x3D;DMARC1 : DMARC 版本</li>

@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -183,26 +183,23 @@
 <p>以下介紹一些 Volatility 2 跟 3 的基本操作</p>
 <h2 id="Volatility-2-基本操作"><a href="#Volatility-2-基本操作" class="headerlink" title="Volatility 2 基本操作"></a>Volatility 2 基本操作</h2><p>當你有一個記憶體 dump 的檔案，例如 memdump.img</p>
 <ol>
-<li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pslist
-python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 pstree<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li>查看網路連線<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 netscan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>列出檔案<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 filescan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>dump files<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 dumpfiles dumpfiles -Q 0x000000003fc61be0 -D c:\files -u<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img --profile&#x3D;Win7SP1x64 cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>取得作業系統與版本<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> imageinfo</span><br></pre></td></tr></table></figure></li>
+<li>列出進程列表<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> <span class="attr">--profile</span>=Win7SP1x64 pslist</span><br><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> <span class="attr">--profile</span>=Win7SP1x64 pstree</span><br></pre></td></tr></table></figure></li>
+<li>查看網路連線<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> <span class="attr">--profile</span>=Win7SP1x64 netscan</span><br></pre></td></tr></table></figure></li>
+<li>列出檔案<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> <span class="attr">--profile</span>=Win7SP1x64 filescan</span><br></pre></td></tr></table></figure></li>
+<li>dump files<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> <span class="attr">--profile</span>=Win7SP1x64 dumpfiles dumpfiles -Q <span class="number">0</span>x000000003fc61be0 -D c:\files -u</span><br></pre></td></tr></table></figure></li>
+<li>查看使用者活動或命令列歷史<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> <span class="attr">--profile</span>=Win7SP1x64 cmdline</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>其他對應指令可以下 <code>-h</code> 查看或者看官方的 doc </p>
 <hr>
 <h2 id="Volatility-3-基本操作"><a href="#Volatility-3-基本操作" class="headerlink" title="Volatility 3 基本操作"></a>Volatility 3 基本操作</h2><p>Volatility 3 就不用再下 profile，先假設 memdump.img 是 Windows </p>
 <ol>
-<li>取得作業系統與版本<pre class="line-numbers language-none"><code class="language-none">python2 vol.py -f memdump.img imageinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>列出進程列表<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.pslist
-python3 vol.py -f memdump.img windows.pstree<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li>查看網路連線<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.netscan
-python3 vol.py -f memdump.img windows.netstat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li>列出檔案<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.filescan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>dump files<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img -o .&#x2F;files_out windows.dumpfiles --pid 1234<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>查看使用者活動或命令列歷史<pre class="line-numbers language-none"><code class="language-none">python3 vol.py -f memdump.img windows.cmdline<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>取得作業系統與版本<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> imageinfo</span><br></pre></td></tr></table></figure></li>
+<li>列出進程列表<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> windows<span class="selector-class">.pslist</span></span><br><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> windows.pstree</span><br></pre></td></tr></table></figure></li>
+<li>查看網路連線<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> windows<span class="selector-class">.netscan</span></span><br><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> windows.netstat</span><br></pre></td></tr></table></figure></li>
+<li>列出檔案<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> windows.filescan</span><br></pre></td></tr></table></figure></li>
+<li>dump files<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> -o ./files_out windows<span class="selector-class">.dumpfiles</span> <span class="attr">--pid</span> <span class="number">1234</span></span><br></pre></td></tr></table></figure></li>
+<li>查看使用者活動或命令列歷史<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 vol<span class="selector-class">.py</span> -f memdump<span class="selector-class">.img</span> windows.cmdline</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>其他指令可以下 <code>-h</code> 查看或者看官方的 doc </p>
 <hr>

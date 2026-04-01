@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -162,7 +162,7 @@
 <h2 id="PECmd"><a href="#PECmd" class="headerlink" title="PECmd"></a>PECmd</h2><p>下載連結：<a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">https://ericzimmerman.github.io/#!index.md</a></p>
 <p>PECmd 是由 Eric Zimmerman 開發的一個命令行工具，它的目的是解析 Windows 的 Prefetch 檔案（.pf），抽取其中的 metadata（如執行時間戳、執行次數、被參照的檔案清單等），以便用於鑑識分析</p>
 <p>有一個很方便的功能是可以使用以下指令批量處理 Prefetch 裡面的所有檔案，並把它們合成一個 CSV 檔</p>
-<pre class="line-numbers language-none"><code class="language-none">.\PECmd.exe -d C:\Users\yunshiuan\Desktop\The_Enduring_Echo\C\Windows\prefetch --csv &quot;C:\Users\yunshiuan\Desktop\output&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\PECmd.exe <span class="operator">-</span>d C:\Users\yunshiuan\Desktop\The_Enduring_Echo\C\Windows\prefetch <span class="operator">-</span>-csv <span class="string">&quot;C:<span class="char escape_">\U</span>sers<span class="char escape_">\y</span>unshiuan<span class="char escape_">\D</span>esktop<span class="char escape_">\o</span>utput&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/YZQ4eHTHNW2nzsMq1S9CPq9H7CPp6_8kzmD9OzCkXTM=.png"></p>
 <p>如果想要單獨轉換某個 .pf 檔的話可以使用 <code>-f</code> </p>

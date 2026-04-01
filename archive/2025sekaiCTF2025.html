@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -147,8 +147,7 @@
             <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這場比賽的題解會以學習Web為主，Writeup會參考<a target="_blank" rel="noopener" href="https://github.com/project-sekai-ctf/sekaictf-2025/tree/main/web">官方github連結</a>以及其他參賽者在網路上討論的內容</p>
 <h1 id="My-flask-app"><a href="#My-flask-app" class="headerlink" title="My flask app"></a>My flask app</h1><p>這是一個flask製作的網頁</p>
 <p>原始碼可以看到</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    app.run(host&#x3D;&#39;0.0.0.0&#39;, port&#x3D;5001, debug&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">5001</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 
 <p>發現到他有開啟debug mod，根據<a target="_blank" rel="noopener" href="https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html#werkzeug--flask-debug">這篇blog</a>可以試試看<code>/console</code>路徑但是這個console會需要用到pin碼，這個密碼是可以爆破的，需要兩個<code>probably_public_bits</code>、<code>private_bits</code></p>
 <ul>
@@ -161,19 +160,7 @@
 </li>
 </ul>
 <p>另外從源碼可以發現到</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">@app.route(&#39;&#x2F;view&#39;)
-def view():
-    filename &#x3D; request.args.get(&#39;filename&#39;)
-    if not filename:
-        return &quot;Filename is required&quot;, 400
-    try:
-        with open(filename, &#39;r&#39;) as file:
-            content &#x3D; file.read()
-        return content, 200
-    except FileNotFoundError:
-        return &quot;File not found&quot;, 404
-    except Exception as e:
-        return f&quot;Error: &#123;str(e)&#125;&quot;, 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/view&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">view</span>():</span><br><span class="line">    filename = request.args.get(<span class="string">&#x27;filename&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> filename:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Filename is required&quot;</span>, <span class="number">400</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">            content = file.read()</span><br><span class="line">        <span class="keyword">return</span> content, <span class="number">200</span></span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;File not found&quot;</span>, <span class="number">404</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;Error: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>, <span class="number">500</span></span><br></pre></td></tr></table></figure>
 <p>訪問到view後他會訪問filename的參數，因此可以任意讀檔，透過這個</p>
 
         </section>

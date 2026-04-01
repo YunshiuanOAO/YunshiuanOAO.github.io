@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -208,78 +208,7 @@
 <p>除此之外，Wireshark 提供了 filter 的功能，可以快速過濾出想要看的封包</p>
 <p><img src="/assets/Pa8-siGHwexyA9rXbQyPRcMA-_VJ_It7Sp41jbj-KvQ=.png"></p>
 <p>這邊整理了一些基本 filter 語法</p>
-<pre class="line-numbers language-none"><code class="language-none"># 特定IP位址
-ip.addr &#x3D;&#x3D; 192.168.1.1
-
-# 來源IP
-ip.src &#x3D;&#x3D; 192.168.1.1
-
-# 目標IP
-ip.dst &#x3D;&#x3D; 192.168.1.1
-
-# IP範圍
-ip.addr &gt;&#x3D; 192.168.1.1 and ip.addr &lt;&#x3D; 192.168.1.100
-
-# 網段
-ip.addr &#x3D;&#x3D; 192.168.1.0&#x2F;24
-
-# 特定埠號
-tcp.port &#x3D;&#x3D; 80
-udp.port &#x3D;&#x3D; 53
-
-# 來源埠
-tcp.srcport &#x3D;&#x3D; 22
-
-# 目標埠
-tcp.dstport &#x3D;&#x3D; 443
-
-# 埠範圍
-tcp.port &gt;&#x3D; 8000 and tcp.port &lt;&#x3D; 9000
-
-# 基本協定
-tcp
-udp
-icmp
-http
-https
-dns
-ssh
-ftp
-
-# 組合協定
-tcp and http
-udp and dns
-
-# HTTP請求方法
-http.request.method &#x3D;&#x3D; &quot;GET&quot;
-http.request.method &#x3D;&#x3D; &quot;POST&quot;
-http.request.method &#x3D;&#x3D; &quot;PUT&quot;
-
-# HTTP狀態碼
-http.response.code &#x3D;&#x3D; 200
-http.response.code &gt;&#x3D; 400
-
-# HTTP主機
-http.host &#x3D;&#x3D; &quot;example.com&quot;
-
-# HTTP URI
-http.request.uri contains &quot;login&quot;
-http.request.uri contains &quot;admin&quot;
-
-# 特定時間範圍
-frame.time &gt;&#x3D; &quot;2024-01-01 10:00:00&quot;
-frame.time &lt;&#x3D; &quot;2024-01-01 11:00:00&quot;
-
-# 相對時間
-frame.time &gt;&#x3D; &quot;2024-01-01 10:00:00&quot; and frame.time &lt;&#x3D; &quot;2024-01-01 10:30:00&quot;
-
-# 封包大小
-frame.len &gt; 1000
-frame.len &lt; 100
-
-# 資料長度
-tcp.len &gt; 500
-udp.length &gt; 100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 特定IP位址</span></span><br><span class="line"><span class="attribute">ip</span>.addr == <span class="number">192.168.1.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 來源IP</span></span><br><span class="line"><span class="attribute">ip</span>.src == <span class="number">192.168.1.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目標IP</span></span><br><span class="line"><span class="attribute">ip</span>.dst == <span class="number">192.168.1.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># IP範圍</span></span><br><span class="line"><span class="attribute">ip</span>.addr &gt;= <span class="number">192.168.1.1</span> and ip.addr &lt;= <span class="number">192.168.1.100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 網段</span></span><br><span class="line"><span class="attribute">ip</span>.addr == <span class="number">192.168.1.0</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 特定埠號</span></span><br><span class="line"><span class="attribute">tcp</span>.port == <span class="number">80</span></span><br><span class="line"><span class="attribute">udp</span>.port == <span class="number">53</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 來源埠</span></span><br><span class="line"><span class="attribute">tcp</span>.srcport == <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目標埠</span></span><br><span class="line"><span class="attribute">tcp</span>.dstport == <span class="number">443</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 埠範圍</span></span><br><span class="line"><span class="attribute">tcp</span>.port &gt;= <span class="number">8000</span> and tcp.port &lt;= <span class="number">9000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 基本協定</span></span><br><span class="line"><span class="attribute">tcp</span></span><br><span class="line"><span class="attribute">udp</span></span><br><span class="line"><span class="attribute">icmp</span></span><br><span class="line"><span class="attribute">http</span></span><br><span class="line"><span class="attribute">https</span></span><br><span class="line"><span class="attribute">dns</span></span><br><span class="line"><span class="attribute">ssh</span></span><br><span class="line"><span class="attribute">ftp</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 組合協定</span></span><br><span class="line"><span class="attribute">tcp</span> and http</span><br><span class="line"><span class="attribute">udp</span> and dns</span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTP請求方法</span></span><br><span class="line"><span class="attribute">http</span>.request.method == <span class="string">&quot;GET&quot;</span></span><br><span class="line"><span class="attribute">http</span>.request.method == <span class="string">&quot;POST&quot;</span></span><br><span class="line"><span class="attribute">http</span>.request.method == <span class="string">&quot;PUT&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTP狀態碼</span></span><br><span class="line"><span class="attribute">http</span>.response.code == <span class="number">200</span></span><br><span class="line"><span class="attribute">http</span>.response.code &gt;= <span class="number">400</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTP主機</span></span><br><span class="line"><span class="attribute">http</span>.host == <span class="string">&quot;example.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTP URI</span></span><br><span class="line"><span class="attribute">http</span>.request.uri contains <span class="string">&quot;login&quot;</span></span><br><span class="line"><span class="attribute">http</span>.request.uri contains <span class="string">&quot;admin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 特定時間範圍</span></span><br><span class="line"><span class="attribute">frame</span>.time &gt;= <span class="string">&quot;2024-01-01 10:00:00&quot;</span></span><br><span class="line"><span class="attribute">frame</span>.time &lt;= <span class="string">&quot;2024-01-01 11:00:00&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 相對時間</span></span><br><span class="line"><span class="attribute">frame</span>.time &gt;= <span class="string">&quot;2024-01-01 10:00:00&quot;</span> and frame.time &lt;= <span class="string">&quot;2024-01-01 10:30:00&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 封包大小</span></span><br><span class="line"><span class="attribute">frame</span>.len &gt; <span class="number">1000</span></span><br><span class="line"><span class="attribute">frame</span>.len &lt; <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 資料長度</span></span><br><span class="line"><span class="attribute">tcp</span>.len &gt; <span class="number">500</span></span><br><span class="line"><span class="attribute">udp</span>.length &gt; <span class="number">100</span></span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>今天介紹了什麼是 Network Forensic，以及 Wireshark 的使用，Wireshark 的功能還有很多，接下來幾天也會介紹一些其他的工具或者 Wireshark 的其他功能。</p>

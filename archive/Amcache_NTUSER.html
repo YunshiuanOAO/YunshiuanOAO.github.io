@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -153,32 +153,7 @@
 <p>可以先使用 <a target="_blank" rel="noopener" href="https://ericzimmerman.github.io/#!index.md">RegistryExplorer </a> 合併 Transport logs 後直接查看或者使用 Eric Zimmerman’s tools 中的 AmcacheParser 轉成 CSV 檔</p>
 <p><img src="/assets/OZlv8y4NKybwgKVheToBnYUFk2xmh7wPekUkky8pRuQ=.png"></p>
 <h2 id="AmcacheParser"><a href="#AmcacheParser" class="headerlink" title="AmcacheParser"></a>AmcacheParser</h2><p>AmcacheParser 是由數位鑑識專家 Eric Zimmerman 所開發的一款命令列工具，專門用於解析 Windows 系統中的 Amcache.hve 註冊檔，支援將解析結果輸出為 CSV 格式，方便後續分析與處理</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">PS C:\Users\yunshiuan\Desktop\net9 &gt; .\AmcacheParser.exe -f C:\Users\yunshiuan\Desktop\Amcache.hve_clean --csv C:\Users\yunshiuan\Desktop
-AmcacheParser version 1.5.2.0
-
-Author: Eric Zimmerman (saericzimmerman@gmail.com)
-https:&#x2F;&#x2F;github.com&#x2F;EricZimmerman&#x2F;AmcacheParser
-
-Command line: -f C:\Users\yunshiuan\Desktop\Amcache.hve_clean --csv C:\Users\yunshiuan\Desktop
-
-Warning: Administrator privileges not found!
-
-Unknown value name when processing DevicePnp at path &#123;11517B7C-E79D-4e20-961B-75A811715ADD&#125;\Root\InventoryDevicePnp\display&#x2F;default_monitor&#x2F;1&amp;1f0c3c2f&amp;0&amp;uid256: ManifestPath
-
-C:\Users\yunshiuan\Desktop\Amcache.hve_clean is in new format!
-
-Total file entries found: 240
-Total shortcuts found: 51
-Total device containers found: 13
-Total device PnPs found: 94
-Total drive binaries found: 373
-Total driver packages found: 4
-
-Found 123 unassociated file entry
-
-Results saved to: C:\Users\yunshiuan\Desktop
-
-Total parsing time: 0.909 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\yunshiuan\Desktop\net9 &gt; .\AmcacheParser.exe <span class="operator">-f</span> C:\Users\yunshiuan\Desktop\Amcache.hve_clean <span class="literal">--csv</span> C:\Users\yunshiuan\Desktop</span><br><span class="line">AmcacheParser version <span class="number">1.5</span>.<span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">Author: Eric Zimmerman (saericzimmerman@gmail.com)</span><br><span class="line">https://github.com/EricZimmerman/AmcacheParser</span><br><span class="line"></span><br><span class="line">Command line: <span class="operator">-f</span> C:\Users\yunshiuan\Desktop\Amcache.hve_clean <span class="literal">--csv</span> C:\Users\yunshiuan\Desktop</span><br><span class="line"></span><br><span class="line">Warning: Administrator privileges not found!</span><br><span class="line"></span><br><span class="line">Unknown value name when processing DevicePnp at path &#123;<span class="number">11517</span>B7C<span class="literal">-E79D-4e20-961B-75A811715ADD</span>&#125;\Root\InventoryDevicePnp\display/default_monitor/<span class="number">1</span>&amp;<span class="number">1</span>f0c3c2f&amp;<span class="number">0</span>&amp;uid256: ManifestPath</span><br><span class="line"></span><br><span class="line">C:\Users\yunshiuan\Desktop\Amcache.hve_clean is <span class="keyword">in</span> new format!</span><br><span class="line"></span><br><span class="line">Total file entries found: <span class="number">240</span></span><br><span class="line">Total shortcuts found: <span class="number">51</span></span><br><span class="line">Total device containers found: <span class="number">13</span></span><br><span class="line">Total device PnPs found: <span class="number">94</span></span><br><span class="line">Total drive binaries found: <span class="number">373</span></span><br><span class="line">Total driver packages found: <span class="number">4</span></span><br><span class="line"></span><br><span class="line">Found <span class="number">123</span> unassociated file entry</span><br><span class="line"></span><br><span class="line">Results saved to: C:\Users\yunshiuan\Desktop</span><br><span class="line"></span><br><span class="line">Total parsing time: <span class="number">0.909</span> seconds</span><br></pre></td></tr></table></figure>
 
 <p>它的輸出會有很多 CSV 檔，可能會出現下面檔案</p>
 <table>

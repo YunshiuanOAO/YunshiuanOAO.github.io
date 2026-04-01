@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -158,21 +158,17 @@
 </blockquote>
 <p>題目敘述說惡意程式會讓使用者嘗試去請求 domain ，要找出FQDN</p>
 <p>我想要先知道內部有哪些 IP 有在進行 DNS 查詢</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot;
-| table src_ip
-| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">index</span>=<span class="string">&quot;botsv1&quot;</span> sourcetype=<span class="string">&quot;stream:dns&quot;</span></span><br><span class="line">| table src_ip</span><br><span class="line">| stats <span class="keyword">count</span> <span class="keyword">by</span> src_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/sYm2KnhgFYCkdM9sQJ_4SWm4Wfc7Cdngvk7lwpW0Jp8=.png"></p>
 <p>這邊知道192.168.2.50、192.168.250.100、192.168.250.20、192.168.250.40、192.168.250.70 這些內部 IP 有在進行 DNS 查詢，接下來我先看192.168.250.0&#x2F;24 內 IP 查詢了哪些 domain，</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24 
-| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=<span class="string">&quot;botsv1&quot;</span> <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:dns&quot;</span> <span class="attribute">src_ip</span>=192.168.250.0/24 </span><br><span class="line">| table  src_ip,dest_ip,query&#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/OMbF3JUJiANeRWwDsBVF2A-In4u5w0v0fjWPRff2WmE=.png"></p>
 <p>接下來會有很多其他的 DNS 記錄出來 我們可以點擊不可能是答案的 FQDN ，然後選擇 Exclude from result ，然後它就會在 Search 欄位中自動產出將此FQDN 排除查詢的語法。</p>
 <p><img src="/assets/IoBJChn4M4fthuMfAPQoc1e6b4G-eXwv6hstSV2nq_M=.png"></p>
 <p>經過層層篩選後最後查詢如下</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.in-addr.arpa&quot; &quot;query&#123;&#125;&quot;!&#x3D;&quot;demo-01&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.authdns.ripe.net&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.microsoft.com&quot; &quot;query&#123;&#125;&quot;&#x3D;*.*.* &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.waynecorpinc.local&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;dns.msftncsi.com&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.globalrootservers.net&quot; 
-| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index=<span class="string">&quot;botsv1&quot;</span> sourcetype=<span class="string">&quot;stream:dns&quot;</span> src_ip=<span class="number">192.168</span>.<span class="number">250.0</span>/<span class="number">24</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.in-addr.arpa&quot;</span> <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;demo-01&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.authdns.ripe.net&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.microsoft.com&quot;</span> <span class="string">&quot;query&#123;&#125;&quot;</span>=*.*.* <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.waynecorpinc.local&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;dns.msftncsi.com&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.globalrootservers.net&quot;</span> </span><br><span class="line">| table  src_ip,dest_ip,query&#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/jzPkKSf2XPhZ_kdZBN_vHdWs9SodRqw0Hdol4W8JsjY=.png"></p>
 <p>這邊可以看到 cerberhhyed5frqa.xmfir0.win 這個 FQDN，而這個網址在情境的圖片上有出現，因此是這題的答案</p>
@@ -187,9 +183,7 @@
 <p>首先先來調整時間，選擇時間並選擇 DataRange，調整為查詢08&#x2F;24&#x2F;2016 到 08&#x2F;25&#x2F;2016這段時間的資料</p>
 <p><img src="/assets/l1jatLA2J8_nIfT-W0ySlWGVeQuBHTsKq6ZrZNWqTms=.png"></p>
 <p>接下來查詢 host 為 we8105desk 的 source IP 記錄，因為是查詢 Sysmon 來源的關係所以是使用 SourceIp 當作查詢來源 IP</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 host&#x3D;we8105desk source&#x3D;WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational
-| stats count by SourceIp 
-| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index=botsv1 host=we8105desk source=<span class="title class_">WinEventLog</span><span class="symbol">:Microsoft-Windows-Sysmon/Operational</span></span><br><span class="line">|<span class="params"> stats count by SourceIp </span></span><br><span class="line"><span class="params"></span>| sort -count</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/ZXDBGmZerwfzhgg20VYhTIab7F3el5JViBuBlzlz1qk=.png"></p>
 <p>這邊可以看到答案是 192.168.250.100</p>
@@ -202,8 +196,7 @@
 </blockquote>
 <p>這題想要問 Suricata 產生的警報，當中關於 Cerber malware 出現最少的 signature 是哪一個</p>
 <p>可以用以下的語法查詢，將 signature 與 signature_id 抓出來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata Cerber 
-| table alert.signature alert.signature_id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata Cerber </span><br><span class="line">| table alert.signature alert.signature_id</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/SUW4b8xNVYYgib6Y3L8SLD1NeyFdmlv0pC-9KT0GKzc=.png"></p>
 <p>可以很明顯的看到 <code>ETPRO TROJAN Ransomware/Cerber Checkin 2</code> 這個 signature 只出現一次，而它的 id 為2816763 ，則為答案</p>
@@ -217,8 +210,7 @@
 <p>這題需要先Q25，可以先去看 Q25 的解題過程</p>
 <p>題目敘述說在Q25 找到 關於VBScript 是 121214.tmp被執行了，請問啟動這個VBScript 的父進程 ID 是什麼？</p>
 <p>可以先將ParentImage、ParentProcessId以及CommandLine 抓出來查看</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
-| table ParentImage ParentProcessId CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=xmlwineventlog *.vbs</span><br><span class="line">| table ParentImage ParentProcessId CommandLine</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/cn-02vrj7Ro2hRDX_3l34zNpoDpJ3d--i0_5yj-7Lyo=.png"></p>
 <p>這邊可以很清楚的看到啟動121214.tmp 的父進程是 wscript.exe ，它的ID 為3968，這正是我們的答案</p>
@@ -231,15 +223,12 @@
 </blockquote>
 <p>題目敘述說當 Cerber 惡意程式執行時，初始會先執行 VB script，而這個 VB script 的產生包含前面啟動它的 exe 檔 可以在 Splunk 的其中一個欄位找到，最後問這個欄位裡面的值總共有多少 characters</p>
 <p>看到題目敘述，可以直接聯想到的是 CommandLine 欄位，所以我們先把 EventLog 的 CommandLine 欄位抓出來，並且限制檔名為 .vbs</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
-| table CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=xmlwineventlog *.vbs</span><br><span class="line">| table CommandLine</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/48ggord4P-7U5Euy77ESb7wgPZPyzklMo8loEzzXW_M=.png"></p>
 <p>可以看到下面一大串的 cmd.exe…….. 並且後面接 <code>GSI=%APPDATA%\%RANDOM%.vbs</code> 這邊就可以確定是題目所說。</p>
 <p>接下來要計算裡面有多少字元，使用的是 eval 的 len 函式</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
-| eval cmdlenght&#x3D;len(CommandLine)
-| table CommandLine cmdlenght<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=xmlwineventlog *.vbs</span><br><span class="line">| eval <span class="attribute">cmdlenght</span>=len(CommandLine)</span><br><span class="line">| table CommandLine cmdlenght</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/NsHJjeRVHk2NQIl9gw8oRwmXM2WSI3lcQOAvMZljaoU=.png"></p>
 <p>這邊它幫我們計算出答案為4490</p>
@@ -252,19 +241,17 @@
 </blockquote>
 <p>題目敘述說惡意程式去下載一個包含 Cerber 勒索病毒加密程式碼的檔案，它的檔案名稱是什麼</p>
 <p>我先把 192.168.250.100 (we8105desk) HTTP 的 GET 請求全部先抓下來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;stream:http&quot; src_ip&#x3D;192.168.250.100 http_method&#x3D;GET
-| table  src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">source</span>=<span class="string">&quot;stream:http&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100 <span class="attribute">http_method</span>=GET</span><br><span class="line">| table  src_ip,dest_ip,site,src_headers</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/tO3hZ1-M67gHdIfdlzVWlYr4RjE5w5rVxvEXMrR_Ns4=.png"></p>
 <p>當中最可疑的是它向 <code>solidaritedeproximite.org</code> 請求一個 mhtr.jpg 檔案</p>
 <p>我們單獨看一下關於有包含 mhtr.jpg 的記錄</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 mhtr.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span><span class="operator">=</span>botsv1 mhtr.jpg</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/3qLVjpkrNx1j5OKEazxyKyRjn6aJd4IHKxs2-Th5SSQ=.png"></p>
 <p>發現到有 <code>fgt_utm</code> 的記錄跳出來，在 Splunk 中通常指的是來自 FortiGate 防火牆的 Unified Threat Management 安全日誌類型的 sourcetype，用來記錄防毒、入侵防禦、網頁過濾等安全事件。</p>
 <p>我們使用 fgt_utm 記錄，並把 filename,msg,analyticscksum 欄位抓出來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;fgt_utm&quot; mhtr.jpg
-| table filename,msg,analyticscksum<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;fgt_utm&quot;</span> mhtr.jpg</span><br><span class="line">| table filename,msg,analyticscksum</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/wX3qtK3vMoJ_wBsisJ0D4TGBsSh3WWWES9-kVGMwxwM=.png"></p>
 <p>可以看到它偵測 mhtr.jpg 為惡意檔案，並且有 sha256 給我們，我們將它丟入 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9c1cabc16826273ad69f59af06f12fe6484e2eb0b5d3c87a690993934675e459">VirusTotal</a></p>
@@ -290,8 +277,7 @@
 <p>在 Splunk 中提供了一個 sourcetype，名稱為 winregistry，用來監控 Windows 註冊表 key／value 的建立、修改、刪除等操作。</p>
 <p>另外關於 USB 的其中一個註冊表路徑會在 <code>SYSTEM\ControlSet001\USBSTOR</code>，主要用途是記錄曾經連接過的 USB 裝置資訊，例如製造商、產品、序號、FriendlyName 等等</p>
 <p>因此我們將 <code>USBSTOR</code> 底下的 value 抓出來，並且用 dedup 將重複的 value 刪除，只保留第一筆出來的值</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;winregistry&quot; host&#x3D;we8105desk USBSTOR
-| table registry_value_data | dedup registry_value_data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">source</span>=<span class="string">&quot;winregistry&quot;</span> <span class="attribute">host</span>=we8105desk USBSTOR</span><br><span class="line">| table registry_value_data | dedup registry_value_data</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/B7j-ZowtUGr4m3r3GkRhOsm_eHvyijuT3v9bNfFIRzM=.png"></p>
 <p>這邊就可以看到 USB 的名稱為 MIRANDA_PRI</p>
@@ -304,15 +290,11 @@
 </blockquote>
 <p>題目敘述 Bob Smith’s workstation 在 ransomware 執行期間去連線了 file server，請問 file server 的 IP 是什麼？</p>
 <p>連線 file server 的 protocol 可能會有 SMB 或者 FTP，FTP 是空的，那我們可以著重去看 SMB</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100
-| table dest_ip
-| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:smb&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100</span><br><span class="line">| table dest_ip</span><br><span class="line">| dedup dest_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/yOqGwKrU-ZM7IjAYNdpFOfs2S1L4Z0hW5ixVwDSsEIU=.png"></p>
 <p>接下來要再更確認一點，file server 可能會進行登入，因此我們加上 login&#x3D;”bob.smith”</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 login&#x3D;&quot;bob.smith&quot;
-| table dest_ip
-| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:smb&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100 <span class="attribute">login</span>=<span class="string">&quot;bob.smith&quot;</span></span><br><span class="line">| table dest_ip</span><br><span class="line">| dedup dest_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/9yawfJ9r2QGw0qUBPTIYITVz6gXLxAQGGFcAJeFblNM=.png"></p>
 <p>這樣就確定了 192.168.250.20 是 file server </p>
@@ -325,18 +307,16 @@
 </blockquote>
 <p>題目問有多少個遠端 pdf 被加密了</p>
 <p>我們在上一題知道 file server 的 IP 為 192.168.250.20，我們另外先拿一下它的 domain name</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 dest_ip&#x3D;192.168.250.20 path&#x3D;*
-| table path<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:smb&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100 <span class="attribute">dest_ip</span>=192.168.250.20 <span class="attribute">path</span>=*</span><br><span class="line">| table path</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/qEWsjAJB7FUV9Mq7acGsjdBlmDRUI1hj8Kd1x4wE9uo=.png"></p>
 <p>這邊得知了 domain name 為 we9041srv.waynecorpinc.local</p>
 <p>首先我先搜尋 wineventlog 中有沒有關於 .pdf 的記錄</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span><span class="operator">=</span>botsv1 sourcetype<span class="operator">=</span><span class="string">&quot;wineventlog&quot;</span> *.pdf</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/xJ0cOJW0DDg-M8pGh77C8_DVq-sVjUcXcwSXEbI-zOM=.png"></p>
 <p>發現到有，並且是從 192.168.250.100 請求 we9041srv.waynecorpinc.local 的一個 pdf<br>因此我們將所有關於這個的記錄抓下來，並用 stats 中的 dc 幫我們算總共有幾個檔案</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf  EventCode&#x3D;5145 Source_Address&#x3D;192.168.250.100
-| stats dc(Relative_Target_Name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;wineventlog&quot;</span> *.pdf  <span class="attribute">EventCode</span>=5145 <span class="attribute">Source_Address</span>=192.168.250.100</span><br><span class="line">| stats dc(Relative_Target_Name)</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/B-ZLsIdRUo5P-2poxSx5cJ8Qark7Byogq2TCf8i5JyU=.png"></p>
 <p>總共是 257 個，則 257 為答案</p>
@@ -349,13 +329,12 @@
 </blockquote>
 <p>這題問的是在 Bob Smith 的電腦上有多少的 .txt 檔被 ransomware 鎖起來了</p>
 <p>首先我們先使用 Sysmon 將針對 Bob Smith 內的 .txt 的操作抓下來，並且看是哪個檔案對 .txt 操作</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; TargetFilename&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;
-| table Image TargetFilename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">source</span>=<span class="string">&quot;wineventlog:microsoft-windows-sysmon/operational&quot;</span> <span class="attribute">TargetFilename</span>=<span class="string">&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;</span></span><br><span class="line">| table Image TargetFilename</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/aslGsxq9wbcm5wT5VeqfAuUnScwW0MXR-gC6Kb-YIZs=.png"></p>
 <p>可以看到是有一個 osk.exe 對 .txt 檔做操作，</p>
 <p>那我們可以 EventID&#x3D;1 去看這個 osk.exe 的 hash </p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; EventCode&#x3D;1 Image&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\AppData\\Roaming\\&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;\\osk.exe&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i<span class="attr">ndex</span><span class="operator">=</span>botsv1 source<span class="operator">=</span><span class="string">&quot;wineventlog:microsoft-windows-sysmon/operational&quot;</span> EventCode<span class="operator">=</span><span class="number">1</span> Image<span class="operator">=</span><span class="string">&quot;C:<span class="char escape_">\\</span>Users<span class="char escape_">\\</span>bob.smith.WAYNECORPINC<span class="char escape_">\\</span>AppData<span class="char escape_">\\</span>Roaming<span class="char escape_">\\</span>&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;<span class="char escape_">\\</span>osk.exe&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/bGRAyITwgDbzGkIxST7PVBbBAzYcou8g5XtO2PGhEQs=.png"></p>
 <p>得到的 MD5 hash 為 <a target="_blank" rel="noopener" href="https://189ccf15-ac01-4578-b319-8cf69e039163.cyberdefenders.network/en-US/app/search/search?q=search%20index=botsv1%20source=%22wineventlog:microsoft-windows-sysmon/operational%22%20EventCode=1%20Image=%22C:%5C%5CUsers%5C%5Cbob.smith.WAYNECORPINC%5C%5CAppData%5C%5CRoaming%5C%5C%7B35ACA89F-933F-6A5D-2776-A3589FB99832%7D%5C%5Cosk.exe%22&display.page.search.mode=smart&dispatch.sample_ratio=1&workload_pool=&earliest=0&latest=now&display.page.search.tab=events&display.general.type=events&sid=1760368198.162#">EE0828A4E4C195D97313BFC7D4B531F1</a>，丟進給 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/37397f8d8e4b3731749094d7b7cd2cf56cacb12dd69e0131f07dd78dff6f262b">VirusTotal</a> 後</p>

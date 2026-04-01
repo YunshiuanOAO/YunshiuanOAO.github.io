@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -172,10 +172,7 @@
 <p>通常資料會存在 <code>C:\Users\&lt;username&gt;\AppData</code></p>
 <hr>
 <h1 id="AppData-目錄結構"><a href="#AppData-目錄結構" class="headerlink" title="AppData 目錄結構"></a>AppData 目錄結構</h1><p>Windows 系統中，應用程式的使用者資料通常儲存在 <code>AppData</code> 目錄下：</p>
-<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;username&gt;\AppData\
-├── Local\
-├── Roaming\        
-└── LocalLow\       <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="string">\Users\&lt;username&gt;\AppData\</span></span><br><span class="line">├── Local<span class="string">\</span></span><br><span class="line">├── Roaming<span class="string">\</span>        </span><br><span class="line">└── LocalLow<span class="string">\</span>       </span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>Local : 儲存大容量，臨時或易刪除的資料</li>
@@ -185,43 +182,16 @@
 <p>以下介紹一些常用的瀏覽器的資料儲存位置以及可以分析的檔案</p>
 <hr>
 <h1 id="🌐-瀏覽器資料鑑識"><a href="#🌐-瀏覽器資料鑑識" class="headerlink" title="🌐  瀏覽器資料鑑識"></a>🌐  瀏覽器資料鑑識</h1><h2 id="Google-Chrome"><a href="#Google-Chrome" class="headerlink" title="Google Chrome"></a>Google Chrome</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default</code></p>
-<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User Data\Default\
-├── History               # 瀏覽歷史和下載記錄
-├── Network\Cookies       # Cookie 資料
-├── Login Data            # 儲存的密碼
-├── Web Data              # 自動填入資料
-├── Bookmarks             # 書籤
-├── Preferences           # 使用者偏好設定
-├── Cache\                # 快取資料
-├── Local Storage\        # 本地儲存
-├── Session Storage\      # 會話儲存
-└── IndexedDB\            # 索引資料庫<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="string">\Users\&lt;user&gt;\AppData\Local\Google\Chrome\User</span> Data<span class="string">\Default\</span></span><br><span class="line">├── History               <span class="comment"># 瀏覽歷史和下載記錄</span></span><br><span class="line">├── Network<span class="string">\Cookies</span>       <span class="comment"># Cookie 資料</span></span><br><span class="line">├── Login Data            <span class="comment"># 儲存的密碼</span></span><br><span class="line">├── Web Data              <span class="comment"># 自動填入資料</span></span><br><span class="line">├── Bookmarks             <span class="comment"># 書籤</span></span><br><span class="line">├── Preferences           <span class="comment"># 使用者偏好設定</span></span><br><span class="line">├── Cache<span class="string">\</span>                <span class="comment"># 快取資料</span></span><br><span class="line">├── Local Storage<span class="string">\</span>        <span class="comment"># 本地儲存</span></span><br><span class="line">├── Session Storage<span class="string">\</span>      <span class="comment"># 會話儲存</span></span><br><span class="line">└── IndexedDB<span class="string">\</span>            <span class="comment"># 索引資料庫</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/t3wC0oXhNjW5IAY58wESdbEguCnaBPvkbUMzF7wKS0w=.png"></p>
 <h2 id="Microsoft-Edge"><a href="#Microsoft-Edge" class="headerlink" title="Microsoft Edge"></a>Microsoft Edge</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User Data\Default</code></p>
-<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User Data\Default\
-├── History               # 瀏覽歷史和下載記錄
-├── Cookies               # Cookie 資料
-├── Login Data            # 儲存的密碼
-├── Web Data              # 自動填入資料
-├── Preferences           # 使用者偏好設定
-├── Cache\                # 快取資料
-├── Local Storage\        # 本地儲存
-├── Session Storage\      # 會話儲存
-└── IndexedDB\            # 索引資料庫<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="string">\Users\&lt;user&gt;\AppData\Local\Microsoft\Edge\User</span> Data<span class="string">\Default\</span></span><br><span class="line">├── History               <span class="comment"># 瀏覽歷史和下載記錄</span></span><br><span class="line">├── Cookies               <span class="comment"># Cookie 資料</span></span><br><span class="line">├── Login Data            <span class="comment"># 儲存的密碼</span></span><br><span class="line">├── Web Data              <span class="comment"># 自動填入資料</span></span><br><span class="line">├── Preferences           <span class="comment"># 使用者偏好設定</span></span><br><span class="line">├── Cache<span class="string">\</span>                <span class="comment"># 快取資料</span></span><br><span class="line">├── Local Storage<span class="string">\</span>        <span class="comment"># 本地儲存</span></span><br><span class="line">├── Session Storage<span class="string">\</span>      <span class="comment"># 會話儲存</span></span><br><span class="line">└── IndexedDB<span class="string">\</span>            <span class="comment"># 索引資料庫</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/c8YUdhLtLG-xs03GspLLfxg5lXWwJaANvvFQ00ftp9E=.png"></p>
 <h2 id="Mozilla-Firefox"><a href="#Mozilla-Firefox" class="headerlink" title="Mozilla Firefox"></a>Mozilla Firefox</h2><p><strong>位置：</strong> <code>C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;</code></p>
 <p><code>&lt;profile&gt;</code> 常常會以xxxx.default-release 表示</p>
-<pre class="line-numbers language-none"><code class="language-none">C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;\
-├── places.sqlite        # 瀏覽歷史、書籤、下載記錄
-├── cookies.sqlite       # Cookie 資料
-├── logins.json          # 儲存的密碼
-├── formhistory.sqlite   # 表單歷史
-├── permissions.sqlite   # 網站權限
-├── prefs.js            # 使用者偏好設定
-├── user.js             # 使用者自訂設定
-└── storage\            # 本地儲存<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\&lt;user&gt;\AppData\Roaming\Mozilla\Firefox\Profiles\&lt;profile&gt;\</span><br><span class="line">├── places.sqlite        <span class="comment"># 瀏覽歷史、書籤、下載記錄</span></span><br><span class="line">├── cookies.sqlite       <span class="comment"># Cookie 資料</span></span><br><span class="line">├── logins.<span class="keyword">json </span>         <span class="comment"># 儲存的密碼</span></span><br><span class="line">├── formhistory.sqlite   <span class="comment"># 表單歷史</span></span><br><span class="line">├── permissions.sqlite   <span class="comment"># 網站權限</span></span><br><span class="line">├── <span class="keyword">prefs.js </span>           <span class="comment"># 使用者偏好設定</span></span><br><span class="line">├── user.<span class="keyword">js </span>            <span class="comment"># 使用者自訂設定</span></span><br><span class="line">└── storage\            <span class="comment"># 本地儲存</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/MH-kVAb81up_baCG59UVWSc7VpFwFHxrAKgKZVGoG5c=.png"></p>
 <p>有些檔案會是 SQLite 儲存的，這邊推薦一個 GUI 應用程式可以查看 SQLite 資料庫內的內容：<strong>DB Browser for SQLite</strong></p>

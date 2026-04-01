@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -178,15 +178,7 @@
 </ul>
 <p>最基本的查詢以 <code>[out:json];</code> 開始，這指定了輸出格式。接著使用 <code>node</code>、<code>way</code> 或 <code>relation</code> 來指定要查詢的物件類型，而<code>nwr</code>則可以將三者都包含，然後在方括號中指定搜尋條件，關於搜尋條件的所有的key 跟value 都可以在這邊查到 <a target="_blank" rel="noopener" href="https://wiki.openstreetmap.org/wiki/Map/_features">https://wiki.openstreetmap.org/wiki/Map\_features</a> 。</p>
 <p>像圖示中是L3akCTF 2025的其中一題<a target="_blank" rel="noopener" href="https://medium.com/@shibaosint/l3akctf-2025-fidget-spinner-writeup-cd94eafc2828">Fidget Spinner</a>我們想要找在厄蘭島上所有的風車地點，可以這樣寫</p>
-<pre class="line-numbers language-none"><code class="language-none">[out:json][timeout:25];
-&#x2F;&#x2F;restrict our search to the island
-area[name&#x3D;&quot;Öland&quot;];
-(
-  &#x2F;&#x2F; search for windmills
-  nwr[&quot;man_made&quot;&#x3D;&quot;windmill&quot;](area); &#x2F;&#x2F;(area)的功能是限制在Öland地點上查詢
-);
-&#x2F;&#x2F; print results
-out geom;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[out:json]</span><span class="selector-attr">[timeout:25]</span>;</span><br><span class="line"><span class="comment">//restrict our search to the island</span></span><br><span class="line"><span class="selector-tag">area</span><span class="selector-attr">[name=<span class="string">&quot;Öland&quot;</span>]</span>;</span><br><span class="line">(</span><br><span class="line">  <span class="comment">// search for windmills</span></span><br><span class="line">  nwr[<span class="string">&quot;man_made&quot;</span>=<span class="string">&quot;windmill&quot;</span>](area); <span class="comment">//(area)的功能是限制在Öland地點上查詢</span></span><br><span class="line">);</span><br><span class="line"><span class="comment">// print results</span></span><br><span class="line"><span class="selector-tag">out</span> <span class="selector-tag">geom</span>;</span><br></pre></td></tr></table></figure>
 
 <p>之後出來的結果就會是這樣</p>
 <p><img src="/assets/hLt5ujf8M4p8aGhdbo4CVsi7_xOwj5CBfN3zKMmBMMo=.png"></p>
@@ -201,55 +193,7 @@ out geom;<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <p>它可以去看圖片的基本資料，例如圖片大小、修改時間等等，但它可以去看這張照片的拍攝地點在哪裡，並且會給你 GPS 定位。</p>
 <p>舉個例子：<a target="_blank" rel="noopener" href="https://drive.google.com/file/d/17rE9LAp7TNk8u09EwguZB3RQ4H3WNIMB/view">DownUnderCTF 2023 Excellent Vista!</a></p>
 <p>下載之後用 exiftool 看一下</p>
-<pre class="line-numbers language-none"><code class="language-none">$ exiftool ExcellentVista.jpg
-
-ExifTool Version Number         : 13.10
-File Name                       : ExcellentVista.jpg
-Directory                       : .
-File Size                       : 2.7 MB
-File Modification Date&#x2F;Time     : 2025:09:23 15:41:41+08:00
-File Access Date&#x2F;Time           : 2025:09:23 15:41:45+08:00
-File Inode Change Date&#x2F;Time     : 2025:09:23 15:41:44+08:00
-File Permissions                : -rw-r--r--
-File Type                       : JPEG
-File Type Extension             : jpg
-MIME Type                       : image&#x2F;jpeg
-Exif Byte Order                 : Big-endian (Motorola, MM)
-X Resolution                    : 72
-Y Resolution                    : 72
-Resolution Unit                 : inches
-Y Cb Cr Positioning             : Centered
-Date&#x2F;Time Original              : 2023:08:31 22:58:56
-Create Date                     : 2023:08:31 22:58:56
-Sub Sec Time Original           : 00
-Sub Sec Time Digitized          : 00
-GPS Version ID                  : 2.3.0.0
-GPS Latitude Ref                : South
-GPS Longitude Ref               : East
-GPS Altitude Ref                : Above Sea Level
-GPS Speed Ref                   : km&#x2F;h
-GPS Speed                       : 0
-GPS Img Direction Ref           : True North
-GPS Img Direction               : 122.5013812
-GPS Dest Bearing Ref            : True North
-GPS Dest Bearing                : 122.5013812
-GPS Horizontal Positioning Error: 6.055886243 m
-Padding                         : (Binary data 2060 bytes, use -b option to extract)
-About                           : uuid:faf5bdd5-ba3d-11da-ad31-d33d75182f1b
-Image Width                     : 4032
-Image Height                    : 3024
-Encoding Process                : Baseline DCT, Huffman coding
-Bits Per Sample                 : 8
-Color Components                : 3
-Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
-Image Size                      : 4032x3024
-Megapixels                      : 12.2
-Create Date                     : 2023:08:31 22:58:56.00
-Date&#x2F;Time Original              : 2023:08:31 22:58:56.00
-GPS Altitude                    : 70.5 m Above Sea Level
-GPS Latitude                    : 29 deg 30&#39; 34.33&quot; S
-GPS Longitude                   : 153 deg 21&#39; 34.46&quot; E
-GPS Position                    : 29 deg 30&#39; 34.33&quot; S, 153 deg 21&#39; 34.46&quot; E<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">exiftool</span> <span class="string">ExcellentVista.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="attr">ExifTool Version Number         :</span> <span class="number">13.10</span></span><br><span class="line"><span class="attr">File Name                       :</span> <span class="string">ExcellentVista.jpg</span></span><br><span class="line"><span class="attr">Directory                       :</span> <span class="string">.</span></span><br><span class="line"><span class="attr">File Size                       :</span> <span class="number">2.7</span> <span class="string">MB</span></span><br><span class="line"><span class="attr">File Modification Date/Time     :</span> <span class="number">2025</span><span class="string">:09:23</span> <span class="number">15</span><span class="string">:41:41+08:00</span></span><br><span class="line"><span class="attr">File Access Date/Time           :</span> <span class="number">2025</span><span class="string">:09:23</span> <span class="number">15</span><span class="string">:41:45+08:00</span></span><br><span class="line"><span class="attr">File Inode Change Date/Time     :</span> <span class="number">2025</span><span class="string">:09:23</span> <span class="number">15</span><span class="string">:41:44+08:00</span></span><br><span class="line"><span class="attr">File Permissions                :</span> <span class="string">-rw-r--r--</span></span><br><span class="line"><span class="attr">File Type                       :</span> <span class="string">JPEG</span></span><br><span class="line"><span class="attr">File Type Extension             :</span> <span class="string">jpg</span></span><br><span class="line"><span class="attr">MIME Type                       :</span> <span class="string">image/jpeg</span></span><br><span class="line"><span class="attr">Exif Byte Order                 :</span> <span class="string">Big-endian</span> <span class="string">(Motorola,</span> <span class="string">MM)</span></span><br><span class="line"><span class="attr">X Resolution                    :</span> <span class="number">72</span></span><br><span class="line"><span class="attr">Y Resolution                    :</span> <span class="number">72</span></span><br><span class="line"><span class="attr">Resolution Unit                 :</span> <span class="string">inches</span></span><br><span class="line"><span class="attr">Y Cb Cr Positioning             :</span> <span class="string">Centered</span></span><br><span class="line"><span class="attr">Date/Time Original              :</span> <span class="number">2023</span><span class="string">:08:31</span> <span class="number">22</span><span class="string">:58:56</span></span><br><span class="line"><span class="attr">Create Date                     :</span> <span class="number">2023</span><span class="string">:08:31</span> <span class="number">22</span><span class="string">:58:56</span></span><br><span class="line"><span class="attr">Sub Sec Time Original           :</span> <span class="number">00</span></span><br><span class="line"><span class="attr">Sub Sec Time Digitized          :</span> <span class="number">00</span></span><br><span class="line"><span class="attr">GPS Version ID                  :</span> <span class="number">2.3</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">GPS Latitude Ref                :</span> <span class="string">South</span></span><br><span class="line"><span class="attr">GPS Longitude Ref               :</span> <span class="string">East</span></span><br><span class="line"><span class="attr">GPS Altitude Ref                :</span> <span class="string">Above</span> <span class="string">Sea</span> <span class="string">Level</span></span><br><span class="line"><span class="attr">GPS Speed Ref                   :</span> <span class="string">km/h</span></span><br><span class="line"><span class="attr">GPS Speed                       :</span> <span class="number">0</span></span><br><span class="line"><span class="attr">GPS Img Direction Ref           :</span> <span class="literal">True</span> <span class="string">North</span></span><br><span class="line"><span class="attr">GPS Img Direction               :</span> <span class="number">122.5013812</span></span><br><span class="line"><span class="attr">GPS Dest Bearing Ref            :</span> <span class="literal">True</span> <span class="string">North</span></span><br><span class="line"><span class="attr">GPS Dest Bearing                :</span> <span class="number">122.5013812</span></span><br><span class="line"><span class="attr">GPS Horizontal Positioning Error:</span> <span class="number">6.055886243</span> <span class="string">m</span></span><br><span class="line"><span class="attr">Padding                         :</span> <span class="string">(Binary</span> <span class="string">data</span> <span class="number">2060 </span><span class="string">bytes,</span> <span class="string">use</span> <span class="string">-b</span> <span class="string">option</span> <span class="string">to</span> <span class="string">extract)</span></span><br><span class="line"><span class="attr">About                           :</span> <span class="string">uuid:faf5bdd5-ba3d-11da-ad31-d33d75182f1b</span></span><br><span class="line"><span class="attr">Image Width                     :</span> <span class="number">4032</span></span><br><span class="line"><span class="attr">Image Height                    :</span> <span class="number">3024</span></span><br><span class="line"><span class="attr">Encoding Process                :</span> <span class="string">Baseline</span> <span class="string">DCT,</span> <span class="string">Huffman</span> <span class="string">coding</span></span><br><span class="line"><span class="attr">Bits Per Sample                 :</span> <span class="number">8</span></span><br><span class="line"><span class="attr">Color Components                :</span> <span class="number">3</span></span><br><span class="line"><span class="attr">Y Cb Cr Sub Sampling            :</span> <span class="string">YCbCr4:2:0</span> <span class="string">(2</span> <span class="number">2</span><span class="string">)</span></span><br><span class="line"><span class="attr">Image Size                      :</span> <span class="string">4032x3024</span></span><br><span class="line"><span class="attr">Megapixels                      :</span> <span class="number">12.2</span></span><br><span class="line"><span class="attr">Create Date                     :</span> <span class="number">2023</span><span class="string">:08:31</span> <span class="number">22</span><span class="string">:58:56.00</span></span><br><span class="line"><span class="attr">Date/Time Original              :</span> <span class="number">2023</span><span class="string">:08:31</span> <span class="number">22</span><span class="string">:58:56.00</span></span><br><span class="line"><span class="attr">GPS Altitude                    :</span> <span class="number">70.5</span> <span class="string">m</span> <span class="string">Above</span> <span class="string">Sea</span> <span class="string">Level</span></span><br><span class="line"><span class="attr">GPS Latitude                    :</span> <span class="number">29</span> <span class="string">deg</span> <span class="number">30</span><span class="string">&#x27; 34.33&quot; S</span></span><br><span class="line"><span class="string">GPS Longitude                   : 153 deg 21&#x27;</span> <span class="number">34.46</span><span class="string">&quot; E</span></span><br><span class="line"><span class="string">GPS Position                    : 29 deg 30&#x27; 34.33&quot;</span> <span class="string">S,</span> <span class="number">153</span> <span class="string">deg</span> <span class="number">21</span><span class="string">&#x27; 34.46&quot; E</span></span><br></pre></td></tr></table></figure>
 
 <p>最後它提供了拍照的地點。</p>
 <hr>

@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -257,7 +257,7 @@
 <p>題目想要找出 <code>imreallynotbatman.com</code> 網站使用了什麼 CMS 系統。</p>
 <p>因此我們會用到 Search 功能。</p>
 <p>來到 Search &amp; Report 頁面在 Search 欄位搜尋：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span><span class="operator">=</span><span class="string">&quot;botsv1&quot;</span> imreallynotbatman.com</span><br></pre></td></tr></table></figure>
 <p>在 Splunk 收到日誌或事件後，會根據設定儲存在不同的 index<br>這段搜尋語法的意思是在資料索引為botsv1中，找出字串中包含 <code>imreallynotbatman.com</code>。<br>data indexes 可以在 Setting-&gt; DATA -&gt; Index 中得知<br><img src="/assets/s7Yn9AMSgsP7iMFp1_kteGCWUZgVydpg8wxoXVaY1Mw=.png"></p>
 <p>看第一個 Log 就可以發現使用的是 <code>joomla</code>。</p>
 <p><img src="/assets/6KmCQjyMKDS5-zRyLEXLBBfFIzOziopvdBwhCd6LJiM=.png"></p>
@@ -270,25 +270,19 @@
 </blockquote>
 <p>接下來他想要找的是 Po1s0n1vy 用來掃描 imreallynotbatman.com 的 IP 是什麼？</p>
 <p>有一個線索是知道這個 IP 有進行網頁漏洞掃描，有一個方向是我們可以使用在 Day17 提到的 Suricata，它會產生網路連接的 Log，因此我們搜尋的範圍可以限制在 Suricata 的 log 下，搜尋指令如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata http.<span class="attribute">hostname</span>=imreallynotbatman.com</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/JxJw2skLZ9umeMi8nqi2Oawi__n6MDwXb8f9NJlSCYA=.png"></p>
 <p>然後我們想要專注的是<strong>來源 IP</strong>，因此我們會需要用到 table 語法，它可以將我們想要的欄位單獨拉出來做一張表格，讓我們可以專注在分析這個欄位上。</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
-| table src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata http.<span class="attribute">hostname</span>=imreallynotbatman.com </span><br><span class="line">| table src_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/OhDFwdXkJxXoIpb1xqzNuy-uyBeSzR4Ds3i5LoryWiw=.png"></p>
 <p>這邊我們獲得了每個 Suricata log 的來源 IP，接下來進行統計，因為我想要得到的是這個 IP 出現幾次，數量很多會有很高的機率是進行掃描，所以接下來會使用到 stats 語法，它提供了一些基本的統計功能。</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
-| table src_ip 
-| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata http.<span class="attribute">hostname</span>=imreallynotbatman.com </span><br><span class="line">| table src_ip </span><br><span class="line">| stats count by src_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/XOGDycf1lecuXmMmaM985JoLpyxsQW9OIUYvABV4ZMA=.png"></p>
 <p>這樣就看得出來答案就是 <code>40.80.148.42</code>，另外如果想要數量由大排到小，可以使用 sort 語法，預設是由小排到大，加上 <code>-</code> 可以讓它變成由大排到小。</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com 
-| table src_ip 
-| stats count by src_ip 
-| sort -count reverse<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">index</span>=botsv1 sourcetype=suricata http.<span class="built_in">hostname</span>=imreallynotbatman.<span class="keyword">com</span> </span><br><span class="line">| table src_ip </span><br><span class="line">| stats <span class="built_in">count</span> by src_ip </span><br><span class="line">| <span class="keyword">sort</span> -<span class="built_in">count</span> <span class="built_in">reverse</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/be5iJG9bbqLEDr3wZZV59naJ4B8Du_ciK_RTg4cMfdA=.png"></p>
 <blockquote>
@@ -301,16 +295,15 @@
 <p>這題想要搜尋到他們使用的 scanner 工具是什麼。</p>
 <p>一樣我們可以使用 Suricata 工具，它除了可以產生網路連接 log 之外，還可以根據自訂規則產生警報，如抓到某個掃描工具的 Signature。</p>
 <p>所以我們可以針對 Suricata 產生的 alert 去分析：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata http.<span class="attribute">hostname</span>=imreallynotbatman.com <span class="attribute">src_ip</span>=40.80.148.42 alert</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/PF6XbKoFeldNiTIGNzQa2S3TylhVgZqSQfC96KNtyHA=.png"></p>
 <p>signature 欄位顯示偵測到的是什麼相關操作，因此我們用 table 專注去看 alert.signature 有沒有相關的線索：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata http.hostname&#x3D;imreallynotbatman.com src_ip&#x3D;40.80.148.42 alert
-| table alert.signature<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata http.<span class="attribute">hostname</span>=imreallynotbatman.com <span class="attribute">src_ip</span>=40.80.148.42 alert</span><br><span class="line">| table alert.signature</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/FFuDTSF0_gvnDMjyPdFes-eoxr2Iy8NVLD0YUvxLKZs=.png"></p>
 <p>接下來就可以找到這個 value：</p>
-<pre class="line-numbers language-none"><code class="language-none">ET SCAN Acunetix Accept HTTP Header detected scan in progress<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ET <span class="built_in">SCAN</span> Acunetix Accept HTTP Header detected <span class="built_in">scan</span> in progress</span><br></pre></td></tr></table></figure>
 
 <p>可以看出 Acunetix 就是我們需要的答案。</p>
 <blockquote>
@@ -322,8 +315,7 @@
 </blockquote>
 <p>要找到哪個 IP 在對 imreallynotbatman.com 進行暴力破解。</p>
 <p>需要對網站進行帳號密碼的暴力破解，會需要用到 POST 的 method，我們可以針對 POST 操作做查看，並且也會需要知道 POST 帶的資料，確認是不是在做暴力破解，查詢可以用以下指令：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http
-| table src_ip, form_data, uri<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">http_method</span>=POST <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http</span><br><span class="line">| table src_ip, form_data, uri</span><br></pre></td></tr></table></figure>
 
 <p><code>sourcetype=stream:http</code> 代表是拿 Splunk Stream app 所收集到並且屬於 HTTP 流量資料，而 <code>dest_ip=192.168.250.70</code> 是 imreallynotbatman.com 的 IP，在前幾題的操作可以得知。</p>
 <p><img src="/assets/YlPiSsFhTTIy4alIrPTC0E81cW-xZcJU14fKd8qyayo=.png"></p>
@@ -337,9 +329,7 @@
 </blockquote>
 <p>這題要獲得第一個暴力破解嘗試的密碼。</p>
 <p>這題可以使用 sort 將時間排序：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http src_ip&#x3D;23.22.63.114
-| table src_ip, form_data, uri _time
-| sort _time<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">http_method</span>=POST <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">src_ip</span>=23.22.63.114</span><br><span class="line">| table src_ip, form_data, uri _time</span><br><span class="line">| sort _time</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/39-8d3Nvl4wzQTMjMF4pyt3Z9T5fbnjtIBP4MTLXBnQ=.png"></p>
 <p>看到第一列的 password 參數是 12345678。</p>
@@ -352,7 +342,7 @@
 </blockquote>
 <p>這題要找的是 Po1s0n1vy 上傳的執行檔的檔名是什麼。</p>
 <p>在 HTTP 中，如果上傳一個檔案會使用 <code>multipart/form-data</code>，代表會將不同 type 的資料透過一次請求傳送出去，因此我們可以用 <code>multipart/form-data</code> 縮小我們的搜尋範圍，另外語法也支援 regex，在搜尋執行檔上比較方便：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 http_method&#x3D;POST dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http multipart&#x2F;form-data *.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">http_method</span>=POST <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http multipart/form-data *.exe</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/YVwaJ7YoOM-RMWk-A5KU8bH-aYXv1Bg-BFKJo1a-ZSo=.png"></p>
 <p>可以發現到上傳的執行檔檔名為 3791.exe。</p>
@@ -451,7 +441,7 @@
 </tr>
 </tbody></table>
 <p>其中 Event ID &#x3D; 1 有 MD5 可以查看，那這樣我們就搜尋 3791.exe 的執行紀錄，獲得它的 MD5 值：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source &#x3D; WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational 3791.exe EventCode&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index=botsv1 source = <span class="title class_">WinEventLog</span><span class="symbol">:Microsoft-Windows-Sysmon/Operational</span> <span class="number">3791</span>.exe <span class="title class_">EventCode</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/juHx-R1ointkAU6o-_IgpSKURGIDc0xy64Q9Lcizq1g=.png"></p>
 <p>而我們專心看這個紀錄：</p>
@@ -466,9 +456,7 @@
 </blockquote>
 <p>這題想要問是哪個密碼成功進入了 imreallynotbatman.com。</p>
 <p>我們可以在解 Q5 的時候知道登入的頁面是在 <code>/joomla/administrator/index.php</code>，並且它是用暴力破解的方式嘗試登入系統，所以如果有一個密碼與其他登入次數比其他的還多就有可能會是正確的密碼，但是它的密碼是放在 form_data 欄位，這個欄位會包含其他的文字資訊，因此我們會需要用到 rex 語法：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
-| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
-| stats count by pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">http_method</span>=POST <span class="attribute">uri</span>=/joomla/administrator/index.php</span><br><span class="line">| rex <span class="attribute">field</span>=form_data <span class="string">&quot;passwd=(?&lt;pass&gt;\w+)&quot;</span></span><br><span class="line">| stats count by pass</span><br></pre></td></tr></table></figure>
 
 <p>rex 的欄位說明如下：</p>
 <ul>
@@ -483,14 +471,11 @@
 </li>
 </ul>
 <p>原本的 form_data 長這樣：</p>
-<pre class="line-numbers language-none"><code class="language-none">username&#x3D;admin&amp;task&#x3D;login&amp;return&#x3D;aW5kZXgucGhw&amp;option&#x3D;com_login&amp;passwd&#x3D;topgun&amp;49e63c55a9730eee52c7ea0448de3a01&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">username</span><span class="operator">=</span>admin<span class="variable">&amp;task</span>=login<span class="variable">&amp;return</span>=aW5kZXgucGhw<span class="variable">&amp;option</span>=com_login<span class="variable">&amp;passwd</span>=topgun<span class="variable">&amp;49e63c55a9730eee52c7ea0448de3a01</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <p>因此它會提取 <code>passwd=</code> 後面的字串，直到碰到不是字母、數字或底線為止，然後它會變成單獨的 pass 欄位。</p>
 <p><img src="/assets/bDwPdvFgqR8HTS-_cHAqJUw8P4v7Kczqt2wjET1hwak=.png"></p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
-| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
-| stats count by pass
-| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">http_method</span>=POST <span class="attribute">uri</span>=/joomla/administrator/index.php</span><br><span class="line">| rex <span class="attribute">field</span>=form_data <span class="string">&quot;passwd=(?&lt;pass&gt;\w+)&quot;</span></span><br><span class="line">| stats count by pass</span><br><span class="line">| sort -count</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/O7MkDnpyKaqjyMnhCJipRzitRuH_45-EXW9K7hO0R2I=.png"></p>
 <blockquote>
@@ -503,8 +488,7 @@
 <p>題目想問是哪個檔案名稱污染了 imreallynotbatman.com 網頁。</p>
 <p>這邊應該是想要問情境 1 當中進入網站出現一張圖片。</p>
 <p>代表它之前可能會去下載過，因此可以用以下指令查詢它之前請求的頁面：</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70 
-| table site src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">src_ip</span>=192.168.250.70 </span><br><span class="line">| table site src_headers</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/Q4BQsOFmAx6I7jH9goDcf-MGpRlOr2Ocb1LG0GUrdu8=.png"></p>
 <p>這邊可以看到它去一個網頁請求 <code>poisonivy-is-coming-for-you-batman.jpeg</code> 圖片，這個就是答案。</p>
@@ -526,8 +510,7 @@
 <p>Q12: Web Defacement: What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?</p>
 </blockquote>
 <p>從Q11 我們可以得到他去請求的 FQDN 叫做 <code>prankglassinebracket.jumpingcrab.com</code> ，我們可以再確認一下這個 FQDN 的 IP 是什麼</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;stream:http src_ip&#x3D;192.168.250.70
-| table src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">src_ip</span>=192.168.250.70</span><br><span class="line">| table src_ip,dest_ip,site,src_headers</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/2ChrVHaw6WBVh-DZf7m-0KgknWSklENqTx-sjMpnjb4=.png"></p>
 <p>最下方可以看到 23.22.63.114 對應的 FQDN 就是 prankglassinebracket.jumpingcrab.com ，23.22.63.114 在Q5 我們確定它是在進行暴力破解登入後台，因此23.22.63.114 就是我們這題的答案</p>
@@ -551,10 +534,10 @@
 <p>查詢結果如下</p>
 <p><a target="_blank" rel="noopener" href="https://www.whoxy.com/po1s0n1vy.com#history">https://www.whoxy.com/po1s0n1vy.com#history</a></p>
 <p><img src="/assets/cffA2Y3jHDGoOTdqfSE7l0V6BpAyBkAYzVdGcD_75-4=.png"></p>
-<p>這邊可以看到 Email 是<a href="mailto:&#108;&#105;&#108;&#108;&#x69;&#97;&#x6e;&#46;&#x72;&#x6f;&#x73;&#x65;&#64;&#112;&#x6f;&#x31;&#115;&#x30;&#x6e;&#x31;&#118;&#x79;&#x2e;&#99;&#111;&#x6d;">lillian.rose@po1s0n1vy.com</a> </p>
+<p>這邊可以看到 Email 是<a href="mailto:&#x6c;&#105;&#108;&#108;&#105;&#97;&#x6e;&#46;&#x72;&#x6f;&#x73;&#101;&#x40;&#112;&#111;&#49;&#x73;&#48;&#x6e;&#x31;&#118;&#121;&#46;&#x63;&#x6f;&#x6d;">lillian.rose@po1s0n1vy.com</a> </p>
 <p>這邊不是其他的email 是因為題目給的格式是<code>------*.---*@---------*.---</code></p>
 <blockquote>
-<p>ans : <a href="mailto:&#x6c;&#x69;&#x6c;&#x6c;&#x69;&#97;&#110;&#x2e;&#x72;&#111;&#115;&#x65;&#x40;&#112;&#x6f;&#x31;&#x73;&#48;&#x6e;&#x31;&#118;&#x79;&#x2e;&#x63;&#111;&#109;">lillian.rose@po1s0n1vy.com</a></p>
+<p>ans : <a href="mailto:&#108;&#x69;&#x6c;&#108;&#x69;&#97;&#110;&#x2e;&#114;&#111;&#x73;&#x65;&#64;&#112;&#111;&#49;&#x73;&#x30;&#x6e;&#49;&#x76;&#x79;&#x2e;&#99;&#x6f;&#109;">lillian.rose@po1s0n1vy.com</a></p>
 </blockquote>
 <hr>
 <blockquote>
@@ -614,11 +597,7 @@
 <p>點選 Lookups 的首頁的第二行Add new ，接下來去指定剛剛丟進去的 csv 表，要記得開啟進階選項把 Case sensitive match 取消勾選</p>
 <p><img src="/assets/3bznzUqDU1ujXoEwOpSRUXmT3yqzy7peIVtO-D2qjuI=.png"></p>
 <p>接下來就可以回到search 頁面使用 lookup 語法，匹配欄位資料</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
-| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
-| lookup Coldplay name as pass output duration
-| search duration&#x3D;*
-| table pass duration<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">http_method</span>=POST <span class="attribute">uri</span>=/joomla/administrator/index.php</span><br><span class="line">| rex <span class="attribute">field</span>=form_data <span class="string">&quot;passwd=(?&lt;pass&gt;\w+)&quot;</span></span><br><span class="line">| lookup Coldplay name as pass output duration</span><br><span class="line">| search <span class="attribute">duration</span>=*</span><br><span class="line">| table pass duration</span><br></pre></td></tr></table></figure>
 
 <p>lookup 的語法解說如下</p>
 <ul>
@@ -638,11 +617,7 @@
 </blockquote>
 <p>題目想要我們計算出所有嘗試的密碼長度</p>
 <p>要計算 password 的平均長度，我們會需要使用到 eval 與 stats 幫助我們計算，eval 提供了基本的運算操作以及豐富的函式，<a target="_blank" rel="noopener" href="https://help.splunk.com/en/splunk-cloud-platform/search/search-reference/10.0.2503/search-commands/eval">官方doc</a></p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
-| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
-| eval length &#x3D; len(pass) 
-| stats avg(length) as avglength 
-| eval rounded &#x3D; round(avglength, 0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">http_method</span>=POST <span class="attribute">uri</span>=/joomla/administrator/index.php</span><br><span class="line">| rex <span class="attribute">field</span>=form_data <span class="string">&quot;passwd=(?&lt;pass&gt;\w+)&quot;</span></span><br><span class="line">| eval length = len(pass) </span><br><span class="line">| stats avg(length) as avglength </span><br><span class="line">| eval rounded = round(avglength, 0)</span><br></pre></td></tr></table></figure>
 
 <p>我們將pass提取出來後，使用len計算每一個pass 的長度，接下來用stats 提供的avg 計算所有欄位的平均長度，最後在使用 eval 的 round 幫我們做四捨五入操作</p>
 <p><img src="/assets/2c1yATfALElIHxDzSUF1GHSVnCVk0OjI8U-DAjAv5Ic=.png"></p>
@@ -656,9 +631,7 @@
 </blockquote>
 <p>題目想要問識別出正確密碼到被成功登入之間經過了多少秒</p>
 <p>我們在 Q9 得知了被爆破出來的密碼是 batman，因此我們先用 search 語法將 batman 密碼的請求先篩出來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
-| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
-| search pass&#x3D;&quot;batman&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">http_method</span>=POST <span class="attribute">uri</span>=/joomla/administrator/index.php</span><br><span class="line">| rex <span class="attribute">field</span>=form_data <span class="string">&quot;passwd=(?&lt;pass&gt;\w+)&quot;</span></span><br><span class="line">| search <span class="attribute">pass</span>=<span class="string">&quot;batman&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/5_9NUx3oXQErFGjdK89pTRrJncTrI3r-dr5iQhHBAsw=.png"></p>
 <p>Time 欄位相減的秒數為 92.17</p>
@@ -671,9 +644,7 @@
 </blockquote>
 <p>題目想要問攻擊者嘗試了多少種密碼</p>
 <p>這邊我們可以使用 stats 當中 dc 這個函式，dc 是 Splunk 中的去重計數函式 ，全稱為 “distinct count”</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 dest_ip&#x3D;192.168.250.70 sourcetype&#x3D;stream:http http_method&#x3D;POST uri&#x3D;&#x2F;joomla&#x2F;administrator&#x2F;index.php
-| rex field&#x3D;form_data &quot;passwd&#x3D;(?&lt;pass&gt;\w+)&quot;
-| stats dc(pass) as &quot;attempt&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">dest_ip</span>=192.168.250.70 <span class="attribute">sourcetype</span>=stream:http <span class="attribute">http_method</span>=POST <span class="attribute">uri</span>=/joomla/administrator/index.php</span><br><span class="line">| rex <span class="attribute">field</span>=form_data <span class="string">&quot;passwd=(?&lt;pass&gt;\w+)&quot;</span></span><br><span class="line">| stats dc(pass) as <span class="string">&quot;attempt&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/9iSpRiZZHUassgH2fFCF0IJr92jRFOeNS3pBWP3zcyA=.png"></p>
 <p>答案出來為412</p>
@@ -685,21 +656,17 @@
 </blockquote>
 <p>題目敘述說惡意程式會讓使用者嘗試去請求 domain ，要找出FQDN</p>
 <p>我想要先知道內部有哪些 IP 有在進行 DNS 查詢</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot;
-| table src_ip
-| stats count by src_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">index</span>=<span class="string">&quot;botsv1&quot;</span> sourcetype=<span class="string">&quot;stream:dns&quot;</span></span><br><span class="line">| table src_ip</span><br><span class="line">| stats <span class="keyword">count</span> <span class="keyword">by</span> src_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/sYm2KnhgFYCkdM9sQJ_4SWm4Wfc7Cdngvk7lwpW0Jp8=.png"></p>
 <p>這邊知道192.168.2.50、192.168.250.100、192.168.250.20、192.168.250.40、192.168.250.70 這些內部 IP 有在進行 DNS 查詢，接下來我先看192.168.250.0&#x2F;24 內 IP 查詢了哪些 domain，</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24 
-| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=<span class="string">&quot;botsv1&quot;</span> <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:dns&quot;</span> <span class="attribute">src_ip</span>=192.168.250.0/24 </span><br><span class="line">| table  src_ip,dest_ip,query&#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/OMbF3JUJiANeRWwDsBVF2A-In4u5w0v0fjWPRff2WmE=.png"></p>
 <p>接下來會有很多其他的 DNS 記錄出來 我們可以點擊不可能是答案的 FQDN ，然後選擇 Exclude from result ，然後它就會在 Search 欄位中自動產出將此FQDN 排除查詢的語法。</p>
 <p><img src="/assets/IoBJChn4M4fthuMfAPQoc1e6b4G-eXwv6hstSV2nq_M=.png"></p>
 <p>經過層層篩選後最後查詢如下</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;&quot;botsv1&quot; sourcetype&#x3D;&quot;stream:dns&quot; src_ip&#x3D;192.168.250.0&#x2F;24  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.in-addr.arpa&quot; &quot;query&#123;&#125;&quot;!&#x3D;&quot;demo-01&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.authdns.ripe.net&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.microsoft.com&quot; &quot;query&#123;&#125;&quot;&#x3D;*.*.* &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.waynecorpinc.local&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;dns.msftncsi.com&quot;  &quot;query&#123;&#125;&quot;!&#x3D;&quot;*.globalrootservers.net&quot; 
-| table  src_ip,dest_ip,query&#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index=<span class="string">&quot;botsv1&quot;</span> sourcetype=<span class="string">&quot;stream:dns&quot;</span> src_ip=<span class="number">192.168</span>.<span class="number">250.0</span>/<span class="number">24</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.in-addr.arpa&quot;</span> <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;demo-01&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.authdns.ripe.net&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.microsoft.com&quot;</span> <span class="string">&quot;query&#123;&#125;&quot;</span>=*.*.* <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.waynecorpinc.local&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;dns.msftncsi.com&quot;</span>  <span class="string">&quot;query&#123;&#125;&quot;</span>!=<span class="string">&quot;*.globalrootservers.net&quot;</span> </span><br><span class="line">| table  src_ip,dest_ip,query&#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/jzPkKSf2XPhZ_kdZBN_vHdWs9SodRqw0Hdol4W8JsjY=.png"></p>
 <p>這邊可以看到 cerberhhyed5frqa.xmfir0.win 這個 FQDN，而這個網址在情境的圖片上有出現，因此是這題的答案</p>
@@ -714,9 +681,7 @@
 <p>首先先來調整時間，選擇時間並選擇 DataRange，調整為查詢08&#x2F;24&#x2F;2016 到 08&#x2F;25&#x2F;2016這段時間的資料</p>
 <p><img src="/assets/l1jatLA2J8_nIfT-W0ySlWGVeQuBHTsKq6ZrZNWqTms=.png"></p>
 <p>接下來查詢 host 為 we8105desk 的 source IP 記錄，因為是查詢 Sysmon 來源的關係所以是使用 SourceIp 當作查詢來源 IP</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 host&#x3D;we8105desk source&#x3D;WinEventLog:Microsoft-Windows-Sysmon&#x2F;Operational
-| stats count by SourceIp 
-| sort -count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index=botsv1 host=we8105desk source=<span class="title class_">WinEventLog</span><span class="symbol">:Microsoft-Windows-Sysmon/Operational</span></span><br><span class="line">|<span class="params"> stats count by SourceIp </span></span><br><span class="line"><span class="params"></span>| sort -count</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/ZXDBGmZerwfzhgg20VYhTIab7F3el5JViBuBlzlz1qk=.png"></p>
 <p>這邊可以看到答案是 192.168.250.100</p>
@@ -729,8 +694,7 @@
 </blockquote>
 <p>這題想要問 Suricata 產生的警報，當中關於 Cerber malware 出現最少的 signature 是哪一個</p>
 <p>可以用以下的語法查詢，將 signature 與 signature_id 抓出來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;suricata Cerber 
-| table alert.signature alert.signature_id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=suricata Cerber </span><br><span class="line">| table alert.signature alert.signature_id</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/SUW4b8xNVYYgib6Y3L8SLD1NeyFdmlv0pC-9KT0GKzc=.png"></p>
 <p>可以很明顯的看到 <code>ETPRO TROJAN Ransomware/Cerber Checkin 2</code> 這個 signature 只出現一次，而它的 id 為2816763 ，則為答案</p>
@@ -744,8 +708,7 @@
 <p>這題需要先Q25，可以先去看 Q25 的解題過程</p>
 <p>題目敘述說在Q25 找到 關於VBScript 是 121214.tmp被執行了，請問啟動這個VBScript 的父進程 ID 是什麼？</p>
 <p>可以先將ParentImage、ParentProcessId以及CommandLine 抓出來查看</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
-| table ParentImage ParentProcessId CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=xmlwineventlog *.vbs</span><br><span class="line">| table ParentImage ParentProcessId CommandLine</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/cn-02vrj7Ro2hRDX_3l34zNpoDpJ3d--i0_5yj-7Lyo=.png"></p>
 <p>這邊可以很清楚的看到啟動121214.tmp 的父進程是 wscript.exe ，它的ID 為3968，這正是我們的答案</p>
@@ -758,15 +721,12 @@
 </blockquote>
 <p>題目敘述說當 Cerber 惡意程式執行時，初始會先執行 VB script，而這個 VB script 的產生包含前面啟動它的 exe 檔 可以在 Splunk 的其中一個欄位找到，最後問這個欄位裡面的值總共有多少 characters</p>
 <p>看到題目敘述，可以直接聯想到的是 CommandLine 欄位，所以我們先把 EventLog 的 CommandLine 欄位抓出來，並且限制檔名為 .vbs</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
-| table CommandLine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=xmlwineventlog *.vbs</span><br><span class="line">| table CommandLine</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/48ggord4P-7U5Euy77ESb7wgPZPyzklMo8loEzzXW_M=.png"></p>
 <p>可以看到下面一大串的 cmd.exe…….. 並且後面接 <code>GSI=%APPDATA%\%RANDOM%.vbs</code> 這邊就可以確定是題目所說。</p>
 <p>接下來要計算裡面有多少字元，使用的是 eval 的 len 函式</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;xmlwineventlog *.vbs
-| eval cmdlenght&#x3D;len(CommandLine)
-| table CommandLine cmdlenght<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=xmlwineventlog *.vbs</span><br><span class="line">| eval <span class="attribute">cmdlenght</span>=len(CommandLine)</span><br><span class="line">| table CommandLine cmdlenght</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/NsHJjeRVHk2NQIl9gw8oRwmXM2WSI3lcQOAvMZljaoU=.png"></p>
 <p>這邊它幫我們計算出答案為4490</p>
@@ -779,19 +739,17 @@
 </blockquote>
 <p>題目敘述說惡意程式去下載一個包含 Cerber 勒索病毒加密程式碼的檔案，它的檔案名稱是什麼</p>
 <p>我先把 192.168.250.100 (we8105desk) HTTP 的 GET 請求全部先抓下來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;stream:http&quot; src_ip&#x3D;192.168.250.100 http_method&#x3D;GET
-| table  src_ip,dest_ip,site,src_headers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">source</span>=<span class="string">&quot;stream:http&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100 <span class="attribute">http_method</span>=GET</span><br><span class="line">| table  src_ip,dest_ip,site,src_headers</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/tO3hZ1-M67gHdIfdlzVWlYr4RjE5w5rVxvEXMrR_Ns4=.png"></p>
 <p>當中最可疑的是它向 <code>solidaritedeproximite.org</code> 請求一個 mhtr.jpg 檔案</p>
 <p>我們單獨看一下關於有包含 mhtr.jpg 的記錄</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 mhtr.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span><span class="operator">=</span>botsv1 mhtr.jpg</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/3qLVjpkrNx1j5OKEazxyKyRjn6aJd4IHKxs2-Th5SSQ=.png"></p>
 <p>發現到有 <code>fgt_utm</code> 的記錄跳出來，在 Splunk 中通常指的是來自 FortiGate 防火牆的 Unified Threat Management 安全日誌類型的 sourcetype，用來記錄防毒、入侵防禦、網頁過濾等安全事件。</p>
 <p>我們使用 fgt_utm 記錄，並把 filename,msg,analyticscksum 欄位抓出來</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;fgt_utm&quot; mhtr.jpg
-| table filename,msg,analyticscksum<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;fgt_utm&quot;</span> mhtr.jpg</span><br><span class="line">| table filename,msg,analyticscksum</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/wX3qtK3vMoJ_wBsisJ0D4TGBsSh3WWWES9-kVGMwxwM=.png"></p>
 <p>可以看到它偵測 mhtr.jpg 為惡意檔案，並且有 sha256 給我們，我們將它丟入 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/9c1cabc16826273ad69f59af06f12fe6484e2eb0b5d3c87a690993934675e459">VirusTotal</a></p>
@@ -817,8 +775,7 @@
 <p>在 Splunk 中提供了一個 sourcetype，名稱為 winregistry，用來監控 Windows 註冊表 key／value 的建立、修改、刪除等操作。</p>
 <p>另外關於 USB 的其中一個註冊表路徑會在 <code>SYSTEM\ControlSet001\USBSTOR</code>，主要用途是記錄曾經連接過的 USB 裝置資訊，例如製造商、產品、序號、FriendlyName 等等</p>
 <p>因此我們將 <code>USBSTOR</code> 底下的 value 抓出來，並且用 dedup 將重複的 value 刪除，只保留第一筆出來的值</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;winregistry&quot; host&#x3D;we8105desk USBSTOR
-| table registry_value_data | dedup registry_value_data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">source</span>=<span class="string">&quot;winregistry&quot;</span> <span class="attribute">host</span>=we8105desk USBSTOR</span><br><span class="line">| table registry_value_data | dedup registry_value_data</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/B7j-ZowtUGr4m3r3GkRhOsm_eHvyijuT3v9bNfFIRzM=.png"></p>
 <p>這邊就可以看到 USB 的名稱為 MIRANDA_PRI</p>
@@ -831,15 +788,11 @@
 </blockquote>
 <p>題目敘述 Bob Smith’s workstation 在 ransomware 執行期間去連線了 file server，請問 file server 的 IP 是什麼？</p>
 <p>連線 file server 的 protocol 可能會有 SMB 或者 FTP，FTP 是空的，那我們可以著重去看 SMB</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100
-| table dest_ip
-| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:smb&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100</span><br><span class="line">| table dest_ip</span><br><span class="line">| dedup dest_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/yOqGwKrU-ZM7IjAYNdpFOfs2S1L4Z0hW5ixVwDSsEIU=.png"></p>
 <p>接下來要再更確認一點，file server 可能會進行登入，因此我們加上 login&#x3D;”bob.smith”</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 login&#x3D;&quot;bob.smith&quot;
-| table dest_ip
-| dedup dest_ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:smb&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100 <span class="attribute">login</span>=<span class="string">&quot;bob.smith&quot;</span></span><br><span class="line">| table dest_ip</span><br><span class="line">| dedup dest_ip</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/9yawfJ9r2QGw0qUBPTIYITVz6gXLxAQGGFcAJeFblNM=.png"></p>
 <p>這樣就確定了 192.168.250.20 是 file server </p>
@@ -852,18 +805,16 @@
 </blockquote>
 <p>題目問有多少個遠端 pdf 被加密了</p>
 <p>我們在上一題知道 file server 的 IP 為 192.168.250.20，我們另外先拿一下它的 domain name</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;stream:smb&quot; src_ip&#x3D;192.168.250.100 dest_ip&#x3D;192.168.250.20 path&#x3D;*
-| table path<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;stream:smb&quot;</span> <span class="attribute">src_ip</span>=192.168.250.100 <span class="attribute">dest_ip</span>=192.168.250.20 <span class="attribute">path</span>=*</span><br><span class="line">| table path</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/qEWsjAJB7FUV9Mq7acGsjdBlmDRUI1hj8Kd1x4wE9uo=.png"></p>
 <p>這邊得知了 domain name 為 we9041srv.waynecorpinc.local</p>
 <p>首先我先搜尋 wineventlog 中有沒有關於 .pdf 的記錄</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span><span class="operator">=</span>botsv1 sourcetype<span class="operator">=</span><span class="string">&quot;wineventlog&quot;</span> *.pdf</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/xJ0cOJW0DDg-M8pGh77C8_DVq-sVjUcXcwSXEbI-zOM=.png"></p>
 <p>發現到有，並且是從 192.168.250.100 請求 we9041srv.waynecorpinc.local 的一個 pdf<br>因此我們將所有關於這個的記錄抓下來，並用 stats 中的 dc 幫我們算總共有幾個檔案</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 sourcetype&#x3D;&quot;wineventlog&quot; *.pdf  EventCode&#x3D;5145 Source_Address&#x3D;192.168.250.100
-| stats dc(Relative_Target_Name)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">sourcetype</span>=<span class="string">&quot;wineventlog&quot;</span> *.pdf  <span class="attribute">EventCode</span>=5145 <span class="attribute">Source_Address</span>=192.168.250.100</span><br><span class="line">| stats dc(Relative_Target_Name)</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/B-ZLsIdRUo5P-2poxSx5cJ8Qark7Byogq2TCf8i5JyU=.png"></p>
 <p>總共是 257 個，則 257 為答案</p>
@@ -876,13 +827,12 @@
 </blockquote>
 <p>這題問的是在 Bob Smith 的電腦上有多少的 .txt 檔被 ransomware 鎖起來了</p>
 <p>首先我們先使用 Sysmon 將針對 Bob Smith 內的 .txt 的操作抓下來，並且看是哪個檔案對 .txt 操作</p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; TargetFilename&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;
-| table Image TargetFilename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">index</span>=botsv1 <span class="attribute">source</span>=<span class="string">&quot;wineventlog:microsoft-windows-sysmon/operational&quot;</span> <span class="attribute">TargetFilename</span>=<span class="string">&quot;C:\\Users\\bob.smith.WAYNECORPINC\\*.txt&quot;</span></span><br><span class="line">| table Image TargetFilename</span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/aslGsxq9wbcm5wT5VeqfAuUnScwW0MXR-gC6Kb-YIZs=.png"></p>
 <p>可以看到是有一個 osk.exe 對 .txt 檔做操作，</p>
 <p>那我們可以 EventID&#x3D;1 去看這個 osk.exe 的 hash </p>
-<pre class="line-numbers language-none"><code class="language-none">index&#x3D;botsv1 source&#x3D;&quot;wineventlog:microsoft-windows-sysmon&#x2F;operational&quot; EventCode&#x3D;1 Image&#x3D;&quot;C:\\Users\\bob.smith.WAYNECORPINC\\AppData\\Roaming\\&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;\\osk.exe&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i<span class="attr">ndex</span><span class="operator">=</span>botsv1 source<span class="operator">=</span><span class="string">&quot;wineventlog:microsoft-windows-sysmon/operational&quot;</span> EventCode<span class="operator">=</span><span class="number">1</span> Image<span class="operator">=</span><span class="string">&quot;C:<span class="char escape_">\\</span>Users<span class="char escape_">\\</span>bob.smith.WAYNECORPINC<span class="char escape_">\\</span>AppData<span class="char escape_">\\</span>Roaming<span class="char escape_">\\</span>&#123;35ACA89F-933F-6A5D-2776-A3589FB99832&#125;<span class="char escape_">\\</span>osk.exe&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/assets/bGRAyITwgDbzGkIxST7PVBbBAzYcou8g5XtO2PGhEQs=.png"></p>
 <p>得到的 MD5 hash 為 <a target="_blank" rel="noopener" href="https://189ccf15-ac01-4578-b319-8cf69e039163.cyberdefenders.network/en-US/app/search/search?q=search%20index=botsv1%20source=%22wineventlog:microsoft-windows-sysmon/operational%22%20EventCode=1%20Image=%22C:%5C%5CUsers%5C%5Cbob.smith.WAYNECORPINC%5C%5CAppData%5C%5CRoaming%5C%5C%7B35ACA89F-933F-6A5D-2776-A3589FB99832%7D%5C%5Cosk.exe%22&display.page.search.mode=smart&dispatch.sample_ratio=1&workload_pool=&earliest=0&latest=now&display.page.search.tab=events&display.general.type=events&sid=1760368198.162#">EE0828A4E4C195D97313BFC7D4B531F1</a>，丟進給 <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/37397f8d8e4b3731749094d7b7cd2cf56cacb12dd69e0131f07dd78dff6f262b">VirusTotal</a> 後</p>

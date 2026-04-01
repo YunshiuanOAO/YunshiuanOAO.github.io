@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -162,7 +162,7 @@
 <blockquote>
 <p>I wonder what this really is… enc ‘’.join([chr((ord(flag[i]) &lt;&lt; 8) + ord(flag[i + 1])) for i in range(0, len(flag), 2)])</p>
 </blockquote>
-<h3 id="觀察"><a href="#觀察" class="headerlink" title="觀察"></a>觀察</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">enc &#39;&#39;.join([chr((ord(flag[i]) &lt;&lt; 8) + ord(flag[i + 1])) for i in range(0, len(flag), 2)])<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="觀察"><a href="#觀察" class="headerlink" title="觀察"></a>觀察</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enc <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>((<span class="built_in">ord</span>(flag[i]) &lt;&lt; <span class="number">8</span>) + <span class="built_in">ord</span>(flag[i + <span class="number">1</span>])) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag), <span class="number">2</span>)])</span><br></pre></td></tr></table></figure>
 
 <p>這段程式碼看起來將一段文字編成了其他編碼，丟進去CyberChef選擇magic自偵測的方式即可拿到flag</p>
 <p><a href="%22https://gchq.github.io/CyberChef/#recipe=Magic(3,true,false,'')&input=54Gp5o2v5I2U5Jm744S25b2i5qW0542f5qWu542044y05pGf5r2m5by45by345Wk45C446S45om9&oenc=65001%22">CyberChef</a></p>
@@ -178,9 +178,7 @@
 <p>Your mission is to enter Dr. Evil’s laboratory and retrieve the blueprints for his Doomsday Project. The laboratory is protected by a series of locked vault doors. Each door is controlled by a computer and requires a password to open. Unfortunately, our undercover agents have not been able to obtain the secret passwords for the vault doors, but one of our junior agents obtained the source code for each vault’s computer! You will need to read the source code for each level to figure out what the password is for that vault door. As a warmup, we have created a replica vault in our training facility. The source code for the training vault is here: VaultDoorTraining.java</p>
 </blockquote>
 <h3 id="觀察-1"><a href="#觀察-1" class="headerlink" title="觀察"></a>觀察</h3><p>打開VaultDoorTraining.java後發現他在checkPassword函式中直接將玩家的輸入與w4rm1ng_Up_w1tH_jAv4_3808d338b46做比對，相同救回傳Access granted</p>
-<pre class="line-numbers language-none"><code class="language-none">public boolean checkPassword(String password) &#123;
-	return password.equals(&quot;w4rm1ng_Up_w1tH_jAv4_3808d338b46&quot;);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">boolean</span> <span class="title function_">checkPassword</span>(<span class="params"><span class="title class_">String</span> password</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> password.<span class="title function_">equals</span>(<span class="string">&quot;w4rm1ng_Up_w1tH_jAv4_3808d338b46&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>因此可以直接組出flag</p>
 <p>flag:</p>
@@ -222,80 +220,24 @@
 <p>目標是要改變玩家的<strong>跳躍功能</strong> 因此要在裡面找到處理跳躍功能的程式碼<br>翻找一下會發現是在EvolveGames-&gt;PlayerController的update()函式中</p>
 <p><img src="/./assets/NoWayOut_dnspy.png" alt="NoWayOut_dnspy"></p>
 <p>其中有一個條件很明顯是處理跳躍功能</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (Input.GetButton(&quot;Jump&quot;) &amp;&amp; this.canMove &amp;&amp; this.characterController.isGrounded &amp;&amp; !this.isClimbing)
-&#123;
-    this.moveDirection.y &#x3D; this.jumpSpeed;
-&#125;
-else
-&#123;
-    this.moveDirection.y &#x3D; y;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Input.<span class="built_in">GetButton</span>(<span class="string">&quot;Jump&quot;</span>) &amp;&amp; <span class="keyword">this</span>.canMove &amp;&amp; <span class="keyword">this</span>.characterController.isGrounded &amp;&amp; !<span class="keyword">this</span>.isClimbing)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.moveDirection.y = <span class="keyword">this</span>.jumpSpeed;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.moveDirection.y = y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這裡有兩個解法</p>
 <ol>
 <li>增加跳躍數值</li>
 </ol>
 <p>code:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (Input.GetButton(&quot;Jump&quot;) &amp;&amp; this.canMove &amp;&amp; this.characterController.isGrounded &amp;&amp; !this.isClimbing)
-&#123;
-    this.moveDirection.y &#x3D; this.jumpSpeed + 20f;
-&#125;
-else
-&#123;
-    this.moveDirection.y &#x3D; y;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Input.<span class="built_in">GetButton</span>(<span class="string">&quot;Jump&quot;</span>) &amp;&amp; <span class="keyword">this</span>.canMove &amp;&amp; <span class="keyword">this</span>.characterController.isGrounded &amp;&amp; !<span class="keyword">this</span>.isClimbing)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.moveDirection.y = <span class="keyword">this</span>.jumpSpeed + <span class="number">20</span>f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.moveDirection.y = y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>讓玩家一跳就跳很高</p>
 <ol start="2">
 <li>刪除限制條件</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (Input.GetButton(&quot;Jump&quot;))
-&#123;
-    this.moveDirection.y &#x3D; this.jumpSpeed;
-&#125;
-else
-&#123;
-    this.moveDirection.y &#x3D; y;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Input.<span class="built_in">GetButton</span>(<span class="string">&quot;Jump&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.moveDirection.y = <span class="keyword">this</span>.jumpSpeed;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.moveDirection.y = y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>讓玩家可以在空中連續跳</p>
 <p>另外，也可以注意到在APTX的 class中有一個條件</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (collision.gameObject &#x3D;&#x3D; this.player)
-&#123;
-    this.Mysterious.SetActive(true);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (collision.gameObject == <span class="keyword">this</span>.player)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>.Mysterious.<span class="built_in">SetActive</span>(<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這個條件的感覺很像是如果一個東西碰到玩家後，會將一個Mysterious設成true<br>可以猜測是如果玩家碰到旗子之後的程式<br>因此可以編輯這個class 新增一個start函式，讓遊戲執行的時候就將Mysterious設成true</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">using System;
-using UnityEngine;
-
-&#x2F;&#x2F; Token: 0x02000002 RID: 2
-public class APTX : MonoBehaviour
-&#123;
-	&#x2F;&#x2F; Token: 0x06000001 RID: 1
-	private void OnTriggerEnter(Collider collision)
-	&#123;
-		if (collision.gameObject &#x3D;&#x3D; this.player)
-		&#123;
-			this.Mysterious.SetActive(true);
-		&#125;
-	&#125;
-
-	&#x2F;&#x2F; Token: 0x06000002 RID: 2
-	public APTX()
-	&#123;
-	&#125;
-
-	&#x2F;&#x2F; Token: 0x0600003A RID: 58
-	public void Start()
-	&#123;
-		this.Mysterious.SetActive(true);
-	&#125;
-
-	&#x2F;&#x2F; Token: 0x04000001 RID: 1
-	public GameObject player;
-
-	&#x2F;&#x2F; Token: 0x04000002 RID: 2
-	public GameObject Mysterious;
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Token: 0x02000002 RID: 2</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">APTX</span> : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Token: 0x06000001 RID: 1</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="type">void</span> <span class="title">OnTriggerEnter</span><span class="params">(Collider collision)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (collision.gameObject == <span class="keyword">this</span>.player)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">this</span>.Mysterious.<span class="built_in">SetActive</span>(<span class="literal">true</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Token: 0x06000002 RID: 2</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">APTX</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Token: 0x0600003A RID: 58</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">Start</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.Mysterious.<span class="built_in">SetActive</span>(<span class="literal">true</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Token: 0x04000001 RID: 1</span></span><br><span class="line">	<span class="keyword">public</span> GameObject player;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Token: 0x04000002 RID: 2</span></span><br><span class="line">	<span class="keyword">public</span> GameObject Mysterious;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 <h4 id="解法二-CheatEngine"><a href="#解法二-CheatEngine" class="headerlink" title="解法二: CheatEngine"></a>解法二: CheatEngine</h4><p>使用cheatEngin獲得玩家位置的記憶體位置，修改掉數值達成穿牆<br><a target="_blank" rel="noopener" href="https://youtu.be/QgF4PQjeG-o?si=qvckIAU1Cr03s50d&t=604">參考影片</a></p>

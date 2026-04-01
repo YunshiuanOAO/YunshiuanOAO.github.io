@@ -49,9 +49,9 @@
     
 
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="yunshiuan" type="application/atom+xml">
+</head>
 
 <body>
     <script>
@@ -155,7 +155,7 @@
 <p>因為HTTPS 多了一層SSL&#x2F;TLS，他會將封包進行加密保護傳輸內容不被竊聽</p>
 <p>解密流程如下：</p>
 <p>假設我們要分析一個HTTPS網站的登入過程，將加解密的key 先存在一個檔案中</p>
-<pre class="line-numbers language-shellscript" data-language="shellscript"><code class="language-shellscript">export SSLKEYLOGFILE&#x3D;&quot;&#x2F;home&#x2F;user&#x2F;ssl-keys.log&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export SSLKEYLOGFILE=&quot;/home/user/ssl-keys.log&quot;</span><br></pre></td></tr></table></figure>
 
 <p>然後再Preferences-&gt; Prorocols 裡面找到TLS ，接下來把剛剛儲存的key 路徑丟進去最底下<code>(Pre)-Master-Screct log filename</code>裡面</p>
 <p><img src="/assets/CeYJy0OyLQdOSSNNFOSwGR4xwqu41W5ftRSrnPAi5Lg=.png"></p>

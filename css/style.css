@@ -1114,6 +1114,9 @@ header .menu label {
   .main {
     padding-top: 40pt;
   }
+  .wrapper.home-bg .main {
+    padding-top: 5.5em;
+  }
   .navbar {
     display: none;
   }

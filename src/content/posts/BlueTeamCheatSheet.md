@@ -1979,7 +1979,7 @@ SPF 是一種電子郵件驗證協定，它讓網域擁有者能夠指定哪些�
 
 可以使用 `dig` 指令查看 SPF
 
-```BASH
+```bash
 $ dig yunshiuan.com  TXT | grep spf
 yunshiuan.com.		377	IN	TXT	"v=spf1 include:_spf.mx.cloudflare.net ~all"
 ```

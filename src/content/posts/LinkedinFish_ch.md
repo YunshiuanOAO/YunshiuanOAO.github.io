@@ -2786,7 +2786,7 @@ trusted_public_key.verify(
 
 驗證通過後會對message內的內容進行 XOR 解密,key = `!!!HappyPenguin1950!!!` + base64decode + 反轉，解密之後得到
 
-```url
+```text
 http://23.254.164[.]156/introduction-video
 ```
 

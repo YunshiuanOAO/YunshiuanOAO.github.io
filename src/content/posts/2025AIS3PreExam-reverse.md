@@ -27,7 +27,7 @@ ida反編譯後用strings 看一下
 
 主要是這段，當將`p_s`丟進`sub_1E20`時回傳值會決定是對的還是錯的，因此可以確定`sub_1E20`是一個flag checker
 
-```CPP
+```cpp
 _BOOL4 __cdecl sub_1E20(int a1)
 {
   unsigned int v1; // ecx
@@ -752,7 +752,7 @@ jmp之後跳到這邊
 
 經過分析後主要圖片加密功能會`sub_4018EA`中的`sub_401520`
 
-```C
+```c
 int __cdecl sub_4018EA(char a1)
 {
   int v1; // eax
@@ -847,7 +847,7 @@ if __name__ == "__main__":
 
 顯示用pwntools 的disassembly 看一下 shellcode
 
-````assembly
+````asm
 0: 83 fe 20 cmp esi, 0x20
 3: 0f 84 a3 03 00 00 je 0x3ac
 9: 83 fe 0d cmp esi, 0xd

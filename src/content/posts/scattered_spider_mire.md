@@ -1,3 +1,15 @@
+---
+title: 基於 ATT&CK Evaluations Enterprise 2025 的 Scattered Spider 攻擊與鑑識模擬演練
+description: 依據 ATT&CK Evaluations Enterprise 2025 情境，重現 Scattered Spider 的攻擊流程並進行鑑識分析
+published: 2026-09-28
+category: Writeup
+tags:
+  - Scattered Spider
+  - ATT&CK Evaluations
+  - Threat Emulation
+  - Digital Forensics
+---
+
 # 基於ATT&CK Evaluations Enterprise 2025 Scattered Spider 攻擊&鑑識模擬演練
 
 > auth : yunshiuan
@@ -754,4 +766,3 @@ airbyte-worker  | 2026-03-29 12:27:45 destination > INFO main i.a.c.i.d.s.S3Cons
 ## Reference
 
 https://attackevals.github.io/ael/enterprise/scattered_spider/emulation_plan/scattered_spider_scenario
-

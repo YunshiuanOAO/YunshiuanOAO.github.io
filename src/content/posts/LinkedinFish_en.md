@@ -2783,7 +2783,7 @@ trusted_public_key.verify(
 
 After verification passes, it decrypts the message content using XOR (key = `!!!HappyPenguin1950!!!`) + base64decode + reverse, obtaining:
 
-```url
+```text
 http://23.254.164[.]156/introduction-video
 ```
 

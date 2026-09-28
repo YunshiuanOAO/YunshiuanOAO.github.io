@@ -1,3 +1,17 @@
+---
+title: 基於 ATT&CK Evaluations Enterprise 2025 的 Mustang Panda 攻擊與鑑識模擬演練
+description: 依據 ATT&CK Evaluations Enterprise 2025 情境，重現 Mustang Panda 的 TONESHELL 與 PlugX 攻擊流程並進行鑑識分析
+published: 2026-09-28
+category: Writeup
+tags:
+  - Mustang Panda
+  - ATT&CK Evaluations
+  - Threat Emulation
+  - Digital Forensics
+  - TONESHELL
+  - PlugX
+---
+
 # 基於ATT&CK Evaluations Enterprise 2025 Mustang_Panda 攻擊&鑑識模擬演練
 
 >  auth : yunshiuan
